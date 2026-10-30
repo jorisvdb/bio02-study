@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIO02 steps on one page</title>
+<style>
+@page { size: A4 landscape; margin: 5mm; }
+* { box-sizing: border-box; }
+html { background: #8a8f98; }
+body { margin: 0; font: 8.8pt/1.2 "Arial Narrow", "Roboto Condensed", Arial, sans-serif; color: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.bar { font: 13px/1.4 system-ui, sans-serif; color: #fff; padding: 8px 12px; }
+.bar a { color: #fff; }
+.sheet { width: 287mm; height: 200mm; margin: 0 auto 12px; background: #fff; padding: 2mm; overflow: hidden;
+  column-count: 5; column-gap: 3mm; column-rule: .2mm solid #ccc; column-fill: auto; box-shadow: 0 2px 12px #0006; }
+@media print { html { background: #fff; } .bar { display: none; } .sheet { margin: 0; box-shadow: none; padding: 0; width: 287mm; height: 200mm; } }
+h1 { font-size: 11.5pt; margin: 0 0 1mm; }
+h1 small { font-weight: 400; color: #555; font-size: 8pt; }
+h2 { font-size: 10pt; margin: 1.6mm 0 .6mm; padding: .4mm 1.2mm; color: #fff; border-radius: .7mm; break-after: avoid; }
+ol { margin: 0 0 1mm; padding-left: 4mm; break-inside: avoid; }
+ol::before { content: attr(data-t); display: block; margin-left: -4mm; font-weight: 700; }
+ol li::marker { font-weight: 700; color: #555; }
+li { margin: 0; }
+p { margin: 0 0 .6mm; }
+.g { color: #444; font-style: italic; margin: 0 0 .3mm; }
+.t { color: #b3261e; }
+.t::before { content: "⚠ "; }
+.c1 { background: #3b7dd8; } .c2 { background: #d14b5a; } .c3 { background: #2e9d6a; } .c4 { background: #8e5cc7; }
+</style>
+</head>
+<body>
+<div class="bar"><a href="index.html">← Cheatsheets</a> · BIO02 steps on one A4 (landscape). Print: Ctrl+P → Landscape, Scale 100 %, tick “Background graphics”.</div>
+<div class="sheet">
+
+<h1>BIO02 – the steps <small>· every process in order · ⚠ = exam trap</small></h1>
+
+<h2 class="c1">1 · Chromosomes</h2>
+<ol data-t="Nondisjunction in meiosis I">
+<li>homologs fail to separate</li>
+<li>both go to one daughter cell</li>
+<li>meiosis II copies the error</li>
+<li>4 wrong gametes: 2 × n+1, 2 × n−1</li>
+</ol>
+<ol data-t="Nondisjunction in meiosis II">
+<li>meiosis I normal</li>
+<li>sister chromatids stay together</li>
+<li>only one cell wrong</li>
+<li>2 normal, 1 × n+1, 1 × n−1</li>
+</ol>
+<ol data-t="From gamete to syndrome">
+<li>wrong gamete + normal gamete</li>
+<li>zygote 2n+1 (trisomy) or 2n−1 (monosomy)</li>
+<li>mitosis copies it to every cell</li>
+<li>wrong gene dose → miscarriage or syndrome</li>
+</ol>
+<p class="t">10–25 % of conceptions; main cause of pregnancy loss. Mitotic nondisjunction → mosaic.</p>
+<ol data-t="Polyploidy (whole sets)">
+<li>3n: diploid egg + normal sperm</li>
+<li>4n: zygote copies DNA, does not divide</li>
+<li>plants fine (banana 3n, wheat 6n, strawberry 8n)</li>
+</ol>
+<p class="t">One extra chromosome upsets balance more than a whole set.</p>
+<ol data-t="A chromosome breaks (4 outcomes)">
+<li>fragment lost → deletion</li>
+<li>fragment joins sister/homolog → duplication</li>
+<li>fragment flips → inversion</li>
+<li>fragment joins other chromosome → translocation</li>
+</ol>
+<p class="t">Unequal crossover = 1 deletion + 1 duplication. Inversion/reciprocal translocation keep all genes: position effect.</p>
+<ol data-t="Syndromes">
+<li>Down 47,+21; risk ↑ with mother's age</li>
+<li>Klinefelter 47,XXY; Turner 45,X (only viable monosomy)</li>
+<li>cri du chat: deletion 5p</li>
+<li>CML: translocation 9;22 → Philadelphia, fused gene</li>
+</ol>
+
+<h2 class="c2">2 · Cancer</h2>
+<p class="g">Begin: a society of cells under social controls → goal of the cheat: divide without permission.</p>
+<ol data-t="How a cancer evolves">
+<li>1 cell mutates, divides a bit more → clone</li>
+<li>more hits (Knudson), selection in the tumour</li>
+<li>benign: stays above the basal lamina</li>
+<li>malignant: breaks through, invades</li>
+<li>instability (chromothripsis) speeds it up</li>
+<li>subclones: heterogeneity</li>
+<li>stroma, angiogenesis, immune escape</li>
+<li>metastasis: vessel → travel → colonise</li>
+</ol>
+<p class="t">Carcinoma 85 % (epithelium); &lt; 1/1000 cells survive the blood; colonisation is the hard step.</p>
+<ol data-t="Hallmarks (2000)">
+<li>own growth signals</li>
+<li>ignore stop signals</li>
+<li>escape apoptosis</li>
+<li>unlimited divisions (telomeres)</li>
+<li>angiogenesis</li>
+<li>invasion + metastasis</li>
+</ol>
+<ol data-t="Make an oncogene (1 hit, dominant)">
+<li>point mutation → hyperactive protein</li>
+<li>amplification → too much protein</li>
+<li>rearrangement → fusion / strong promoter</li>
+</ol>
+<ol data-t="Lose a tumor suppressor (2 hits, recessive)">
+<li>copy 1: deletion or point mutation</li>
+<li>copy 2: chromosome lost, mitotic recombination, gene conversion, deletion, mutation, or methylation</li>
+<li>hereditary Rb: hit 1 inherited → many tumours</li>
+</ol>
+<p class="t">Oncogene: same missense mutation repeats. Tumor suppressor: truncating mutations anywhere.</p>
+<ol data-t="p53, the alarm">
+<li>stress: DNA damage, hypoxia, short telomeres, oncogene overdrive</li>
+<li>p53 stabilised, binds DNA</li>
+<li>p21 → blocks Cdk → no S phase</li>
+<li>or senescence, or apoptosis</li>
+</ol>
+<p class="t">p53 mutated in ≈ 50 % of cancers. Three pathways broken: Rb, Ras/PI3K, p53.</p>
+<ol data-t="Colorectal order">
+<li>Apc lost (early, polyp)</li>
+<li>instability</li>
+<li>K-Ras activated</li>
+<li>p53 lost → carcinoma</li>
+</ol>
+
+<h2 class="c3">3 · Viruses</h2>
+<p class="g">Begin: genes in a protein coat, no metabolism → goal: hundreds of copies, made by the host.</p>
+<ol data-t="Replicative cycle">
+<li>surface protein ↔ host receptor (host range)</li>
+<li>genome enters (inject, endocytosis, fusion)</li>
+<li>host copies genome, makes proteins</li>
+<li>self-assembly</li>
+<li>exit: lysis or budding</li>
+</ol>
+<p class="t">DNA virus: host DNA polymerase. RNA virus: own RNA → RNA polymerase (cells lack it).</p>
+<ol data-t="Enveloped virus">
+<li>spike binds receptor; envelope fuses</li>
+<li>ER ribosomes make glycoproteins</li>
+<li>ER + Golgi add sugars → membrane</li>
+<li>capsid buds out wrapped in membrane</li>
+</ol>
+<ol data-t="HIV (retrovirus, class VI)">
+<li>fuse; 2 RNA + 2 reverse transcriptase in</li>
+<li>RT: RNA → DNA (cytoplasm)</li>
+<li>DNA into nucleus, integrates = provirus</li>
+<li>host RNA pol → RNA = mRNA + genomes</li>
+<li>proteins, assembly, budding</li>
+</ol>
+<p class="t">Six classes: I dsDNA, II ssDNA, III dsRNA, IV +ssRNA (= mRNA), V −ssRNA (template), VI retro.</p>
+
+<h2 class="c4">4 · Techniques</h2>
+<ol data-t="PCR (one cycle)">
+<li>denature 94–98 °C</li>
+<li>anneal primers 50–65 °C</li>
+<li>extend 72 °C (Taq, 5′→3′)</li>
+<li>repeat 20–40×: 20 → 10⁶ copies</li>
+</ol>
+<p class="t">Needs template, 2 primers, dNTPs, polymerase (no ligase).</p>
+<ol data-t="cDNA">
+<li>mRNA + reverse transcriptase → DNA</li>
+<li>RNA removed; polymerase makes strand 2</li>
+<li>no introns; then PCR</li>
+</ol>
+<ol data-t="Cloning by ligation">
+<li>cut insert + vector, same enzyme</li>
+<li>sticky ends pair</li>
+<li>ligase seals</li>
+<li>transform competent E. coli</li>
+<li>select on antibiotic</li>
+</ol>
+<p class="t">Ligase joins; restriction enzyme cuts (palindrome 4–8 bp).</p>
+<ol data-t="CRISPR-Cas9">
+<li>guide RNA leads Cas9 to the site</li>
+<li>double-strand break</li>
+<li>NHEJ: errors → knockout</li>
+<li>HR + template → precise edit</li>
+</ol>
+<ol data-t="RNAi">
+<li>dsRNA → Dicer → siRNA (21 nt)</li>
+<li>Argonaute keeps one strand</li>
+<li>pairs with mRNA → destroyed/blocked</li>
+</ol>
+<ol data-t="Knockout mouse">
+<li>ES cells: gene → marker (HR)</li>
+<li>select in G418</li>
+<li>inject in black blastocyst</li>
+<li>chimeric pup; backcross; germline</li>
+<li>cross heterozygotes → knockout</li>
+</ol>
+<ol data-t="Sanger">
+<li>primer + polymerase + dNTPs + little ddNTP</li>
+<li>chain stops at ddNTP (no 3′ OH)</li>
+<li>ladder sorted by length</li>
+<li>read shortest first; colour = base</li>
+</ol>
+<ol data-t="Shotgun genome">
+<li>fragment, linkers, PCR</li>
+<li>sequence all</li>
+<li>assemble by overlaps</li>
+<li>8 genome equivalents → 99.9 %</li>
+</ol>
+<ol data-t="Illumina cycle">
+<li>adapters; bridge PCR → clusters</li>
+<li>add 1 blocked fluorescent base</li>
+<li>photograph</li>
+<li>remove block + dye; repeat</li>
+</ol>
+<p class="t">Reads 75–150 bp. Nanopore: current through a pore, long reads, no PCR.</p>
+<ol data-t="Exome capture">
+<li>fragments + biotin RNA probes (exons)</li>
+<li>streptavidin beads catch them</li>
+<li>wash 98.5 % away; sequence</li>
+</ol>
+<ol data-t="Western blot">
+<li>SDS-PAGE</li>
+<li>transfer to membrane</li>
+<li>block (BSA)</li>
+<li>primary antibody</li>
+<li>secondary antibody + label → band</li>
+</ol>
+<ol data-t="Which tool?">
+<li>one gene's RNA → qRT-PCR</li>
+<li>all genes → microarray / RNA-seq</li>
+<li>place on chromosome → FISH</li>
+<li>copy number genome-wide → aCGH</li>
+<li>one protein → Western; cells → flow cytometry</li>
+</ol>
+<p class="t">A260/A280 ≈ 2 for pure DNA. DNA runs to +, small fastest.</p>
+
+</div>
+</body>
+</html>

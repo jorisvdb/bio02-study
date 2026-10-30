@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Process stories</title>
+<link rel="stylesheet" href="cs.css">
+<style>
+main.story { max-width: 780px; }
+.story p.lead { color: var(--muted); }
+.story nav.toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; margin: 10px 0 18px; font-size: .9rem; }
+.story nav.toc ol { margin: 4px 0; padding-left: 1.4em; columns: 2; column-gap: 28px; }
+.story nav.toc li { break-inside: avoid; }
+.story nav.toc a { text-decoration: none; }
+.story h2.sec { margin-top: 28px; }
+.story section.st { margin: 14px 0 18px; break-inside: avoid; page-break-inside: avoid; }
+.story section.st h3 { font-size: 1.05rem; margin: 0 0 3px; color: var(--accent); }
+.story .bg { font-size: .85rem; color: var(--muted); margin: 0 0 4px; }
+.story .bg b { color: var(--fg); font-weight: 600; }
+.story section.st p.tx { margin: 0; font-size: 1rem; line-height: 1.6; }
+.story .one { font-size: .88rem; margin: 5px 0 0; padding: 3px 9px; border-left: 4px solid var(--mnemo); background: var(--mnemo-bg); border-radius: 4px; }
+.story .one::before { content: "In one line: "; font-weight: 700; }
+@media (max-width: 600px) { .story nav.toc ol { columns: 1; } }
+@media print {
+  .story nav.toc { display: none; }
+  .story section.st p.tx { font-size: 11.5px; line-height: 1.45; }
+  .story section.st { margin: 8px 0 10px; }
+  .story h2.sec { margin-top: 12px; break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<main class="story">
+<nav class="nav"><a href="../index.html">← All chapters</a><a href="index.html">Cheatsheets</a><a href="process_maps.html">Process maps</a><a href="../quiz/index.html">Quiz</a></nav>
+<h1>The processes as stories</h1>
+<p class="lead">One short story per process, in the order of the course. Each story starts from what the cell (or the lab) <b>has</b> and what it <b>wants</b>, then tells what happens. Only the main ideas: the cheatsheets and process maps have the details. Dutch words are in brackets (tussen haakjes). Stories marked (background) use the Alberts chapter, which is not exam material.</p>
+
+<nav class="toc"><b>Contents</b><ol>
+<li><a href="#s-nondis">Nondisjunction in meiosis I and II</a></li>
+<li><a href="#s-aneu">From a wrong gamete to an aneuploid baby</a></li>
+<li><a href="#s-poly">Polyploidy: whole extra sets</a></li>
+<li><a href="#s-break">Breaking a chromosome</a></li>
+<li><a href="#s-phil">The Philadelphia chromosome</a></li>
+<li><a href="#s-society">A society of cells and one cell that cheats</a></li>
+<li><a href="#s-benign">Benign, malignant, metastasis</a></li>
+<li><a href="#s-progress">One cell, many years: tumour progression</a></li>
+<li><a href="#s-instab">Genetic instability and chromothripsis</a></li>
+<li><a href="#s-hallmarks">The hallmarks of cancer</a></li>
+<li><a href="#s-stroma">The tumour and its neighbourhood</a></li>
+<li><a href="#s-metast">The journey of a metastasis</a></li>
+<li><a href="#s-gasbrake">Gas and brakes: proto-oncogenes and tumor suppressor genes</a></li>
+<li><a href="#s-onco3">Three ways to make an oncogene</a></li>
+<li><a href="#s-rb">Retinoblastoma and the two hits</a></li>
+<li><a href="#s-genomes">Reading cancer genomes: drivers, passengers and three pathways</a></li>
+<li><a href="#s-p53">p53, the alarm antenna</a></li>
+<li><a href="#s-colon">The road to colorectal cancer</a></li>
+<li><a href="#s-virus">What a virus is</a></li>
+<li><a href="#s-takeover">A virus takes over a cell</a></li>
+<li><a href="#s-envelope">Enveloped viruses: dressing in the host's membrane</a></li>
+<li><a href="#s-hiv">HIV, a retrovirus</a></li>
+<li><a href="#s-culture">Growing cells in the lab</a></li>
+<li><a href="#s-pcr">PCR: copying DNA a million times, and cDNA</a></li>
+<li><a href="#s-clone">Cloning a gene into a plasmid</a></li>
+<li><a href="#s-edit">Changing a genome: RNAi, CRISPR-Cas9 and the knockout mouse</a></li>
+<li><a href="#s-seq">Reading DNA: from Sanger to Illumina and Nanopore</a></li>
+<li><a href="#s-detect">Finding a sequence, a copy number, an RNA or a protein</a></li>
+<li><a href="#s-see">Seeing molecules: absorbance, gels and mass spectrometry</a></li>
+</ol></nav>
+
+<h2 class="sec">Chapter 1 · Alterations of chromosomes</h2>
+
+<section class="st" id="s-nondis">
+<h3>1 · Nondisjunction in meiosis I and II</h3>
+<p class="bg"><b>Has:</b> a cell with 46 chromosomes, copied, ready for meiosis. <b>Wants:</b> four gametes (sex cells, geslachtscellen) with exactly 23 each.</p>
+<p class="tx">Meiosis is two divisions. In <b>meiosis I</b> the two <b>homologs</b> of each pair (one from the mother, one from the father) are pulled apart by the <b>spindle</b> (spoelfiguur, the protein fibres). In <b>meiosis II</b> the two <b>sister chromatids</b> (the identical copies of one chromosome) are pulled apart. Usually this works. The occasional mishap is <b>nondisjunction</b> (non-disjunctie): "not going apart". If it happens in meiosis I, both homologs of a pair go to the same cell; that cell and its empty partner both go through meiosis II, so <b>all four gametes are wrong</b>: two have one chromosome too many (n + 1), two have one too few (n − 1). If it happens in meiosis II, only one of the two cells makes the mistake: <b>two gametes are normal</b>, one is n + 1 and one is n − 1. All the other chromosomes are shared out normally. The exam example: Klinefelter syndrome (XXY) comes from nondisjunction of the sex chromosomes during meiosis.</p>
+<p class="one">meiosis I error → 4 wrong gametes; meiosis II error → 2 normal, 1 × n + 1, 1 × n − 1.</p>
+</section>
+
+<section class="st" id="s-aneu">
+<h3>2 · From a wrong gamete to an aneuploid baby</h3>
+<p class="bg"><b>Has:</b> a gamete with 22 or 24 chromosomes. <b>Wants:</b> nothing: the problem only starts at fertilization.</p>
+<p class="tx">At <b>fertilization</b> (bevruchting) the wrong gamete fuses with a normal one. The <b>zygote</b> (the fertilized egg) now has the wrong number of one chromosome: this is <b>aneuploidy</b>. One copy instead of two is <b>monosomy</b> (2n − 1 = 45 chromosomes); three copies is <b>trisomy</b> (2n + 1 = 47). The zygote then divides by <b>mitosis</b>, which copies the chromosomes exactly, so <b>every cell of the embryo</b> inherits the error. Why is that bad? A chromosome carries hundreds of genes, and a cell makes an amount of each gene's product that depends on the number of copies: the <b>gene dose</b>. Three copies means 1.5 times too much of hundreds of products at once, so development goes wrong. Monosomy and trisomy happen in 10 to 25 % of human conceptions and are the main cause of <b>miscarriage</b> (miskraam). The survivors show a <b>syndrome</b>, a fixed set of traits: Down syndrome is trisomy 21. If nondisjunction happens in mitosis early in the embryo, only part of the body is aneuploid: a <b>mosaic</b>.</p>
+<p class="one">wrong gamete + normal gamete → 45 or 47 in every cell → wrong gene dose → miscarriage or syndrome.</p>
+</section>
+
+<section class="st" id="s-poly">
+<h3>3 · Polyploidy: whole extra sets</h3>
+<p class="bg"><b>Has:</b> a zygote. <b>Wants:</b> two sets of chromosomes, but ends up with three or four.</p>
+<p class="tx"><b>Polyploidy</b> (polyploïdie) is not one chromosome too many but <b>whole extra sets</b> in every body cell: <b>triploid</b> is 3n (69 in a human), <b>tetraploid</b> is 4n (92). Two ways. First: nondisjunction of <i>all</i> chromosomes at once gives an abnormal <b>diploid egg</b> (2n); a normal sperm (n) makes it 3n. Second: a normal 2n zygote copies its chromosomes but then <b>fails to divide</b>, so one cell holds 4n, and all later divisions keep 4n. Polyploidy is common in plants and drives their evolution: a <b>banana is 3n</b>, <b>wheat 6n</b>, a <b>strawberry 8n</b>. Polyploid animals are rare (a few fishes and amphibians). Surprisingly, polyploids look more normal than aneuploids. The reason is <b>genetic balance</b>: with a whole extra set every gene is tripled, so the proportions between genes stay the same; one extra chromosome puts its genes out of proportion to all the others.</p>
+<p class="one">3n from a diploid egg, 4n from a zygote that copies but does not divide; a whole set keeps the balance, one chromosome breaks it.</p>
+</section>
+
+<section class="st" id="s-break">
+<h3>4 · Breaking a chromosome: deletion, duplication, inversion, translocation</h3>
+<p class="bg"><b>Has:</b> a chromosome broken by radiation, chemicals or an error in meiosis. <b>Wants:</b> to put the piece back; four things can go wrong.</p>
+<p class="tx">Think of the chromosome as a row of segments A B C D E F. When it breaks, the loose piece can be lost: a <b>deletion</b> (the chromosome now misses genes). It can be stuck onto the sister or the homolog as an extra copy: a <b>duplication</b>. It can be put back the wrong way round: an <b>inversion</b> (A B E D C F). Or it can join a completely different, <b>non-homologous</b> chromosome: a <b>translocation</b>. Deletions and duplications often arise together during <b>unequal crossing-over</b>: in meiosis two non-sister chromatids swap pieces of different size, so one partner gives away more than it gets. A large deletion on both homologs (or on the single X of a male) removes essential genes and is usually lethal. A <b>reciprocal</b> translocation (two chromosomes swap pieces) and an inversion keep every gene in its normal dose, yet they can still change the phenotype, because a gene's activity depends on its neighbours: a <b>position effect</b>.</p>
+<p class="one">lost = deletion, extra = duplication, flipped = inversion, moved to another chromosome = translocation.</p>
+</section>
+
+<section class="st" id="s-phil">
+<h3>5 · The Philadelphia chromosome: a translocation that causes leukemia</h3>
+<p class="bg"><b>Has:</b> a dividing precursor of a white blood cell in the bone marrow. <b>Wants:</b> a normal mitosis, but two chromosomes break and swap.</p>
+<p class="tx">Translocations can also happen during <b>mitosis</b>, in a body cell. In one precursor of white blood cells, a large piece of <b>chromosome 22</b> is exchanged with a small piece from the tip of <b>chromosome 9</b>. The result is an abnormally long chromosome 9 and a much shortened, easily recognised chromosome 22: the <b>Philadelphia chromosome</b>, named after the city where it was first seen. At the junction a new <b>fused gene</b> is created, half of one gene glued to half of another, and its product drives the cell cycle without stopping. Every descendant of that one cell inherits it, and the clone grows into <b>chronic myelogenous leukemia</b> (CML, a cancer of white blood cells). Chapter 2 uses this as proof that a cancer comes from a single cell: the breakpoint is identical in all leukemic cells of one patient but differs slightly between patients. (Background: the fused gene is Bcr-Abl, and the drug imatinib blocks its product.)</p>
+<p class="one">9 and 22 swap pieces in one white-blood-cell precursor → short chromosome 22 with a fused gene → CML.</p>
+</section>
+
+<h2 class="sec">Chapter 2 · The genetic basis of cancer</h2>
+
+<section class="st" id="s-society">
+<h3>6 · A society of cells and one cell that cheats</h3>
+<p class="bg"><b>Has:</b> a body of more than 10<sup>13</sup> cells, all with the same genome. <b>Wants:</b> every cell to rest, grow, divide, specialise or die exactly when the body needs it.</p>
+<p class="tx">The cells of an animal are not free-living competitors like bacteria; they form a <b>society</b> in which self-sacrifice is the rule. To coordinate, cells send and receive signals: <b>growth factors</b> say "divide", <b>growth-inhibiting factors</b> say "stop", and the balance keeps a tissue stable. These are the <b>social controls</b>. Every day billions of cells get <b>mutations</b> (changes in their DNA). Most do nothing. But sometimes a mutation gives one cell a small <b>selective advantage</b>: it divides a little faster or survives a little better than its neighbours. Its descendants form a <b>clone</b> (kloon, a group of cells from one ancestor). Over the years that clone collects further mutations, and rounds of mutation, competition and <b>natural selection</b> inside the body make it worse and worse. That is cancer: an evolution of cells within one lifetime, by the same rules that drive the evolution of species. In the end the cheating clone can destroy the whole society.</p>
+<p class="one">cancer = one clone of cells that keeps mutating and out-competes its neighbours: evolution inside the body.</p>
+</section>
+
+<section class="st" id="s-benign">
+<h3>7 · Benign, malignant, metastasis</h3>
+<p class="bg"><b>Has:</b> a cell that divides when it should not. <b>Wants:</b> (from the body's point of view) to keep it in place.</p>
+<p class="tx">A cell that keeps dividing out of control makes a <b>tumour</b> or <b>neoplasm</b> ("new growth"). As long as the cells stay inside their own tissue, behind the <b>basal lamina</b> (a thin sheet of protein that borders every epithelium, the cell layer that lines surfaces), the tumour is <b>benign</b> (goedaardig): remove it and the patient is cured. It becomes a true cancer only when it is <b>malignant</b> (kwaadaardig): the cells have learnt to <b>invade</b>, to break through the basal lamina into the surrounding tissue. From there they can enter blood or lymph vessels and found secondary tumours elsewhere: <b>metastases</b> (uitzaaiingen). Metastases kill, by making a vital organ fail. Names follow the tissue: a <b>carcinoma</b> comes from epithelium (85 % of cancers, because epithelia divide most and are exposed to damage); <b>leukemias, lymphomas, myelomas</b> from white blood cells; a <b>sarcoma</b> from connective tissue or muscle. A benign gland tumour is an <b>adenoma</b>, its malignant twin an <b>adenocarcinoma</b>. Basal-cell skin carcinoma rarely spreads; a melanoma often does.</p>
+<p class="one">benign = stays behind the basal lamina; malignant = invades; metastasis = colony elsewhere; -oma versus carcinoma/sarcoma.</p>
+</section>
+
+<section class="st" id="s-progress">
+<h3>8 · One cell, many years: tumour progression</h3>
+<p class="bg"><b>Has:</b> one cell with a first heritable change. <b>Wants:</b> (the clone) to grow despite low oxygen, few nutrients and the pressure of normal tissue.</p>
+<p class="tx">Almost every cancer can be traced back to a <b>single primary tumour</b> and, before that, a single cell. By the time it is found it has grown for many years and holds a billion cells (a breast tumour doubles about every 100 days). The proof of the single origin is the Philadelphia chromosome: one breakpoint per patient. There is always a long <b>lag</b>: lung cancer rises decades after heavy smoking, leukemias in Hiroshima five years after the bomb, occupational cancers 10 to 20 years after exposure. During that time the cells go through <b>tumour progression</b>: at each step one cell picks up an extra mutation or epigenetic change that makes it fitter, and its offspring take over. This is <b>Knudson's multiple-hit idea</b>: several hits are needed, and the more cells there are, the sooner the next hit arrives, so progression speeds up. As in the evolution of species, the lineage splits into <b>subclones</b> that coexist or colonise different places. This <b>heterogeneity</b> (variety) is why cancers are hard to cure and why early detection matters.</p>
+<p class="one">one cell, several hits over years, selection of the fittest subclone: a tumour evolves.</p>
+</section>
+
+<section class="st" id="s-instab">
+<h3>9 · Genetic instability and chromothripsis</h3>
+<p class="bg"><b>Has:</b> a tumour clone that needs many more mutations. <b>Wants:</b> to mutate faster.</p>
+<p class="tx">If cancer only grew by single mutations one after another, its pace would be predictable. It is not: long quiet periods are punctuated by sudden jumps, the <b>"Big Bang"</b> idea. Most cancer cells are <b>genetically unstable</b>: they collect changes abnormally fast, and this is itself selected for, because it speeds up progression. There are two flavours. In some tumours the <b>karyotype</b> (the set of chromosomes seen at mitosis) looks normal but the genes are riddled with point mutations: DNA repair has failed. In others the karyotype is chaos: breaks, exchanges, extra copies. One cause is a chromosome that attaches to both spindle poles and <b>lags</b> behind at anaphase. It can end up in the wrong daughter (<b>aneuploidy</b>), or get walled off in its own little <b>micronucleus</b>, where its DNA is copied badly and damaged. At the next mitosis it shatters into pieces that are glued back in random order, some lost: <b>chromothripsis</b> ("chromosome shattering"). Such reshuffling lets the clone sample many phenotypes at once.</p>
+<p class="one">instability is selected for; a lagging chromosome → aneuploidy or micronucleus → chromothripsis.</p>
+</section>
+
+<section class="st" id="s-hallmarks">
+<h3>10 · The hallmarks of cancer</h3>
+<p class="bg"><b>Has:</b> a clone with some mutations. <b>Wants:</b> a full set of "subversive skills" to become a cancer.</p>
+<p class="tx">Different cancers use different combinations, but all share a set of <b>hallmarks</b> (kenmerken). Hanahan and Weinberg listed six in 2000: the cell makes its own growth signals (<b>self-sufficiency</b>), ignores stop signals (<b>insensitivity to antigrowth signals</b>), escapes <b>apoptosis</b> (programmed cell death), divides without limit by keeping its telomeres (<b>limitless replicative potential</b>), grows new blood vessels (<b>angiogenesis</b>) and <b>invades and metastasises</b>. In 2011 they added two emerging hallmarks, rewired <b>metabolism</b> and <b>avoiding immune destruction</b>, plus two enabling characteristics that make the others possible: <b>genome instability</b> and <b>tumour-promoting inflammation</b>. The 2022 version adds unlocked phenotypic plasticity, non-mutational epigenetic reprogramming, polymorphic microbiomes and senescent cells. The syllabus sums it up in six attributes: altered homeostasis (more birth than death), bypass of proliferation limits, evasion of death signals, altered metabolism, manipulation of the tissue environment and the immune response, and escape to foreign sites.</p>
+<p class="one">own gas, no brakes, no death, no limit, own blood supply, spread; plus instability and inflammation that enable it all.</p>
+</section>
+
+<section class="st" id="s-stroma">
+<h3>11 · The tumour and its neighbourhood</h3>
+<p class="bg"><b>Has:</b> cancer cells surrounded by normal cells. <b>Wants:</b> to recruit those neighbours as helpers.</p>
+<p class="tx">A tumour is not only cancer cells. Around and between them lies the <b>stroma</b>: connective tissue with <b>fibroblasts</b> (cells that make the fibres and matrix), inflammatory white blood cells, and the <b>endothelial cells</b> that form blood and lymph vessels, with their <b>pericytes</b> (smooth muscle cells around the vessels). Only the cancer cells carry the mutations, but the stroma is no passive bystander. The cancer cells secrete signal proteins that change the stromal cells, and enzymes (<b>proteases</b>) that remodel the <b>extracellular matrix</b>; the stromal cells answer with signals that make the cancer cells grow. Tumour and stroma evolve together, like weeds and the ecosystem they invade. The tumour also tricks the immune system in two ways. It behaves like an <b>unhealed wound</b>: inflammation makes vessels leaky and brings matrix, and the tumour calls for new vessels, <b>angiogenesis</b>, to feed its interior, which otherwise runs out of oxygen (<b>hypoxia</b>). And it builds an <b>immunosuppressive</b> environment that blocks the white blood cells that could kill it; drugs that undo this block are a new kind of therapy.</p>
+<p class="one">stroma helps the tumour; the tumour acts like a wound (angiogenesis) and switches the immune attack off.</p>
+</section>
+
+<section class="st" id="s-metast">
+<h3>12 · The journey of a metastasis</h3>
+<p class="bg"><b>Has:</b> a malignant cell in a primary tumour. <b>Wants:</b> to found a colony in another organ, which 90 % of cancer deaths come from.</p>
+<p class="tx">Metastasis is a <b>multistep</b> journey, and every step is hard. First the cell must lose the adhesion that ties it to its neighbours and the matrix, and <b>invade</b> the local tissue. Then it must enter a vessel. <b>Lymph vessels</b> have flimsy walls and let small clumps in, which often get stuck in <b>lymph nodes</b> and grow there. Cells that enter the <b>blood</b> travel alone or in small clusters as <b>circulating tumour cells</b> (CTCs); clusters survive better. The odds are bad: in animals fewer than 1 in 1000 cells injected into the blood is alive after 24 hours, and fewer than 0.1 % of those colonise a new tissue. Experiments with cells labelled with GFP (green fluorescent protein) show that many cells do leave the vessels and enter a foreign tissue, but most then die, fail to divide, or form a <b>micrometastasis</b> of ten to a few thousand cells that fades away. <b>Colonisation</b> of the new site is the rate-limiting step, like Vikings landing in Greenland. A dormant micrometastasis can wake up years after the primary tumour was removed.</p>
+<p class="one">invade → enter a vessel → survive the trip → leave → colonise; the last step is the hardest.</p>
+</section>
+
+<section class="st" id="s-gasbrake">
+<h3>13 · Gas and brakes: proto-oncogenes and tumor suppressor genes</h3>
+<p class="bg"><b>Has:</b> about 300 cancer-critical genes among 21 000. <b>Wants:</b> to sort them into two kinds by what their mutation does.</p>
+<p class="tx">Among the thousands of mutations in a cancer cell most are <b>passengers</b>, accidental by-products; only a few are <b>drivers</b>. The driver genes, the <b>cancer-critical genes</b>, fall into two classes. A <b>proto-oncogene</b> is a normal gene whose product pushes growth or division, like the gas pedal. A <b>gain-of-function</b> mutation makes it overactive or over-produced; the mutant version is an <b>oncogene</b>. One mutated copy is enough, because the hyperactive product acts anyway: the effect is <b>dominant</b>. A <b>tumor suppressor gene</b> is a normal gene whose product holds growth back, like a brake. A <b>loss-of-function</b> mutation removes the brake. Usually both copies must be lost before anything happens, because one good copy still brakes: the effect is <b>recessive</b>. Genes whose loss causes genetic instability form a sub-class, the <b>genome maintenance genes</b>. From the cancer cell's point of view the two classes are two sides of one coin: too much gas or too little brake both give too much proliferation.</p>
+<p class="one">proto-oncogene + 1 hit = oncogene (gas, dominant); tumor suppressor needs 2 hits (brake, recessive).</p>
+</section>
+
+<section class="st" id="s-onco3">
+<h3>14 · Three ways to make an oncogene</h3>
+<p class="bg"><b>Has:</b> a normal proto-oncogene. <b>Wants:</b> (the tumour) more or stronger product.</p>
+<p class="tx">Three kinds of accident turn a proto-oncogene into an oncogene. One: a <b>small change in the DNA sequence</b>, a point mutation or a tiny deletion. Inside the coding part it can make a <b>hyperactive protein</b>; in the regulatory part (the promoter or an enhancer) it makes the <b>normal protein in too large amounts</b>. Two: <b>gene amplification</b>, an error of DNA replication that leaves the cell with many extra copies of the gene, so the protein is over-produced. Three: a <b>chromosomal rearrangement</b> that breaks and rejoins DNA. It can fuse the gene to another gene, giving a <b>hyperactive fusion protein</b> (the Philadelphia chromosome), or put the gene next to a strong control region so a normal protein is over-produced (background: in Burkitt's lymphoma the Myc gene lands next to the antibody genes of B cells). The classic example of the first kind is the <b>EGF receptor</b>, the receptor for epidermal growth factor: a deletion removes part of the outside domain and the receptor signals "grow" even when no EGF is there, like a doorbell that rings when nobody presses it. Such mutations are common in glioblastoma, the commonest brain tumour.</p>
+<p class="one">point mutation (hyperactive or too much), amplification (too many copies), rearrangement (fusion or wrong promoter).</p>
+</section>
+
+<section class="st" id="s-rb">
+<h3>15 · Retinoblastoma and the two hits</h3>
+<p class="bg"><b>Has:</b> a child with one bad copy of the Rb gene in every cell. <b>Wants:</b> (the retina) to keep its one good copy.</p>
+<p class="tx">You cannot find a lost gene with a test that looks for extra activity, so the first tumor suppressor gene was found through a rare childhood eye cancer, <b>retinoblastoma</b> (1 in 20 000 children). In the <b>hereditary</b> form, tumours appear in both eyes and several times; in the <b>non-hereditary</b> form, once, in one eye. Some patients miss a band on chromosome 13, and there the <b>Rb gene</b> was found. Children with the hereditary form inherit one broken copy in every cell; a retinal cell becomes cancerous only when a somatic accident destroys the remaining good copy: the <b>second hit</b>. In the non-hereditary form both copies must be lost by two independent accidents in one cell line, which is why it is rare. The <b>Rb protein</b> is the main brake on entry into the cell cycle in almost every cell, and it is also lost in lung, breast and bladder carcinomas. The second copy can disappear in six ways: a small deletion, a point mutation, loss of the whole chromosome at mitosis, <b>mitotic recombination</b> or <b>gene conversion</b> that replaces the good copy with the bad one, or <b>epigenetic silencing</b>: methyl groups on the C's of the promoter switch the gene off for good.</p>
+<p class="one">one bad copy does nothing; lose the second (6 ways, including methylation) and the brake is gone.</p>
+</section>
+
+<section class="st" id="s-genomes">
+<h3>16 · Reading cancer genomes: drivers, passengers and three pathways</h3>
+<p class="bg"><b>Has:</b> the complete DNA sequence of thousands of tumours. <b>Wants:</b> to know which changes matter.</p>
+<p class="tx">Cheap sequencing lets us read a tumour's whole genome, or just its <b>exome</b> (the 21 000 protein-coding genes), count copies of every region, map methylation and measure every RNA; mass spectrometry measures the proteins. The Cancer Genome Atlas did this for more than 10 000 tumours of 33 types. A <b>driver</b> is recognised because it recurs in many patients; a <b>passenger</b> appears only rarely. Oncogenes show the <b>same missense change</b> again and again (one amino acid swapped at one hot spot, as in PIK3CA); tumor suppressors show <b>truncating</b> mutations scattered everywhere, any of which kills the protein. About 300 genes, 1 % of the genome, are cancer-critical, with surprisingly varied jobs. The simplifying pattern: in 91 glioblastomas, 74 % had a mutation in each of <b>three pathways</b>, and usually only one gene per pathway. The <b>Rb pathway</b> controls entry into the cell cycle, the <b>RTK/Ras/PI 3-kinase pathway</b> passes growth signals from outside into the cell, and the <b>p53 pathway</b> answers stress and DNA damage. Ovarian cancer gives 67 %, 45 % and 96 %. Nearly every cancer breaks all three controls: cell cycle, proliferation and survival.</p>
+<p class="one">drivers recur, passengers do not; almost every cancer disables Rb, Ras/PI 3-kinase and p53, one gene per pathway.</p>
+</section>
+
+<section class="st" id="s-p53">
+<h3>17 · p53, the alarm antenna</h3>
+<p class="bg"><b>Has:</b> a cell in trouble: damaged DNA, short telomeres, no oxygen, or an oncogene running wild. <b>Wants:</b> to stop that cell from dividing, or to kill it cleanly.</p>
+<p class="tx">Unlike Rb, <b>p53</b> is almost absent in a healthy cell: it is made and immediately broken down. Mice without p53 look normal but all get cancer before ten months, so p53 is needed only in emergencies. Its level rises in any pathological state: <b>DNA damage</b>, <b>telomere shortening</b>, <b>hypoxia</b> (lack of oxygen), osmotic or oxidative stress, or regulatory signals driven too hard, as when the Myc oncogene is over-expressed. p53 is a <b>transcription regulator</b>: it switches genes on. It switches on <b>p21</b>, a protein that binds and blocks the <b>Cdk complexes</b> that drive the cell cycle, so the cell cannot enter S phase: <b>arrest</b>, temporary or permanent (<b>senescence</b>). Or it switches on genes for <b>apoptosis</b>, the good death, in which the cell is eaten by its neighbours and recycled, unlike <b>necrosis</b>, the bad death, where the cell bursts and causes inflammation. A deranged cancer cell with working p53 would be stopped or killed, so almost every cancer disables the pathway; p53 itself is mutated in about 50 % of cancers, mostly in its DNA-binding domain. Hence its nickname: guardian of the genome.</p>
+<p class="one">stress → p53 rises → p21 blocks the Cdks (arrest, senescence) or apoptosis; mutated in half of all cancers.</p>
+</section>
+
+<section class="st" id="s-colon">
+<h3>18 · The road to colorectal cancer</h3>
+<p class="bg"><b>Has:</b> a normal gut epithelium. <b>Wants:</b> (the clone) to go from polyp to carcinoma, which takes a typical order of mutations.</p>
+<p class="tx">Colorectal cancer can take several routes, but a common order exists, read from the mutations found in small and large tumours. Loss of the tumor suppressor <b>Apc</b> comes first: it is found just as often in small benign <b>polyps</b> (bumps of extra cells on the gut wall, the adenomas) as in large carcinomas. Changes that bring <b>genetic and epigenetic instability</b> also come early, because the later steps need them. An activating mutation of the proto-oncogene <b>K-Ras</b> comes next: rare in small polyps, common in larger ones with disturbed cell differentiation. Loss of <b>p53</b> comes late: rare in polyps, common in carcinomas. Why last? A moderately active Ras is part of normal growth control and does not alarm p53, so a slowly growing tumour can live with p53 intact. But the jump to fast, malignant growth needs oncogenes pushed to a stressful level, and that would trigger p53-driven arrest or death. Only a cell that has lost p53 can survive its own hyperactive oncogenes. Every patient's tumour is different in detail, and even the shared mutations can come in another order. (Background: Apc normally keeps β-catenin in check; in Lynch syndrome mismatch repair fails first.)</p>
+<p class="one">Apc first, instability early, K-Ras in bigger polyps, p53 last, so the cell can bear its own oncogenes.</p>
+</section>
+
+<h2 class="sec">Chapter 3 · Human pathogens: viruses</h2>
+
+<section class="st" id="s-virus">
+<h3>19 · What a virus is</h3>
+<p class="bg"><b>Has:</b> a few genes and a protein coat. <b>Wants:</b> a cell, because alone it can do nothing.</p>
+<p class="tx">Infectious diseases cause a quarter of all human deaths, and the <b>pathogens</b> (ziekteverwekkers) include bacteria such as Helicobacter pylori, which causes most stomach ulcers, and viruses such as SARS-CoV-2. A <b>virus</b> is not a cell: it has no metabolism and no ribosomes, so it cannot grow or copy itself alone. Most biologists put it in the grey zone between living and chemical: "packaged genes in transit from one cell to another". It is tiny: 20 nm, smaller than a ribosome, up to 1500 nm for the largest. The <b>genome</b> can be double- or single-stranded DNA or RNA, one molecule or several, with 3 to 2000 genes (a bacterium has 200 to a few thousand). Around it is the <b>capsid</b>, a protein shell built from many copies of a few proteins: a <b>helical</b> rod (tobacco mosaic virus, over 1000 copies of one protein) or an <b>icosahedron</b> with 20 triangular faces (adenovirus, 252 proteins). Many animal viruses wear an extra <b>envelope</b>, a piece of host membrane studded with viral <b>glycoproteins</b> (proteins with sugars). Some carry a few enzymes inside. The most complex capsids belong to <b>bacteriophages</b>, viruses of bacteria, with a tail that injects DNA.</p>
+<p class="one">genome (DNA or RNA) + capsid (+ envelope): not alive, needs a host cell.</p>
+</section>
+
+<section class="st" id="s-takeover">
+<h3>20 · A virus takes over a cell</h3>
+<p class="bg"><b>Has:</b> a virus outside a cell. <b>Wants:</b> hundreds of new viruses, made with the cell's machinery.</p>
+<p class="tx">A virus is an <b>obligate intracellular parasite</b>: it can only replicate inside a host cell. It recognises its host by a "handshake": a protein on its surface fits a <b>receptor</b> on the cell, a normal cell protein that the virus has adopted as its door. This fit decides the <b>host range</b>: West Nile virus infects mosquitoes, birds, horses and humans; measles infects only humans; a cold virus infects only the lining of the upper airways, HIV only certain immune cells. Entry depends on the type: a phage injects its DNA with its tail; other viruses are taken up by <b>endocytosis</b> or, if enveloped, by <b>fusion</b> of the envelope with the cell membrane. Once inside, the viral genes <b>commandeer</b> the cell: the host supplies nucleotides, enzymes, ribosomes, tRNAs, amino acids and ATP. A DNA virus mostly uses the host's <b>DNA polymerase</b>; an RNA virus brings or encodes its own <b>RNA polymerase</b>, because cells cannot copy RNA from RNA. Genomes and capsid proteins then <b>self-assemble</b> into new particles, which leave by the hundreds or thousands, often destroying the cell. That damage, and the body's reaction to it, gives the symptoms.</p>
+<p class="one">handshake with a receptor → enter → host copies the genome and makes the proteins → self-assembly → exit.</p>
+</section>
+
+<section class="st" id="s-envelope">
+<h3>21 · Enveloped viruses: dressing in the host's membrane</h3>
+<p class="bg"><b>Has:</b> a new capsid inside an infected cell. <b>Wants:</b> an envelope with viral spikes, taken from the cell on the way out.</p>
+<p class="tx">An enveloped animal virus, such as influenza or a coronavirus, uses its <b>envelope</b> to get in and gets a new one on the way out. The protein parts of the viral <b>glycoproteins</b> are made by ribosomes on the host's <b>endoplasmic reticulum</b> (ER), the membrane network where membrane proteins are built; enzymes in the ER and the <b>Golgi apparatus</b> add the sugars. The finished glycoproteins travel in host membrane to the cell surface. There the new capsids <b>bud</b> off: they push out through the membrane and wrap themselves in it, much like exocytosis. So the envelope is host membrane, but almost all the proteins in it are viral. Budding does not necessarily kill the cell, unlike the lytic cycle of a phage. <b>Herpesviruses</b> do it differently: they are double-stranded DNA viruses that replicate in the nucleus, take a temporary envelope from the <b>nuclear envelope</b>, shed it in the cytoplasm, and dress again in Golgi membrane. Their DNA can stay behind as <b>mini-chromosomes</b> in nerve cells, <b>latent</b> for years, until stress wakes it: cold sores and genital sores that come back for life.</p>
+<p class="one">glycoproteins via ER and Golgi to the surface → capsid buds out wrapped in host membrane; herpes hides latent in nerve cells.</p>
+</section>
+
+<section class="st" id="s-hiv">
+<h3>22 · HIV, a retrovirus</h3>
+<p class="bg"><b>Has:</b> two copies of an RNA genome and two molecules of reverse transcriptase inside an envelope. <b>Wants:</b> a permanent place in the host's DNA.</p>
+<p class="tx">Animal viruses are classified by their genetic material: class I double-stranded DNA, II single-stranded DNA, III double-stranded RNA, IV single-stranded RNA that works directly as mRNA, V single-stranded RNA that is first copied into mRNA by a viral enzyme (no cell has an RNA-to-RNA polymerase), and VI the <b>retroviruses</b>. These have the most complicated cycle. Their enzyme <b>reverse transcriptase</b> copies RNA into DNA, the <b>reverse</b> of the usual DNA → RNA flow, hence the name. <b>HIV</b>, the virus that causes AIDS, is the medical example. Its envelope fuses with the membrane of an immune cell and releases two RNA copies and two reverse transcriptase molecules into the cytoplasm. There the enzyme makes a DNA copy. The DNA enters the nucleus and <b>integrates</b> into a chromosome as a <b>provirus</b>, which never leaves: the cell is infected for life. The host's own RNA polymerase transcribes the provirus into RNA that serves both as mRNA for the viral proteins and as the genome of new viruses, which assemble and bud from the cell. Exam: reverse transcriptase uses viral RNA as a template for DNA synthesis.</p>
+<p class="one">RNA → (reverse transcriptase) → DNA → provirus in the host chromosome → host RNA polymerase makes new viruses.</p>
+</section>
+
+<h2 class="sec">Chapter 4 · Tools and techniques</h2>
+
+<section class="st" id="s-culture">
+<h3>23 · Growing cells in the lab</h3>
+<p class="bg"><b>Has:</b> a question about a molecule or a process. <b>Wants:</b> a large, uniform population of cells to study it in.</p>
+<p class="tx">Most experiments need one cell type in bulk: <b>cell culture</b>. Single-celled organisms are easy: E. coli or yeast grow in a liquid <b>medium</b> (a nutrient broth at the right pH), or on an <b>agar plate</b> (agar is a seaweed jelly), where each cell grows into a visible <b>colony</b>. Cells from an animal tissue are <b>primary cells</b>; they stick to a plastic flask, stop dividing when they touch each other (<b>contact inhibition</b>) and give up after a limited number of divisions, because their <b>telomeres</b> shorten until <b>senescence</b>. So researchers use <b>cell lines</b>, often from tumours, that make telomerase and divide forever, with the warning that they differ from real tissue and pick up mutations. <b>Stem cells</b> divide asymmetrically: one daughter stays a stem cell, the other differentiates. Embryonic stem cells (ES cells) are <b>totipotent</b> (any cell type, in the syllabus wording), adult stem cells such as the blood-forming <b>hematopoietic</b> ones are <b>pluripotent</b> (a subset). Four transcription factors can reprogram a skin cell into an <b>induced pluripotent stem cell</b> (iPS cell), a patient's own stem cell with no embryo needed. Viruses are grown in cultured cells and counted by the clear <b>plaques</b> they leave in a lawn of cells.</p>
+<p class="one">liquid or agar for microbes; primary cells senesce, cell lines do not; stem cells self-renew; iPS = reprogrammed skin cell.</p>
+</section>
+
+<section class="st" id="s-pcr">
+<h3>24 · PCR: copying DNA a million times, and cDNA</h3>
+<p class="bg"><b>Has:</b> a few copies of a DNA stretch of interest. <b>Wants:</b> millions of copies, in an afternoon.</p>
+<p class="tx">The <b>polymerase chain reaction</b> (PCR) needs four things in one tube: the template DNA, two <b>primers</b> (short synthetic pieces of DNA, about 20 bases, each matching the 3′ end of one strand at the border of the stretch), the four <b>nucleotides</b> (dNTPs) and a <b>DNA polymerase</b> that survives heat, <b>Taq</b> from the hot-spring bacterium Thermus aquaticus. A machine cycles three temperatures. <b>Denaturation</b> at 94 to 98 °C pulls the two strands apart. <b>Annealing</b> at 50 to 65 °C lets the primers pair with their spots. <b>Extension</b> at 72 °C lets the polymerase build a new strand from each primer, 5′ → 3′, as in replication (BIO01). Each cycle doubles the stretch between the primers: 20 cycles give over a million copies, 20 to 40 cycles are usual. Traps: primers that bind elsewhere amplify the wrong thing, an early copying error is amplified too, and pieces over 4000 to 5000 bases need special conditions. To copy an <b>RNA</b>, first let <b>reverse transcriptase</b> (the retrovirus enzyme) make a DNA copy of the mRNA, degrade the RNA, let DNA polymerase add the second strand, and you have <b>cDNA</b>: the gene without its introns, ready for PCR.</p>
+<p class="one">denature 95 → anneal 55 → extend 72, repeat 30 times with primers, dNTPs and Taq; RNA first → cDNA with reverse transcriptase.</p>
+</section>
+
+<section class="st" id="s-clone">
+<h3>25 · Cloning a gene into a plasmid</h3>
+<p class="bg"><b>Has:</b> a DNA fragment, usually made by PCR. <b>Wants:</b> to keep it, multiply it and change it inside bacteria.</p>
+<p class="tx"><b>DNA cloning</b> means putting a fragment into a <b>vector</b> that copies itself inside a cell, independent of the chromosome. The usual vector is a <b>plasmid</b>, a small circle of double-stranded DNA with an <b>origin of replication</b> for E. coli, a <b>selectable marker</b> such as a gene for resistance to the antibiotic ampicillin, and unique <b>restriction sites</b>. A <b>restriction enzyme</b> is a bacterial defence protein that cuts DNA at a specific short <b>palindromic</b> sequence (reads the same on both strands), for example EcoRI at GAATTC. Many cut off-centre, leaving single-stranded overhangs, <b>sticky ends</b>. Cut the insert and the plasmid with the same enzyme, mix them, and the matching sticky ends pair up; <b>DNA ligase</b> seals the backbone. Put the recombinant plasmid into <b>competent</b> bacteria (made leaky with salt or an electric shock), a step called <b>transformation</b>, and spread them on an agar plate with the antibiotic: only cells that took up the plasmid grow. A collection of many clones, each with a different fragment, is a <b>library</b>: genomic, or cDNA from the mRNAs of one tissue. Exam trap: ligase glues; restriction enzymes cut.</p>
+<p class="one">cut insert and vector with the same enzyme → sticky ends pair → ligase → transform E. coli → select on antibiotic.</p>
+</section>
+
+<section class="st" id="s-edit">
+<h3>26 · Changing a genome: RNAi, CRISPR-Cas9 and the knockout mouse</h3>
+<p class="bg"><b>Has:</b> a gene with an unknown job. <b>Wants:</b> to switch it off or change it in a living cell or animal, and watch what happens.</p>
+<p class="tx">In <b>forward genetics</b> you make random mutants, pick the ones with a phenotype and then find the gene; in <b>reverse genetics</b> you start with the gene and change it. Three tools. <b>RNA interference</b> (RNAi) knocks a gene down: a double-stranded RNA is cut by the enzyme <b>Dicer</b> into <b>siRNAs</b> of about 21 nucleotides; an <b>Argonaute</b> protein keeps one strand, which pairs with the matching mRNA, and the mRNA is destroyed or blocked. <b>CRISPR-Cas9</b> comes from a bacterial immune system that stores pieces of virus DNA as <b>spacers</b> and uses them to guide a cutting protein. In the lab a <b>guide RNA</b> leads <b>Cas9</b> to a chosen DNA sequence, "scissors with a GPS", and Cas9 makes a double-strand break. The cell repairs it either sloppily, by joining the ends (errors, so a knockout), or precisely, by <b>homologous recombination</b> with a DNA template you supply. The <b>knockout mouse</b> uses recombination in ES cells of a white mouse to replace the gene with a drug-resistance marker, puts those cells into a black-mouse blastocyst, implants it, and breeds the patchy <b>chimeric</b> pups until the knockout is in the germ line and then in every cell. None is 100 % accurate.</p>
+<p class="one">RNAi silences the mRNA; CRISPR-Cas9 cuts the DNA where the guide RNA says; the knockout mouse swaps the gene in ES cells.</p>
+</section>
+
+<section class="st" id="s-seq">
+<h3>27 · Reading DNA: from Sanger to Illumina and Nanopore</h3>
+<p class="bg"><b>Has:</b> a DNA molecule, or a whole genome. <b>Wants:</b> the order of its bases.</p>
+<p class="tx"><b>Sanger sequencing</b> copies the DNA from a primer with normal nucleotides plus a few <b>ddNTPs</b>, nucleotides without the 3′ OH, so the chain stops wherever one is built in. The result is a ladder of fragments ending at every A, C, G or T; sorted by size on a gel, or by colour in a capillary, they spell the sequence, up to about 900 bases per reaction. A genome is far longer, so it is <b>shotgun</b> sequenced: broken into random overlapping fragments, each sequenced, and a computer glues the overlaps back together. You must read 8 genome lengths to cover 99.9 % (37 Mbp for the 4.6 Mbp E. coli genome), and the <b>depth of coverage</b> (5X = each base in 5 reads) sets how sure you are of a variant. The human genome took 100 machines two years. <b>Illumina</b>, second generation, reads millions of fragments at once: adapters tie them to a glass surface, <b>bridge amplification</b> makes clusters, and each cycle adds one fluorescent <b>reversible terminator</b> base, photographs it and unblocks it; reads are short (75 to 150 bases). <b>Nanopore</b>, third generation, pulls a single strand through a protein pore and reads the dips in the electric current: very long reads, in real time, on a pocket-size MinION, even RNA directly.</p>
+<p class="one">Sanger = chain stops at a ddNTP; genome = shotgun + overlaps + coverage; Illumina = clusters, one lit base per cycle; Nanopore = current through a pore.</p>
+</section>
+
+<section class="st" id="s-detect">
+<h3>28 · Finding a sequence, a copy number, an RNA or a protein</h3>
+<p class="bg"><b>Has:</b> a precise question about one gene, chromosome, RNA or protein. <b>Wants:</b> the right tool for that question.</p>
+<p class="tx">Where does a sequence sit on a chromosome? <b>FISH</b>: fix cells on a slide, add a fluorescent DNA <b>probe</b> that pairs with the sequence, stain all DNA blue with DAPI, and look; two probes that normally sit apart fuse into one yellow spot after a translocation. Are chromosomes missing or extra? A <b>karyotype</b>: stain metaphase chromosomes with Giemsa and sort them by size and banding. Which regions are deleted or duplicated, genome-wide? <b>Array CGH</b>: patient DNA in green and reference DNA in red hybridised to a chip of genome fragments; yellow is equal, red a deletion, green a duplication. How much RNA of one gene? <b>qRT-PCR</b>: reverse transcribe, then PCR while a dye counts the product each cycle; more RNA means fewer cycles to the threshold. All genes at once? A <b>microarray</b> with a spot per gene, hybridised with two colours of cDNA, or <b>RNA-seq</b>, which just sequences all cDNAs. Where and when is a gene on? Fuse its promoter to a <b>reporter</b> such as GFP. Is a protein there? A <b>Western blot</b>: SDS-PAGE, transfer to a membrane, a primary <b>antibody</b> that binds the protein, a labelled secondary antibody that binds the first. Which cells carry a marker? <b>Flow cytometry</b>, cells in single file past a laser.</p>
+<p class="one">sequence on a chromosome → FISH; copy number → aCGH; one RNA → qRT-PCR; all RNAs → microarray or RNA-seq; one protein → Western blot; cells → flow cytometry.</p>
+</section>
+
+<section class="st" id="s-see">
+<h3>29 · Seeing molecules: absorbance, gels and mass spectrometry</h3>
+<p class="bg"><b>Has:</b> a tube with an invisible mixture. <b>Wants:</b> to know how much is in it, to separate it, and to identify what it is.</p>
+<p class="tx">Molecules absorb light at their own wavelengths. DNA and RNA absorb most at <b>260 nm</b>, proteins at <b>280 nm</b> (because of tryptophan and tyrosine). A <b>spectrophotometer</b> shines light through a <b>cuvette</b> and measures what comes out; the <b>Beer–Lambert law</b> A = ε · l · c says the absorbance equals a constant for the molecule times the path length times the concentration, so absorbance gives concentration. The ratio A260/A280 is about 2 for clean DNA and 0.6 for protein, so a DNA sample below 2 is contaminated with protein. Enzymes are measured by their activity, often through a coupled reaction read at 340 nm with NADH. To separate molecules, use <b>gel electrophoresis</b>: DNA is negative, so in an agarose gel it runs to the plus pole, small fragments fastest, and <b>ethidium bromide</b> that slips between the bases makes the bands glow under UV. Proteins vary in charge and shape, so they are first coated with the detergent <b>SDS</b>, which unfolds them and makes them uniformly negative; <b>SDS-PAGE</b> then sorts them by mass. To identify a protein, cut it with trypsin and weigh the pieces in a <b>mass spectrometer</b>, which sorts ions by mass-to-charge ratio to within one dalton; MS/MS breaks the pieces further and reads the amino acids and their modifications.</p>
+<p class="one">260 DNA, 280 protein, A = εlc; gels sort by size (SDS makes proteins uniform); mass spec weighs fragments to identify them.</p>
+</section>
+
+</main>
+</body>
+</html>

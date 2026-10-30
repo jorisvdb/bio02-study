@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Process maps</title>
+<style>
+@page { size: A4 landscape; margin: 8mm; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #e9ebef; color: #1d232b; font: 14px/1.4 system-ui, "Segoe UI", Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.bar { max-width: 1100px; margin: 0 auto; padding: 12px 16px; }
+.bar a { color: #2a6f97; }
+.bar ol { margin: 6px 0 0; padding-left: 20px; columns: 2; }
+.page { background: #fff; max-width: 1100px; margin: 0 auto 16px; padding: 14px 18px; box-shadow: 0 2px 10px #0003; border-radius: 6px; }
+.page h2 { font-size: 17px; margin: 0 0 6px; }
+.page h2 small { font-weight: 400; color: #5d6875; font-size: 13px; }
+.page svg { display: block; width: 100%; height: auto; }
+.page p.cap { margin: 6px 0 0; color: #5d6875; font-size: 13px; }
+@media print {
+  body { background: #fff; }
+  .bar { display: none; }
+  .page { box-shadow: none; border-radius: 0; margin: 0; padding: 0; max-width: none; break-after: page; page-break-after: always; }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  .page svg { width: 100%; height: 168mm; }
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="index.html">← Cheatsheets</a> · <b>Process maps</b>: one page per process: who does each step, where, and in which order. The same maps open in the quiz with 🗺.
+  Print: Ctrl+P → Landscape, tick “Background graphics”. Each map gets its own A4 page.
+  <ol id="toc"></ol>
+</div>
+<div id="maps"></div>
+<script src="../quiz/pics/proc_chrom.js"></script>
+<script src="../quiz/pics/proc_cancer.js"></script>
+<script src="../quiz/pics/proc_virus.js"></script>
+<script src="../quiz/pics/proc_tech.js"></script>
+<script>
+(function () {
+  var P = window.QPROC || {};
+  // course order: chapters 1 to 4
+  var order = [['nondis', 'chapter 1'], ['struct', 'chapter 1'], ['evolve', 'chapter 2'], ['genes', 'chapter 2'], ['cycle', 'chapter 3'], ['hiv', 'chapter 3'], ['pcr', 'chapter 4'], ['clone', 'chapter 4'], ['seq', 'chapter 4'], ['detect', 'chapter 4']];
+  var maps = document.getElementById('maps'), toc = document.getElementById('toc'), html = '', t = '';
+  order.forEach(function (o) {
+    var p = P[o[0]]; if (!p) return;
+    html += '<section class="page" id="m-' + o[0] + '"><h2>' + p.title + ' <small>· ' + o[1] + '</small></h2>' + p.svg + (p.cap ? '<p class="cap">' + p.cap + '</p>' : '') + '</section>';
+    t += '<li><a href="#m-' + o[0] + '">' + p.title + '</a> <small>(' + o[1] + ')</small></li>';
+  });
+  maps.innerHTML = html; toc.innerHTML = t;
+})();
+</script>
+</body>
+</html>

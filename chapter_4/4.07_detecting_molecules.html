@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.7 Detecting molecules</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .axis { stroke: var(--fg); stroke-width: 1.5; fill: none; }
+  .curve { fill: none; stroke-width: 3; stroke-linecap: round; }
+  .curve.dna { stroke: var(--c-N); }
+  .curve.prot { stroke: var(--c-O); }
+  .grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 4; }
+  .beam { stroke: var(--c-S); stroke-width: 4; stroke-linecap: round; }
+  .beam.weak { stroke-width: 2; stroke-dasharray: 6 4; }
+  .cuv { fill: var(--key-bg); stroke: var(--accent); stroke-width: 2; }
+  .boxp { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .bb { stroke: var(--c-N); stroke-width: 3; }
+  .pair { fill: var(--c-N); fill-opacity: .25; stroke: var(--c-N); stroke-width: 1; }
+  .etbr { fill: var(--c-P); fill-opacity: .6; stroke: var(--c-P); stroke-width: 1.5; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+  table.sym td:first-child { font-size: 1.1rem; white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.06_rnai_crispr_knockout_mice.html">← 4.6 RNAi, CRISPR and knockout mice</a><a href="index.html">Chapter 4 index</a><a href="4.08_gels_and_mass_spectrometry.html">4.8 Gels and mass spectrometry →</a></nav>
+
+<h1>4.7 Detecting molecules: absorbance, fluorescent dyes and activity assays</h1>
+<p class="lede">In one sentence: you can tell that DNA or protein is present, and how much, by shining light through the sample (molecules absorb light at their own wavelengths),
+by attaching a dye that glows, or by measuring what an enzyme produces instead of the enzyme itself.</p>
+
+<p>Pages 4.3 to 4.6 made and changed DNA. But how do you know a tube contains DNA at all, how much, and whether it is clean? This page (syllabus 4.6) gives the basic
+measuring methods used in every lab. The most important one, the <strong>Beer–Lambert law</strong>, is the only formula in the whole chapter: it links how much light a sample
+absorbs to how concentrated it is. The A260/A280 ratio from this page is how every DNA sample is checked before sequencing or PCR. The ethidium bromide dye comes back on page 4.8 (gels).</p>
+
+<!-- ============================================================ -->
+<h2>0. Words, symbols and units used on this page</h2>
+<p>This page uses a few units and symbols that were never defined in the course. Read them here first.</p>
+<table class="sym">
+  <tr><th>Symbol or unit</th><th>How to read it</th><th>What it means</th></tr>
+  <tr><td>nm</td><td>nanometre</td><td>a billionth of a metre (10⁻⁹ m); here the <em>wavelength</em> of light. Visible light runs from about 400 nm (violet) to 700 nm (red); shorter than 400 nm is <strong>ultraviolet (UV)</strong>, invisible to us</td></tr>
+  <tr><td>λ</td><td>lambda (Greek letter)</td><td>the usual symbol for a wavelength; "A<sub>λ</sub>" = the absorbance at wavelength λ</td></tr>
+  <tr><td>A, A260, A280</td><td>absorbance; "A two-sixty"</td><td>how much light the sample absorbs; the number after A is the wavelength in nm at which it was measured</td></tr>
+  <tr><td>ε</td><td>epsilon (Greek letter)</td><td>the extinction coefficient: a constant that says how strongly one molecule type absorbs at a given wavelength</td></tr>
+  <tr><td>M</td><td>molar</td><td>a concentration unit: 1 M = 1 mole per litre; a mole is a fixed, very large number of molecules (6 × 10²³), so M counts molecules per litre</td></tr>
+  <tr><td>µg/ml, mg/ml</td><td>micrograms (millionths of a gram) per millilitre; milligrams per millilitre</td><td>concentration by weight: 50 µg/ml = 50 millionths of a gram in each millilitre</td></tr>
+  <tr><td>cm</td><td>centimetre</td><td>the path length of the light through the sample; a standard cuvette is 1 cm wide</td></tr>
+  <tr><td>aromatic amino acid</td><td>—</td><td>an amino acid with a flat ring of carbon atoms in its side chain: tryptophan, tyrosine, phenylalanine (BIO01 chapter 2); rings like this absorb UV light</td></tr>
+  <tr><td>intercalate</td><td>—</td><td>to slip in between: a flat molecule sliding between the stacked base pairs of DNA</td></tr>
+  <tr><td>fluorescence</td><td>—</td><td>a molecule takes in light of one wavelength and sends out light of a longer wavelength: it glows; such a molecule is a fluorochrome or fluorophore</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Symbolen: <strong>nm</strong> = nanometer (golflengte van licht; onder 400 nm = <strong>UV</strong>), <strong>λ</strong> (lambda) = golflengte, <strong>A</strong> = absorbantie (A260 = gemeten bij 260 nm),
+<strong>ε</strong> (epsilon) = extinctiecoëfficiënt (constante per molecuul), <strong>M</strong> = molair = mol per liter, <strong>µg/ml</strong> = microgram per milliliter, <strong>cm</strong> = weglengte
+van het licht door het monster. <strong>Fluorescentie</strong> = licht opnemen en als langere golflengte weer uitzenden (gloeien).</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Two ways to detect a molecule (syllabus 4.6)</h2>
+<p>To study or purify a cellular component you must be able to <strong>detect</strong> it (notice that it is there) and tell it apart from the other molecules in the mixture, and often also
+<strong>measure how much</strong> there is (quantify). The syllabus names two general strategies:</p>
+<ul>
+  <li>Use an <strong>intrinsic property</strong> of the molecule (intrinsic = its own, built in): its biochemical activity (what it does) or its <strong>spectroscopic</strong> properties (how it interacts with light).</li>
+  <li><strong>Attach another molecule</strong> with a convenient property (a colour, fluorescence, a chemical reaction) and detect that instead: a label.</li>
+</ul>
+<div class="callout key"><span class="tag">Populations, not single molecules</span>
+<p>Almost all these methods look at <strong>a population of molecules</strong>, millions at once, not at one molecule. When the syllabus says "the properties of a protein" it means the average of a whole population of that protein. Keep this in mind for the whole chapter.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een molecuul detecteren kan via een <strong>eigen eigenschap</strong> (activiteit, of hoe het licht absorbeert) of via een <strong>aangehecht label</strong> (kleurstof, fluorescentie). Bijna altijd
+meet je een hele <strong>populatie</strong> moleculen, niet één molecuul.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Absorbance: molecules have a light signature (4.6.1)</h2>
+<p>Biological molecules <strong>absorb</strong> light (take it in, so less comes out the other side), but only at certain wavelengths, specific to the molecule. If you measure how much is absorbed
+at every wavelength you get the <strong>absorption spectrum</strong> of the molecule: a curve with one or more <strong>peaks</strong>. The peak is a chemical "signature": it tells you which kind of molecule is there.</p>
+<ul>
+  <li><strong>DNA and RNA</strong> have their absorbance maximum at about <strong>260 nm</strong> (in the UV). The absorbing parts are the <strong>bases</strong> (A, C, G and T or U): flat rings.</li>
+  <li><strong>Proteins</strong> usually have a peak at about <strong>280 nm</strong>, caused by the <strong>aromatic amino acids</strong> tryptophan, tyrosine and phenylalanine.</li>
+  <li>Both also absorb at shorter wavelengths, because of the backbone (the sugar-phosphate chain of DNA, the peptide chain of proteins).</li>
+  <li>Some small molecules absorb visible light. The cofactor <strong>FAD</strong> (flavin adenine dinucleotide, a helper molecule that some enzymes need) and its reduced form <strong>FADH₂</strong> both have peaks at <strong>380 and 450 nm</strong>, so a protein that carries FAD can be followed by measuring those wavelengths.</li>
+</ul>
+<p>A molecule that absorbs <strong>visible</strong> light (400 to 700 nm) looks coloured. A group that gives a protein its colour is called a <strong>chromophore</strong> (Greek chromo = colour, phore = carrying).
+Example: the red colour of blood comes from the <strong>heme</strong> group (an iron-containing ring) bound in the protein globin; heme is the chromophore of hemoglobin.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 560 230" width="560" height="230" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60,20 L60,180 L530,180" class="axis"/>
+    <text x="40" y="100" class="txt small" transform="rotate(-90 40 100)">absorbance</text>
+    <text x="300" y="212" class="txt small">wavelength (nm)</text>
+    <!-- x ticks: 220..320 mapped 60..520 => 4.6 px per nm -->
+    <path d="M152,180 L152,186 M244,180 L244,186 M336,180 L336,186 M428,180 L428,186" class="axis"/>
+    <text x="152" y="200" class="txt small">240</text><text x="244" y="200" class="txt small">260</text><text x="336" y="200" class="txt small">280</text><text x="428" y="200" class="txt small">300</text>
+    <path d="M244,180 L244,40" class="grid"/><path d="M336,180 L336,120" class="grid"/>
+    <!-- DNA curve: peak at 260 (x=244) -->
+    <path d="M70,60 C110,90 130,150 160,130 C200,100 225,40 244,40 C263,40 300,110 340,150 C380,172 430,178 520,179" class="curve dna"/>
+    <!-- protein curve: peak at 280 (x=336), lower -->
+    <path d="M70,40 C100,60 120,170 170,172 C230,172 290,120 336,120 C380,120 400,160 440,172 C480,178 500,179 520,179" class="curve prot"/>
+    <text x="275" y="30" class="txt small bold left" style="fill:var(--c-N)">DNA, RNA: peak ≈ 260 nm (the bases)</text>
+    <text x="435" y="92" class="txt small bold" style="fill:var(--c-O)">protein: peak ≈ 280 nm</text>
+    <text x="435" y="106" class="txt small" style="fill:var(--c-O)">(tryptophan, tyrosine, phenylalanine)</text>
+    <text x="66" y="22" class="txt small muted left">backbone absorbs at short wavelengths ↓</text>
+  </svg>
+  <figcaption>Absorption spectra of DNA (blue) and protein (red) at equal concentrations (after syllabus Figure 4-20a). Note that protein absorbs much less than DNA at the same weight.</figcaption>
+</figure>
+
+<h3>The spectrophotometer</h3>
+<p>Absorbance is measured in a <strong>spectrophotometer</strong> (spectro = of the spectrum, photo = light, meter = measurer). The liquid sample is put in a small transparent vessel with flat sides,
+the <strong>cuvette</strong>, and placed in the instrument. A beam of light of the chosen wavelength is sent through the cuvette, and the instrument compares the intensity of the light that comes out
+(I) with the intensity of a beam that went through air or through pure water or buffer (I₀, "I zero"). The less light comes out, the more the sample absorbed.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 600 150" width="600" height="150" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <rect x="20" y="50" width="90" height="50" rx="6" class="boxp"/>
+    <text x="65" y="70" class="txt small">light source</text><text x="65" y="86" class="txt small muted">one wavelength λ</text>
+    <path d="M114,75 L250,75" class="beam"/>
+    <text x="182" y="62" class="txt small">I₀ (light in)</text>
+    <rect x="255" y="40" width="60" height="70" rx="4" class="cuv"/>
+    <text x="285" y="78" class="txt small">sample</text>
+    <text x="285" y="128" class="txt small muted">cuvette, l = 1 cm</text>
+    <path d="M320,75 L456,75" class="beam weak"/>
+    <text x="388" y="62" class="txt small">I (light out, weaker)</text>
+    <rect x="460" y="50" width="90" height="50" rx="6" class="boxp"/>
+    <text x="505" y="70" class="txt small">detector</text><text x="505" y="86" class="txt small muted">compares I with I₀</text>
+    <text x="300" y="24" class="txt small">the sample absorbs part of the light: absorbance A is calculated from I / I₀</text>
+  </svg>
+  <figcaption>Absorption spectroscopy (syllabus Figure 4-21). The three things that decide how much is absorbed: the kind of molecule, its concentration, and the distance the light travels through the liquid.</figcaption>
+</figure>
+
+<h3>The Beer–Lambert law</h3>
+<p>The amount of light absorbed depends on exactly three things, and the law puts them in one line:</p>
+<p style="text-align:center;font-size:1.3rem"><strong>A<sub>λ</sub> = ε<sub>λ</sub> · l · c</strong></p>
+<table class="sym">
+  <tr><th>Symbol</th><th>Read as</th><th>Meaning</th><th>Unit</th></tr>
+  <tr><td>A<sub>λ</sub></td><td>absorbance at wavelength λ</td><td>what the spectrophotometer measures</td><td>no unit</td></tr>
+  <tr><td>ε<sub>λ</sub></td><td>epsilon at λ: the extinction coefficient (also: molar absorptivity)</td><td>a <strong>constant for each substance</strong> at that wavelength: how strongly one molar of it absorbs; for a protein at 280 nm it is set mainly by the number of tryptophans and tyrosines</td><td>M⁻¹ cm⁻¹ (per molar, per cm)</td></tr>
+  <tr><td>l</td><td>path length</td><td>how far the light travels through the liquid = the width of the cuvette</td><td>cm (usually 1)</td></tr>
+  <tr><td>c</td><td>concentration</td><td>how much of the molecule is in the liquid</td><td>M (mol per litre)</td></tr>
+</table>
+<p>The key term is ε: it varies with wavelength and is a property of the molecule. If you know ε for your molecule, one absorbance reading gives you the <strong>concentration</strong>: c = A / (ε · l).
+That works best when no other molecule in the tube absorbs at that wavelength.</p>
+
+<div class="callout key"><span class="tag">Worked example (numbers invented for practice)</span>
+<p>A protein has ε₂₈₀ = 20 000 M⁻¹ cm⁻¹. In a 1 cm cuvette you measure A280 = 0.50. Then c = A / (ε · l) = 0.50 / (20 000 × 1) = 0.000025 M = 25 µM (micromolar, millionths of a molar).
+Double the concentration and A doubles to 1.00; use a 2 cm cuvette and A doubles too. That is why the law is a simple multiplication: A grows in proportion to both c and l.</p></div>
+
+<h3>Rules of thumb and the purity check</h3>
+<ul>
+  <li>At 260 nm, an absorbance of <strong>1.0</strong> corresponds to about <strong>50 µg/ml of double-stranded DNA</strong>, or <strong>40 µg/ml of single-stranded RNA</strong>.</li>
+  <li>At 280 nm, an absorbance of 1.0 corresponds to about <strong>1 mg/ml of an "average" protein</strong> (it depends on the amino acid composition: more tryptophan and tyrosine means more absorbance).</li>
+  <li><strong>Purity:</strong> compare the absorbance at two wavelengths. The ratio <strong>A260 / A280</strong> is about <strong>2 for pure DNA</strong> and about <strong>0.6 for a pure protein preparation</strong>.
+  If a DNA sample has a ratio clearly <strong>below 2</strong>, it is probably <strong>contaminated with protein</strong> (the protein adds absorbance at 280 nm, which pulls the ratio down).</li>
+</ul>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Moleculen <strong>absorberen</strong> licht bij eigen golflengten: het <strong>absorptiespectrum</strong> met pieken is hun handtekening. DNA/RNA: piek bij <strong>260 nm</strong> (de basen);
+eiwit: piek bij <strong>280 nm</strong> (aromatische aminozuren tryptofaan, tyrosine, fenylalanine); FAD: 380 en 450 nm; een <strong>chromofoor</strong> geeft een eiwit kleur (heem maakt bloed rood).
+Meten met een <strong>spectrofotometer</strong>: licht door een <strong>cuvet</strong>, vergelijk uitgaand (I) met ingaand (I₀) licht. <strong>Wet van Beer–Lambert: A = ε · l · c</strong>
+(absorbantie = extinctiecoëfficiënt × weglengte × concentratie); ken je ε, dan geeft A de concentratie. Vuistregels: A260 = 1 ≈ 50 µg/ml dsDNA of 40 µg/ml RNA; A280 = 1 ≈ 1 mg/ml eiwit.
+<strong>Zuiverheid</strong>: A260/A280 ≈ 2 voor DNA, ≈ 0,6 voor eiwit; DNA met een ratio duidelijk onder 2 bevat eiwit.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Fluorescent dyes: making DNA glow (4.6.2)</h2>
+<p>Besides its own absorbance, a molecule can be detected by <strong>binding or attaching</strong> a second molecule that fluoresces or has a clear colour. For DNA (and sometimes RNA) the classic
+dye is <strong>ethidium bromide</strong>. It is a flat molecule that <strong>intercalates</strong>: it slides in between the stacked base pairs of the double helix. Once intercalated, it
+<strong>fluoresces under UV light</strong>: shine UV on the gel and every place where there is DNA glows orange. This is how DNA bands on agarose and polyacrylamide gels are made visible (page 4.8).</p>
+<p>Ethidium bromide is effective but it is a <strong>mutagen</strong> (it causes mutations, exactly because it sits inside DNA) and a health and environmental risk. Safer alternatives with the same job:
+<strong>SYBR Green, SYBR Safe, GelRed</strong> (and GelGreen).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 560 170" width="560" height="170" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- DNA as two backbones with base-pair rungs -->
+    <path d="M60,30 L60,150 M200,30 L200,150" class="bb"/>
+    <rect x="66" y="36" width="128" height="12" rx="3" class="pair"/>
+    <rect x="66" y="56" width="128" height="12" rx="3" class="pair"/>
+    <rect x="66" y="92" width="128" height="12" rx="3" class="pair"/>
+    <rect x="66" y="112" width="128" height="12" rx="3" class="pair"/>
+    <rect x="66" y="132" width="128" height="12" rx="3" class="pair"/>
+    <rect x="66" y="74" width="128" height="12" rx="3" class="etbr"/>
+    <text x="130" y="84" class="txt small">ethidium bromide</text>
+    <text x="130" y="20" class="txt small muted">stacked base pairs (side view)</text>
+    <path d="M250,80 L300,80" class="path accent" marker-end="url(#arc)"/>
+    <text x="275" y="68" class="txt small muted">UV light</text>
+    <rect x="320" y="40" width="200" height="80" rx="8" class="boxp"/>
+    <text x="420" y="70" class="txt small">the intercalated dye</text>
+    <text x="420" y="86" class="txt small bold" style="fill:var(--c-P)">fluoresces (glows orange)</text>
+    <text x="420" y="104" class="txt small muted">→ DNA bands visible on a gel</text>
+    <text x="280" y="160" class="txt small muted">blue = sugar-phosphate backbones · light blue = base pairs · orange = the flat dye slipped in between</text>
+  </svg>
+  <figcaption>Ethidium bromide intercalating in DNA (after syllabus Figure 4-22). Because it sits inside DNA, it is also a mutagen; SYBR Safe and GelRed are the safer replacements.</figcaption>
+</figure>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Ethidiumbromide</strong> is een vlak molecuul dat tussen de basenparen van DNA schuift (<strong>intercaleren</strong>) en dan onder <strong>UV-licht fluoresceert</strong>: zo zie je DNA-banden op een gel.
+Het is een <strong>mutageen</strong>; veiliger alternatieven zijn <strong>SYBR Green, SYBR Safe en GelRed</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Activity assays: measure what the enzyme makes (4.6.3)</h2>
+<p>To study how an enzyme works, and how its activity changes with conditions or mutations, scientists often do not detect the enzyme itself but <strong>measure its activity</strong>: how fast it turns its
+substrate (the molecule it works on) into product. The products are often easier to detect than the enzyme, especially in tiny amounts or in an impure sample. Such a measurement is an
+<strong>assay</strong> (a test that gives a number).</p>
+<ul>
+  <li><strong>Direct:</strong> a <strong>kinase</strong> (an enzyme that attaches a phosphate group to its target protein, BIO01 chapter 2) can be followed by giving it <strong>radioactive phosphate</strong> and measuring how much radioactivity ends up on the target.</li>
+  <li><strong>Coupled reactions:</strong> some products are not easy to measure. Then the reaction of interest is <strong>linked</strong> to another reaction whose product <em>is</em> easy to measure.</li>
+</ul>
+<p>The syllabus example (Figure 4-23). Begin state: <strong>topoisomerase II</strong> (an enzyme that untangles DNA and uses ATP for it; BIO01 chapter 4) breaks ATP down into ADP and phosphate.
+Goal: follow how fast it works. ADP itself is hard to measure directly. So:</p>
+<ol>
+  <li>Other enzymes and chemicals are added that use the ADP produced in a chain of reactions.</li>
+  <li>That chain consumes <strong>NADH</strong> (a small energy-carrying molecule) and turns it into its oxidised form <strong>NAD⁺</strong>.</li>
+  <li><strong>NADH absorbs light at 340 nm; NAD⁺ does not.</strong></li>
+  <li>So as topoisomerase II makes ADP, NADH is used up and the absorbance at 340 nm <strong>drops</strong>. Reading A340 in a spectrophotometer over time gives the speed of the topoisomerase reaction.</li>
+</ol>
+<table class="cmp">
+  <tr><td>principle</td><td>measure the product (or something coupled to it) instead of the enzyme</td></tr>
+  <tr><td>what you need</td><td>the enzyme (even impure), its substrate, a detectable product or a coupled reaction ending in something detectable (radioactivity, absorbance)</td></tr>
+  <tr><td>steps</td><td>mix enzyme + substrate (+ coupling enzymes) → follow the signal over time (A340 falling, radioactivity rising) → the slope = activity</td></tr>
+  <tr><td>used for</td><td>enzyme speed under different conditions or with mutations; works with impure samples and small amounts</td></tr>
+  <tr><td>trap</td><td>in the coupled NADH assay the signal goes <em>down</em>: NADH (absorbs at 340 nm) becomes NAD⁺ (does not)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>activiteitstest</strong> meet niet het enzym maar zijn <strong>product</strong>: een kinase via radioactief fosfaat op het doelwit. Als het product niet meetbaar is: <strong>gekoppelde reacties</strong>.
+Voorbeeld: topoisomerase II zet ATP om in ADP; het ADP drijft reacties aan die <strong>NADH</strong> (absorbeert bij 340 nm) omzetten in <strong>NAD⁺</strong> (absorbeert niet); de absorbantie bij 340 nm
+<strong>daalt</strong>, en de snelheid daarvan is de activiteit van het enzym.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>detect / quantify</td><td>notice that a molecule is present / measure how much there is</td></tr>
+  <tr><td>intrinsic property</td><td>a built-in property of the molecule itself (activity, light absorbance)</td></tr>
+  <tr><td>label</td><td>a second molecule attached to the molecule of interest to make it detectable</td></tr>
+  <tr><td>spectroscopic</td><td>to do with how a molecule interacts with light of different wavelengths</td></tr>
+  <tr><td>absorb, absorbance (A)</td><td>take in light; the measure of how much is taken in</td></tr>
+  <tr><td>absorption spectrum</td><td>absorbance plotted against wavelength; its peaks are the molecule's signature</td></tr>
+  <tr><td>wavelength, nm, UV</td><td>the "colour" of light, in nanometres; below 400 nm is ultraviolet</td></tr>
+  <tr><td>aromatic amino acids</td><td>tryptophan, tyrosine, phenylalanine: ring side chains that absorb at 280 nm</td></tr>
+  <tr><td>FAD / FADH₂</td><td>a cofactor (helper molecule) of some enzymes; peaks at 380 and 450 nm</td></tr>
+  <tr><td>chromophore</td><td>a group that absorbs visible light and gives a protein its colour (heme in hemoglobin)</td></tr>
+  <tr><td>spectrophotometer, cuvette</td><td>the instrument that measures absorbance; the transparent vessel that holds the sample</td></tr>
+  <tr><td>I₀, I</td><td>intensity of the light going in and coming out</td></tr>
+  <tr><td>Beer–Lambert law</td><td>A = ε · l · c</td></tr>
+  <tr><td>extinction coefficient ε</td><td>constant per molecule and wavelength; how strongly it absorbs</td></tr>
+  <tr><td>path length l</td><td>distance the light travels through the sample (cuvette width, usually 1 cm)</td></tr>
+  <tr><td>concentration c, M</td><td>amount per volume; M = mol per litre</td></tr>
+  <tr><td>A260/A280 ratio</td><td>purity check: ≈ 2 for DNA, ≈ 0.6 for protein; DNA below 2 = protein contamination</td></tr>
+  <tr><td>fluorochrome, fluoresce</td><td>a molecule that glows: absorbs light and re-emits it at a longer wavelength</td></tr>
+  <tr><td>ethidium bromide</td><td>intercalating DNA dye that fluoresces under UV; a mutagen</td></tr>
+  <tr><td>intercalate</td><td>slip in between the stacked base pairs</td></tr>
+  <tr><td>SYBR Green, SYBR Safe, GelRed</td><td>safer DNA dyes</td></tr>
+  <tr><td>assay</td><td>a test that gives a measurement</td></tr>
+  <tr><td>activity assay</td><td>measuring an enzyme by what it produces</td></tr>
+  <tr><td>coupled reaction</td><td>linking the reaction of interest to a second reaction with an easily measured product</td></tr>
+  <tr><td>NADH / NAD⁺</td><td>small energy carrier; NADH absorbs at 340 nm, NAD⁺ does not</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective of the chapter: "The student describes various techniques used in the analysis of proteins and metabolites" and "utilizes fundamental concepts of ... protein and metabolite analysis techniques to solve problems".</p>
+<ol>
+  <li>Name the two general strategies for detecting a molecule (intrinsic property; attached label) and say that measurements are of populations.</li>
+  <li>Give the absorbance peaks: DNA/RNA 260 nm (bases), protein 280 nm (tryptophan, tyrosine, phenylalanine), FAD 380 and 450 nm; explain chromophore with heme.</li>
+  <li>Describe a spectrophotometer measurement (cuvette, I and I₀) and the three things that decide absorbance.</li>
+  <li>Write the Beer–Lambert law and read every symbol; calculate a concentration from an absorbance.</li>
+  <li>Use the rules of thumb (A260 = 1 ≈ 50 µg/ml dsDNA, 40 µg/ml RNA; A280 = 1 ≈ 1 mg/ml protein) and the A260/A280 purity ratio (≈ 2 DNA, ≈ 0.6 protein).</li>
+  <li>Explain how ethidium bromide makes DNA visible (intercalation, UV fluorescence), why it is dangerous, and name the safer dyes.</li>
+  <li>Explain an activity assay and the coupled NADH/NAD⁺ example (A340 falls).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is an absorption spectrum, and what is it used for?</dt>
+  <dd>The absorbance of a molecule measured over a range of wavelengths, drawn as a curve. Its peaks are a signature of the molecule, so it can be used to identify and to quantify the molecule in solution.</dd>
+
+  <dt>At which wavelengths do DNA and proteins absorb most, and which parts of the molecules are responsible?</dt>
+  <dd>DNA and RNA at about 260 nm, because of the bases (A, C, G, T/U). Proteins at about 280 nm, because of the aromatic amino acids tryptophan, tyrosine and phenylalanine.</dd>
+
+  <dt>What is a chromophore? Give an example.</dt>
+  <dd>A group in a protein that absorbs visible light (400 to 700 nm) and so makes the otherwise colourless protein coloured. Example: the heme group of hemoglobin makes blood red; FAD is another (peaks at 380 and 450 nm).</dd>
+
+  <dt>What does a spectrophotometer compare?</dt>
+  <dd>The intensity of a light beam after it has passed through the sample in the cuvette (I) with the intensity of a beam that passed through air, water or buffer (I₀). From the ratio the absorbance is calculated.</dd>
+
+  <dt>Write the Beer–Lambert law and name its parts.</dt>
+  <dd>A = ε · l · c: the absorbance at a wavelength equals the extinction coefficient ε (a constant for that molecule at that wavelength, in M⁻¹ cm⁻¹) times the path length l (in cm) times the concentration c (in M).</dd>
+
+  <dt>You know ε of your protein at 280 nm and you measure A280 in a 1 cm cuvette. What can you calculate, and under which condition?</dt>
+  <dd>The concentration: c = A / (ε · l). It is reliable only if no other molecule in the sample also absorbs at 280 nm.</dd>
+
+  <dt>A DNA sample has A260 = 1.0 and an A260/A280 ratio of 1.5. What do you conclude?</dt>
+  <dd>About 50 µg/ml of double-stranded DNA, but the ratio is well below 2, so the sample is probably contaminated with protein (protein adds absorbance at 280 nm, lowering the ratio).</dd>
+
+  <dt>Why does ethidium bromide make DNA visible, and why is it dangerous?</dt>
+  <dd>It intercalates between the stacked base pairs and then fluoresces under UV light, so DNA bands on a gel glow. Because it sits inside DNA it is a mutagen; SYBR Green, SYBR Safe and GelRed are safer replacements.</dd>
+
+  <dt>Why would you measure an enzyme's activity instead of detecting the enzyme itself?</dt>
+  <dd>The products are often easier to detect, especially in small quantities or in an impure sample, and the activity is what you want to compare between conditions or mutants.</dd>
+
+  <dt>Explain the coupled assay for topoisomerase II.</dt>
+  <dd>Topoisomerase II turns ATP into ADP. The ADP drives a chain of added reactions that consume NADH and make NAD⁺. NADH absorbs at 340 nm and NAD⁺ does not, so the absorbance at 340 nm falls as the enzyme works; the rate of the fall is the enzyme's activity.</dd>
+
+  <dt>How can a kinase be followed directly?</dt>
+  <dd>By giving it radioactive phosphate and measuring how much radioactivity is attached to its target protein.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Detect by an <strong>intrinsic property</strong> (activity, light) or by an <strong>attached label</strong>; you measure <strong>populations</strong> of molecules.</li>
+  <li><strong>DNA/RNA peak ≈ 260 nm</strong> (bases); <strong>protein peak ≈ 280 nm</strong> (tryptophan, tyrosine, phenylalanine); FAD 380 + 450 nm.</li>
+  <li><strong>Chromophore</strong> = colour-giving group; <strong>heme</strong> makes blood red.</li>
+  <li><strong>Spectrophotometer</strong>: light through a <strong>cuvette</strong>; compares I (out) with I₀ (in).</li>
+  <li><strong>Beer–Lambert: A = ε · l · c</strong>; ε = extinction coefficient (constant per molecule), l = path length (cm), c = concentration (M).</li>
+  <li>Known ε → <strong>c = A / (ε · l)</strong>.</li>
+  <li><strong>A260 = 1 ≈ 50 µg/ml dsDNA ≈ 40 µg/ml RNA; A280 = 1 ≈ 1 mg/ml protein</strong>.</li>
+  <li><strong>A260/A280 ≈ 2 pure DNA, ≈ 0.6 protein</strong>; DNA below 2 = protein contamination.</li>
+  <li><strong>Ethidium bromide</strong> intercalates between base pairs, <strong>fluoresces under UV</strong>; a <strong>mutagen</strong>; safer: SYBR Green/Safe, GelRed.</li>
+  <li><strong>Activity assay</strong> = measure the product; kinase with radioactive phosphate; <strong>coupled reaction</strong>: NADH (340 nm) → NAD⁺ (nothing), so <strong>A340 falls</strong>.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>You measure a clear liquid at 260 nm and at 280 nm. A260 is high, A280 is half of it. What is most likely in the tube?
+    <ul class="opts"><li data-l="a">pure protein</li><li data-l="b">pure DNA</li><li data-l="c">DNA with protein contamination</li><li data-l="d">water</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> A260/A280 = 2 is the signature of pure DNA. Protein would give a ratio of about 0.6 (A280 higher than A260); contaminated DNA would give something clearly below 2.</p></div></details></li>
+  <li>Which amino acids make a protein absorb at 280 nm?
+    <details><summary>Answer</summary><div class="ans"><p>The <strong>aromatic</strong> ones: <strong>tryptophan, tyrosine and phenylalanine</strong>. Their flat ring side chains absorb UV light; the extinction coefficient at 280 nm is set mainly by the number of tryptophans and tyrosines.</p></div></details></li>
+  <li>In A = ε · l · c, which symbol is a constant that belongs to the molecule, and which two depend on your sample and cuvette?
+    <details><summary>Answer</summary><div class="ans"><p><strong>ε</strong> (epsilon, the extinction coefficient) belongs to the molecule at that wavelength. <strong>l</strong> (path length) depends on the cuvette and <strong>c</strong> (concentration) on the sample.</p></div></details></li>
+  <li>A sample in a 1 cm cuvette gives A = 0.40. You pour it into a 2 cm cuvette. What is A now?
+    <details><summary>Answer</summary><div class="ans"><p><strong>0.80.</strong> Absorbance is proportional to the path length: the light passes through twice as many molecules.</p></div></details></li>
+  <li>ε = 10 000 M⁻¹ cm⁻¹, l = 1 cm, A = 0.25. What is the concentration?
+    <details><summary>Answer</summary><div class="ans"><p>c = A / (ε · l) = 0.25 / 10 000 = <strong>0.000025 M = 25 µM</strong>.</p></div></details></li>
+  <li>A260 of a double-stranded DNA solution is 2.0. Roughly how much DNA is there?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>100 µg/ml</strong>: A260 = 1.0 corresponds to 50 µg/ml of dsDNA, and absorbance is proportional to concentration.</p></div></details></li>
+  <li>True or false: "A protein absorbs light at 260 nm."
+    <details><summary>Answer</summary><div class="ans"><p><strong>Partly true but misleading.</strong> Its peak is at 280 nm; it absorbs some light at 260 nm too (and more at shorter wavelengths, from the backbone). That is why protein contamination changes the A260/A280 ratio of a DNA sample.</p></div></details></li>
+  <li>What is I₀ in a spectrophotometer measurement?
+    <details><summary>Answer</summary><div class="ans"><p>The intensity of the light beam <strong>before</strong> the sample, measured through air, water or buffer. The absorbance is calculated by comparing I (after the sample) with I₀.</p></div></details></li>
+  <li>Why does hemoglobin look red?
+    <details><summary>Answer</summary><div class="ans"><p>Because of its <strong>heme</strong> group, a <strong>chromophore</strong>: it absorbs part of the visible light, so the protein appears coloured. Most proteins have no chromophore and are colourless.</p></div></details></li>
+  <li>How does ethidium bromide attach to DNA, and what do you need to see it?
+    <details><summary>Answer</summary><div class="ans"><p>It <strong>intercalates</strong>: slips between the stacked base pairs. You need <strong>UV light</strong>; the intercalated dye then fluoresces.</p></div></details></li>
+  <li>Why are SYBR Safe and GelRed used instead of ethidium bromide?
+    <details><summary>Answer</summary><div class="ans"><p>Ethidium bromide is a <strong>mutagen</strong> (it causes mutations because it sits inside DNA) and a health and environmental risk. The alternatives do the same job, making DNA visible, but are less toxic.</p></div></details></li>
+  <li>In the topoisomerase II coupled assay, the absorbance at 340 nm goes down over time. Why down and not up?
+    <ul class="opts"><li data-l="a">the enzyme destroys the cuvette</li><li data-l="b">NADH, which absorbs at 340 nm, is consumed and becomes NAD⁺, which does not absorb</li><li data-l="c">ADP absorbs at 340 nm and is used up</li><li data-l="d">ATP fluoresces</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The ADP made by the enzyme drives coupled reactions that use NADH. Less NADH means less absorbance at 340 nm, so the signal falls as the enzyme works.</p></div></details></li>
+  <li>Why is a coupled reaction needed at all in that example?
+    <details><summary>Answer</summary><div class="ans"><p>Because the direct product, <strong>ADP</strong>, is not easy to measure. Linking its production to the NADH → NAD⁺ change turns it into something a spectrophotometer can read.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.06_rnai_crispr_knockout_mice.html">← 4.6 RNAi, CRISPR and knockout mice</a><a href="index.html">Chapter 4 index</a><a href="4.08_gels_and_mass_spectrometry.html">4.8 Gels and mass spectrometry →</a></nav>
+</main>
+</body>
+</html>

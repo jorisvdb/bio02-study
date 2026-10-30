@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheatsheet 1 – Alterations of chromosomes</title>
+<link rel="stylesheet" href="cs.css">
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="../chapter_1/index.html">Chapter 1 pages</a><a href="cs2_cancer.html">2 Cancer →</a></nav>
+<h1>1 · Alterations of chromosomes</h1>
+<div class="anims"><b>Watch first: animations for this chapter</b>
+<ul>
+  <li><a href="../animations/chromosomes.html#nd=1">▶ 1 · Nondisjunction and aneuploidy</a> <span class="note">meiosis I vs II, n + 1 and n − 1 gametes, trisomy · card <a href="#c-nondisj">Nondisjunction</a></span></li>
+  <li><a href="../animations/chromosomes.html#st=1">▶ 2 · Structural changes</a> <span class="note">deletion, duplication, inversion, translocation · card <a href="#c-structure">The four structural changes</a></span></li>
+</ul></div>
+
+<div class="kapstok"><b>Kapstok – map of this chapter</b>
+<p>Big genetic changes: a whole chromosome too many or too few (number), or a piece lost, doubled, flipped or moved (structure). Both cause human syndromes. Click a name to jump to its card.</p>
+<ul class="tree">
+  <li><a href="#c-meiosis">Reminder: meiosis I separates homologs, meiosis II sisters</a>
+    <ul>
+      <li><a href="#c-nondisj">Nondisjunction</a> <span class="note">(the mistake: chromosomes do not move apart)</span>
+        <ul>
+          <li><a href="#c-aneuploid">Aneuploidy: 2n + 1 trisomy, 2n − 1 monosomy</a></li>
+          <li><a href="#c-mosaic">In mitosis: mosaic</a></li>
+          <li><a href="#c-polyploid">Polyploidy: whole extra sets (3n, 4n)</a></li>
+        </ul></li>
+    </ul></li>
+  <li><a href="#c-structure">Structure: deletion, duplication, inversion, translocation</a>
+    <ul>
+      <li><a href="#c-unequal">Unequal crossing-over → deletion + duplication</a></li>
+      <li><a href="#c-balance">Gene balance: what is lethal, what changes the phenotype</a></li>
+    </ul></li>
+  <li><a href="#c-karyotype">Human conditions (karyotype notation)</a>
+    <ul>
+      <li><a href="#c-down">Down syndrome = trisomy 21</a> · <a href="#c-size">why 21, 18, 13</a></li>
+      <li><a href="#c-sex">Sex chromosomes: XXY, XYY, XXX, X0</a></li>
+      <li><a href="#c-cridu">Cri du chat = deletion 5p</a> · <a href="#c-cml">CML = translocation 9;22</a></li>
+    </ul></li>
+  <li><a href="#c-traps">Quick traps</a></li>
+</ul></div>
+
+<h2 class="sec">A · Chromosome number<small>Errors in meiosis give a gamete with one chromosome too many or too few. After fertilization every cell has the wrong number.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-meiosis">
+<p class="crumb">Chapter 1 › <b>Reminder from BIO01: meiosis</b></p>
+<h2>Meiosis: I separates homologs, II separates sister chromatids</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <circle cx="60" cy="60" r="36" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <path d="M46 44 l10 32 M56 44 l-10 32" stroke="#d1495b" stroke-width="4" stroke-linecap="round"/>
+  <path d="M66 44 l10 32 M76 44 l-10 32" stroke="#3a86ff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M104 60 h40" stroke="#8a8f98" stroke-width="2"/><text x="124" y="52" text-anchor="middle" fill="currentColor" font-size="10">meiosis I</text>
+  <circle cx="190" cy="36" r="26" fill="none" stroke="#8a8f98" stroke-width="2"/><path d="M184 24 l10 24 M194 24 l-10 24" stroke="#d1495b" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="190" cy="104" r="26" fill="none" stroke="#8a8f98" stroke-width="2"/><path d="M184 92 l10 24 M194 92 l-10 24" stroke="#3a86ff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M224 36 h40 M224 104 h40" stroke="#8a8f98" stroke-width="2"/><text x="244" y="72" text-anchor="middle" fill="currentColor" font-size="10">meiosis II</text>
+  <g fill="none" stroke="#8a8f98" stroke-width="2"><circle cx="300" cy="22" r="18"/><circle cx="300" cy="64" r="18"/><circle cx="300" cy="106" r="18"/><circle cx="300" cy="148" r="18"/></g>
+  <path d="M300 12 v20 M300 54 v20" stroke="#d1495b" stroke-width="4" stroke-linecap="round"/>
+  <path d="M300 96 v20 M300 138 v20" stroke="#3a86ff" stroke-width="4" stroke-linecap="round"/>
+  <g fill="currentColor" font-size="10">
+    <text x="340" y="26">4 gametes, each n</text><text x="340" y="40">(1 of every pair)</text>
+    <text x="340" y="110">homologs = pair, one from</text><text x="340" y="123">each parent (red, blue)</text>
+    <text x="340" y="142">X = copied chromosome:</text><text x="340" y="155">2 sister chromatids</text>
+    <text x="60" y="118" text-anchor="middle">2n, copied</text>
+  </g>
+</svg>
+</figure>
+<div class="legend"><ul><li><i style="background:#d1495b"></i>homolog from the mother</li><li><i style="background:#3a86ff"></i>homolog from the father</li></ul></div>
+<p class="mnemo">Human: body cell 2n = 46, gamete (geslachtscel) n = 23. Zygote = egg + sperm = 2n again.</p>
+</div>
+
+<div class="card" id="c-nondisj">
+<p class="crumb">Chromosome number › <b>Nondisjunction</b></p>
+<h2>Nondisjunction: meiosis I versus meiosis II</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 200" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="currentColor" font-weight="700" font-size="11"><text x="128" y="14" text-anchor="middle">in meiosis I</text><text x="392" y="14" text-anchor="middle">in meiosis II</text></g>
+  <path d="M260 4 v192" stroke="#8a8f98" stroke-dasharray="3 4"/>
+  <!-- left: MI -->
+  <circle cx="128" cy="40" r="20" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <path d="M118 30 l6 20 M124 30 l-6 20" stroke="#d1495b" stroke-width="3"/><path d="M132 30 l6 20 M138 30 l-6 20" stroke="#3a86ff" stroke-width="3"/>
+  <path d="M110 66 l-30 20 M146 66 l30 20" stroke="#8a8f98" stroke-width="1.5"/>
+  <circle cx="72" cy="100" r="20" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/>
+  <path d="M62 90 l6 20 M68 90 l-6 20" stroke="#d1495b" stroke-width="3"/><path d="M76 90 l6 20 M82 90 l-6 20" stroke="#3a86ff" stroke-width="3"/>
+  <circle cx="184" cy="100" r="20" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/>
+  <path d="M60 124 l-18 18 M84 124 l18 18 M172 124 l-18 18 M196 124 l18 18" stroke="#8a8f98" stroke-width="1.5"/>
+  <g fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"><circle cx="36" cy="156" r="15"/><circle cx="108" cy="156" r="15"/><circle cx="148" cy="156" r="15"/><circle cx="220" cy="156" r="15"/></g>
+  <path d="M32 148 v16 M104 148 v16" stroke="#d1495b" stroke-width="3"/><path d="M40 148 v16 M112 148 v16" stroke="#3a86ff" stroke-width="3"/>
+  <g fill="currentColor" font-weight="700" text-anchor="middle"><text x="36" y="186">n+1</text><text x="108" y="186">n+1</text><text x="148" y="186">n−1</text><text x="220" y="186">n−1</text></g>
+  <text x="128" y="198" text-anchor="middle" fill="currentColor">all 4 gametes wrong</text>
+  <!-- right: MII -->
+  <circle cx="392" cy="40" r="20" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <path d="M382 30 l6 20 M388 30 l-6 20" stroke="#d1495b" stroke-width="3"/><path d="M396 30 l6 20 M402 30 l-6 20" stroke="#3a86ff" stroke-width="3"/>
+  <path d="M374 66 l-30 20 M410 66 l30 20" stroke="#8a8f98" stroke-width="1.5"/>
+  <circle cx="336" cy="100" r="20" fill="none" stroke="#8a8f98" stroke-width="2"/><path d="M330 90 l6 20 M336 90 l-6 20" stroke="#d1495b" stroke-width="3"/>
+  <circle cx="448" cy="100" r="20" fill="none" stroke="#8a8f98" stroke-width="2"/><path d="M442 90 l6 20 M448 90 l-6 20" stroke="#3a86ff" stroke-width="3"/>
+  <path d="M324 124 l-18 18 M348 124 l18 18 M436 124 l-18 18 M460 124 l18 18" stroke="#8a8f98" stroke-width="1.5"/>
+  <circle cx="300" cy="156" r="15" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/><circle cx="372" cy="156" r="15" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/>
+  <circle cx="412" cy="156" r="15" fill="none" stroke="#8a8f98" stroke-width="2"/><circle cx="484" cy="156" r="15" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <path d="M296 148 v16 M304 148 v16" stroke="#d1495b" stroke-width="3"/><path d="M412 148 v16 M484 148 v16" stroke="#3a86ff" stroke-width="3"/>
+  <g fill="currentColor" font-weight="700" text-anchor="middle"><text x="300" y="186">n+1</text><text x="372" y="186">n−1</text><text x="412" y="186">n</text><text x="484" y="186">n</text></g>
+  <text x="392" y="198" text-anchor="middle" fill="currentColor">2 normal, 2 wrong</text>
+</svg>
+</figure>
+<div class="legend"><ul><li><i style="border-color:#d1495b;border-style:dashed"></i>dashed = wrong chromosome number</li></ul></div>
+<ol class="steps">
+  <li>Meiosis I error: homologs stay together</li>
+  <li>→ both daughter cells wrong → 4 wrong gametes</li>
+  <li>Meiosis II error: sister chromatids stay together</li>
+  <li>→ only one cell wrong → 2 wrong, 2 normal</li>
+</ol>
+<p class="trap">Nondisjunction = "not going apart" (non-disjunctie). It is the cause of Klinefelter, Turner and Down (exam Q1).</p>
+</div>
+
+<div class="card" id="c-aneuploid">
+<p class="crumb">Chromosome number › Nondisjunction › <b>Aneuploidy</b></p>
+<h2>Aneuploidy: after fertilization, 2n + 1 or 2n − 1</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <circle cx="40" cy="40" r="22" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/><path d="M34 30 v20 M46 30 v20" stroke="#d1495b" stroke-width="3"/>
+  <text x="40" y="78" text-anchor="middle" fill="currentColor">gamete n + 1</text>
+  <text x="82" y="44" fill="currentColor" font-size="16">+</text>
+  <circle cx="124" cy="40" r="22" fill="none" stroke="#8a8f98" stroke-width="2"/><path d="M124 30 v20" stroke="#3a86ff" stroke-width="3"/>
+  <text x="124" y="78" text-anchor="middle" fill="currentColor">gamete n</text>
+  <path d="M158 40 h30" stroke="#8a8f98" stroke-width="2"/>
+  <circle cx="222" cy="40" r="26" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/><path d="M212 28 v24 M222 28 v24" stroke="#d1495b" stroke-width="3"/><path d="M232 28 v24" stroke="#3a86ff" stroke-width="3"/>
+  <text x="222" y="82" text-anchor="middle" fill="currentColor" font-weight="700">zygote 2n + 1</text><text x="222" y="96" text-anchor="middle" fill="currentColor">trisomic: 47</text>
+  <circle cx="330" cy="40" r="22" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/>
+  <text x="330" y="78" text-anchor="middle" fill="currentColor">gamete n − 1</text>
+  <text x="370" y="44" fill="currentColor" font-size="16">+</text>
+  <circle cx="412" cy="40" r="22" fill="none" stroke="#8a8f98" stroke-width="2"/><path d="M412 30 v20" stroke="#3a86ff" stroke-width="3"/>
+  <path d="M446 40 h20" stroke="#8a8f98" stroke-width="2"/>
+  <circle cx="492" cy="40" r="22" fill="none" stroke="#d1495b" stroke-width="2" stroke-dasharray="3 2"/><path d="M492 30 v20" stroke="#3a86ff" stroke-width="3"/>
+  <text x="482" y="82" text-anchor="middle" fill="currentColor" font-weight="700">2n − 1</text><text x="482" y="96" text-anchor="middle" fill="currentColor">monosomic: 45</text>
+  <text x="260" y="114" text-anchor="middle" fill="currentColor" font-size="10">mitosis copies the error into every cell of the embryo</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><th>name</th><th>copies of that chromosome</th><th>human</th></tr>
+  <tr><td><b>trisomic</b> (2n + 1)</td><td>3 instead of 2</td><td>47</td></tr>
+  <tr><td><b>monosomic</b> (2n − 1)</td><td>1 instead of 2</td><td>45</td></tr>
+</table>
+<p class="mnemo">10–25 % of conceptions are mono- or trisomic = main cause of miscarriage (miskraam). Survivors: syndrome from wrong <b>gene dose</b>.</p>
+</div>
+
+<div class="card" id="c-mosaic">
+<p class="crumb">Chromosome number › Nondisjunction › <b>In mitosis: mosaic</b></p>
+<h2>Nondisjunction in mitosis of the early embryo → mosaic</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 110" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <circle cx="40" cy="50" r="18" fill="#8d99ae"/>
+  <path d="M62 50 h26" stroke="#8a8f98" stroke-width="2"/>
+  <circle cx="110" cy="32" r="14" fill="#8d99ae"/><circle cx="110" cy="68" r="14" fill="#8d99ae"/>
+  <text x="110" y="100" text-anchor="middle" fill="currentColor">normal mitoses</text>
+  <path d="M128 32 h20 M128 68 h20" stroke="#8a8f98" stroke-width="2"/>
+  <circle cx="170" cy="22" r="11" fill="#8d99ae"/><circle cx="170" cy="44" r="11" fill="#8d99ae"/>
+  <circle cx="170" cy="66" r="11" fill="#e76f51"/><circle cx="170" cy="88" r="11" fill="#2a9d8f"/>
+  <text x="170" y="12" text-anchor="middle" fill="currentColor">error here ↓</text>
+  <path d="M186 50 h26" stroke="#8a8f98" stroke-width="2"/>
+  <g>
+    <circle cx="300" cy="55" r="48" fill="none" stroke="#8a8f98" stroke-width="2"/>
+    <g fill="#8d99ae"><circle cx="280" cy="30" r="7"/><circle cx="300" cy="24" r="7"/><circle cx="320" cy="32" r="7"/><circle cx="270" cy="50" r="7"/><circle cx="330" cy="52" r="7"/><circle cx="275" cy="72" r="7"/><circle cx="290" cy="88" r="7"/></g>
+    <g fill="#e76f51"><circle cx="305" cy="48" r="7"/><circle cx="318" cy="68" r="7"/><circle cx="310" cy="86" r="7"/></g>
+    <g fill="#2a9d8f"><circle cx="290" cy="60" r="7"/><circle cx="326" cy="80" r="7"/></g>
+  </g>
+  <g fill="currentColor"><text x="365" y="34">grey = normal 46</text><text x="365" y="54">orange = 47 (trisomic)</text><text x="365" y="74">green = 45 (monosomic)</text><text x="365" y="98" font-weight="700">one body, mixed cells = mosaic</text></g>
+</svg>
+</figure>
+<p class="trap">Mosaicism (mozaïek) is one of the three routes to Down syndrome in exam Q2: nondisjunction, duplication or mosaicism.</p>
+</div>
+
+<div class="card" id="c-polyploid">
+<p class="crumb">Chromosome number › <b>Polyploidy</b></p>
+<h2>Polyploidy: whole extra sets (3n, 4n) – not aneuploidy</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="none" stroke="#8a8f98" stroke-width="1.5"><rect x="10" y="10" width="110" height="80" rx="8"/><rect x="140" y="10" width="110" height="80" rx="8"/><rect x="270" y="10" width="110" height="80" rx="8"/><rect x="400" y="10" width="110" height="80" rx="8"/></g>
+  <g stroke-width="4" stroke-linecap="round">
+    <path d="M30 22 v56 M52 32 v46 M74 44 v34" stroke="#d1495b"/><path d="M40 22 v56 M62 32 v46 M84 44 v34" stroke="#3a86ff"/>
+    <path d="M158 22 v56 M182 32 v46 M194 32 v46 M222 44 v34" stroke="#d1495b"/><path d="M168 22 v56 M206 32 v46 M232 44 v34" stroke="#3a86ff"/>
+    <path d="M290 22 v56 M312 32 v46 M334 44 v34" stroke="#d1495b"/><path d="M300 22 v56 M322 32 v46" stroke="#3a86ff"/>
+    <path d="M416 22 v56 M446 32 v46 M476 44 v34" stroke="#d1495b"/><path d="M426 22 v56 M456 32 v46 M486 44 v34" stroke="#3a86ff"/><path d="M436 22 v56 M466 32 v46 M496 44 v34" stroke="#2a9d8f"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle" font-weight="700"><text x="65" y="106">2n normal (6)</text><text x="195" y="106">2n + 1 (7)</text><text x="325" y="106">2n − 1 (5)</text><text x="455" y="106">3n triploid (9)</text></g>
+  <g fill="currentColor" text-anchor="middle"><text x="65" y="120">2 sets of 3</text><text x="195" y="120">aneuploid</text><text x="325" y="120">aneuploid</text><text x="455" y="120">polyploid: balance kept</text></g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>triploid 3n</td><td>diploid egg (all chromosomes nondisjoin) + normal sperm</td></tr>
+  <tr><td>tetraploid 4n</td><td>2n zygote copies DNA but does not divide</td></tr>
+  <tr><td>plants</td><td>banana 3n, wheat 6n, strawberry 8n; animals rare (fish, amphibians)</td></tr>
+</table>
+<p class="trap">Polyploids look more normal than aneuploids: a whole set keeps the gene balance, one extra chromosome breaks it.</p>
+</div>
+
+</div>
+
+<h2 class="sec">B · Chromosome structure<small>Breakage (radiation, errors in meiosis) and wrong rejoining: a piece is lost, doubled, flipped or moved.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-structure">
+<p class="crumb">Chapter 1 › <b>The four structural changes</b></p>
+<h2>Deletion, duplication, inversion, translocation</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <defs>
+    <g id="seg"><rect width="26" height="18" rx="3"/></g>
+  </defs>
+  <g font-weight="700" fill="#fff" text-anchor="middle">
+    <!-- normal -->
+    <g transform="translate(10,10)">
+      <rect width="26" height="18" rx="3" fill="#8d99ae"/><rect x="28" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="56" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="84" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="112" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="140" width="26" height="18" rx="3" fill="#8d99ae"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">C</text><text x="97" y="13">D</text><text x="125" y="13">E</text><text x="153" y="13">F</text>
+    </g>
+    <!-- deletion -->
+    <g transform="translate(10,52)">
+      <rect width="26" height="18" rx="3" fill="#8d99ae"/><rect x="28" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="56" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="84" width="26" height="18" rx="3" fill="#8d99ae"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">E</text><text x="97" y="13">F</text>
+    </g>
+    <!-- duplication -->
+    <g transform="translate(10,94)">
+      <rect width="26" height="18" rx="3" fill="#8d99ae"/><rect x="28" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="56" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="84" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="112" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="140" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="168" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="196" width="26" height="18" rx="3" fill="#8d99ae"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">C</text><text x="97" y="13">D</text><text x="125" y="13">C</text><text x="153" y="13">D</text><text x="181" y="13">E</text><text x="209" y="13">F</text>
+    </g>
+    <!-- inversion -->
+    <g transform="translate(10,136)">
+      <rect width="26" height="18" rx="3" fill="#8d99ae"/><rect x="28" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="56" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="84" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="112" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="140" width="26" height="18" rx="3" fill="#8d99ae"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">D</text><text x="97" y="13">C</text><text x="125" y="13">E</text><text x="153" y="13">F</text>
+    </g>
+    <!-- translocation -->
+    <g transform="translate(330,52)">
+      <rect width="26" height="18" rx="3" fill="#8d99ae"/><rect x="28" width="26" height="18" rx="3" fill="#8d99ae"/><rect x="56" width="26" height="18" rx="3" fill="#2a9d8f"/><rect x="84" width="26" height="18" rx="3" fill="#2a9d8f"/><rect x="112" width="26" height="18" rx="3" fill="#2a9d8f"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">M</text><text x="97" y="13">N</text><text x="125" y="13">O</text>
+    </g>
+    <g transform="translate(330,94)">
+      <rect width="26" height="18" rx="3" fill="#2a9d8f"/><rect x="28" width="26" height="18" rx="3" fill="#2a9d8f"/><rect x="56" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="84" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="112" width="26" height="18" rx="3" fill="#9b59b6"/><rect x="140" width="26" height="18" rx="3" fill="#9b59b6"/>
+      <text x="13" y="13">K</text><text x="41" y="13">L</text><text x="69" y="13">C</text><text x="97" y="13">D</text><text x="125" y="13">E</text><text x="153" y="13">F</text>
+    </g>
+  </g>
+  <g fill="currentColor">
+    <text x="200" y="24">normal: A B C D E F</text>
+    <text x="130" y="66"><tspan font-weight="700">deletion</tspan>: C D lost</text>
+    <text x="10" y="126"><tspan font-weight="700">duplication</tspan>: C D twice (fragment re-attached as an extra piece)</text>
+    <text x="10" y="168"><tspan font-weight="700">inversion</tspan>: C D flipped to D C</text>
+    <text x="330" y="40" font-weight="700">reciprocal translocation</text>
+    <text x="330" y="130">pieces swapped between two</text>
+    <text x="330" y="144">NON-homologous chromosomes</text><text x="330" y="158">(grey = 1, green = 2)</text><text x="330" y="172">purple = the part that moved</text>
+  </g>
+  <g stroke="#d1495b" stroke-width="2"><path d="M65 48 l4 -8 M121 48 l-4 -8"/></g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td><b>deletion</b></td><td>fragment lost → genes missing</td></tr>
+  <tr><td><b>duplication</b></td><td>fragment re-attached as extra segment (sister or nonsister chromatid)</td></tr>
+  <tr><td><b>inversion</b></td><td>fragment re-attached in reverse orientation</td></tr>
+  <tr><td><b>translocation</b></td><td>fragment joins a nonhomologous chromosome</td></tr>
+</table>
+<p class="mnemo">Red arrows in the syllabus figure = breakage points; purple = affected part.</p>
+</div>
+
+<div class="card" id="c-unequal">
+<p class="crumb">Structure › <b>Unequal crossing-over</b></p>
+<h2>Unequal crossing-over: one deletion + one duplication</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <g font-weight="700" fill="#fff" text-anchor="middle">
+    <g transform="translate(20,16)">
+      <rect width="26" height="18" rx="3" fill="#d1495b"/><rect x="28" width="26" height="18" rx="3" fill="#d1495b"/><rect x="56" width="26" height="18" rx="3" fill="#d1495b"/><rect x="84" width="26" height="18" rx="3" fill="#d1495b"/><rect x="112" width="26" height="18" rx="3" fill="#d1495b"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">C</text><text x="97" y="13">D</text><text x="125" y="13">E</text>
+    </g>
+    <g transform="translate(20,60)">
+      <rect width="26" height="18" rx="3" fill="#3a86ff"/><rect x="28" width="26" height="18" rx="3" fill="#3a86ff"/><rect x="56" width="26" height="18" rx="3" fill="#3a86ff"/><rect x="84" width="26" height="18" rx="3" fill="#3a86ff"/><rect x="112" width="26" height="18" rx="3" fill="#3a86ff"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">C</text><text x="97" y="13">D</text><text x="125" y="13">E</text>
+    </g>
+    <g transform="translate(330,16)">
+      <rect width="26" height="18" rx="3" fill="#d1495b"/><rect x="28" width="26" height="18" rx="3" fill="#d1495b"/><rect x="56" width="26" height="18" rx="3" fill="#3a86ff"/><rect x="84" width="26" height="18" rx="3" fill="#3a86ff"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">D</text><text x="97" y="13">E</text>
+    </g>
+    <g transform="translate(330,60)">
+      <rect width="26" height="18" rx="3" fill="#3a86ff"/><rect x="28" width="26" height="18" rx="3" fill="#3a86ff"/><rect x="56" width="26" height="18" rx="3" fill="#3a86ff"/><rect x="84" width="26" height="18" rx="3" fill="#d1495b"/><rect x="112" width="26" height="18" rx="3" fill="#d1495b"/><rect x="140" width="26" height="18" rx="3" fill="#d1495b"/>
+      <text x="13" y="13">A</text><text x="41" y="13">B</text><text x="69" y="13">C</text><text x="97" y="13">C</text><text x="125" y="13">D</text><text x="153" y="13">E</text>
+    </g>
+  </g>
+  <path d="M76 34 L104 60" stroke="#e76f51" stroke-width="3"/><path d="M104 34 L76 60" stroke="#e76f51" stroke-width="3"/>
+  <path d="M190 47 h60" stroke="#8a8f98" stroke-width="2"/><text x="220" y="40" text-anchor="middle" fill="currentColor" font-size="10">misaligned</text>
+  <g fill="currentColor" font-size="10"><text x="20" y="108">nonsister chromatids pair out of register, exchange unequal pieces</text><text x="330" y="108">one loses C (deletion),</text><text x="330" y="121">the other has C twice (duplication)</text></g>
+</svg>
+</figure>
+<p class="mnemo">Deletions and duplications are "especially likely during meiosis" because of unequal crossing-over.</p>
+</div>
+
+<div class="card" id="c-balance">
+<p class="crumb">Structure › <b>Gene balance: what is harmful</b></p>
+<h2>Which structural changes are harmful, and why</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 100" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <rect x="10" y="10" width="240" height="80" rx="8" fill="#fdecea" stroke="#c0392b"/>
+  <rect x="270" y="10" width="240" height="80" rx="8" fill="#eaf7ee" stroke="#2a9d8f"/>
+  <g fill="#1f2328"><text x="20" y="30" font-weight="700">genes missing or doubled</text><text x="20" y="48">deletion, duplication</text><text x="20" y="66">gene dose wrong → usually harmful;</text><text x="20" y="82">large homozygous deletion = lethal</text>
+  <text x="280" y="30" font-weight="700">all genes present, normal dose</text><text x="280" y="48">reciprocal translocation, inversion</text><text x="280" y="66">can still change phenotype:</text><text x="280" y="82">a gene's neighbours influence its expression</text></g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>homozygous large deletion</td><td>both homologs miss essential genes → lethal</td></tr>
+  <tr><td>male, X with large deletion</td><td>only one X → lethal too</td></tr>
+  <tr><td>heterozygous deletion</td><td>often still severe (cri du chat)</td></tr>
+  <tr><td>translocation</td><td>can create a fused gene → cancer (CML)</td></tr>
+</table>
+</div>
+
+</div>
+
+<h2 class="sec">C · Human conditions<small>Which chromosome change gives which syndrome. Syndrome = a fixed set of traits with one cause.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-karyotype">
+<p class="crumb">Human conditions › <b>Karyotype notation</b></p>
+<h2>Reading a karyotype: total number, then sex chromosomes</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <g fill="none" stroke="#8a8f98" stroke-width="1.5"><rect x="10" y="10" width="115" height="70" rx="8"/><rect x="138" y="10" width="115" height="70" rx="8"/><rect x="266" y="10" width="115" height="70" rx="8"/><rect x="394" y="10" width="115" height="70" rx="8"/></g>
+  <g fill="currentColor" text-anchor="middle" font-weight="700" font-size="16"><text x="67" y="36">46,XX</text><text x="195" y="36">47,XXY</text><text x="323" y="36">45,X</text><text x="451" y="36">47,XX,+21</text></g>
+  <g fill="currentColor" text-anchor="middle" font-size="10"><text x="67" y="56">normal female</text><text x="67" y="70">(46,XY = male)</text><text x="195" y="56">Klinefelter</text><text x="195" y="70">one X extra</text><text x="323" y="56">Turner (X0)</text><text x="323" y="70">one X missing</text><text x="451" y="56">Down: female,</text><text x="451" y="70">extra chromosome 21</text></g>
+  <text x="260" y="98" text-anchor="middle" fill="currentColor">first number = total chromosomes · then the sex chromosomes</text><text x="260" y="114" text-anchor="middle" fill="currentColor">"+21" = an extra chromosome 21 · "5p−" = short arm of 5 missing</text>
+</svg>
+</figure>
+<p class="mnemo">p = short arm (petit), q = long arm. Karyotype = photo of all chromosomes of one cell sorted in pairs (chapter 4: Giemsa stain).</p>
+</div>
+
+<div class="card" id="c-down">
+<p class="crumb">Human conditions › Autosomes › <b>Down syndrome</b></p>
+<h2>Down syndrome = trisomy 21 (47 chromosomes)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <g stroke-width="7" stroke-linecap="round"><path d="M40 30 v40" stroke="#2a9d8f"/><path d="M58 30 v40" stroke="#2a9d8f"/><path d="M76 30 v40" stroke="#e76f51"/></g>
+  <text x="58" y="90" text-anchor="middle" fill="currentColor">chromosome 21 × 3</text>
+  <text x="58" y="106" text-anchor="middle" fill="currentColor" font-size="10">1 in 1000–1100 births</text>
+  <path d="M140 110 V20 H500" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <g fill="currentColor" font-size="10"><text x="108" y="24">1 %</text><text x="100" y="68">0.5 %</text><text x="100" y="112">0.1 %</text><text x="300" y="126" text-anchor="middle">age of the mother</text></g>
+  <path d="M170 104 C 260 102 330 96 380 70 S 470 22 490 20" stroke="#d1495b" stroke-width="3" fill="none"/>
+  <g fill="currentColor" font-size="10"><text x="180" y="98">age 30: 0.1 % (1 in 900)</text><text x="330" y="40">age 40: 1 % (1 in 100)</text><text x="378" y="110">most cases: nondisjunction</text><text x="378" y="122">in meiosis I of the mother</text></g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>traits</td><td>facial features, short stature, correctable heart defects, developmental delay; higher leukemia and Alzheimer risk; lower blood pressure, stroke, solid tumours</td></tr>
+  <tr><td>fertility</td><td>almost all males and half of females sterile</td></tr>
+  <tr><td>mechanisms (exam Q2)</td><td>nondisjunction, duplication or mosaicism</td></tr>
+</table>
+<p class="trap">Risk rises with maternal age, cause not yet explained. Trisomies 13 and 18 also rise with age but infants rarely survive long.</p>
+</div>
+
+<div class="card" id="c-size">
+<p class="crumb">Human conditions › Autosomes › <b>Why 21, 18 and 13</b></p>
+<h2>Chromosome size and gene content decide viability</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <path d="M50 130 V15 M50 130 H500" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <path d="M50 130 L420 25" stroke="#8a8f98" stroke-dasharray="4 4"/>
+  <g fill="currentColor"><text x="12" y="20">genes</text><text x="440" y="145">size (Mb)</text><text x="300" y="52">dotted = average 6.7 genes per Mb</text></g>
+  <g fill="#3a86ff"><circle cx="440" cy="30" r="5"/><circle cx="380" cy="70" r="5"/><circle cx="300" cy="80" r="5"/><circle cx="250" cy="95" r="5"/></g>
+  <g fill="#e76f51"><circle cx="90" cy="118" r="5"/><circle cx="120" cy="112" r="5"/><circle cx="115" cy="122" r="5"/></g>
+  <g fill="currentColor"><text x="446" y="22">1</text><text x="386" y="64">2</text><text x="70" y="108">21</text><text x="128" y="108">18</text><text x="122" y="135">13</text></g>
+  <text x="150" y="30" fill="currentColor"><tspan fill="#e76f51" font-weight="700">small, few genes</tspan> → trisomy survivable</text>
+  <text x="150" y="44" fill="currentColor"><tspan fill="#3a86ff" font-weight="700">large, many genes</tspan> → trisomy lethal before birth</text>
+</svg>
+</figure>
+<p class="mnemo">Survivable trisomies: 21, 18, 13 (the small ones) and the sex chromosomes.</p>
+</div>
+
+<div class="card" id="c-sex">
+<p class="crumb">Human conditions › <b>Sex-chromosome aneuploidies</b></p>
+<h2>Sex chromosomes: XXY, XYY, XXX and X0</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 110" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <g fill="none" stroke="#8a8f98" stroke-width="1.5"><rect x="10" y="8" width="115" height="94" rx="8"/><rect x="138" y="8" width="115" height="94" rx="8"/><rect x="266" y="8" width="115" height="94" rx="8"/><rect x="394" y="8" width="115" height="94" rx="8"/></g>
+  <g fill="currentColor" text-anchor="middle" font-weight="700" font-size="14"><text x="67" y="30">47,XXY</text><text x="195" y="30">47,XYY</text><text x="323" y="30">47,XXX</text><text x="451" y="30">45,X</text></g>
+  <g fill="currentColor" text-anchor="middle" font-size="10">
+    <text x="67" y="48">Klinefelter</text><text x="67" y="62">male, 1 in 650</text><text x="67" y="76">small testes, little sperm</text><text x="67" y="90">tall, breast tissue</text>
+    <text x="195" y="48">(no syndrome)</text><text x="195" y="62">male, 1 in 1000</text><text x="195" y="76">normal development</text><text x="195" y="90">taller than average</text>
+    <text x="323" y="48">trisomy X</text><text x="323" y="62">female, 1 in 1000</text><text x="323" y="76">healthy, slightly taller</text><text x="323" y="90">learning risk</text>
+    <text x="451" y="48">Turner (X0)</text><text x="451" y="62">female, 1 in 2500</text><text x="451" y="76">sterile, short, webbed neck</text><text x="451" y="90">only viable monosomy</text>
+  </g>
+</svg>
+</figure>
+<p class="trap">Sex-chromosome aneuploidies upset the balance less than autosomal ones: the Y carries few genes. Klinefelter = nondisjunction during meiosis (exam Q1), not translocation or polyploidy.</p>
+<p class="mnemo">Therapy: testosterone (Klinefelter), estrogen (Turner). Turner: typical intelligence.</p>
+</div>
+
+<div class="card" id="c-cridu">
+<p class="crumb">Human conditions › Structure › <b>Cri du chat</b></p>
+<h2>Cri du chat = deletion on the short arm of chromosome 5 (5p−)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 100" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <rect x="60" y="10" width="16" height="30" rx="6" fill="#2a9d8f"/><rect x="60" y="44" width="16" height="46" rx="6" fill="#2a9d8f"/><circle cx="68" cy="42" r="5" fill="#e9c46a"/>
+  <rect x="140" y="22" width="16" height="18" rx="6" fill="#2a9d8f"/><rect x="140" y="44" width="16" height="46" rx="6" fill="#2a9d8f"/><circle cx="148" cy="42" r="5" fill="#e9c46a"/>
+  <rect x="140" y="8" width="16" height="12" rx="4" fill="none" stroke="#d1495b" stroke-dasharray="3 2"/>
+  <g fill="currentColor" font-size="10"><text x="30" y="24">p arm</text><text x="30" y="70">q arm</text><text x="68" y="98" text-anchor="middle">normal 5</text><text x="148" y="98" text-anchor="middle">5p− (piece lost)</text></g>
+  <path d="M158 12 h10" stroke="#d1495b"/>
+  <g fill="currentColor"><text x="180" y="18">heterozygous deletion: one chromosome 5 damaged is enough</text><text x="180" y="40">cat-like cry (kattengeschrei), small head (microcephaly),</text><text x="180" y="56">severe intellectual disability, wide-set eyes, small jaw,</text><text x="180" y="72">low-set ears; usually die in infancy or early childhood</text></g>
+</svg>
+</figure>
+<p class="trap">"Many deletions, even heterozygous, cause severe problems." Deletion = genes missing = wrong dose.</p>
+</div>
+
+<div class="card" id="c-cml">
+<p class="crumb">Human conditions › Structure › <b>Philadelphia chromosome</b></p>
+<h2>CML: reciprocal translocation 9;22 → Philadelphia chromosome</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <rect x="40" y="10" width="16" height="100" rx="6" fill="#3a86ff"/><rect x="40" y="96" width="16" height="14" rx="4" fill="#e76f51"/>
+  <rect x="100" y="60" width="16" height="50" rx="6" fill="#e76f51"/><rect x="100" y="60" width="16" height="30" rx="4" fill="#3a86ff" fill-opacity=".0"/>
+  <g fill="currentColor" font-size="10" text-anchor="middle"><text x="48" y="124">9</text><text x="108" y="124">22</text></g>
+  <path d="M150 60 h40" stroke="#8a8f98" stroke-width="2"/><text x="170" y="52" text-anchor="middle" fill="currentColor" font-size="10">swap</text>
+  <rect x="230" y="10" width="16" height="130" rx="6" fill="#3a86ff"/><rect x="230" y="96" width="16" height="44" rx="4" fill="#e76f51"/>
+  <rect x="290" y="80" width="16" height="30" rx="6" fill="#e76f51"/><rect x="290" y="96" width="16" height="14" rx="4" fill="#3a86ff"/>
+  <g fill="currentColor" font-size="10" text-anchor="middle"><text x="238" y="150" font-size="9">9q+ (long)</text><text x="298" y="124">22q− = Philadelphia</text></g>
+  <g fill="currentColor"><text x="322" y="24">large part of 22 ↔ small tip of 9</text><text x="322" y="44">happens in MITOSIS of a white-</text><text x="322" y="58">blood-cell precursor → all descendants</text><text x="322" y="80" font-weight="700">new fused gene → uncontrolled</text><text x="322" y="94" font-weight="700">cell cycle → leukemia (CML)</text><text x="322" y="116">CML = chronic myelogenous leukemia</text></g>
+</svg>
+</figure>
+<p class="trap">Translocation can also occur in mitosis (not only meiosis) and is then only in that cell line, not inherited.</p>
+<p class="mnemo">Chapter 2 uses the same chromosome as proof that a cancer starts from ONE cell (same breakpoint in all leukemia cells of a patient).</p>
+</div>
+
+</div>
+
+<h2 class="sec">D · Quick check<small>Short traps from the whole chapter.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-traps">
+<p class="crumb">Whole chapter › <b>Quick traps</b></p>
+<h2>Quick traps of the whole chapter</h2>
+<table class="mini">
+  <tr><td>nondisjunction in meiosis I</td><td>4 abnormal gametes; in meiosis II: 2</td></tr>
+  <tr><td>aneuploidy vs polyploidy</td><td>one chromosome off (2n ± 1) vs whole sets (3n, 4n)</td></tr>
+  <tr><td>which looks more normal?</td><td>polyploid (balance kept); plants tolerate it</td></tr>
+  <tr><td>Klinefelter, Turner, Down</td><td>all nondisjunction; Down also duplication or mosaicism</td></tr>
+  <tr><td>only viable monosomy</td><td>Turner 45,X</td></tr>
+  <tr><td>no gene lost, still a problem</td><td>inversion, reciprocal translocation: position effect; CML fused gene</td></tr>
+  <tr><td>cri du chat</td><td>deletion on 5p, heterozygous is enough</td></tr>
+  <tr><td>Philadelphia</td><td>shortened 22 after 9;22 swap in mitosis</td></tr>
+</table>
+</div>
+
+</div>
+
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="cs2_cancer.html">2 Cancer →</a></nav>
+</main>
+</body>
+</html>

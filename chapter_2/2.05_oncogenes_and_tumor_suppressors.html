@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.5 Oncogenes and tumor suppressor genes</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .gene { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .gene.on { fill: var(--c-O); stroke: var(--c-O); }
+  .gene.off { fill: none; stroke: var(--c-O); stroke-width: 2.5; stroke-dasharray: 5 3; }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .cell.bad { stroke: var(--c-O); stroke-width: 2.5; }
+  .dna { stroke: var(--c-N); stroke-width: 3; fill: none; }
+  .dnab { stroke: var(--c-N); stroke-width: 7; fill: none; stroke-linecap: round; }
+  .reg { stroke: var(--c-S); stroke-width: 7; fill: none; stroke-linecap: round; }
+  .other { stroke: var(--c-Cl); stroke-width: 7; fill: none; stroke-linecap: round; }
+  .prot { fill: var(--c-R); }
+  .prot.hyper { fill: var(--c-O); }
+  .mem { stroke: var(--muted); stroke-width: 1.5; fill: var(--key-bg); }
+  .rec { fill: var(--c-N); }
+  .ligand { fill: var(--c-S); }
+  .ph { fill: var(--c-O); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.04_microenvironment_and_metastasis.html">← 2.4 Microenvironment and metastasis</a><a href="index.html">Chapter 2 index</a><a href="2.06_rb_and_losing_the_second_copy.html">2.6 Rb and losing the second copy →</a></nav>
+
+<h1>2.5 Cancer-critical genes: oncogenes and tumor suppressor genes</h1>
+<p class="lede">In one sentence: the genes that matter in cancer come in two classes, those that drive a cell toward cancer when they become
+<strong>too active</strong> (proto-oncogenes, which then become oncogenes) and those that do so when they are <strong>lost</strong> (tumor suppressor genes),
+and an oncogene needs only one damaged copy while a tumor suppressor usually needs both copies gone.</p>
+
+<p>The first half of this chapter (pages 2.1 to 2.4) described cancer from the outside: a clone of cells that evolves, grows, invades and spreads.
+From this page on we go inside the cell and ask <em>which genes</em> are changed. This is the heart of the chapter for the exam: the learning objectives ask you to
+"explain how mutations in a proto-oncogene and in a tumor suppressor gene have different effects at the protein level" and to "select from a list of
+mutations those that result in an oncogene". Two questions of the example exam (5 and 6) and the extra question in syllabus section 2.4 test exactly this page.</p>
+
+<!-- ============================================================ -->
+<h2>0. Reminders from BIO01 that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>gene</td><td>a stretch of DNA that codes for one protein (or one RNA). We write gene names in <em>italics</em> (<em>Rb</em>) and the protein upright (Rb protein).</td></tr>
+  <tr><td>allele, copy</td><td>a body cell is diploid: it has <strong>two copies</strong> of every gene, one from each parent</td></tr>
+  <tr><td>mutation</td><td>a change in the DNA letters; a <strong>point mutation</strong> changes one letter, a <strong>deletion</strong> removes letters</td></tr>
+  <tr><td>somatic</td><td>in body cells, not in sperm or egg; a somatic mutation is passed to the cell's daughters, not to children (soma = body)</td></tr>
+  <tr><td>heritable (here)</td><td>passed on from a cell to its daughter cells by division (not: inherited from your parents)</td></tr>
+  <tr><td>coding sequence</td><td>the part of a gene that is translated into protein (BIO01 ch 5)</td></tr>
+  <tr><td>regulatory region</td><td>DNA near a gene that decides how often it is transcribed: promoter, enhancer (BIO01 ch 6)</td></tr>
+  <tr><td>dominant / recessive</td><td>dominant: one copy of the changed gene is enough to see the effect; recessive: the effect only shows when both copies are changed</td></tr>
+  <tr><td>epigenetic</td><td>a heritable change in gene <em>use</em> without a change in the DNA letters (e.g. methylation, BIO01 ch 6)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: elke lichaamscel heeft <strong>twee kopieën</strong> van elk gen. Een <strong>somatische</strong> mutatie zit in een lichaamscel en gaat door naar de
+dochtercellen, niet naar kinderen. <strong>Dominant</strong> = één veranderde kopie volstaat; <strong>recessief</strong> = beide kopieën moeten veranderd zijn. Gennamen
+schrijven we <em>schuin</em>, eiwitnamen recht.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Finding the genes that matter (syllabus 2.2 intro)</h2>
+<p>Cancer depends on <strong>heritable changes in somatic cells</strong>: changes a cell passes on to its daughters. To understand cancer at the molecular level we have to find
+<em>which</em> mutations and epigenetic changes are involved. Finding the <em>cells</em> is easy: natural selection favours them and they announce themselves as a tumor.
+Finding the <em>genes</em> is hard, for two reasons:</p>
+<ul>
+  <li>A typical cancer depends on a whole <strong>set</strong> of changes, and that set is never exactly the same in two patients (although tumor types share patterns).</li>
+  <li>Because cancer cells are genetically unstable (page 2.3), each cell also carries a large number of mutations that are <strong>accidental by-products</strong>.
+  These are called <strong>passengers</strong>; the mutations that actually cause the disease are called <strong>drivers</strong>. Telling them apart is difficult.</li>
+</ul>
+<p>Despite this, over the past 40 years many genes that are <em>repeatedly</em> altered in human cancers have been identified. The syllabus calls them
+<strong>cancer-critical genes</strong>: all genes whose alteration can contribute to the start or the evolution of cancer. There are about <strong>300</strong> of them (page 2.7).</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Kanker hangt af van <strong>erfelijke veranderingen in lichaamscellen</strong>. De cellen vinden is makkelijk (ze vormen een tumor), de genen vinden is moeilijk: elke
+patiënt heeft een andere set, en veel mutaties zijn toevallige <strong>passengers</strong> (meelifters) naast de echte <strong>drivers</strong> (oorzaken). Genen die herhaaldelijk
+veranderd zijn in kanker heten <strong>cancer-critical genes</strong>; er zijn er ongeveer 300.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Two classes: too much or too little (2.2.1)</h2>
+<p>Cancer-critical genes are grouped by the <em>direction</em> of the damage: does the cancer risk come from <strong>too much</strong> activity of the gene's product, or from
+<strong>too little</strong>?</p>
+<table class="cmp">
+  <tr><th>Class</th><th>Normal gene</th><th>Dangerous change</th><th>Result</th></tr>
+  <tr><td>Proto-oncogene</td><td>a normal gene that helps cells grow and divide ("proto" = before, the gene before it goes wrong)</td><td><strong>gain-of-function</strong>: the product becomes <strong>overactive</strong> or is <strong>overproduced</strong></td><td>the mutant form is called an <strong>oncogene</strong> (onkos = tumor): it drives the cell toward cancer</td></tr>
+  <tr><td>Tumor suppressor gene</td><td>a normal gene that holds cell division back or protects the genome ("suppress" = hold down, onderdrukken)</td><td><strong>loss-of-function</strong>: the product is missing or broken</td><td>a brake is gone; this contributes to cancer</td></tr>
+</table>
+<p>Both kinds of mutation can push a cell toward cancer <strong>directly</strong> (the cell divides when it should not) or <strong>indirectly</strong>: by causing genetic or
+epigenetic instability, so that other changes that do stimulate growth arrive faster. The genes whose loss causes instability form a subclass of tumor suppressors
+called <strong>genome maintenance genes</strong> (genes that keep the genome in good repair, for example DNA repair genes from BIO01 chapter 4).</p>
+
+<div class="callout key"><span class="tag">Flip sides of the same coin</span>
+<p>From the cancer cell's point of view, an oncogene and a lost tumor suppressor can have the <em>same</em> effect. Example: "too much signal to divide" can come from an
+overactive growth-signal gene (oncogene) <em>or</em> from losing the gene that normally switches that signal off (tumor suppressor). Gas pedal pressed down, or brake
+cable cut: the car goes too fast either way (syllabus Figure 2-19).</p></div>
+
+<h3>Dominant versus recessive (Figure 2-18)</h3>
+<p>Here is the difference that the exam asks for, <strong>at the level of the protein</strong>:</p>
+<ul>
+  <li>An <strong>oncogene acts dominantly</strong>: mutation of a <strong>single</strong> copy of the proto-oncogene is enough. One overactive protein molecule type is already pressing the gas; the normal copy next to it cannot undo that.</li>
+  <li>A <strong>tumor suppressor acts recessively</strong>: usually (not always) <strong>both</strong> copies must be removed or inactivated before an effect is seen. As long as one good copy makes working brake protein, the brake still works. The second copy is often lost not by a new mutation but by losing the whole chromosome (page 2.6).</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 250" width="880" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- A: oncogene -->
+    <text x="210" y="16" class="txt bold">A · proto-oncogene → oncogene: ONE hit is enough (dominant)</text>
+    <circle cx="90" cy="110" r="50" class="cell"/>
+    <rect x="68" y="90" width="44" height="12" rx="3" class="gene"/><rect x="68" y="118" width="44" height="12" rx="3" class="gene"/>
+    <text x="90" y="178" class="txt small">normal cell</text><text x="90" y="192" class="txt small muted">2 normal copies</text>
+    <path d="M150,110 L200,110" class="path accent" marker-end="url(#ar1)"/>
+    <text x="175" y="98" class="txt small muted">1 activating</text><text x="175" y="130" class="txt small muted">mutation</text>
+    <circle cx="270" cy="110" r="50" class="cell bad"/>
+    <rect x="248" y="90" width="44" height="12" rx="3" class="gene on"/><rect x="248" y="118" width="44" height="12" rx="3" class="gene"/>
+    <text x="270" y="178" class="txt small">cell on its way to cancer</text><text x="270" y="192" class="txt small muted">1 oncogene + 1 normal copy</text>
+    <text x="270" y="206" class="txt small muted">the overactive protein wins</text>
+    <!-- B: tumor suppressor -->
+    <line x1="430" y1="6" x2="430" y2="244" class="path" style="stroke-dasharray:3 5"/>
+    <text x="655" y="16" class="txt bold">B · tumor suppressor: TWO hits needed (recessive)</text>
+    <circle cx="500" cy="110" r="44" class="cell"/>
+    <rect x="480" y="92" width="40" height="11" rx="3" class="gene"/><rect x="480" y="117" width="40" height="11" rx="3" class="gene"/>
+    <text x="500" y="178" class="txt small">normal cell</text>
+    <path d="M550,110 L584,110" class="path accent" marker-end="url(#ar1)"/>
+    <text x="567" y="98" class="txt small muted">hit 1</text>
+    <circle cx="640" cy="110" r="44" class="cell"/>
+    <rect x="620" y="92" width="40" height="11" rx="3" class="gene off"/><rect x="620" y="117" width="40" height="11" rx="3" class="gene"/>
+    <text x="640" y="178" class="txt small">still healthy</text><text x="640" y="192" class="txt small muted">1 good copy = brake works</text>
+    <path d="M690,110 L724,110" class="path accent" marker-end="url(#ar1)"/>
+    <text x="707" y="98" class="txt small muted">hit 2</text>
+    <circle cx="780" cy="110" r="44" class="cell bad"/>
+    <rect x="760" y="92" width="40" height="11" rx="3" class="gene off"/><rect x="760" y="117" width="40" height="11" rx="3" class="gene off"/>
+    <text x="780" y="178" class="txt small">cell on its way to cancer</text><text x="780" y="192" class="txt small muted">both copies gone, no brake</text>
+    <text x="440" y="236" class="txt small muted">filled red = activating (gain of function) · dashed red = inactivating (loss of function) · grey = normal copy</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-18. Each cell shows the two copies of one gene. Left: a single gain-of-function mutation makes an oncogene and the cell is already in trouble.
+  Right: a single loss-of-function hit does nothing visible; only when the second copy is also lost does the brake fail.</figcaption>
+</figure>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 6 is a matching question. Four definitions: "a mutant gene whose overactive form causes cancer" = <strong>oncogene</strong>; "a normal gene in which a
+gain-of-function mutation can drive a cell towards cancer" = <strong>proto-oncogene</strong>; "a tumor suppressor gene found mutated in about half of human cancers" =
+<strong>p53</strong> (the gene for a protein that senses stress in the cell and then stops the cycle or triggers apoptosis; page 2.8); "a normal gene in which a loss-of-function mutation can contribute to cancer" = <strong>tumor suppressor gene</strong>. Learn the exact wording
+"gain-of-function" and "loss-of-function".</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Twee klassen. <strong>Proto-oncogen</strong>: normaal gen dat groei en deling stimuleert; door een <strong>gain-of-function</strong>-mutatie (overactief of te veel) wordt het een
+<strong>oncogen</strong>. <strong>Tumorsuppressorgen</strong>: normaal gen dat afremt of het genoom beschermt; gevaarlijk bij <strong>loss-of-function</strong> (verlies).
+Een subgroep zijn de <strong>genome maintenance genes</strong> (onderhoud van het genoom). Beide kunnen hetzelfde effect geven (gaspedaal of rem). Oncogen = <strong>dominant</strong>:
+één getroffen kopie volstaat. Tumorsuppressor = <strong>recessief</strong>: meestal moeten beide kopieën weg.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Three kinds of accident that make an oncogene (2.2.2, Figure 2-20)</h2>
+<p>Begin state: a normal proto-oncogene on a chromosome, making a normal amount of a normal protein. Goal of the question: which accidents turn it into an oncogene?
+There are two ways to end up "too strong": a protein that is <strong>hyperactive</strong> (each molecule works too hard), or a normal protein that is
+<strong>overproduced</strong> (too many molecules). Three kinds of accident give one or the other:</p>
+<ol>
+  <li><strong>A small change in the DNA sequence</strong> (a point mutation or a small deletion).
+    <ul>
+      <li>inside the <strong>protein-coding sequence</strong> → a <strong>hyperactive protein</strong>, made in normal amounts;</li>
+      <li>inside a <strong>regulatory region</strong> → a normal protein that is <strong>overproduced</strong>.</li>
+    </ul></li>
+  <li><strong>Gene amplification</strong>: errors in DNA replication make <strong>extra copies</strong> of the gene, so the normal protein is greatly overproduced
+  (amplify = make more of, versterken).</li>
+  <li><strong>A chromosomal rearrangement</strong>: the DNA breaks and is rejoined in a new way (deletions, inversions and translocations from chapter 1). Two possible outcomes:
+    <ul>
+      <li>the coding region is <strong>fused</strong> to another gene → a <strong>hyperactive fusion protein</strong> (a protein made of two pieces that do not belong together);</li>
+      <li>the gene lands next to the <strong>control regions of another gene</strong> that is actively transcribed → the normal protein is <strong>overproduced</strong>.</li>
+    </ul></li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 900 300" width="900" height="300" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- start -->
+    <text x="90" y="16" class="txt bold">proto-oncogene</text>
+    <path d="M20,40 L160,40" class="dna"/><path d="M40,40 L70,40" class="reg"/><path d="M80,40 L150,40" class="dnab"/>
+    <text x="55" y="62" class="txt small muted">regulatory</text><text x="115" y="62" class="txt small muted">coding</text>
+    <circle cx="90" cy="92" r="9" class="prot"/><text x="90" y="118" class="txt small">normal protein,</text><text x="90" y="131" class="txt small">normal amount</text>
+    <!-- 1 -->
+    <text x="310" y="16" class="txt bold">1 · point mutation / small deletion</text>
+    <path d="M230,40 L390,40" class="dna"/><path d="M250,40 L280,40" class="reg"/><path d="M290,40 L360,40" class="dnab"/>
+    <text x="325" y="30" class="txt small" style="fill:var(--c-O)">✕</text>
+    <circle cx="300" cy="92" r="10" class="prot hyper"/><text x="300" y="118" class="txt small">in coding part:</text><text x="300" y="131" class="txt small">hyperactive protein</text>
+    <path d="M230,170 L390,170" class="dna"/><path d="M250,170 L280,170" class="reg"/><path d="M290,170 L360,170" class="dnab"/>
+    <text x="265" y="160" class="txt small" style="fill:var(--c-O)">✕</text>
+    <circle cx="283" cy="215" r="7" class="prot"/><circle cx="300" cy="215" r="7" class="prot"/><circle cx="317" cy="215" r="7" class="prot"/><circle cx="291" cy="230" r="7" class="prot"/><circle cx="309" cy="230" r="7" class="prot"/>
+    <text x="310" y="256" class="txt small">in regulatory part:</text><text x="310" y="269" class="txt small">normal protein overproduced</text>
+    <!-- 2 -->
+    <text x="530" y="16" class="txt bold">2 · gene amplification</text>
+    <path d="M460,40 L610,40" class="dna"/><path d="M470,40 L488,40" class="reg"/><path d="M492,40 L518,40" class="dnab"/><path d="M522,40 L540,40" class="reg"/><path d="M544,40 L570,40" class="dnab"/><path d="M574,40 L592,40" class="reg"/><path d="M596,40 L608,40" class="dnab"/>
+    <text x="535" y="62" class="txt small muted">many copies of the gene</text>
+    <circle cx="513" cy="92" r="7" class="prot"/><circle cx="530" cy="92" r="7" class="prot"/><circle cx="547" cy="92" r="7" class="prot"/><circle cx="521" cy="107" r="7" class="prot"/><circle cx="538" cy="107" r="7" class="prot"/>
+    <text x="530" y="131" class="txt small">normal protein, greatly overproduced</text>
+    <!-- 3 -->
+    <text x="760" y="16" class="txt bold">3 · chromosome rearrangement</text>
+    <path d="M660,40 L860,40" class="dna"/><path d="M680,40 L740,40" class="other"/><path d="M745,40 L820,40" class="dnab"/>
+    <text x="745" y="62" class="txt small muted">another gene (green) + our coding part (blue)</text>
+    <rect x="735" y="82" width="16" height="16" rx="3" class="other" style="fill:var(--c-Cl);stroke:none"/><circle cx="762" cy="90" r="10" class="prot hyper"/>
+    <text x="760" y="118" class="txt small">fusion protein,</text><text x="760" y="131" class="txt small">hyperactive</text>
+    <path d="M660,170 L860,170" class="dna"/><path d="M680,170 L730,170" class="other"/><path d="M740,170 L810,170" class="dnab"/>
+    <text x="745" y="192" class="txt small muted">strong control region of another gene</text>
+    <circle cx="743" cy="215" r="7" class="prot"/><circle cx="760" cy="215" r="7" class="prot"/><circle cx="777" cy="215" r="7" class="prot"/><circle cx="751" cy="230" r="7" class="prot"/><circle cx="769" cy="230" r="7" class="prot"/>
+    <text x="760" y="256" class="txt small">normal protein overproduced</text>
+    <text x="450" y="292" class="txt small muted">blue = coding DNA · yellow = own regulatory DNA · green = DNA from another gene · purple = normal protein · red = hyperactive protein</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-20. Only two things can go wrong at the protein level: a hyperactive protein (red) or too much normal protein (many purple dots). Each of the three accidents gives one of them.</figcaption>
+</figure>
+
+<h3>Example: the EGF receptor (Figure 2-21)</h3>
+<p>Some names first. <strong>EGF</strong> is epidermal growth factor: a small signal protein that tells cells to divide (epidermis = outer skin layer, where it was found;
+growth factor = BIO01 ch 7, a protein from other cells that says "divide"). The <strong>EGF receptor</strong> is a protein that sits in the cell membrane. Its
+<strong>extracellular domain</strong> (the part outside the cell) catches EGF; when that happens, the <strong>intracellular domain</strong> (the part inside) gets phosphate
+groups attached (phosphorylation, BIO01 ch 2: a phosphate group added as an on-switch) and sends the "divide" signal into the cell.</p>
+<p>In the most common human brain tumor, <strong>glioblastoma</strong>, a <strong>deletion</strong> often removes part of the extracellular domain. The shortened receptor
+is <strong>active even without EGF</strong>: it is phosphorylated all the time and keeps sending "divide". The syllabus compares it to a <strong>faulty doorbell that rings
+even when nobody presses the button</strong>. This is accident type 1 (a deletion in the coding sequence → hyperactive protein).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 640 190" width="640" height="190" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="88" width="600" height="18" class="mem"/>
+    <text x="6" y="82" class="txt small muted left">outside the cell</text><text x="6" y="122" class="txt small muted left">inside the cell</text>
+    <!-- normal receptor, no EGF -->
+    <rect x="90" y="40" width="14" height="48" rx="4" class="rec"/><rect x="90" y="106" width="14" height="40" rx="4" class="rec"/>
+    <text x="97" y="168" class="txt small">normal, no EGF</text><text x="97" y="182" class="txt small muted">silent</text>
+    <!-- normal receptor with EGF -->
+    <rect x="230" y="40" width="14" height="48" rx="4" class="rec"/><rect x="230" y="106" width="14" height="40" rx="4" class="rec"/>
+    <circle cx="237" cy="30" r="9" class="ligand"/><text x="262" y="34" class="txt small left">EGF bound</text>
+    <circle cx="252" cy="118" r="5" class="ph"/><circle cx="252" cy="134" r="5" class="ph"/><text x="268" y="130" class="txt small left">P = phosphate</text>
+    <text x="237" y="168" class="txt small">normal, EGF present</text><text x="237" y="182" class="txt small muted">signal: divide</text>
+    <!-- truncated receptor -->
+    <rect x="430" y="66" width="14" height="22" rx="4" class="rec"/><rect x="430" y="106" width="14" height="40" rx="4" class="rec"/>
+    <path d="M430,62 L444,62" class="path" style="stroke:var(--c-O);stroke-width:2"/><text x="470" y="58" class="txt small left" style="fill:var(--c-O)">outer part deleted</text>
+    <circle cx="452" cy="118" r="5" class="ph"/><circle cx="452" cy="134" r="5" class="ph"/>
+    <text x="437" y="168" class="txt small">truncated, no EGF</text><text x="437" y="182" class="txt small muted">signal anyway: faulty doorbell</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-21. Blue = receptor, yellow = EGF, red dots = phosphate groups on the inside part (the on-signal). The truncated receptor (truncated = cut short) signals without EGF.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>The first oncogene was found in a chicken virus. Rous sarcoma virus causes connective-tissue tumors in chickens; its genome turned out to carry a passenger gene, <em>v-Src</em>,
+that is a mutated copy of a normal chicken gene, <em>c-Src</em>. The virus had picked the gene up from a host cell. Later, DNA from human tumor cells put into mouse cells revealed the
+human oncogene <em>Ras</em> (Ras is a switch protein that passes "grow and divide" signals from receptors into the cell), the same gene a rat tumor virus carries. That discovery, in the early 1980s, showed that cancers are caused by mutations in a limited number of genes.
+Another classic: in Burkitt's lymphoma a translocation puts the <em>Myc</em> gene (Myc is a protein in the nucleus that pushes the cell to grow and divide) next to the strong control regions of antibody genes in B cells, so Myc is massively overproduced (accident type 3).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Drie soorten ongelukken maken van een proto-oncogen een oncogen: (1) een <strong>kleine verandering</strong> (puntmutatie of kleine deletie): in het coderende deel →
+<strong>hyperactief eiwit</strong>; in het regulerende deel → <strong>te veel</strong> normaal eiwit; (2) <strong>genamplificatie</strong> (extra kopieën) → te veel eiwit;
+(3) een <strong>chromosoomherschikking</strong> → een hyperactief <strong>fusie-eiwit</strong>, of een normaal eiwit onder een sterke promoter van een ander gen → te veel.
+Voorbeeld: de <strong>EGF-receptor</strong> zonder zijn buitenste deel staat altijd aan (kapotte deurbel), vaak bij glioblastoom (hersentumor).</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Worked example: which mutations give an oncogene? (syllabus 2.4)</h2>
+<p>The question at the end of the syllabus chapter lists seven mutations and asks which can result in an oncogene (several answers). First the words it uses, with their BIO01 reminders:</p>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>UTR</td><td>untranslated region: the parts of the mRNA before (5′) and after (3′) the coding sequence that are not translated; they contain control signals (BIO01 ch 5)</td></tr>
+  <tr><td>silencer</td><td>a DNA or RNA element that <em>reduces</em> expression when a repressor protein binds it (BIO01 ch 6; "silence" = make quiet)</td></tr>
+  <tr><td>enhancer</td><td>a DNA element that <em>increases</em> transcription when activator proteins bind it (BIO01 ch 6)</td></tr>
+  <tr><td>splice site</td><td>the signals at the ends of an intron where the spliceosome cuts; the 3′ splice acceptor is the signal at the end of the intron (BIO01 ch 5)</td></tr>
+  <tr><td>premature stop codon</td><td>a stop codon that appears too early, so the protein is cut short (BIO01 ch 5)</td></tr>
+  <tr><td>constitutive promoter</td><td>a promoter that is always on, at a high steady level, not switched by signals (BIO01 ch 6; constitutive = permanent)</td></tr>
+</table>
+<p>Now the test for each option: <strong>does it make the product more active or more abundant (then yes), or does it break or reduce the product (then no)?</strong></p>
+<table>
+  <tr><th>Option</th><th>Oncogene?</th><th>Why</th></tr>
+  <tr><td>Deletion of the entire coding region</td><td><strong>no</strong></td><td>no protein at all: that is loss-of-function, the tumor suppressor pattern</td></tr>
+  <tr><td>Deletion of a silencer in the 3′ UTR</td><td><strong>yes</strong></td><td>the brake on expression is removed → more product (overproduction, like a regulatory-region change in accident type 1)</td></tr>
+  <tr><td>Deletion of an enhancer in the 3′ UTR</td><td><strong>no</strong></td><td>the booster is removed → less product</td></tr>
+  <tr><td>Deletion of a 3′ splice acceptor</td><td><strong>no</strong></td><td>the intron is not removed correctly → usually a broken protein (loss-of-function)</td></tr>
+  <tr><td>A premature stop codon</td><td><strong>no</strong></td><td>a truncated, usually dead protein: loss-of-function (page 2.7 shows this is the typical tumor-suppressor mutation)</td></tr>
+  <tr><td>A point mutation</td><td><strong>yes</strong></td><td>if it changes an amino acid so that the protein becomes hyperactive (like the EGF receptor above, or the signalling switch protein Ras, page 2.7); not every point mutation does, but it <em>can</em></td></tr>
+  <tr><td>Translocation placing the coding region under a constitutive promoter</td><td><strong>yes</strong></td><td>the normal protein is made all the time at high level: accident type 3</td></tr>
+</table>
+<div class="callout warn"><span class="tag">Note</span>
+<p>This reasoning is Claude's, not an official answer key: the syllabus gives the question without answers. The logic follows the syllabus rule "more activity or more product = oncogene; less or broken = loss". One could argue about the splice-site option (in rare cases a mis-spliced protein is hyperactive), but "usually destroys the protein" is the expected reading.</p></div>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 5: "Which alteration could cause a cell to proliferate more than it should?" Options: altering a protein that promotes apoptosis (brake on survival lost),
+altering a protein that stops the cycle when something is defective (checkpoint brake lost), overexpressing a growth-factor receptor (gas pressed), activating a proto-oncogene
+into an oncogene (gas pressed). <strong>All of them</strong> can: the correct choice is "all options describe mechanisms that could lead to excessive cell proliferation". The first
+two are tumor-suppressor-style losses, the last two oncogene-style gains, and both sides of the coin give the same result.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Toets voor elke optie: <strong>meer activiteit of meer product → oncogen; kapot of minder → geen oncogen</strong>. Ja: silencer weg (meer product), puntmutatie (kan hyperactief eiwit
+geven), translocatie onder een constitutieve (altijd-aan) promoter. Nee: hele coderende regio weg, enhancer weg, splice-site weg, vroegtijdig stopcodon (allemaal verlies).
+Dit is Claudes redenering, geen officiële sleutel.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>cancer-critical gene</td><td>any gene whose alteration can contribute to the start or evolution of cancer (about 300)</td></tr>
+  <tr><td>driver mutation</td><td>a mutation that causes or advances the cancer</td></tr>
+  <tr><td>passenger mutation</td><td>an accidental mutation that is present but does nothing for the cancer</td></tr>
+  <tr><td>proto-oncogene</td><td>a normal gene that promotes growth or division; a gain-of-function mutation makes it an oncogene</td></tr>
+  <tr><td>oncogene</td><td>the mutant, overactive or overexpressed form of a proto-oncogene</td></tr>
+  <tr><td>tumor suppressor gene</td><td>a normal gene whose loss-of-function contributes to cancer (a brake or a guardian)</td></tr>
+  <tr><td>genome maintenance gene</td><td>a tumor suppressor whose loss causes genetic instability (e.g. DNA repair genes)</td></tr>
+  <tr><td>gain-of-function / loss-of-function</td><td>the product does more than normal / the product is missing or broken</td></tr>
+  <tr><td>dominant / recessive (in cancer)</td><td>oncogene: one damaged copy is enough; tumor suppressor: usually both copies must be gone</td></tr>
+  <tr><td>hyperactive protein</td><td>each molecule works too hard, even without its normal signal</td></tr>
+  <tr><td>overproduction, overexpression</td><td>too many molecules of a normal protein</td></tr>
+  <tr><td>gene amplification</td><td>extra copies of a gene made by replication errors</td></tr>
+  <tr><td>fusion protein</td><td>a protein made from two genes joined by a chromosome rearrangement</td></tr>
+  <tr><td>EGF, EGF receptor</td><td>epidermal growth factor, a "divide" signal; its receptor in the membrane passes the signal inside</td></tr>
+  <tr><td>extracellular / intracellular domain</td><td>the part of a membrane protein outside / inside the cell</td></tr>
+  <tr><td>truncated</td><td>cut short, missing a piece</td></tr>
+  <tr><td>glioblastoma</td><td>the most common human brain tumor</td></tr>
+  <tr><td>constitutive promoter</td><td>a promoter that is always on</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "the student can precisely explain how mutations in a proto-oncogene and in a tumor suppressor gene have different effects at the protein level" and "selects from a list of mutations those that result in an oncogene".</p>
+<ol>
+  <li>Define proto-oncogene, oncogene and tumor suppressor gene with the words gain-of-function and loss-of-function (exam Q6).</li>
+  <li>Explain dominant (one hit) versus recessive (two hits) at the protein level: one overactive protein presses the gas; one good copy of a brake still brakes.</li>
+  <li>Say that both an oncogene and a lost tumor suppressor can give the same result, e.g. excess proliferation (exam Q5: all options).</li>
+  <li>List the three kinds of accident that make an oncogene and say for each whether it gives a hyperactive protein or overproduction.</li>
+  <li>Explain the EGF receptor example: deletion of the extracellular domain → active without EGF (faulty doorbell), glioblastoma.</li>
+  <li>Decide for a list of mutations which can give an oncogene (silencer deletion, activating point mutation, translocation under a constitutive promoter) and which cannot (whole-gene deletion, enhancer deletion, splice-site loss, premature stop).</li>
+  <li>Know what drivers, passengers, cancer-critical genes and genome maintenance genes are.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is the difference between a driver and a passenger mutation?</dt>
+  <dd>A driver causes or advances the cancer and is found repeatedly in many patients. A passenger is an accidental mutation that happened in the same unstable cell but contributes nothing.</dd>
+
+  <dt>What is a proto-oncogene, and what is an oncogene?</dt>
+  <dd>A proto-oncogene is a normal gene that promotes cell growth or division. When a gain-of-function mutation makes its product overactive or overproduced, the mutant gene is called an oncogene.</dd>
+
+  <dt>What is a tumor suppressor gene?</dt>
+  <dd>A normal gene whose product holds division back or protects the genome; a loss-of-function mutation (losing it) contributes to cancer.</dd>
+
+  <dt>Why does an oncogene act dominantly?</dt>
+  <dd>Because the overactive protein made from the one mutated copy already drives the cell; the normal protein from the other copy cannot cancel that. One hit is enough.</dd>
+
+  <dt>Why does a tumor suppressor usually act recessively?</dt>
+  <dd>Because one good copy still makes working brake protein. Only when both copies are removed or inactivated is the brake gone. (Not always: for some tumor suppressors one damaged copy already has an effect.)</dd>
+
+  <dt>What are genome maintenance genes?</dt>
+  <dd>A subclass of tumor suppressor genes whose loss causes genetic or epigenetic instability, so that other mutations accumulate faster. They act indirectly.</dd>
+
+  <dt>In what sense are oncogenes and tumor suppressors "flip sides of the same coin"?</dt>
+  <dd>The same effect, e.g. too much signal to divide, can come from an overactive gas gene (oncogene) or from losing a brake gene (tumor suppressor).</dd>
+
+  <dt>Name the three types of accident that convert a proto-oncogene into an oncogene.</dt>
+  <dd>(1) A point mutation or small deletion: in the coding sequence → hyperactive protein; in a regulatory region → overproduction. (2) Gene amplification → extra copies → overproduction. (3) A chromosomal rearrangement → a hyperactive fusion protein, or a normal protein overproduced under the control region of another gene.</dd>
+
+  <dt>What goes wrong with the EGF receptor in glioblastoma?</dt>
+  <dd>A deletion removes part of its extracellular domain. The truncated receptor is phosphorylated and signals "divide" even when no EGF is bound: a faulty doorbell that rings without being pressed.</dd>
+
+  <dt>Does a deletion of the whole coding region of a proto-oncogene make an oncogene?</dt>
+  <dd>No. No protein is made, which is loss-of-function. An oncogene needs more activity or more product, not less.</dd>
+
+  <dt>Why does a translocation that places a gene under a constitutive promoter make an oncogene?</dt>
+  <dd>A constitutive promoter is always on, so the normal protein is made all the time at a high level: overproduction, accident type 3.</dd>
+
+  <dt>Why does deleting a silencer in the 3′ UTR count, but deleting an enhancer does not?</dt>
+  <dd>A silencer reduces expression; removing it gives more product (gain). An enhancer increases expression; removing it gives less product (loss).</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Driver</strong> = causes the cancer, seen repeatedly; <strong>passenger</strong> = accidental by-product. About <strong>300 cancer-critical genes</strong>.</li>
+  <li><strong>Proto-oncogene</strong> + <strong>gain-of-function</strong> → <strong>oncogene</strong> (overactive or overproduced).</li>
+  <li><strong>Tumor suppressor gene</strong> + <strong>loss-of-function</strong> → brake gone. Subclass: <strong>genome maintenance genes</strong> (instability).</li>
+  <li><strong>Oncogene = dominant, 1 hit</strong>. <strong>Tumor suppressor = recessive, 2 hits</strong> (usually).</li>
+  <li>Both sides of the coin can give the <strong>same effect</strong> (gas pressed = brake cut).</li>
+  <li>Three accidents: <strong>point mutation/small deletion</strong>, <strong>gene amplification</strong>, <strong>chromosome rearrangement</strong>.</li>
+  <li>Only two outcomes at the protein level: <strong>hyperactive protein</strong> or <strong>normal protein overproduced</strong>.</li>
+  <li>Rearrangement gives a <strong>fusion protein</strong> or puts the gene under a <strong>strong control region</strong>.</li>
+  <li><strong>EGF receptor</strong> without its extracellular domain = active without EGF = <strong>faulty doorbell</strong>; <strong>glioblastoma</strong>.</li>
+  <li>Oncogene test: <strong>more activity or more product = yes</strong>; broken, truncated, missing = no.</li>
+  <li>Exam Q5: <strong>all</strong> listed alterations (lost apoptosis, lost checkpoint, overexpressed receptor, activated oncogene) can cause excess proliferation.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>A normal gene in which a gain-of-function mutation can drive a cell toward cancer is called a:
+    <ul class="opts"><li data-l="a">oncogene</li><li data-l="b">proto-oncogene</li><li data-l="c">tumor suppressor gene</li><li data-l="d">passenger</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The normal gene is the proto-oncogene; its mutant, overactive form is the oncogene. A tumor suppressor is dangerous when lost, not when overactive.</p></div></details></li>
+  <li>How many copies of a proto-oncogene must mutate before the cell is affected? And of a tumor suppressor gene?
+    <details><summary>Answer</summary><div class="ans"><p><strong>One</strong> copy of a proto-oncogene (dominant: the overactive protein wins). Usually <strong>both</strong> copies of a tumor suppressor (recessive: one good copy still makes working brake protein).</p></div></details></li>
+  <li>True or false: "A mutation in a tumor suppressor gene makes its protein hyperactive."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Tumor suppressor mutations are loss-of-function: the protein is missing or broken. Hyperactive proteins are the oncogene pattern.</p></div></details></li>
+  <li>Explain "flip sides of the same coin" with a car.
+    <details><summary>Answer</summary><div class="ans"><p>An oncogene is a gas pedal stuck down; a lost tumor suppressor is a cut brake cable. In both cases the car (the cell) goes too fast: the same effect from opposite kinds of damage.</p></div></details></li>
+  <li>A point mutation in the <em>regulatory region</em> of a proto-oncogene results in:
+    <ul class="opts"><li data-l="a">a hyperactive protein in normal amounts</li><li data-l="b">a normal protein in larger amounts</li><li data-l="c">a fusion protein</li><li data-l="d">no protein</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The regulatory region decides how often the gene is read, not what the protein looks like. A change in the <em>coding</em> sequence would give a (hyperactive) protein with a different shape.</p></div></details></li>
+  <li>What is gene amplification, and what does it do to the protein?
+    <details><summary>Answer</summary><div class="ans"><p>Errors in DNA replication make <strong>extra copies</strong> of the gene in one cell. Each copy is read, so the <strong>normal protein is greatly overproduced</strong>.</p></div></details></li>
+  <li>Name the two possible outcomes of a chromosomal rearrangement that creates an oncogene.
+    <details><summary>Answer</summary><div class="ans"><p>(1) The coding region is fused to another gene → a <strong>hyperactive fusion protein</strong>. (2) The gene is placed next to the strong control regions of an actively transcribed gene → the <strong>normal protein is overproduced</strong>.</p></div></details></li>
+  <li>Why is the truncated EGF receptor compared with a faulty doorbell?
+    <details><summary>Answer</summary><div class="ans"><p>Because it rings (sends the "divide" signal into the cell) even when nobody presses the button (no EGF bound). The deletion of its extracellular domain makes it active on its own. Common in glioblastoma.</p></div></details></li>
+  <li>Which of these can result in an oncogene? (several)
+    <ul class="opts"><li data-l="a">deletion of the entire coding region</li><li data-l="b">deletion of a silencer in the 3′ UTR</li><li data-l="c">a premature stop codon</li><li data-l="d">a translocation that puts the coding region under a constitutive promoter</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b and d.</strong> Removing a silencer gives more product; a constitutive promoter makes the protein all the time. (a) gives no protein and (c) a truncated protein: both are loss-of-function. (Claude's reasoning, see section 4.)</p></div></details></li>
+  <li>A point mutation changes one amino acid of the Ras protein so that it can no longer switch itself off. Oncogene or tumor suppressor pattern?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Oncogene</strong>: a hyperactive protein from a small change in the coding sequence (accident type 1). It acts dominantly: one mutated copy is enough.</p></div></details></li>
+  <li>Why is deleting an enhancer of a proto-oncogene <em>not</em> a way to make an oncogene?
+    <details><summary>Answer</summary><div class="ans"><p>An enhancer boosts transcription; without it the gene is read <em>less</em>, so there is less product. An oncogene needs more product or more activity.</p></div></details></li>
+  <li>What are genome maintenance genes, and are they oncogenes or tumor suppressors?
+    <details><summary>Answer</summary><div class="ans"><p>Genes that keep the genome in good repair (DNA repair, chromosome segregation). Their <em>loss</em> causes instability, so they are a subclass of <strong>tumor suppressor genes</strong>; they act indirectly, by speeding up other mutations.</p></div></details></li>
+  <li>Exam-style: which single alteration could make a cell proliferate more than it should? (a) loss of a pro-apoptosis protein, (b) loss of a checkpoint protein, (c) overexpression of a growth-factor receptor, (d) activation of a proto-oncogene.
+    <details><summary>Answer</summary><div class="ans"><p><strong>All four.</strong> (a) and (b) remove brakes (tumor-suppressor-style losses); (c) and (d) press the gas (oncogene-style gains). The exam's correct option is "all options describe mechanisms that could lead to excessive proliferation".</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.04_microenvironment_and_metastasis.html">← 2.4 Microenvironment and metastasis</a><a href="index.html">Chapter 2 index</a><a href="2.06_rb_and_losing_the_second_copy.html">2.6 Rb and losing the second copy →</a></nav>
+</main>
+</body>
+</html>

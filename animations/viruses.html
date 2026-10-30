@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viruses: replication and HIV</title>
+<link rel="stylesheet" href="anim.css">
+<style>
+:root { --vgen: #d64541; --vcap: #3f6fd8; --venv: #8a6fb5; --rec: #2fa37a; --ribo: #9b7fd1; --vpol: #e08a2e; --rt: #e3a33b; --chrom: #6a7f99; --cellf: #f2f6fa; --cells: #9fb3c8; --nuclc: #8a6fb5; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --vgen: #ff7b6e; --vcap: #8cb4ff; --venv: #b39ae0; --rec: #45c495; --ribo: #a990e0; --vpol: #f0a050; --rt: #f0b752; --chrom: #9fb0c6; --cellf: #1f262e; --cells: #5d7184; --nuclc: #b39ae0; }
+}
+:root[data-theme="dark"] { --vgen: #ff7b6e; --vcap: #8cb4ff; --venv: #b39ae0; --rec: #45c495; --ribo: #a990e0; --vpol: #f0a050; --rt: #f0b752; --chrom: #9fb0c6; --cellf: #1f262e; --cells: #5d7184; --nuclc: #b39ae0; }
+.cellb { fill: var(--cellf); stroke: var(--cells); stroke-width: 2.5; }
+.cellb.broken { stroke-dasharray: 18 14; fill-opacity: .4; }
+.nucl { fill: none; stroke: var(--nuclc); stroke-width: 3; }
+.recp { fill: none; stroke: var(--rec); stroke-width: 3; stroke-linecap: round; }
+.recp.hi { stroke: var(--hl); stroke-width: 4; }
+.ribo { fill: var(--ribo); }
+.venv circle { fill: var(--venv); fill-opacity: .18; stroke: var(--venv); stroke-width: 2.5; }
+.spk { stroke: var(--venv); stroke-width: 2; }
+.spkh { fill: var(--venv); }
+.vcap path { fill: var(--vcap); fill-opacity: .25; stroke: var(--vcap); stroke-width: 2.5; }
+.vcap.small path { fill-opacity: .6; stroke-width: 1.5; }
+.vcapf { fill: var(--vcap); fill-opacity: .25; stroke: var(--vcap); stroke-width: 2; }
+.vgen path, .vgenf { fill: none; stroke: var(--vgen); stroke-width: 3; stroke-linecap: round; }
+.mrna { fill: none; stroke: var(--vgen); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.dna { fill: none; stroke: var(--dna); stroke-width: 3; stroke-linecap: round; }
+.provr { fill: var(--dna); }
+.chrom { fill: var(--chrom); }
+.rt circle { fill: var(--rt); stroke: #8a5a00; stroke-width: 1; }
+.vpol { fill: var(--vpol); }
+.hpol { fill: var(--pol); }
+.sm.w { fill: #fff; font-weight: 600; }
+.lbl.bad { fill: var(--stop); font-weight: 700; }
+.lbl.ck { fill: var(--hl); }
+.lbl.big2 { font-size: 20px; font-weight: 700; }
+.sm2 { fill: var(--fg); font: 13px system-ui, sans-serif; }
+.panel { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+</style>
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">← All chapters</a><a href="index.html">Animations</a><a href="../chapter_3/3.01_what_is_a_virus.html">Page 3.1 What a virus is</a><a href="../chapter_3/3.02_how_viruses_replicate.html">Page 3.2 Replication</a><a href="../chapter_3/3.03_rna_viruses_and_hiv.html">Page 3.3 RNA viruses and HIV</a><a href="../cheatsheet/cs3_viruses.html">Cheatsheet 3</a></nav>
+<h1>Viruses: a virus takes over a cell, and HIV</h1>
+<p class="lede">Two animations of chapter 3. The first shows the general replicative cycle of a virus in one host cell: attachment, entry, copying the genome, making proteins, self-assembly and exit. The second follows HIV, a retrovirus: reverse transcriptase, the provirus and budding. Press <b>▶ Play</b> to watch, or go step by step with <b>◀</b> and <b>▶|</b>. Click <b>🔇 Turn voice on</b> to hear every step. Keys: <span class="keys"><kbd>Space</kbd> play/pause, <kbd>←</kbd> <kbd>→</kbd> step, <kbd>Home</kbd> restart, <kbd>V</kbd> voice</span>.
+<span class="note">Simplified and not to scale: a real cell is 10 to 100 times bigger than a virus and makes hundreds to thousands of new viruses.</span></p>
+<div class="tabs" role="tablist">
+  <button data-tab="cy" role="tab" class="on"><b>1 · A virus takes over a cell</b><small>attach → enter → copy the genome → proteins → self-assembly → lysis or budding</small></button>
+  <button data-tab="hiv" role="tab"><b>2 · HIV, a retrovirus</b><small>reverse transcriptase makes DNA from RNA → provirus → new viruses</small></button>
+</div>
+<section class="player" id="pl-cy" aria-label="Part 1: the replicative cycle of a virus"></section>
+<section class="player" id="pl-hiv" aria-label="Part 2: HIV, a retrovirus" hidden></section>
+<p class="note">Remember: a DNA virus uses the host’s DNA polymerase; an RNA virus needs its own RNA → RNA polymerase; a retrovirus brings reverse transcriptase (RNA → DNA) and leaves a provirus in the host genome.</p>
+</main>
+<script src="audio/manifest.js"></script>
+<script src="player.js"></script>
+<script src="scenes_virus.js"></script>
+</body>
+</html>

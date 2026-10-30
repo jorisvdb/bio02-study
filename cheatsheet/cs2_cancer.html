@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheatsheet 2 – The genetic basis of cancer</title>
+<link rel="stylesheet" href="cs.css">
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="../chapter_2/index.html">Chapter 2 pages</a><a href="cs1_chromosomes.html">← 1 Chromosomes</a><a href="cs3_viruses.html">3 Viruses →</a></nav>
+<h1>2 · The genetic basis of cancer</h1>
+<div class="anims"><b>Watch first: animations for this chapter</b>
+<ul>
+  <li><a href="../animations/cancer.html#ev=1">▶ 1 · How a cancer evolves</a> <span class="note">one mutant cell → clone → subclones → invasion → metastasis · card <a href="#c-evolution">Clonal evolution</a></span></li>
+  <li><a href="../animations/cancer.html#gen=1">▶ 2 · Oncogene vs tumor suppressor: the two hits</a> <span class="note">gas pedal stuck vs both brakes lost · card <a href="#c-twoclasses">Two classes of cancer-critical genes</a></span></li>
+</ul></div>
+
+<div class="kapstok"><b>Kapstok – map of this chapter</b>
+<p>Part 1: what cancer is (a clone of cells that evolves and spreads). Part 2: which genes (oncogenes = gas stuck, tumor suppressors = brakes lost; Rb, p53). Click a name to jump to its card.</p>
+<ul class="tree">
+  <li><a href="#c-society">Cells form a society with social controls</a>
+    <ul>
+      <li><a href="#c-benign">Benign → malignant → metastasis</a> · <a href="#c-names">tumour names</a></li>
+      <li><a href="#c-clone">One cell: clonal origin</a> → <a href="#c-progression">tumour progression (Knudson)</a> → <a href="#c-evolution">clonal evolution</a></li>
+      <li><a href="#c-instab">Genetic instability, chromothripsis</a> · <a href="#c-hallmarks">hallmarks</a></li>
+      <li><a href="#c-micro">Microenvironment, angiogenesis</a> · <a href="#c-meta">metastasis steps</a></li>
+    </ul></li>
+  <li><a href="#c-twoclasses">Cancer-critical genes: 2 classes</a>
+    <ul>
+      <li><a href="#c-oncoways">3 ways to make an oncogene</a> · <a href="#c-which">which mutations give an oncogene</a></li>
+      <li><a href="#c-rb">Rb and retinoblastoma</a> · <a href="#c-sixways">6 ways to lose the 2nd copy</a></li>
+      <li><a href="#c-patterns">mutation patterns in sequenced genomes</a> · <a href="#c-pathways">3 pathways</a></li>
+      <li><a href="#c-p53">p53 the stress sensor</a> · <a href="#c-colon">colorectal order</a></li>
+    </ul></li>
+  <li><a href="#c-traps">Quick traps</a></li>
+</ul></div>
+
+<h2 class="sec">A · What cancer is<small>A society of cells, and one clone that breaks the rules and evolves.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-society">
+<p class="crumb">Chapter 2 › <b>Cells as a society</b></p>
+<h2>Social controls: a cell rests, grows, divides, specialises or dies on command</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <circle cx="110" cy="75" r="34" fill="#2a9d8f"/><text x="110" y="72" text-anchor="middle" fill="#fff" font-weight="700">cell</text><text x="110" y="86" text-anchor="middle" fill="#fff" font-size="9">listens to signals</text>
+  <g stroke="#8a8f98" stroke-width="1.5"><path d="M150 60 h60 M150 90 h60 M110 36 v-16 M110 114 v16"/></g>
+  <g fill="currentColor"><text x="216" y="56" font-weight="700">growth factors</text><text x="216" y="68">→ divide (gas)</text><text x="216" y="88" font-weight="700">growth-inhibiting factors</text><text x="216" y="100">→ stop (brake)</text><text x="110" y="14" text-anchor="middle">proliferation / differentiation</text><text x="110" y="146" text-anchor="middle">quiescence / senescence / apoptosis</text></g>
+  <g fill="currentColor"><text x="380" y="20" font-weight="700">cell fates (Figure 2-3)</text><text x="380" y="36">proliferation = divide</text><text x="380" y="50">differentiation = specialise</text><text x="380" y="64">maturation = finish specialising</text><text x="380" y="78">quiescence = rest, can return</text><text x="380" y="92">dormancy = long rest, bad conditions</text><text x="380" y="106">senescence = stop forever</text><text x="380" y="120">apoptosis = programmed death</text><text x="380" y="140" font-size="9">10¹³ cells, billions of mutations/day</text></g>
+</svg>
+</figure>
+<p class="mnemo">Somatic cells sacrifice themselves for the germ cells; a mutant cell that grows "slightly more vigorously" founds a clone = the start of cancer.</p>
+<p class="trap">Senescence = irreversible arrest (tumour-suppressive); quiescence = reversible rest (exam Q3 matching).</p>
+</div>
+
+<div class="card" id="c-benign">
+<p class="crumb">What cancer is › <b>Benign, malignant, metastasis</b></p>
+<h2>Benign stays inside the basal lamina; malignant invades; metastasis = colonies elsewhere</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g>
+    <path d="M10 90 H160" stroke="#e9c46a" stroke-width="4"/>
+    <g fill="#8d99ae"><rect x="14" y="70" width="18" height="18" rx="4"/><rect x="36" y="70" width="18" height="18" rx="4"/><rect x="124" y="70" width="18" height="18" rx="4"/></g>
+    <g fill="#f4a261"><circle cx="70" cy="76" r="8"/><circle cx="88" cy="68" r="8"/><circle cx="106" cy="76" r="8"/><circle cx="88" cy="52" r="8"/><circle cx="76" cy="60" r="8"/><circle cx="100" cy="60" r="8"/></g>
+    <text x="85" y="120" text-anchor="middle" fill="currentColor" font-weight="700">benign (adenoma)</text><text x="85" y="134" text-anchor="middle" fill="currentColor">above the lamina, cure = remove</text>
+  </g>
+  <g>
+    <path d="M190 90 H340" stroke="#e9c46a" stroke-width="4" stroke-dasharray="14 10"/>
+    <g fill="#8d99ae"><rect x="194" y="70" width="18" height="18" rx="4"/><rect x="304" y="70" width="18" height="18" rx="4"/></g>
+    <g fill="#d1495b"><circle cx="250" cy="76" r="8"/><circle cx="268" cy="66" r="8"/><circle cx="232" cy="62" r="8"/><circle cx="256" cy="100" r="8"/><circle cx="276" cy="112" r="8"/><circle cx="240" cy="118" r="8"/></g>
+    <text x="265" y="138" text-anchor="middle" fill="currentColor" font-weight="700">malignant (adenocarcinoma)</text>
+  </g>
+  <g>
+    <path d="M370 90 H510" stroke="#e9c46a" stroke-width="4"/>
+    <rect x="380" y="100" width="120" height="14" rx="7" fill="#fdecea" stroke="#d1495b"/>
+    <circle cx="420" cy="107" r="5" fill="#d1495b"/><circle cx="470" cy="107" r="5" fill="#d1495b"/>
+    <path d="M470 100 C 490 70 500 50 505 30" stroke="#d1495b" stroke-width="1.5" fill="none" stroke-dasharray="3 3"/>
+    <circle cx="500" cy="22" r="10" fill="#d1495b"/>
+    <text x="440" y="134" text-anchor="middle" fill="currentColor" font-weight="700">metastasis</text><text x="440" y="146" text-anchor="middle" fill="currentColor">via blood or lymph vessel</text>
+  </g>
+  <text x="85" y="20" fill="currentColor">basal lamina (yellow) = boundary of the tissue</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td><b>tumour / neoplasm</b></td><td>"new growth": cells dividing out of control</td></tr>
+  <tr><td><b>benign</b></td><td>not invasive; local removal cures</td></tr>
+  <tr><td><b>malignant</b> = cancer</td><td>invades surrounding tissue</td></tr>
+  <tr><td><b>metastasis</b></td><td>secondary tumour elsewhere; kills by organ failure</td></tr>
+</table>
+<p class="trap">Two heritable properties define a cancer cell: proliferate against the rules AND invade/colonise. Invasiveness is essential.</p>
+</div>
+
+<div class="card" id="c-names">
+<p class="crumb">What cancer is › <b>Names by tissue</b></p>
+<h2>Cancer names by tissue of origin</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 110" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <rect x="10" y="10" width="300" height="40" rx="6" fill="#2a9d8f"/><rect x="10" y="56" width="124" height="40" rx="6" fill="#3a86ff"/><rect x="140" y="56" width="84" height="40" rx="6" fill="#9b59b6"/><rect x="230" y="56" width="80" height="40" rx="6" fill="#8d99ae"/>
+  <g fill="#fff" text-anchor="middle" font-weight="700"><text x="160" y="27">carcinoma</text><text x="72" y="73">leukemia, lymphoma,</text><text x="182" y="73">sarcoma</text><text x="270" y="73">nervous</text></g>
+  <g fill="#fff" text-anchor="middle" font-size="9"><text x="160" y="42">epithelium (skin, gut lining, glands): 85 %</text><text x="72" y="86">myeloma: white blood cells</text><text x="182" y="86">muscle, connective</text><text x="270" y="86">system</text></g>
+  <g fill="currentColor"><text x="330" y="26">epithelium = sheet of cells lining a surface</text><text x="330" y="40">(epitheel); divides most → most mutations</text><text x="330" y="62">benign ↔ malignant pairs:</text><text x="330" y="76">adenoma ↔ adenocarcinoma (gland)</text><text x="330" y="96">basal-cell carcinoma: rarely spreads;</text><text x="330" y="108">melanoma (pigment cell): metastasises</text></g>
+</svg>
+</figure>
+<p class="mnemo">Most human cancers are carcinomas because epithelia divide most and are exposed to damage.</p>
+</div>
+
+<div class="card" id="c-clone">
+<p class="crumb">What cancer is › <b>One abnormal cell</b></p>
+<h2>Most cancers come from ONE cell: the Philadelphia proof</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <circle cx="40" cy="60" r="12" fill="#d1495b"/>
+  <path d="M56 60 h26" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#d1495b"><circle cx="100" cy="40" r="8"/><circle cx="100" cy="60" r="8"/><circle cx="100" cy="80" r="8"/><circle cx="120" cy="30" r="8"/><circle cx="120" cy="50" r="8"/><circle cx="120" cy="70" r="8"/><circle cx="120" cy="90" r="8"/><circle cx="140" cy="40" r="8"/><circle cx="140" cy="60" r="8"/><circle cx="140" cy="80" r="8"/></g>
+  <text x="90" y="112" text-anchor="middle" fill="currentColor">1 cell → 10⁹ cells when first detected</text>
+  <g>
+    <rect x="200" y="20" width="12" height="80" rx="5" fill="#3a86ff"/><rect x="200" y="70" width="12" height="30" rx="4" fill="#e76f51"/>
+    <rect x="240" y="20" width="12" height="80" rx="5" fill="#3a86ff"/><rect x="240" y="70" width="12" height="30" rx="4" fill="#e76f51"/>
+    <rect x="280" y="20" width="12" height="80" rx="5" fill="#3a86ff"/><rect x="280" y="70" width="12" height="30" rx="4" fill="#e76f51"/>
+    <path d="M196 70 h20 M236 70 h20 M276 70 h20" stroke="#000" stroke-width="1.5"/>
+    <text x="226" y="128" text-anchor="middle" fill="currentColor">same breakpoint in ALL cells of one patient</text>
+  </g>
+  <g fill="currentColor"><text x="330" y="30">Philadelphia chromosome (9;22):</text><text x="330" y="44">break and rejoin site identical in</text><text x="330" y="58">every leukemic cell of a patient,</text><text x="330" y="72">different between patients →</text><text x="330" y="86" font-weight="700">one accident in one cell</text><text x="330" y="106">tumour also contains stroma: fibroblasts,</text><text x="330" y="120">immune cells, vessel cells (not mutant)</text></g>
+</svg>
+</figure>
+<p class="mnemo">Breast tumour doubling time ≈ 100 days; 10⁸ cells visible on x-ray, 10⁹ palpable, 10¹² death.</p>
+</div>
+
+<div class="card" id="c-progression">
+<p class="crumb">What cancer is › One cell › <b>Tumour progression, Knudson</b></p>
+<h2>Tumour progression: many hits over many years (Knudson)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="none" stroke="#8a8f98" stroke-width="1.5"><rect x="10" y="20" width="90" height="50" rx="6"/><rect x="118" y="20" width="90" height="50" rx="6"/><rect x="226" y="20" width="90" height="50" rx="6"/><rect x="334" y="20" width="90" height="50" rx="6"/></g>
+  <g fill="#8d99ae"><circle cx="40" cy="45" r="6"/><circle cx="55" cy="45" r="6"/><circle cx="70" cy="45" r="6"/></g>
+  <g fill="#f4a261"><circle cx="148" cy="45" r="6"/><circle cx="163" cy="40" r="6"/><circle cx="178" cy="48" r="6"/><circle cx="163" cy="54" r="6"/></g>
+  <g fill="#e76f51"><circle cx="256" cy="45" r="6"/><circle cx="271" cy="38" r="6"/><circle cx="286" cy="48" r="6"/><circle cx="271" cy="56" r="6"/><circle cx="248" cy="58" r="6"/><circle cx="294" cy="60" r="6"/></g>
+  <g fill="#d1495b"><circle cx="364" cy="45" r="6"/><circle cx="379" cy="36" r="6"/><circle cx="394" cy="46" r="6"/><circle cx="379" cy="56" r="6"/><circle cx="356" cy="60" r="6"/><circle cx="402" cy="60" r="6"/><circle cx="410" cy="36" r="6"/></g>
+  <g stroke="#d1495b" stroke-width="2"><path d="M104 45 h10 M212 45 h10 M320 45 h10"/></g>
+  <g fill="#d1495b" font-weight="700" text-anchor="middle"><text x="109" y="14">hit 1</text><text x="217" y="14">hit 2</text><text x="325" y="14">hit 3</text></g>
+  <g fill="currentColor" text-anchor="middle"><text x="55" y="86">normal</text><text x="163" y="86">mild disorder</text><text x="271" y="86">benign tumour</text><text x="379" y="86">malignant</text></g>
+  <text x="260" y="108" text-anchor="middle" fill="currentColor">each hit = a mutation or epigenetic change that gives a selective advantage; takes years (long incubation)</text>
+  <text x="432" y="46" fill="currentColor" font-size="9">cervix: normal →</text><text x="432" y="58" fill="currentColor" font-size="9">low-grade → high-</text><text x="432" y="70" fill="currentColor" font-size="9">grade → invasive</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>smoking → lung cancer</td><td>decades later</td></tr>
+  <tr><td>Hiroshima radiation → leukemia</td><td>rise after ~5 years</td></tr>
+  <tr><td>industrial carcinogen</td><td>10–20+ years</td></tr>
+</table>
+<p class="trap">"Multiple hit theory of Knudson": one mutation is never enough; the bigger the tumour, the faster the next hit comes.</p>
+</div>
+
+<div class="card" id="c-evolution">
+<p class="crumb">What cancer is › One cell › <b>Clonal evolution</b></p>
+<h2>Clonal evolution: mutation, selection, subclones (heterogeneity)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 140" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <path d="M20 120 H500" stroke="#e9c46a" stroke-width="4"/>
+  <g fill="#8d99ae"><rect x="24" y="100" width="16" height="16" rx="3"/><rect x="44" y="100" width="16" height="16" rx="3"/><rect x="64" y="100" width="16" height="16" rx="3"/><rect x="104" y="100" width="16" height="16" rx="3"/></g>
+  <rect x="84" y="100" width="16" height="16" rx="3" fill="#f4a261"/>
+  <text x="92" y="92" text-anchor="middle" fill="currentColor">1 mutation</text>
+  <path d="M130 108 h20" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#f4a261"><rect x="160" y="100" width="16" height="16" rx="3"/><rect x="180" y="100" width="16" height="16" rx="3"/><rect x="200" y="100" width="16" height="16" rx="3"/><rect x="170" y="80" width="16" height="16" rx="3"/><rect x="190" y="80" width="16" height="16" rx="3"/></g>
+  <rect x="180" y="60" width="16" height="16" rx="3" fill="#e76f51"/>
+  <text x="188" y="52" text-anchor="middle" fill="currentColor">2 mutations</text>
+  <path d="M226 108 h20" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#e76f51"><rect x="256" y="100" width="16" height="16" rx="3"/><rect x="276" y="100" width="16" height="16" rx="3"/><rect x="296" y="100" width="16" height="16" rx="3"/><rect x="266" y="80" width="16" height="16" rx="3"/><rect x="286" y="80" width="16" height="16" rx="3"/><rect x="276" y="60" width="16" height="16" rx="3"/></g>
+  <rect x="286" y="40" width="16" height="16" rx="3" fill="#d1495b"/>
+  <text x="290" y="32" text-anchor="middle" fill="currentColor">3 mutations</text>
+  <path d="M322 108 h20" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#d1495b"><rect x="352" y="100" width="16" height="16" rx="3"/><rect x="372" y="100" width="16" height="16" rx="3"/><rect x="392" y="100" width="16" height="16" rx="3"/><rect x="362" y="80" width="16" height="16" rx="3"/><rect x="382" y="80" width="16" height="16" rx="3"/><rect x="372" y="124" width="16" height="16" rx="3"/><rect x="392" y="128" width="16" height="16" rx="3"/></g>
+  <g fill="#9b59b6"><rect x="412" y="80" width="16" height="16" rx="3"/><rect x="412" y="100" width="16" height="16" rx="3"/></g>
+  <text x="380" y="14" text-anchor="middle" fill="currentColor" font-weight="700">invasion through the basal lamina</text>
+  <g fill="currentColor" font-size="9"><text x="434" y="48">subclones (purple):</text><text x="434" y="60">different inside one</text><text x="434" y="72">tumour = intratumour</text><text x="434" y="84">heterogeneity →</text><text x="434" y="96">cures difficult</text></g>
+</svg>
+</figure>
+<ol class="steps">
+  <li>One cell gets a mutation (or epigenetic change)</li>
+  <li>Advantage → its progeny dominate (a clone)</li>
+  <li>More cells → more chance of the next hit</li>
+  <li>Next hit → new dominant subclone</li>
+  <li>Final step: invasion, metastasis</li>
+</ol>
+<p class="mnemo">Darwin inside the body: mutation + natural selection, within one lifetime. Harsh tumour environment (low oxygen, few nutrients) selects.</p>
+</div>
+
+<div class="card" id="c-instab">
+<p class="crumb">What cancer is › <b>Genetic instability, chromothripsis</b></p>
+<h2>Genetic instability speeds evolution; chromothripsis = a chromosome shattered</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g font-weight="700" fill="#fff" text-anchor="middle">
+    <g transform="translate(10,14)"><rect width="22" height="18" rx="3" fill="#2a9d8f"/><rect x="24" width="22" height="18" rx="3" fill="#2a9d8f"/><rect x="48" width="22" height="18" rx="3" fill="#2a9d8f"/><rect x="72" width="22" height="18" rx="3" fill="#2a9d8f"/><rect x="96" width="22" height="18" rx="3" fill="#2a9d8f"/><rect x="120" width="22" height="18" rx="3" fill="#2a9d8f"/><text x="11" y="13">1</text><text x="35" y="13">2</text><text x="59" y="13">3</text><text x="83" y="13">4</text><text x="107" y="13">5</text><text x="131" y="13">6</text></g>
+    <g transform="translate(10,60)"><rect width="22" height="18" rx="3" fill="#e76f51" transform="rotate(20 11 9)"/><rect x="40" y="6" width="22" height="18" rx="3" fill="#e76f51" transform="rotate(-30 51 15)"/><rect x="80" y="-4" width="22" height="18" rx="3" fill="#e76f51" transform="rotate(50 91 5)"/><rect x="118" y="8" width="22" height="18" rx="3" fill="#e76f51" transform="rotate(-10 129 17)"/></g>
+    <g transform="translate(10,104)"><rect width="22" height="18" rx="3" fill="#d1495b"/><rect x="24" width="22" height="18" rx="3" fill="#d1495b"/><rect x="48" width="22" height="18" rx="3" fill="#d1495b"/><rect x="72" width="22" height="18" rx="3" fill="#d1495b"/><rect x="96" width="22" height="18" rx="3" fill="#d1495b"/><text x="11" y="13">1</text><text x="35" y="13">4</text><text x="59" y="13">3</text><text x="83" y="13">6</text><text x="107" y="13">4</text></g>
+  </g>
+  <g fill="currentColor"><text x="160" y="28">intact chromosome</text><text x="160" y="74">sudden catastrophe: many breaks</text><text x="160" y="112">random reassembly:</text><text x="160" y="124">inverted, duplicated, lost (2, 5)</text></g>
+  <g fill="currentColor"><text x="330" y="18" font-weight="700">how it starts: lagging chromosome</text><text x="330" y="32">at mitosis (not attached to both poles)</text><text x="330" y="48">→ (A) aneuploidy n + 1 / n − 1, or</text><text x="330" y="62">→ (B) a micronucleus → DNA damage</text><text x="330" y="76">→ next mitosis: shattered = chromothripsis</text><text x="330" y="98" font-weight="700">"Big Bang": sudden jumps, not only</text><text x="330" y="112" font-weight="700">gradual single mutations</text></g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>type 1</td><td>karyotype normal, many point mutations → repair failure</td></tr>
+  <tr><td>type 2</td><td>karyotype disordered: breaks, deletions, duplications, amplifications</td></tr>
+</table>
+<p class="trap">Instability is selected FOR: anything that speeds heritable change speeds evolution toward malignancy. It also creates heterogeneity.</p>
+</div>
+
+<div class="card" id="c-hallmarks">
+<p class="crumb">What cancer is › <b>Hallmarks of cancer</b></p>
+<h2>Hallmarks of cancer (Hanahan and Weinberg 2000 → 2011 → 2022)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <circle cx="110" cy="85" r="60" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <circle cx="110" cy="85" r="24" fill="#d1495b"/><text x="110" y="89" text-anchor="middle" fill="#fff" font-weight="700">cancer</text>
+  <g fill="currentColor" font-size="9" text-anchor="middle">
+    <text x="110" y="16">1 self-sufficient growth signals</text>
+    <text x="196" y="50">2 ignores anti-growth signals</text>
+    <text x="196" y="124">3 evades apoptosis</text>
+    <text x="110" y="160">4 limitless division (telomeres)</text>
+    <text x="6" y="124" text-anchor="start">5 invasion + metastasis</text>
+    <text x="6" y="50" text-anchor="start">6 sustained angiogenesis</text>
+  </g>
+  <g fill="currentColor"><text x="270" y="20" font-weight="700">2011 added (now core):</text><text x="270" y="34">7 reprogrammed metabolism</text><text x="270" y="48">8 avoiding immune destruction</text><text x="270" y="68" font-weight="700">enabling characteristics:</text><text x="270" y="82">genome instability + mutation</text><text x="270" y="96">tumour-promoting inflammation</text><text x="270" y="116" font-weight="700">2022 emerging:</text><text x="270" y="130">phenotypic plasticity, non-mutational</text><text x="270" y="144">epigenetic reprogramming, polymorphic</text><text x="270" y="158">microbiomes, senescent cells</text></g>
+</svg>
+</figure>
+<p class="mnemo">Syllabus list of 6 attributes: faster growth than death · bypass limits · evade death signals · altered metabolism · manipulate tissue + evade immunity · escape home tissue (metastasis).</p>
+<p class="trap">Angiogenesis = new blood vessels: it supplies blood (oxygen, nutrients) to the tumour (exam Q4). Not "growth factors", not "inhibits apoptosis".</p>
+</div>
+
+<div class="card" id="c-micro">
+<p class="crumb">What cancer is › <b>Tumour microenvironment</b></p>
+<h2>The stroma helps: two-way talk, angiogenesis, immune escape</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 140" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="#d1495b"><circle cx="110" cy="70" r="12"/><circle cx="134" cy="60" r="12"/><circle cx="122" cy="92" r="12"/><circle cx="146" cy="84" r="12"/><circle cx="98" cy="46" r="12"/></g>
+  <text x="124" y="124" text-anchor="middle" fill="currentColor" font-weight="700">cancer cells (mutant)</text>
+  <g fill="#f4a261"><ellipse cx="40" cy="60" rx="16" ry="6" transform="rotate(-30 40 60)"/><ellipse cx="200" cy="40" rx="16" ry="6" transform="rotate(30 200 40)"/></g>
+  <g fill="#9b59b6"><circle cx="50" cy="100" r="8"/><circle cx="190" cy="100" r="8"/></g>
+  <path d="M230 20 C 240 60 230 100 240 130" stroke="#3a86ff" stroke-width="8" fill="none"/><circle cx="236" cy="70" r="4" fill="#2a9d8f"/>
+  <g stroke="#8a8f98" stroke-width="1" stroke-dasharray="2 2"><path d="M60 40 L90 50 M90 50 L60 40"/></g>
+  <g fill="currentColor"><text x="270" y="24"><tspan fill="#f4a261" font-weight="700">■</tspan> fibroblasts: make matrix, send growth signals</text><text x="270" y="42"><tspan fill="#9b59b6" font-weight="700">●</tspan> inflammatory white blood cells</text><text x="270" y="60"><tspan fill="#3a86ff" font-weight="700">▌</tspan> blood/lymph vessel (endothelial cells)</text><text x="270" y="78"><tspan fill="#2a9d8f" font-weight="700">●</tspan> pericyte = smooth muscle cell on the vessel</text><text x="270" y="102" font-weight="700">tumour ↔ stroma evolve together</text><text x="270" y="116">("weeds and their ecosystem")</text><text x="270" y="132">only the cancer cells carry mutations</text></g>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Cancer cells secrete signals + proteases (matrix cutters)</li>
+  <li>Stroma signals back: grow, divide</li>
+  <li>Inflammation like an unhealed wound</li>
+  <li>Angiogenesis: vessels for the hypoxic core</li>
+  <li>Immunosuppressive niche: white cells blocked</li>
+</ol>
+<p class="mnemo">Immune cells can destroy OR promote the tumour. Therapies that lift the immune block are "powerful tools".</p>
+</div>
+
+<div class="card" id="c-meta">
+<p class="crumb">What cancer is › <b>Metastasis steps</b></p>
+<h2>Metastasis: a multistep journey; colonisation is the hard step</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <path d="M10 60 H170" stroke="#e9c46a" stroke-width="4"/>
+  <g fill="#8d99ae"><rect x="14" y="40" width="16" height="16" rx="3"/><rect x="34" y="40" width="16" height="16" rx="3"/></g>
+  <g fill="#d1495b"><circle cx="70" cy="46" r="7"/><circle cx="86" cy="40" r="7"/><circle cx="100" cy="50" r="7"/><circle cx="110" cy="72" r="7"/></g>
+  <path d="M120 85 H510" stroke="#3a86ff" stroke-width="10" fill="none" opacity=".4"/>
+  <circle cx="150" cy="85" r="6" fill="#d1495b"/><circle cx="240" cy="85" r="6" fill="#d1495b"/><circle cx="330" cy="85" r="6" fill="#d1495b"/>
+  <circle cx="420" cy="78" r="6" fill="#d1495b"/>
+  <g fill="#d1495b"><circle cx="440" cy="118" r="6"/><circle cx="452" cy="112" r="6"/><circle cx="446" cy="128" r="6"/></g>
+  <g fill="#d1495b"><circle cx="490" cy="112" r="6"/><circle cx="502" cy="106" r="6"/><circle cx="496" cy="124" r="6"/><circle cx="508" cy="120" r="6"/><circle cx="484" cy="126" r="6"/></g>
+  <g fill="currentColor" font-size="9" text-anchor="middle">
+    <text x="60" y="22">1 benign in epithelium</text><text x="60" y="34">2 invasive, loses adhesion</text>
+    <text x="150" y="106">3 enters vessel</text><text x="240" y="106">4 travels in blood</text><text x="240" y="118">&lt;1 in 1000 alive after 24 h</text>
+    <text x="330" y="106">5 adheres to wall</text><text x="420" y="60">6 exits vessel</text><text x="380" y="146">7 micrometastasis</text><text x="446" y="134">8 colony &lt;0.1 %</text>
+  </g>
+  <text x="250" y="30" fill="currentColor">lymph vessels: clumps enter → lymph-node metastases</text>
+  <text x="250" y="44" fill="currentColor">blood vessels: single circulating tumour cells (CTCs)</text>
+</svg>
+</figure>
+<p class="trap">Metastasis = 90 % of cancer deaths; last step (colonising a distant site) is rate-limiting: 1 in thousands to millions succeeds. Micrometastases can stay dormant for years.</p>
+<p class="mnemo">CTC clusters metastasise more than single CTCs (adhesion overrides death signals).</p>
+</div>
+
+</div>
+
+<h2 class="sec">B · Cancer-critical genes<small>About 300 genes; two classes; a handful of pathways; Rb and p53.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-twoclasses">
+<p class="crumb">Genes › <b>Two classes of cancer-critical genes</b></p>
+<h2>Proto-oncogene → oncogene (gas stuck) vs tumor suppressor (brakes lost)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 160" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="currentColor" font-weight="700"><text x="20" y="18">A · oncogene: dominant, ONE hit</text><text x="280" y="18">B · tumor suppressor: recessive, TWO hits</text></g>
+  <g>
+    <rect x="20" y="30" width="60" height="14" rx="4" fill="#8d99ae"/><rect x="20" y="50" width="60" height="14" rx="4" fill="#8d99ae"/>
+    <text x="90" y="48" fill="currentColor">normal cell: 2 copies</text>
+    <path d="M50 70 v14" stroke="#d1495b" stroke-width="2"/>
+    <rect x="20" y="90" width="60" height="14" rx="4" fill="#d1495b"/><rect x="20" y="110" width="60" height="14" rx="4" fill="#8d99ae"/>
+    <text x="90" y="100" fill="currentColor">1 activating mutation (solid red)</text><text x="90" y="114" fill="currentColor">→ hyperactive protein → cancer-ward</text>
+    <text x="20" y="148" fill="currentColor" font-weight="700">gain of function = too much activity</text>
+  </g>
+  <g>
+    <rect x="280" y="30" width="60" height="14" rx="4" fill="#8d99ae"/><rect x="280" y="50" width="60" height="14" rx="4" fill="#8d99ae"/>
+    <path d="M310 70 v14" stroke="#d1495b" stroke-width="2"/>
+    <rect x="280" y="90" width="60" height="14" rx="4" fill="none" stroke="#d1495b" stroke-width="2"/><rect x="280" y="110" width="60" height="14" rx="4" fill="#8d99ae"/>
+    <text x="350" y="82" fill="currentColor">hit 1: no effect, the other copy works</text>
+    <path d="M400 96 h20" stroke="#d1495b" stroke-width="2"/>
+    <rect x="430" y="90" width="60" height="14" rx="4" fill="none" stroke="#d1495b" stroke-width="2"/><rect x="430" y="110" width="60" height="14" rx="4" fill="none" stroke="#d1495b" stroke-width="2"/>
+    <text x="350" y="138" fill="currentColor">hit 2 (mutation or chromosome lost) → brake gone</text>
+    <text x="280" y="156" fill="currentColor" font-weight="700">loss of function = too little activity</text>
+  </g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><th>exam Q6 matching</th><th></th></tr>
+  <tr><td>oncogene</td><td>mutant gene whose overactive form causes cancer</td></tr>
+  <tr><td>proto-oncogene</td><td>normal gene; gain-of-function mutation drives toward cancer</td></tr>
+  <tr><td>tumor suppressor gene</td><td>normal gene; loss-of-function contributes to cancer</td></tr>
+  <tr><td>p53</td><td>tumor suppressor mutated in ~half of human cancers</td></tr>
+</table>
+<p class="mnemo">Genome maintenance genes = subclass of tumor suppressors (their loss → instability). Both classes can give the same effect: "flip sides of the same coin".</p>
+</div>
+
+<div class="card" id="c-oncoways">
+<p class="crumb">Genes › Oncogenes › <b>Three ways to make an oncogene</b></p>
+<h2>Three accidents that turn a proto-oncogene into an oncogene</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g>
+    <rect x="10" y="30" width="30" height="12" fill="#e9c46a"/><rect x="42" y="30" width="110" height="12" fill="#2a9d8f"/><rect x="100" y="28" width="6" height="16" fill="#d1495b"/>
+    <text x="80" y="20" text-anchor="middle" fill="currentColor" font-weight="700">1 point mutation / small deletion</text>
+    <text x="80" y="60" text-anchor="middle" fill="currentColor">in coding part: hyperactive protein</text>
+    <text x="80" y="72" text-anchor="middle" fill="currentColor">in regulatory part: overproduced</text>
+  </g>
+  <g>
+    <rect x="180" y="24" width="20" height="10" fill="#e9c46a"/><rect x="202" y="24" width="60" height="10" fill="#2a9d8f"/>
+    <rect x="180" y="37" width="20" height="10" fill="#e9c46a"/><rect x="202" y="37" width="60" height="10" fill="#2a9d8f"/>
+    <rect x="180" y="50" width="20" height="10" fill="#e9c46a"/><rect x="202" y="50" width="60" height="10" fill="#2a9d8f"/>
+    <text x="260" y="20" text-anchor="middle" fill="currentColor" font-weight="700">2 gene amplification</text>
+    <text x="260" y="76" text-anchor="middle" fill="currentColor">extra copies (replication error)</text><text x="260" y="88" text-anchor="middle" fill="currentColor">→ normal protein overproduced</text>
+  </g>
+  <g>
+    <rect x="360" y="30" width="40" height="12" fill="#9b59b6"/><rect x="402" y="30" width="100" height="12" fill="#2a9d8f"/>
+    <path d="M400 26 v20" stroke="#d1495b" stroke-width="2"/>
+    <text x="430" y="20" text-anchor="middle" fill="currentColor" font-weight="700">3 chromosome rearrangement</text>
+    <text x="430" y="60" text-anchor="middle" fill="currentColor">fused to active gene: hyperactive</text><text x="430" y="72" text-anchor="middle" fill="currentColor">fusion protein, or strong promoter</text><text x="430" y="84" text-anchor="middle" fill="currentColor">→ normal protein overproduced</text>
+  </g>
+  <g>
+    <rect x="20" y="100" width="30" height="40" rx="4" fill="#3a86ff"/><rect x="20" y="118" width="30" height="22" rx="4" fill="#2a9d8f"/><circle cx="35" cy="96" r="6" fill="#e76f51"/>
+    <rect x="80" y="118" width="30" height="22" rx="4" fill="#2a9d8f"/>
+    <text x="130" y="112" fill="currentColor">EGF receptor: outside part (blue) deleted →</text><text x="130" y="126" fill="currentColor">signals without EGF: "doorbell that rings by itself"</text><text x="130" y="140" fill="currentColor">common in glioblastoma (brain tumour)</text>
+  </g>
+</svg>
+</figure>
+<div class="legend"><ul><li><i style="background:#e9c46a"></i>regulatory region (promoter)</li><li><i style="background:#2a9d8f"></i>coding region</li><li><i style="background:#d1495b"></i>mutation / break</li></ul></div>
+</div>
+
+<div class="card" id="c-which">
+<p class="crumb">Genes › Oncogenes › <b>Which mutations give an oncogene?</b></p>
+<h2>Which mutations can result in an oncogene? (syllabus 2.4, several answers)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 60" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <rect x="10" y="20" width="50" height="14" fill="#9b59b6"/><rect x="62" y="20" width="40" height="14" fill="#e9c46a"/><rect x="104" y="20" width="200" height="14" fill="#2a9d8f"/><rect x="306" y="20" width="60" height="14" fill="#8d99ae"/><rect x="368" y="20" width="40" height="14" fill="#e76f51"/>
+  <g fill="currentColor" font-size="9" text-anchor="middle"><text x="35" y="48">enhancer</text><text x="82" y="48">promoter</text><text x="204" y="48">coding region (exons, introns, splice sites)</text><text x="336" y="48">3′ UTR</text><text x="388" y="48">silencer</text><text x="204" y="12">more product or hyperactive product = oncogene; less or none = not</text></g>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>deletion of the entire coding region</td><td><b>no</b>: no protein at all</td></tr>
+  <tr><td>deletion of a silencer in the 3′ UTR</td><td><b>yes</b>: brake on expression removed → more</td></tr>
+  <tr><td>deletion of an enhancer</td><td><b>no</b>: less expression</td></tr>
+  <tr><td>deletion of a 3′ splice acceptor</td><td><b>no</b>: mRNA mis-spliced, protein broken</td></tr>
+  <tr><td>premature stop codon</td><td><b>no</b>: truncated protein (typical for tumor suppressors)</td></tr>
+  <tr><td>a point mutation</td><td><b>yes</b> if it makes the protein hyperactive (Ras)</td></tr>
+  <tr><td>translocation under a constitutive promoter</td><td><b>yes</b>: always-on production</td></tr>
+</table>
+<p class="trap">Claude's reasoning, not an official key. Rule: an oncogene needs MORE or STRONGER product. UTR = untranslated region of the mRNA; silencer/enhancer = DNA elements that lower/raise transcription.</p>
+</div>
+
+<div class="card" id="c-rb">
+<p class="crumb">Genes › Tumor suppressors › <b>Rb and retinoblastoma</b></p>
+<h2>Rb: first tumor suppressor, found in retinoblastoma (two hits)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="currentColor" font-weight="700" text-anchor="middle"><text x="90" y="16">healthy</text><text x="260" y="16">hereditary form</text><text x="430" y="16">nonhereditary form</text></g>
+  <g>
+    <g fill="#8d99ae"><circle cx="60" cy="50" r="9"/><circle cx="90" cy="50" r="9"/><circle cx="120" cy="50" r="9"/><circle cx="75" cy="76" r="9"/><circle cx="105" cy="76" r="9"/></g>
+    <text x="90" y="110" text-anchor="middle" fill="currentColor">all cells: 2 good Rb copies</text><text x="90" y="124" text-anchor="middle" fill="currentColor">rare cell loses 1 → still fine</text><text x="90" y="140" text-anchor="middle" fill="currentColor" font-weight="700">no tumour</text>
+  </g>
+  <g>
+    <g fill="#f4a261"><circle cx="230" cy="50" r="9"/><circle cx="260" cy="50" r="9"/><circle cx="290" cy="50" r="9"/><circle cx="245" cy="76" r="9"/></g><circle cx="275" cy="76" r="9" fill="#d1495b"/>
+    <text x="260" y="110" text-anchor="middle" fill="currentColor">every cell born with 1 bad copy</text><text x="260" y="124" text-anchor="middle" fill="currentColor">1 somatic event kills the good one</text><text x="260" y="140" text-anchor="middle" fill="currentColor" font-weight="700">many tumours, both eyes</text>
+  </g>
+  <g>
+    <g fill="#8d99ae"><circle cx="400" cy="50" r="9"/><circle cx="430" cy="50" r="9"/><circle cx="460" cy="50" r="9"/><circle cx="415" cy="76" r="9"/></g><circle cx="445" cy="76" r="9" fill="#d1495b"/>
+    <text x="430" y="110" text-anchor="middle" fill="currentColor">2 independent hits in ONE cell line</text><text x="430" y="124" text-anchor="middle" fill="currentColor">very rare: 1 in 30 000</text><text x="430" y="140" text-anchor="middle" fill="currentColor" font-weight="700">one tumour, one eye</text>
+  </g>
+</svg>
+</figure>
+<div class="legend"><ul><li><i style="background:#8d99ae"></i>2 good copies</li><li><i style="background:#f4a261"></i>1 good copy</li><li><i style="background:#d1495b"></i>0 good copies → tumour</li></ul></div>
+<table class="mini">
+  <tr><td>retinoblastoma</td><td>eye tumour of children, retina neural precursor cells, 1 in 20 000</td></tr>
+  <tr><td>clue</td><td>deletion of a band on chromosome 13 → Rb gene mapped</td></tr>
+  <tr><td>Rb protein</td><td>universal brake on cell-cycle entry (G1); also lost in lung, breast, bladder carcinomas</td></tr>
+</table>
+<p class="trap">Finding a LOST gene needs a different strategy than finding a hyperactive one (you cannot transform cells with something absent).</p>
+</div>
+
+<div class="card" id="c-sixways">
+<p class="crumb">Genes › Tumor suppressors › <b>Losing the second copy</b></p>
+<h2>Six ways to lose the remaining good copy (genetic and epigenetic)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 172" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <rect x="200" y="10" width="12" height="40" rx="4" fill="#d1495b"/><rect x="230" y="10" width="12" height="40" rx="4" fill="#2a9d8f"/>
+  <text x="221" y="62" text-anchor="middle" fill="currentColor">cell with 1 mutant (red), 1 good (green) copy</text>
+  <g stroke="#8a8f98" stroke-width="1.2"><path d="M221 66 L50 92 M221 66 L130 92 M221 66 L221 92 M221 66 L310 92 M221 66 L390 92 M221 66 L470 92"/></g>
+  <g fill="currentColor" text-anchor="middle" font-size="9">
+    <text x="50" y="106" font-weight="700">1 deletion</text><text x="50" y="118">piece with gene lost</text>
+    <text x="130" y="140" font-weight="700">2 point mutation</text><text x="130" y="152">replication error</text>
+    <text x="221" y="106" font-weight="700">3 chromosome loss</text><text x="221" y="118">mis-segregation,</text><text x="221" y="130">aneuploidy</text>
+    <text x="310" y="140" font-weight="700">4 mitotic recombination</text><text x="310" y="152">good copy swapped</text><text x="310" y="164">for the mutant one</text>
+    <text x="390" y="106" font-weight="700">5 gene conversion</text><text x="390" y="118">copied over by the</text><text x="390" y="130">mutant during recombination</text>
+    <text x="470" y="140" font-weight="700">6 epigenetic</text><text x="470" y="152">promoter C's methylated</text><text x="470" y="164">→ silenced, heritable</text>
+  </g>
+</svg>
+</figure>
+<p class="mnemo">First copy: usually a small specific event (deletion, point mutation). Second copy: usually a sloppy, non-specific event in an unstable cell.</p>
+<p class="trap">Epigenetic silencing changes NO DNA letter, yet is permanent in all descendants (BIO01 ch 6: methylation of CG cytosines).</p>
+</div>
+
+<div class="card" id="c-patterns">
+<p class="crumb">Genes › Sequencing › <b>Mutation patterns</b></p>
+<h2>Sequenced genomes: oncogene = same missense spot; tumor suppressor = truncations anywhere</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <text x="10" y="16" fill="currentColor" font-weight="700">A · oncogene (PIK3CA)</text>
+  <rect x="10" y="30" width="230" height="14" rx="4" fill="#2a9d8f"/><text x="20" y="58" fill="currentColor" font-size="9">N</text><text x="232" y="58" fill="currentColor" font-size="9">C</text>
+  <g fill="#3a86ff"><path d="M150 28 l-5 -9 h10z M153 28 l-5 -9 h10z M147 28 l-5 -9 h10z M156 28 l-5 -9 h10z M144 28 l-5 -9 h10z"/><path d="M200 28 l-5 -9 h10z M203 28 l-5 -9 h10z"/></g>
+  <text x="10" y="78" fill="currentColor">blue = missense (amino acid changed): the SAME</text><text x="10" y="92" fill="currentColor">nucleotide change again and again → activating</text>
+  <text x="280" y="16" fill="currentColor" font-weight="700">B · tumor suppressor (Rb)</text>
+  <rect x="280" y="30" width="230" height="14" rx="4" fill="#2a9d8f"/>
+  <g fill="#e9c46a"><path d="M300 28 l-5 -9 h10z M330 28 l-5 -9 h10z M352 28 l-5 -9 h10z M390 28 l-5 -9 h10z M420 28 l-5 -9 h10z M445 28 l-5 -9 h10z M480 28 l-5 -9 h10z M500 28 l-5 -9 h10z"/></g>
+  <g fill="#3a86ff"><path d="M370 28 l-5 -9 h10z M460 28 l-5 -9 h10z"/></g>
+  <text x="280" y="78" fill="currentColor">yellow = truncating (stop codon, frameshift):</text><text x="280" y="92" fill="currentColor">spread over the gene → any break inactivates</text>
+  <text x="260" y="112" text-anchor="middle" fill="currentColor">few mutations can activate; missense, nonsense and frameshift can all inactivate</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>driver</td><td>causal; seen repeatedly in many patients</td></tr>
+  <tr><td>passenger</td><td>by-product of instability; rare, no advantage</td></tr>
+  <tr><td>cancer-critical genes</td><td>~300 = 1 % of genes; diverse (signalling, cell cycle, metabolism, chromatin, splicing)</td></tr>
+  <tr><td>resources</td><td>The Cancer Genome Atlas (&gt;10 000 tumours, 33 types), COSMIC</td></tr>
+</table>
+<p class="mnemo">Scans: whole genome, exome (21 000 coding genes), copy number, methylation, RNA levels, proteins by mass spectrometry (ch 4).</p>
+</div>
+
+<div class="card" id="c-pathways">
+<p class="crumb">Genes › <b>Three pathways</b></p>
+<h2>Three controls broken in nearly every cancer: cell cycle, proliferation, survival</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 140" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g><rect x="10" y="20" width="155" height="70" rx="8" fill="#3a86ff" fill-opacity=".15" stroke="#3a86ff" stroke-width="2"/><text x="87" y="40" text-anchor="middle" fill="currentColor" font-weight="700">CELL CYCLE</text><text x="87" y="58" text-anchor="middle" fill="currentColor">Rb pathway</text><text x="87" y="72" text-anchor="middle" fill="currentColor">entry into the cycle (G1)</text></g>
+  <g><rect x="182" y="20" width="155" height="70" rx="8" fill="#2a9d8f" fill-opacity=".15" stroke="#2a9d8f" stroke-width="2"/><text x="259" y="40" text-anchor="middle" fill="currentColor" font-weight="700">CELL PROLIFERATION</text><text x="259" y="58" text-anchor="middle" fill="currentColor">RTK / Ras / PI 3-kinase</text><text x="259" y="72" text-anchor="middle" fill="currentColor">growth signals outside → in</text></g>
+  <g><rect x="354" y="20" width="155" height="70" rx="8" fill="#d1495b" fill-opacity=".15" stroke="#d1495b" stroke-width="2"/><text x="431" y="40" text-anchor="middle" fill="currentColor" font-weight="700">CELL SURVIVAL</text><text x="431" y="58" text-anchor="middle" fill="currentColor">p53 pathway</text><text x="431" y="72" text-anchor="middle" fill="currentColor">stress and DNA damage response</text></g>
+  <text x="260" y="112" text-anchor="middle" fill="currentColor">glioblastoma (91 tumours): 74 % hit in all three · ovarian: Rb 67 %, Ras/PI3K 45 %, p53 96 %</text>
+  <text x="260" y="130" text-anchor="middle" fill="currentColor" font-weight="700">usually only ONE gene per pathway mutated: once broken, no further selection</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>Ras</td><td>switch protein passing growth-factor signals into the cell; mutated in ~30 % of cancers (Alberts)</td></tr>
+  <tr><td>RTK</td><td>receptor tyrosine kinase: membrane receptor that adds phosphates when a growth factor binds</td></tr>
+  <tr><td>PI 3-kinase</td><td>enzyme downstream of Ras (growth)</td></tr>
+</table>
+<p class="trap">What matters is the broken CONTROL, not which gene: a tumour without an Rb mutation has another Rb-pathway gene mutated.</p>
+</div>
+
+<div class="card" id="c-p53">
+<p class="crumb">Genes › Tumor suppressors › <b>p53</b></p>
+<h2>p53: the stress antenna → arrest, senescence or apoptosis</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 160" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="currentColor" text-anchor="middle" font-size="9"><text x="60" y="20">DNA damage</text><text x="160" y="20">telomere shortening</text><text x="250" y="20">hypoxia (low O₂)</text><text x="350" y="20">osmotic / oxidative stress</text><text x="462" y="20">oncogene overdrive (Myc)</text></g>
+  <g stroke="#8a8f98" stroke-width="1.5"><path d="M60 26 L250 60 M160 26 L255 60 M260 26 L260 60 M360 26 L265 60 M470 26 L270 60"/></g>
+  <rect x="200" y="62" width="120" height="30" rx="8" fill="#d1495b"/><text x="260" y="82" text-anchor="middle" fill="#fff" font-weight="700">stable, active p53</text>
+  <g stroke="#8a8f98" stroke-width="1.5"><path d="M230 94 L100 120 M260 94 L260 120 M290 94 L420 120"/></g>
+  <g fill="currentColor" text-anchor="middle" font-weight="700"><text x="100" y="136">cell-cycle ARREST</text><text x="260" y="136">SENESCENCE</text><text x="420" y="136">APOPTOSIS</text></g>
+  <g fill="currentColor" text-anchor="middle" font-size="9"><text x="100" y="150">temporary: repair, then go on</text><text x="260" y="150">permanent arrest</text><text x="420" y="150">clean suicide, contents recycled</text></g>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Normally: p53 made but quickly degraded (little)</li>
+  <li>Stress → p53 stabilised, level rises</li>
+  <li>p53 = transcription regulator</li>
+  <li>Switches on p21 → p21 blocks Cdk complexes</li>
+  <li>No S phase: cycle arrest; or pro-apoptotic genes on</li>
+</ol>
+<table class="mini">
+  <tr><td>mutated in</td><td>~50 % of cancers; most in its DNA-binding domain</td></tr>
+  <tr><td>knockout mice</td><td>normal, but all get cancer before 10 months</td></tr>
+  <tr><td>apoptosis vs necrosis</td><td>good death (eaten, recycled) vs bad death (burst, inflammation)</td></tr>
+</table>
+<p class="trap">Exam Q7: "guardian of the genome" = p53 (repair, arrest, apoptosis). RB1 only brakes S-phase entry; RAS is a signal switch.</p>
+</div>
+
+<div class="card" id="c-colon">
+<p class="crumb">Genes › <b>Colorectal cancer: the order</b></p>
+<h2>Colorectal cancer: Apc early → K-Ras → p53 late</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="9">
+  <g fill="none" stroke="#8a8f98" stroke-width="1.5"><rect x="5" y="40" width="70" height="30" rx="5"/><rect x="88" y="40" width="70" height="30" rx="5"/><rect x="171" y="40" width="70" height="30" rx="5"/><rect x="254" y="40" width="70" height="30" rx="5"/><rect x="337" y="40" width="70" height="30" rx="5"/><rect x="420" y="40" width="95" height="30" rx="5"/></g>
+  <g fill="currentColor" text-anchor="middle"><text x="40" y="54">normal</text><text x="40" y="65">epithelium</text><text x="123" y="54">hyperplastic</text><text x="123" y="65">(too many cells)</text><text x="206" y="58">early adenoma</text><text x="289" y="54">intermediate /</text><text x="289" y="65">late adenoma</text><text x="372" y="58">carcinoma</text><text x="467" y="54">invasion and</text><text x="467" y="65">metastasis</text></g>
+  <g stroke="#d1495b" stroke-width="2"><path d="M76 55 h10 M159 55 h10 M242 55 h10 M325 55 h10 M408 55 h10"/></g>
+  <g fill="#d1495b" font-weight="700" text-anchor="middle"><text x="81" y="30">loss of Apc</text><text x="164" y="30">K-Ras on</text><text x="247" y="30">loss of Smad4 etc.</text><text x="330" y="30">loss of p53</text><text x="413" y="30">unknown</text></g>
+  <path d="M60 90 H460" stroke="#9b59b6" stroke-width="3"/><text x="260" y="108" text-anchor="middle" fill="currentColor">increasing genetic and epigenetic instability (early, needed for the later steps)</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>Apc first</td><td>same high frequency in small polyps and big tumours</td></tr>
+  <tr><td>K-Ras later</td><td>rare in small polyps, common in large ones</td></tr>
+  <tr><td>p53 last</td><td>rare in polyps, common in carcinomas</td></tr>
+</table>
+<p class="mnemo">Why p53 last: moderate Ras activation is not stressful; high activation IS → only without p53 can hyperactive oncogenes survive. Polyp = benign bump of gut lining; adenoma = benign gland tumour.</p>
+</div>
+
+</div>
+
+<h2 class="sec">C · Quick check<small>Short traps from the whole chapter.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-traps">
+<p class="crumb">Whole chapter › <b>Quick traps</b></p>
+<h2>Quick traps of the whole chapter</h2>
+<table class="mini">
+  <tr><td>benign vs malignant</td><td>inside the basal lamina vs invades</td></tr>
+  <tr><td>most common cancer type</td><td>carcinoma (epithelium), 85 %</td></tr>
+  <tr><td>clonal origin proof</td><td>same Philadelphia breakpoint in all cells of one patient</td></tr>
+  <tr><td>one mutation enough?</td><td>never: multiple hits (Knudson), years</td></tr>
+  <tr><td>oncogene</td><td>gain of function, dominant, 1 hit, missense cluster</td></tr>
+  <tr><td>tumor suppressor</td><td>loss of function, recessive, 2 hits, truncations</td></tr>
+  <tr><td>Rb vs p53</td><td>Rb: always present, cell-cycle brake · p53: scarce, rises on stress</td></tr>
+  <tr><td>p53 mutated in</td><td>~50 %; most cancers have the p53 pathway broken</td></tr>
+  <tr><td>angiogenesis</td><td>new vessels → blood to the tumour</td></tr>
+  <tr><td>metastasis</td><td>90 % of deaths; colonisation is the bottleneck</td></tr>
+  <tr><td>colorectal order</td><td>Apc → K-Ras → (Smad4) → p53</td></tr>
+</table>
+</div>
+
+</div>
+
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="cs1_chromosomes.html">← 1 Chromosomes</a><a href="cs3_viruses.html">3 Viruses →</a></nav>
+</main>
+</body>
+</html>

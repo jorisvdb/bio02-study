@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.3 Human conditions caused by chromosome changes</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .chr { stroke: var(--c-N); stroke-width: 9; stroke-linecap: round; fill: none; }
+  .chr.x { stroke: var(--c-O); }
+  .chr.y { stroke: var(--c-Cl); }
+  .chr.c9 { stroke: var(--c-N); }
+  .chr.c22 { stroke: var(--c-P); }
+  .chr.thin { stroke-width: 7; }
+  .cen { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; }
+  .brk { stroke: var(--c-O); stroke-width: 2.2; fill: none; }
+  .brkhead { fill: var(--c-O); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .txt.mono { font-family: ui-monospace, Consolas, monospace; font-weight: 700; font-size: 15px; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="1.02_chromosome_structure_changes.html">← 1.2 Changes in chromosome structure</a><a href="index.html">Chapter 1 index</a><a href="../chapter_2/index.html">Chapter 2 index →</a></nav>
+
+<h1>1.3 Human conditions caused by chromosome changes</h1>
+<p class="lede">In one sentence: a few chromosome errors are mild enough for a baby to be born with them, and each gives a fixed set of traits (a syndrome):
+Down, Klinefelter, XYY, triple X and Turner from a wrong number, cri du chat from a deletion, and a leukemia from a translocation.</p>
+
+<p>Pages 1.1 and 1.2 gave the mechanisms: nondisjunction (wrong number) and breakage (wrong structure). This page gives the human faces of those
+mechanisms, which is what the exam asks about: "In Klinefelter syndrome (47,XXY) ... what genetic defect causes this syndrome?" and "Down syndrome can result
+from multiple genetic mechanisms". For each condition you should be able to say: which chromosome, number or structure, which mechanism, how common, and the main traits.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Meaning</th></tr>
+  <tr><td>autosome</td><td>any chromosome that is not a sex chromosome: pairs 1 to 22 in humans (autosoom)</td></tr>
+  <tr><td>sex chromosomes</td><td>X and Y; a female is XX, a male is XY. The Y chromosome is small and carries relatively few genes</td></tr>
+  <tr><td>karyotype</td><td>a picture of all the chromosomes of one cell, sorted in pairs by size (BIO01 chapter 7), used to count them and spot changes (karyotype)</td></tr>
+  <tr><td>syndrome</td><td>a fixed set of traits that occur together and have one cause (page 1.1)</td></tr>
+  <tr><td>live birth</td><td>a baby born alive; frequencies here are "per live births", so they leave out the many embryos lost before birth</td></tr>
+  <tr><td>viable</td><td>able to survive (levensvatbaar)</td></tr>
+  <tr><td>sterile / fertile</td><td>unable / able to have children</td></tr>
+  <tr><td>fetal testing</td><td>testing cells of the unborn child (fetus) for chromosome changes before birth</td></tr>
+  <tr><td>short arm (p), long arm (q)</td><td>the centromere divides a chromosome into a short arm, called p, and a long arm, called q; "5p" = the short arm of chromosome 5, "22q" = the long arm of chromosome 22</td></tr>
+</table>
+
+<h3>How a karyotype is written</h3>
+<p>A karyotype is written as <strong>total number of chromosomes, then the sex chromosomes</strong>. Read "47,XXY" as "forty-seven chromosomes, with the sex chromosomes X, X and Y".</p>
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 150" width="860" height="150" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(20,0)">
+      <text x="120" y="20" class="txt mono">46,XX</text>
+      <text x="120" y="38" class="txt small muted">normal female</text>
+      <path d="M100,56 L100,116 M140,56 L140,116" class="chr x"/>
+      <circle cx="100" cy="80" r="4" class="cen"/><circle cx="140" cy="80" r="4" class="cen"/>
+      <text x="120" y="140" class="txt small">44 autosomes + X X</text>
+    </g>
+    <g transform="translate(230,0)">
+      <text x="120" y="20" class="txt mono">46,XY</text>
+      <text x="120" y="38" class="txt small muted">normal male</text>
+      <path d="M100,56 L100,116" class="chr x"/><path d="M140,80 L140,116" class="chr y thin"/>
+      <circle cx="100" cy="80" r="4" class="cen"/><circle cx="140" cy="92" r="4" class="cen"/>
+      <text x="120" y="140" class="txt small">44 autosomes + X Y</text>
+    </g>
+    <g transform="translate(440,0)">
+      <text x="120" y="20" class="txt mono">47,XXY</text>
+      <text x="120" y="38" class="txt small muted">Klinefelter</text>
+      <path d="M80,56 L80,116 M120,56 L120,116" class="chr x"/><path d="M160,80 L160,116" class="chr y thin"/>
+      <circle cx="80" cy="80" r="4" class="cen"/><circle cx="120" cy="80" r="4" class="cen"/><circle cx="160" cy="92" r="4" class="cen"/>
+      <text x="120" y="140" class="txt small">44 autosomes + X X Y = one too many</text>
+    </g>
+    <g transform="translate(650,0)">
+      <text x="100" y="20" class="txt mono">45,X</text>
+      <text x="100" y="38" class="txt small muted">Turner (also written X0)</text>
+      <path d="M100,56 L100,116" class="chr x"/>
+      <circle cx="100" cy="80" r="4" class="cen"/>
+      <text x="100" y="140" class="txt small">44 autosomes + X = one too few</text>
+    </g>
+  </svg>
+  <figcaption>Karyotype notation. Red = X chromosome, green = the much smaller Y. The small circle is the centromere. "X0" (X-zero) is the older way of writing 45,X: the 0 means "no second sex chromosome".</figcaption>
+</figure>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Autosomen</strong> = chromosomen 1 tot 22; <strong>geslachtschromosomen</strong> = X en Y. Een <strong>karyotype</strong> is de foto van alle chromosomen van één cel,
+geschreven als <em>totaal aantal, geslachtschromosomen</em>: 46,XX (vrouw), 46,XY (man), 47,XXY (Klinefelter), 45,X of X0 (Turner). <strong>p</strong> = korte arm,
+<strong>q</strong> = lange arm van een chromosoom.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Most aneuploid embryos are lost; a few survive as a syndrome (1.1.3)</h2>
+<p>Begin state: nondisjunction in meiosis (page 1.1) has produced a zygote with 45 or 47 chromosomes. What happens next depends on <em>which</em> chromosome is affected.
+The frequency of aneuploid zygotes may be quite high, but most of these changes are <strong>so disastrous to development that the embryo is spontaneously aborted
+long before birth</strong>. Some types of aneuploidy upset the genetic balance less than others, so individuals with those conditions can survive to birth and beyond.
+They have a <strong>syndrome</strong>: a set of traits characteristic of that type of aneuploidy. Such disorders can be diagnosed before birth by <strong>fetal testing</strong>.</p>
+
+<div class="callout key"><span class="tag">Which trisomies survive, and why: size matters (Figure 1-4)</span>
+<p>Only trisomies of <strong>chromosomes 21, 18 and 13</strong> are seen in newborns, and these three are <strong>relatively small chromosomes</strong>. The syllabus's explanation:
+a small chromosome carries fewer genes, so a third copy upsets the balance less, allowing a better chance of fetal development. Larger chromosomes "have more complex genes
+and regulatory elements", so a trisomy of a large chromosome causes more severe problems and the embryo does not survive. Figure 1-4 of the syllabus plots the size (in
+megabases, Mb = millions of DNA letters) and gene content of the 24 human chromosomes (22 autosomes + X + Y); on average there are about 6.7 protein-coding genes per Mb.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>De meeste aneuploïde embryo's sterven vroeg (miskraam). Sommige aneuploïdieën verstoren het evenwicht minder en zijn <strong>levensvatbaar</strong>: ze geven een
+<strong>syndroom</strong> en zijn vóór de geboorte op te sporen. Alleen trisomie van de <strong>kleine</strong> chromosomen 21, 18 en 13 komt bij pasgeborenen voor: minder genen,
+minder verstoring. Grote chromosomen hebben meer en complexere genen; een extra kopie daarvan is niet te overleven.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Down syndrome: trisomy 21 (1.1.3.1)</h2>
+<ul>
+  <li><strong>Cause:</strong> usually an <strong>extra chromosome 21</strong>, so each body cell has 47 chromosomes. Because the cells are trisomic for chromosome 21, the condition is often called <strong>trisomy 21</strong>. Most cases come from <strong>nondisjunction during meiosis I</strong>.</li>
+  <li><strong>How common:</strong> about <strong>1 in 1000 to 1 in 1100 live births</strong> worldwide.</li>
+  <li><strong>Traits:</strong> characteristic facial features, short stature (small body height), correctable heart defects, developmental delays. Higher chance of leukemia and Alzheimer's disease, but a <em>lower</em> rate of high blood pressure, atherosclerosis (hardening of the arteries), stroke and many solid tumours.</li>
+  <li><strong>Life:</strong> on average a shorter life span, but most live to middle age and beyond with proper medical care; many live independently, are employed and contribute to their communities. Almost all males and about half of the females are sexually underdeveloped and sterile.</li>
+</ul>
+
+<h3>The mother's age</h3>
+<p>The frequency of Down syndrome <strong>increases with the age of the mother</strong>:</p>
+<table class="cmp">
+  <tr><th>Mother's age</th><th>Risk per birth</th></tr>
+  <tr><td>30</td><td>0.1 %, about 1 in 900</td></tr>
+  <tr><td>40</td><td>1 %, about 1 in 100 (ten times higher)</td></tr>
+  <tr><td>older</td><td>even higher</td></tr>
+</table>
+<p>Why maternal age matters has <strong>not yet been explained</strong>. Most cases are nondisjunction during meiosis I, and some research points to an age-dependent abnormality
+in meiosis. (Background from BIO01: a woman's egg cells start meiosis before she is born and stay paused in meiosis I for decades, which fits the idea.) Trisomies of chromosomes
+<strong>13 and 18</strong> also rise with maternal age, but those infants rarely survive for long.</p>
+
+<div class="callout quiz"><span class="tag">Exam link: "Down syndrome can result from multiple genetic mechanisms"</span>
+<p>Example exam question 2 offers "nondisjunction or duplication", "nondisjunction, duplication or mosaicism", "inversion, deletion or nondisjunction" and "none".
+What the syllabus itself names: <strong>nondisjunction in meiosis</strong> (the usual cause) and <strong>nondisjunction in mitosis early in the embryo</strong>, which gives a
+<strong>mosaic</strong> (page 1.1). A <strong>duplication</strong> of chromosome-21 material (page 1.2) would also raise the dose of those genes. Inversions and deletions cannot:
+they add nothing. So the most complete option is <strong>"nondisjunction, duplication or mosaicism"</strong>. Be aware that the syllabus text never uses the words "duplication"
+or "mosaicism" for Down syndrome; the reasoning above is how to get there.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Down = trisomie 21</strong>: een extra chromosoom 21, 47 chromosomen, meestal door non-disjunctie in <strong>meiose I</strong>. Ongeveer <strong>1 op 1000</strong>
+geboorten. Kenmerken: typisch gezicht, kleine gestalte, hartafwijkingen (te opereren), ontwikkelingsachterstand; meer leukemie en Alzheimer, minder hoge bloeddruk en vaste
+tumoren. Risico stijgt met de <strong>leeftijd van de moeder</strong>: 0,1 % op 30 jaar, 1 % op 40 jaar; de reden is niet bekend. Trisomie 13 en 18 stijgen ook met de leeftijd maar zijn
+zelden lang te overleven.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Aneuploidy of the sex chromosomes (1.1.3.2)</h2>
+<p>Aneuploid conditions involving the sex chromosomes (X and Y) upset the genetic balance <strong>less</strong> than those involving autosomes. The syllabus's explanation:
+the <strong>Y chromosome carries relatively few genes</strong>. (Background from BIO01, not in this syllabus: in every cell with more than one X, all but one X are largely switched off,
+which also softens the effect of an extra X.) Four conditions:</p>
+
+<table class="cmp">
+  <tr><th>Condition</th><th>Karyotype</th><th>How common</th><th>Main traits</th></tr>
+  <tr><td>Klinefelter syndrome</td><td>47,XXY (male with an extra X)</td><td>about 1 in 650 live male births</td><td>male sex organs, but small testes that make little or no sperm; signs vary: taller than average, less muscle mass, enlarged breast tissue (gynecomastia); possible learning disabilities; testosterone replacement helps the changes of puberty</td></tr>
+  <tr><td>XYY</td><td>47,XYY (male with an extra Y)</td><td>about 1 in 1000 male births</td><td>typical sexual development, no well-defined syndrome; tend to be taller than average</td></tr>
+  <tr><td>Trisomy X</td><td>47,XXX (female with an extra X)</td><td>about 1 in 1000 live female births</td><td>generally healthy, slightly taller than average; at risk for learning disabilities</td></tr>
+  <tr><td>Turner syndrome</td><td>45,X or X0 (female missing one X)</td><td>about 1 in 2500 female births</td><td>phenotypically female, usually sterile because the sex organs do not mature; short stature, webbed neck, delayed or incomplete puberty, possible heart defects; intelligence usually normal; estrogen replacement therapy brings on secondary sex characteristics</td></tr>
+</table>
+
+<div class="callout key"><span class="tag">Must remember</span>
+<p><strong>Turner syndrome (X0) is the only known viable monosomy in humans.</strong> Every other monosomy (one copy of any autosome) is lethal. A missing X can be survived;
+a missing chromosome 1 to 22 cannot.</p></div>
+
+<div class="callout quiz"><span class="tag">Exam link: Klinefelter</span>
+<p>Example exam question 1: "In Klinefelter syndrome (47,XXY), individuals are phenotypically male, but they have reduced sperm production and may have some breast development
+in adolescence. What genetic defect causes this syndrome?" Answer: <strong>nondisjunction during meiosis</strong>. One parent made a gamete with an extra sex chromosome (an XX egg
+or an XY sperm), so the zygote has three sex chromosomes. Not translocation (moves a piece), not polyploidy (whole extra sets), not duplication (doubles a piece).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Fouten in de geslachtschromosomen zijn milder omdat de <strong>Y weinig genen</strong> draagt. <strong>Klinefelter 47,XXY</strong> (1 op 650 jongens): man, kleine testes, weinig of geen
+sperma, langer, minder spieren, borstvorming, soms leerproblemen; testosteron helpt. <strong>XYY</strong> (1 op 1000): normaal, wat langer. <strong>XXX</strong> (1 op 1000 meisjes):
+gezond, wat langer, risico op leerproblemen. <strong>Turner 45,X / X0</strong> (1 op 2500 meisjes): vrouw, meestal steriel, kleine gestalte, intelligentie normaal; oestrogeen helpt. Turner is
+de <strong>enige levensvatbare monosomie</strong> bij de mens.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Disorders from a changed structure (1.1.3.3)</h2>
+
+<h3>Cri du chat: a deletion on chromosome 5</h3>
+<p>Many deletions in human chromosomes cause severe problems <strong>even in the heterozygous state</strong> (only one of the two homologs has the deletion; page 1.2).
+<strong>Cri du chat</strong> (French for "cry of the cat") results from a specific <strong>deletion on the short arm of chromosome 5</strong>, written <strong>5p−</strong> (read: five-p-minus,
+"a piece of the short arm of chromosome 5 is missing"). A child born with this deletion has a small head (microcephaly), unusual facial features (widely spaced eyes, a small jaw,
+low-set ears), severe intellectual disability, low birth weight and a high-pitched cry that sounds like the mewing of a distressed cat. Such children usually die in infancy or early
+childhood; early intervention can support development, but there is no cure.</p>
+
+<h3>Chronic myelogenous leukemia: a translocation during mitosis</h3>
+<p>Chromosomal translocations can also happen <strong>during mitosis</strong>, in body cells, and some have been implicated in cancers. The example is <strong>chronic myelogenous leukemia
+(CML)</strong>. The words: <em>leukemia</em> = a cancer of the white blood cells (leukemie); <em>myelogenous</em> = coming from the bone marrow (beenmerg), where blood cells are made;
+<em>chronic</em> = developing slowly, over years. Begin state: a <strong>precursor of a white blood cell</strong> (a cell in the bone marrow that will later become a white blood cell) is dividing by mitosis.
+Then:</p>
+<ol>
+  <li>Chromosome 9 and chromosome 22 both break, and a <strong>reciprocal translocation</strong> happens: a large portion of chromosome 22 is exchanged with a small fragment from the tip of chromosome 9.</li>
+  <li>The result is a <strong>much shortened, easily recognised chromosome 22</strong>, called the <strong>Philadelphia chromosome</strong> (after the city where it was first described), and an abnormally long chromosome 9.</li>
+  <li>At the join, two genes that normally sit on different chromosomes are now fused into a <strong>new "fused" gene</strong>. The fused gene drives <strong>uncontrolled cell cycle progression</strong> (BIO01 chapter 7: the cell keeps dividing without the normal controls).</li>
+  <li>The cell passes the translocation on to all its descendants by mitosis; this clone of cells grows into the leukemia. Nearly all CML patients carry the Philadelphia chromosome in their cancer cells.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="brk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="brkhead"/></marker>
+          <marker id="ar4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="200" y="18" class="txt bold">before: normal chromosomes 9 and 22</text>
+    <!-- chr 9: long, break near the bottom tip -->
+    <path d="M120,36 L120,206" class="chr c9"/><circle cx="120" cy="90" r="5" class="cen"/>
+    <path d="M120,182 L120,206" class="chr c22" style="stroke-width:9"/>
+    <path d="M150,182 L130,182" class="brk" marker-end="url(#brk)"/>
+    <text x="120" y="228" class="txt small">9</text>
+    <!-- chr 22: short, break in the long arm -->
+    <path d="M280,110 L280,206" class="chr c22"/><circle cx="280" cy="128" r="5" class="cen"/>
+    <path d="M280,150 L280,206" class="chr c9" style="stroke-width:9"/>
+    <path d="M310,150 L290,150" class="brk" marker-end="url(#brk)"/>
+    <text x="280" y="228" class="txt small">22</text>
+    <text x="330" y="100" class="txt small left">blue piece of 22 (large) and orange</text>
+    <text x="330" y="116" class="txt small left">tip of 9 (small) will be swapped</text>
+    <path d="M430,134 L490,134" class="path accent" marker-end="url(#ar4)"/>
+    <text x="460" y="152" class="txt small muted">swap</text>
+    <text x="680" y="18" class="txt bold">after: reciprocal translocation</text>
+    <!-- chr 9 longer -->
+    <path d="M580,36 L580,182" class="chr c9"/><circle cx="580" cy="90" r="5" class="cen"/>
+    <path d="M580,182 L580,236" class="chr c9" style="stroke-width:9"/>
+    <text x="566" y="212" class="txt small" style="text-anchor:end">9 is now longer</text>
+    <text x="566" y="228" class="txt small" style="text-anchor:end">(got the big piece of 22)</text>
+    <!-- Philadelphia -->
+    <path d="M760,110 L760,150" class="chr c22"/><circle cx="760" cy="128" r="5" class="cen"/>
+    <path d="M760,150 L760,174" class="chr c22" style="stroke-width:9"/>
+    <path d="M760,174 L760,180" class="chr c22" style="stroke-width:9"/>
+    <text x="760" y="200" class="txt bold">Philadelphia</text>
+    <text x="760" y="216" class="txt small">chromosome: a much</text>
+    <text x="760" y="230" class="txt small">shortened 22</text>
+    <path d="M770,174 L790,166" class="path"/>
+    <text x="794" y="168" class="txt small left" style="fill:var(--c-O)">join: fused gene</text>
+  </svg>
+  <figcaption>Syllabus Figure 1-7. Blue = chromosome 9, orange = chromosome 22; in the "before" picture the piece that will move is already drawn in the colour of its destination.
+  Red arrows mark the breakage points. The Philadelphia chromosome is the shortened 22; where the pieces join, a new fused gene is made that pushes the cell through the cell cycle without control.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>The two genes that get fused are called <em>Bcr</em> (on 22) and <em>Abl</em> (on 9). The fused Bcr-Abl protein is a permanently switched-on signal for "divide and do not die".
+Because every leukemic cell in a patient has exactly the same break point, while the break point differs from patient to patient, this was one of the proofs that a cancer starts from
+<strong>one single cell</strong> (chapter 2). A drug, imatinib, was later designed to block exactly this fused protein, and it turned CML from a deadly disease into a treatable one.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Cri du chat</strong>: deletie op de korte arm van chromosoom 5 (<strong>5p−</strong>), heterozygoot al ernstig: klein hoofd, afwijkend gezicht, zware verstandelijke beperking,
+kattengehuil; meestal vroeg overlijden. <strong>CML</strong> (chronische myeloïde leukemie, een kanker van witte bloedcellen): <strong>reciproke translocatie tussen 9 en 22 tijdens de
+mitose</strong> in een voorloper van een witte bloedcel; het verkorte chromosoom 22 heet het <strong>Philadelphia-chromosoom</strong>; op de las ontstaat een <strong>fusiegen</strong> dat de
+celcyclus ongecontroleerd aandrijft.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. The whole chapter on one table</h2>
+<table class="cmp">
+  <tr><th>Condition</th><th>Number or structure?</th><th>Mechanism</th><th>Chromosome</th><th>Frequency</th></tr>
+  <tr><td>Down</td><td>number: trisomy (47)</td><td>nondisjunction, mostly meiosis I in the mother; also mitotic mosaic</td><td>21</td><td>1 in 1000 to 1100 births; 1 in 100 at mother's age 40</td></tr>
+  <tr><td>trisomy 13, 18</td><td>number: trisomy</td><td>nondisjunction, rises with maternal age</td><td>13, 18</td><td>rarely survive long</td></tr>
+  <tr><td>Klinefelter</td><td>number: 47,XXY</td><td>nondisjunction of sex chromosomes</td><td>X</td><td>1 in 650 males</td></tr>
+  <tr><td>XYY</td><td>number: 47,XYY</td><td>nondisjunction</td><td>Y</td><td>1 in 1000 males</td></tr>
+  <tr><td>trisomy X</td><td>number: 47,XXX</td><td>nondisjunction</td><td>X</td><td>1 in 1000 females</td></tr>
+  <tr><td>Turner</td><td>number: 45,X (only viable monosomy)</td><td>nondisjunction</td><td>X</td><td>1 in 2500 females</td></tr>
+  <tr><td>cri du chat</td><td>structure: deletion 5p−</td><td>breakage, piece lost (heterozygous is enough)</td><td>5</td><td>rare</td></tr>
+  <tr><td>CML</td><td>structure: reciprocal translocation</td><td>breakage in mitosis, pieces swapped, fused gene</td><td>9 and 22 (Philadelphia = short 22)</td><td>nearly all CML patients</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Aantal: Down (21), trisomie 13 en 18, Klinefelter XXY, XYY, XXX, Turner X0: allemaal <strong>non-disjunctie</strong>. Bouw: cri du chat (<strong>deletie 5p−</strong>) en CML
+(<strong>translocatie 9;22</strong>, Philadelphia-chromosoom, fusiegen).</p></div>
+
+<!-- ============================================================ -->
+<h2>6. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>autosome</td><td>chromosome 1 to 22; not a sex chromosome</td></tr>
+  <tr><td>karyotype notation (47,XXY)</td><td>total number of chromosomes, comma, the sex chromosomes</td></tr>
+  <tr><td>X0 / 45,X</td><td>one X and no second sex chromosome: Turner syndrome</td></tr>
+  <tr><td>Down syndrome / trisomy 21</td><td>three copies of chromosome 21; 47 chromosomes</td></tr>
+  <tr><td>maternal age effect</td><td>the risk of trisomy 21 rises with the mother's age (0.1 % at 30, 1 % at 40); cause unknown</td></tr>
+  <tr><td>Klinefelter syndrome</td><td>47,XXY: male with an extra X; small testes, little or no sperm</td></tr>
+  <tr><td>Turner syndrome</td><td>45,X: female missing one X; sterile, short; the only viable human monosomy</td></tr>
+  <tr><td>trisomy X, XYY</td><td>an extra X in a female, an extra Y in a male; mild</td></tr>
+  <tr><td>gynecomastia</td><td>breast development in a male</td></tr>
+  <tr><td>testosterone, estrogen</td><td>the male and female sex hormones; given as replacement therapy in Klinefelter and Turner</td></tr>
+  <tr><td>cri du chat (5p−)</td><td>deletion on the short arm of chromosome 5; cat-like cry, small head, severe intellectual disability</td></tr>
+  <tr><td>microcephaly</td><td>abnormally small head</td></tr>
+  <tr><td>leukemia</td><td>cancer of the white blood cells</td></tr>
+  <tr><td>chronic myelogenous leukemia (CML)</td><td>slow leukemia from bone-marrow precursor cells; caused by the 9;22 translocation</td></tr>
+  <tr><td>Philadelphia chromosome</td><td>the much shortened chromosome 22 made by the reciprocal translocation with chromosome 9</td></tr>
+  <tr><td>fused gene</td><td>a new gene made of two pieces of different genes joined at a translocation break point; in CML it drives uncontrolled cell division</td></tr>
+  <tr><td>precursor cell</td><td>a cell that will later develop into a certain cell type (here: a white blood cell)</td></tr>
+  <tr><td>fetal testing</td><td>examining the chromosomes of the unborn child</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes how alterations of chromosome number or structure cause genetic disorders."</p>
+<ol>
+  <li>Read and write karyotypes: 46,XX, 46,XY, 47,XXY, 45,X (X0), 47,XXX, 47,XYY, "trisomy 21".</li>
+  <li>For Down syndrome: cause (extra 21, nondisjunction mostly in meiosis I), frequency (about 1 in 1000), the maternal-age numbers (0.1 % at 30, 1 % at 40), main traits, and the exam's three mechanisms (nondisjunction, duplication, mosaicism).</li>
+  <li>Explain why only trisomies 21, 18 and 13 survive to birth (small chromosomes, fewer genes) and why sex-chromosome aneuploidies are milder (Y has few genes).</li>
+  <li>Name the four sex-chromosome conditions with karyotype, frequency and the key trait; know Turner is the only viable monosomy.</li>
+  <li>Answer "what causes Klinefelter?" with nondisjunction during meiosis.</li>
+  <li>Describe cri du chat as a heterozygous deletion 5p− and its traits.</li>
+  <li>Describe the Philadelphia chromosome: reciprocal translocation 9;22 in mitosis of a white-blood-cell precursor, shortened 22, fused gene, uncontrolled cell cycle, CML.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>8. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why do most aneuploid embryos never reach birth, and which ones do?</dt>
+  <dd>Most chromosome changes are so disastrous to development that the embryo is spontaneously aborted early. Only aneuploidies that upset the balance less survive: trisomy 21 (and more rarely 18 and 13, which are small chromosomes) and aneuploidies of the sex chromosomes.</dd>
+
+  <dt>What is Down syndrome, and what usually causes it?</dt>
+  <dd>Trisomy 21: an extra chromosome 21, 47 chromosomes in every body cell. Usually nondisjunction during meiosis I. It occurs in about 1 in 1000 to 1100 live births.</dd>
+
+  <dt>How does the risk of Down syndrome depend on the mother's age?</dt>
+  <dd>It increases: 0.1 % (1 in 900) at age 30, 1 % (1 in 100) at age 40, higher still later. The reason is not yet explained; research points to an age-dependent abnormality in meiosis.</dd>
+
+  <dt>Name three medical features of Down syndrome and two diseases that are rarer in people with it.</dt>
+  <dd>Characteristic facial features, short stature, correctable heart defects, developmental delays; higher chance of leukemia and Alzheimer's. Rarer: high blood pressure, atherosclerosis, stroke, many solid tumours.</dd>
+
+  <dt>Why do people with Klinefelter or Turner syndrome survive while a baby with monosomy of chromosome 1 does not?</dt>
+  <dd>Sex-chromosome aneuploidy upsets the genetic balance less, because the Y chromosome carries few genes. Monosomy of an autosome removes one copy of hundreds of essential genes and is lethal; Turner (X0) is the only viable monosomy in humans.</dd>
+
+  <dt>Give the karyotype, frequency and main features of Klinefelter syndrome.</dt>
+  <dd>47,XXY; about 1 in 650 live male births; male sex organs with small testes producing little or no sperm; often tall, less muscle, breast tissue, possible learning disabilities. Testosterone replacement helps.</dd>
+
+  <dt>Give the karyotype, frequency and main features of Turner syndrome.</dt>
+  <dd>45,X (X0); about 1 in 2500 female births; female, usually sterile because the sex organs do not mature; short stature, webbed neck, delayed puberty; intelligence usually normal. Estrogen replacement brings on secondary sex characteristics. The only viable human monosomy.</dd>
+
+  <dt>What is true of XYY males and XXX females?</dt>
+  <dd>XYY (1 in 1000 males): typical development, no defined syndrome, taller than average. XXX (1 in 1000 females): generally healthy, slightly taller, some risk of learning disabilities.</dd>
+
+  <dt>What is cri du chat syndrome?</dt>
+  <dd>A deletion on the short arm of chromosome 5 (5p−), harmful even heterozygous: small head, unusual facial features, severe intellectual disability, and a cry like a distressed cat. Children usually die in infancy or early childhood.</dd>
+
+  <dt>What is the Philadelphia chromosome, and how does it cause leukemia?</dt>
+  <dd>A much shortened chromosome 22 made by a reciprocal translocation between chromosomes 9 and 22 during mitosis in a white-blood-cell precursor. At the join a new fused gene is created that drives uncontrolled cell cycle progression, giving chronic myelogenous leukemia (CML).</dd>
+
+  <dt>Which mechanism is behind every syndrome in section 3 of this page?</dt>
+  <dd>Nondisjunction of the sex chromosomes during meiosis: a gamete with two sex chromosomes (XX or XY) or none, fused with a normal gamete.</dd>
+
+  <dt>What does "5p−" mean, letter by letter?</dt>
+  <dd>5 = chromosome 5; p = the short arm; − = a piece is missing (a deletion).</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>9. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Karyotype = <strong>number, sex chromosomes</strong>: 46,XX · 46,XY · 47,XXY · 45,X (= X0) · 47,XXX · 47,XYY.</li>
+  <li><strong>Down = trisomy 21</strong>, 47 chromosomes, nondisjunction mostly <strong>meiosis I</strong>; <strong>1 in 1000</strong> births.</li>
+  <li>Maternal age: <strong>0.1 % at 30, 1 % at 40</strong>; reason unknown. Trisomy 13 and 18 also rise with age, rarely survive.</li>
+  <li>Only trisomies of the <strong>small</strong> chromosomes 21, 18, 13 reach birth: fewer genes, less imbalance.</li>
+  <li>Sex-chromosome aneuploidy is milder: the <strong>Y has few genes</strong>.</li>
+  <li><strong>Klinefelter 47,XXY</strong>, 1 in 650 males: small testes, little or no sperm, tall, breast tissue; cause = <strong>nondisjunction in meiosis</strong>.</li>
+  <li><strong>XYY</strong> 1 in 1000 males, normal, taller. <strong>XXX</strong> 1 in 1000 females, healthy, taller, learning risk.</li>
+  <li><strong>Turner 45,X</strong>, 1 in 2500 females, sterile, short; the <strong>only viable monosomy</strong>.</li>
+  <li><strong>Cri du chat = deletion 5p−</strong>, severe even heterozygous: cat-like cry, small head, intellectual disability.</li>
+  <li><strong>CML = reciprocal translocation 9;22 in mitosis</strong> → <strong>Philadelphia chromosome</strong> (short 22) → <strong>fused gene</strong> → uncontrolled cell cycle.</li>
+  <li>Exam: Down by "nondisjunction, duplication or mosaicism"; Klinefelter by nondisjunction, not translocation, polyploidy or duplication.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>10. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Read this karyotype aloud and name the condition: 47,XXY.
+    <details><summary>Answer</summary><div class="ans"><p>"Forty-seven chromosomes, sex chromosomes X, X and Y": a male with an extra X, <strong>Klinefelter syndrome</strong>.</p></div></details></li>
+  <li>Which of these is the only viable monosomy in humans?
+    <ul class="opts"><li data-l="a">monosomy 21</li><li data-l="b">45,X (Turner)</li><li data-l="c">monosomy 13</li><li data-l="d">46,XY</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Missing an X can be survived (Turner syndrome). Missing any autosome is lethal. 46,XY is a normal male, not a monosomy.</p></div></details></li>
+  <li>What causes Klinefelter syndrome?
+    <ul class="opts"><li data-l="a">nondisjunction during meiosis</li><li data-l="b">translocation during meiosis</li><li data-l="c">polyploidy</li><li data-l="d">duplication</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>a.</strong> A gamete carried an extra sex chromosome because the sex chromosomes did not separate in meiosis. Translocation and duplication move or double a <em>piece</em>; polyploidy adds whole <em>sets</em>. None of those gives one extra X.</p></div></details></li>
+  <li>A 40-year-old mother asks how much higher her risk of a child with Down syndrome is compared with a 30-year-old. What does the syllabus say?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>ten times</strong>: 0.1 % (1 in 900) at 30 versus 1 % (1 in 100) at 40. Why the risk rises with age is not yet explained.</p></div></details></li>
+  <li>Why are trisomies of chromosomes 21, 18 and 13 the only ones seen in newborns?
+    <details><summary>Answer</summary><div class="ans"><p>They are <strong>small chromosomes</strong> with relatively few genes, so a third copy upsets the genetic balance less and the fetus has a better chance to develop. Larger chromosomes carry more and more complex genes; a trisomy of those is too severe to survive.</p></div></details></li>
+  <li>True or false: "A person with Down syndrome has 46 chromosomes, one of which is abnormally long."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Down syndrome is usually trisomy 21: a whole extra chromosome 21, so <strong>47</strong> chromosomes. (An abnormally long chromosome is what you see in a translocation, as in CML.)</p></div></details></li>
+  <li>Which exam option covers all the routes to Down syndrome: "nondisjunction or duplication", "nondisjunction, duplication or mosaicism", or "inversion, deletion or nondisjunction"?
+    <details><summary>Answer</summary><div class="ans"><p><strong>"Nondisjunction, duplication or mosaicism."</strong> Nondisjunction in meiosis is the usual cause; nondisjunction in mitosis of the early embryo gives a mosaic; a duplication of chromosome-21 material also raises the dose. Inversion and deletion add nothing, so the third option is wrong.</p></div></details></li>
+  <li>Match: small testes and little or no sperm · webbed neck and no puberty without estrogen · taller male with no defined syndrome.
+    <details><summary>Answer</summary><div class="ans"><p>Small testes, little sperm = <strong>Klinefelter 47,XXY</strong>. Webbed neck, delayed puberty, estrogen therapy = <strong>Turner 45,X</strong>. Taller male, no syndrome = <strong>XYY</strong>.</p></div></details></li>
+  <li>Why do sex-chromosome aneuploidies cause milder problems than autosomal ones, according to the syllabus?
+    <details><summary>Answer</summary><div class="ans"><p>Because the <strong>Y chromosome carries relatively few genes</strong>, so an extra or missing sex chromosome changes the dose of far fewer genes than an extra autosome.</p></div></details></li>
+  <li>What does "5p−" tell you about cri du chat syndrome?
+    <details><summary>Answer</summary><div class="ans"><p>Chromosome <strong>5</strong>, short arm (<strong>p</strong>), a piece <strong>missing</strong> (−): a <strong>deletion</strong>. It is severe even though only one homolog is affected (heterozygous).</p></div></details></li>
+  <li>In which kind of cell division did the CML translocation happen, and why does that matter?
+    <details><summary>Answer</summary><div class="ans"><p>In <strong>mitosis</strong> of a precursor of a white blood cell, not in meiosis. So it is not inherited from a parent and not present in the patient's other body cells; it exists only in the descendants of that one cell, which become the leukemia.</p></div></details></li>
+  <li>Describe the Philadelphia chromosome in three steps.
+    <details><summary>Answer</summary><div class="ans"><p>1) Chromosomes 9 and 22 break and <strong>exchange pieces</strong> (reciprocal translocation): a large part of 22 for a small tip of 9. 2) The shortened 22 is the <strong>Philadelphia chromosome</strong>; 9 becomes longer. 3) At the join a <strong>fused gene</strong> arises that drives <strong>uncontrolled cell cycle progression</strong> → CML.</p></div></details></li>
+  <li>Does the Philadelphia translocation change the gene dose? Then why is it harmful?
+    <details><summary>Answer</summary><div class="ans"><p>No: it is reciprocal, so all genes are still present. It is harmful because of <strong>position</strong>: two genes are joined into a new fused gene whose product keeps pushing the cell through the cell cycle (page 1.2: expression depends on a gene's neighbours).</p></div></details></li>
+  <li>A newborn has 47,XXX. What should the parents expect?
+    <details><summary>Answer</summary><div class="ans"><p>A generally <strong>healthy</strong> girl, slightly taller than average, with some risk of learning disabilities. Trisomy X occurs in about 1 in 1000 live female births.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="1.02_chromosome_structure_changes.html">← 1.2 Changes in chromosome structure</a><a href="index.html">Chapter 1 index</a><a href="../chapter_2/index.html">Chapter 2 index →</a></nav>
+</main>
+</body>
+</html>

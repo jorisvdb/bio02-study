@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.8 p53 and colorectal cancer</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .inp { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .p53 { fill: var(--c-O); }
+  .out { fill: var(--panel); stroke: var(--c-N); stroke-width: 2; }
+  .stage { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .stage.bad { stroke: var(--c-O); stroke-width: 2.5; }
+  .epi { fill: var(--c-Cl); opacity: .5; }
+  .epi.hi { fill: var(--c-S); opacity: .7; }
+  .epi.tum { fill: var(--c-O); opacity: .6; }
+  .lamina { stroke: var(--c-N); stroke-width: 2.5; fill: none; }
+  .lamina.broken { stroke-dasharray: 4 4; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .txt.red { fill: var(--c-O); font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.07_cancer_genomes_and_pathways.html">← 2.7 Cancer genomes and pathways</a><a href="index.html">Chapter 2 index</a><a href="../chapter_3/index.html">Chapter 3 index →</a></nav>
+
+<h1>2.8 p53, the guardian of the genome, and the steps of colorectal cancer</h1>
+<p class="lede">In one sentence: p53 is a stress sensor that stops a damaged cell from dividing or makes it kill itself, so a cancer cell must switch it off to survive its
+own derangement; and in colon cancer the order of mutations is typically Apc first, then K-Ras, then p53.</p>
+
+<p>This is the last page of chapter 2. Page 2.7 said that virtually every cancer breaks three controls; this page explains the third one, the <strong>p53 pathway</strong>
+(syllabus 2.2.8), then uses <strong>colorectal cancer</strong> (2.2.9) to show that the mutations come in a typical order. It ends with the chapter summary (2.3). For the exam:
+p53 appears in example questions 6 and 7 ("the guardian angel of the genome"), and the learning objective asks you to describe "the main characteristics of the Rb and TP53 gene,
+its significance in cancer development and its biological mechanism of action". <em>TP53</em> is the official name of the human p53 gene (tumor protein 53, after the protein's size).</p>
+
+<!-- ============================================================ -->
+<h2>0. Reminders from BIO01</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>cyclin, Cdk</td><td>a Cdk (cyclin-dependent kinase) is an enzyme that drives the cell cycle forward when its partner cyclin is bound; blocking the Cdks stops the cycle (BIO01 ch 7)</td></tr>
+  <tr><td>S phase</td><td>the part of the cycle in which the DNA is copied</td></tr>
+  <tr><td>checkpoint</td><td>a moment where the cell checks whether it may go on, e.g. "is the DNA damaged?" in G1 (BIO01 ch 7)</td></tr>
+  <tr><td>transcription regulator</td><td>a protein that binds DNA near genes and switches their transcription up or down (BIO01 ch 6)</td></tr>
+  <tr><td>telomere</td><td>the protective end of a chromosome, which gets shorter at each division (BIO01 ch 4)</td></tr>
+  <tr><td>apoptosis</td><td>programmed cell death: the cell dismantles itself neatly and is eaten by its neighbours (page 2.1)</td></tr>
+  <tr><td>epithelium</td><td>a sheet of cells lining a surface, e.g. the inside of the gut; sits on a basal lamina (thin supporting layer, page 2.1)</td></tr>
+  <tr><td>hypoxia, osmotic, oxidative</td><td>too little oxygen; water pressure that makes a cell swell or shrink; damage by reactive oxygen molecules (free radicals)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: een <strong>Cdk</strong> stuwt de celcyclus vooruit zodra zijn <strong>cycline</strong> gebonden is; blokkeer de Cdk's en de cyclus stopt. Een <strong>transcriptieregulator</strong>
+zet genen aan of uit. <strong>Apoptose</strong> = geprogrammeerde, nette celdood. <strong>Hypoxie</strong> = zuurstoftekort; <strong>osmotische stress</strong> = zwellen of krimpen;
+<strong>oxidatieve stress</strong> = schade door reactieve zuurstofmoleculen.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Why cancer cells must break the stress response (2.2.8)</h2>
+<p>That cancer cells break the rules of growth and division is obvious: it is the definition. Less obvious is why they are also almost always abnormal in their <strong>response to
+stress and DNA damage</strong>. The gene at the centre of that response, <em>p53</em>, is mutated in about <strong>50 % of all cancers</strong>, more than any other cancer-critical gene,
+and if you count the genes closely linked to it, <strong>most</strong> cancers have a defect in the p53 pathway. To see why, first the normal function.</p>
+
+<h3>What p53 is and what it senses</h3>
+<p><strong>p53</strong> is a protein (named after its mass, 53 kilodaltons; one dalton is the mass of one hydrogen atom). Unlike Rb, most cells contain <strong>very little p53</strong> under normal
+conditions: the protein is made all the time but <strong>rapidly degraded</strong> (broken down). Mice in which both copies of the gene are deleted look normal in every way but one:
+<strong>they all develop cancer before the age of 10 months</strong>. So p53 is needed only in special circumstances. Cells <strong>raise their p53 level</strong> in response to a whole range of
+conditions that have one thing in common: from the cell's point of view they are <strong>pathological</strong> (ziekelijk), putting it in danger of death or serious injury:</p>
+<ul>
+  <li><strong>DNA damage</strong>: a faulty genome;</li>
+  <li><strong>telomere loss or shortening</strong>: also a danger to the genome;</li>
+  <li><strong>hypoxia</strong>: too little oxygen for the mitochondria;</li>
+  <li><strong>osmotic stress</strong>: the cell swells or shrivels;</li>
+  <li><strong>oxidative stress</strong>: dangerous levels of free radicals;</li>
+  <li><strong>oncogene overdrive</strong>: regulatory signals so intense or uncoordinated that the cell is driven past its limits, "like an engine driven too fast". The p53 level rises, for example, when <strong>Myc</strong> (a protein in the nucleus that stimulates growth and division) is overexpressed to oncogenic levels.</li>
+</ul>
+
+<h3>The two possible answers</h3>
+<p>All these conditions call for desperate action, in one of two forms:</p>
+<ol>
+  <li><strong>Stop dividing</strong>: block progress through the cycle to take time out for repair or recovery. The stop can be temporary (cell-cycle arrest) or permanent
+  (<strong>senescence</strong>, an irreversible arrest, page 2.1).</li>
+  <li><strong>Die</strong>, in a way that does minimal damage to the organism. A <strong>good death</strong> is <strong>apoptosis</strong>: the cell is eaten by its neighbours and its contents
+  are recycled. A <strong>bad death</strong> is <strong>necrosis</strong>: the cell bursts, spills its contents and causes inflammation (ontsteking).</li>
+</ol>
+<p>The p53 pathway therefore works as an <strong>antenna</strong> (Figure 2-26): it senses a wide range of dangers and, when one is detected, triggers arrest, senescence or apoptosis.
+This keeps deranged cells from proliferating. Cancer cells <em>are</em> deranged, so their survival depends on inactivating p53: if the pathway were active, they would be halted or die.
+A cell with unrepaired DNA damage and a working p53 pathway <strong>cannot proliferate</strong>.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 260" width="880" height="260" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- inputs -->
+    <rect x="20" y="20" width="150" height="40" rx="8" class="inp"/><text x="95" y="38" class="txt small">hyperproliferative</text><text x="95" y="52" class="txt small">signals (Myc too high)</text>
+    <rect x="200" y="20" width="150" height="40" rx="8" class="inp"/><text x="275" y="45" class="txt small">DNA damage</text>
+    <rect x="380" y="20" width="150" height="40" rx="8" class="inp"/><text x="455" y="45" class="txt small">telomere shortening</text>
+    <rect x="560" y="20" width="140" height="40" rx="8" class="inp"/><text x="630" y="45" class="txt small">hypoxia</text>
+    <rect x="720" y="20" width="140" height="40" rx="8" class="inp"/><text x="790" y="38" class="txt small">osmotic and</text><text x="790" y="52" class="txt small">oxidative stress</text>
+    <path d="M95,60 L400,118 M275,60 L420,118 M455,60 L440,118 M630,60 L460,118 M790,60 L480,118" class="path accent" marker-end="url(#ar1)"/>
+    <!-- p53 -->
+    <ellipse cx="440" cy="140" rx="125" ry="24" class="p53"/>
+    <text x="440" y="137" class="txt bold" style="fill:#fff">p53 stabilised, level rises</text>
+    <text x="440" y="151" class="txt small" style="fill:#fff">(normally made and quickly degraded)</text>
+    <path d="M400,162 L250,205 M440,162 L440,205 M480,162 L630,205" class="path accent" marker-end="url(#ar1)"/>
+    <!-- outputs -->
+    <rect x="160" y="210" width="180" height="40" rx="8" class="out"/><text x="250" y="228" class="txt small bold">cell-cycle arrest</text><text x="250" y="242" class="txt small muted">time out to repair (p21 blocks Cdks)</text>
+    <rect x="350" y="210" width="180" height="40" rx="8" class="out"/><text x="440" y="228" class="txt small bold">senescence</text><text x="440" y="242" class="txt small muted">permanent arrest</text>
+    <rect x="540" y="210" width="180" height="40" rx="8" class="out"/><text x="630" y="228" class="txt small bold">apoptosis</text><text x="630" y="242" class="txt small muted">the good death, recycled</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-26: p53 as a cellular stress sensor. Many different dangers all raise the p53 level; p53 then chooses between stopping the cycle (briefly or for good) and
+  suicide by apoptosis. Lose p53, and a damaged cell keeps dividing.</figcaption>
+</figure>
+
+<h3>How p53 acts: a transcription regulator</h3>
+<p>p53 does its job mainly as a <strong>transcription regulator</strong>: it binds DNA and switches genes on. That explains where the cancer mutations sit: the most common p53 mutations in
+human tumors are in its <strong>DNA-binding domain</strong>, where they cripple its ability to bind its target sequences. Two kinds of target genes:</p>
+<ul>
+  <li>To stop the cycle, p53 switches on the gene for <strong>p21</strong>, a small protein that <strong>binds and inhibits the cyclin-dependent kinase (Cdk) complexes</strong> needed to
+  progress through the cycle. With the Cdks blocked, the cell cannot enter S phase and cannot replicate its DNA. Chain: stress → p53 up → p21 made → Cdks blocked → no S phase.</li>
+  <li>To cause apoptosis, p53 switches on many <strong>pro-apoptotic genes</strong> (genes whose products push the cell into apoptosis).</li>
+</ul>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 7: which gene is "the guardian angel of the genome"? <strong>The p53 gene</strong>, "because it helps prevent genomic instability by repairing DNA damage,
+inducing apoptosis in damaged cells, and halting the cell cycle to allow for DNA repair". The RAS options are wrong (Ras passes growth signals; it is a proto-oncogene, not a guardian),
+and RB1 regulates cell-cycle entry but does not guard the genome. Question 6: "a tumor suppressor gene found mutated in about half of human cancers" = <strong>p53</strong>.</p></div>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>Traditional cancer treatments exploit this page without knowing it: radiation and most chemotherapy drugs damage DNA. Normal cells stop at their checkpoints and repair; cancer cells
+with broken checkpoints keep dividing with the damage and die a few days later. But a cancer that has lost p53 can also become <em>more</em> resistant, because the apoptosis that p53 would
+trigger never comes. A newer trick is "synthetic lethality": PARP inhibitors block one DNA-repair pathway, which is harmless to normal cells but lethal to tumors that already lost the other
+pathway (Brca1 or Brca2 deficient breast and ovarian cancers).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><em>p53</em> is gemuteerd in ~<strong>50 %</strong> van alle kankers. Normaal is er weinig p53-eiwit (gemaakt en meteen afgebroken); muizen zonder p53 zijn normaal maar krijgen allemaal kanker
+vóór 10 maanden. Het p53-niveau stijgt bij gevaar: <strong>DNA-schade, telomeerverkorting, hypoxie, osmotische en oxidatieve stress, te sterke groeisignalen</strong> (Myc). Twee antwoorden:
+<strong>stoppen</strong> (tijdelijke arrest of blijvende <strong>senescentie</strong>) of <strong>sterven</strong> door <strong>apoptose</strong> (goede dood, gerecycleerd; necrose = slechte dood,
+barsten, ontsteking). p53 is een <strong>transcriptieregulator</strong>; mutaties zitten in zijn <strong>DNA-bindend domein</strong>. Stop: p53 → <strong>p21</strong> → remt de <strong>Cdk's</strong> → geen
+S-fase. Dood: pro-apoptotische genen aan. Een kankercel is ontregeld en moet p53 dus uitschakelen om te overleven.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Colorectal cancer: the mutations come in order (2.2.9)</h2>
+<p>Some words first. The <strong>colon</strong> and <strong>rectum</strong> are the large intestine and its last part (dikke darm, endeldarm); <strong>colorectal cancer</strong> arises from the
+epithelium lining them. A <strong>polyp</strong> is a small lump of tissue sticking out from that lining; a benign polyp of gland-like epithelium is an <strong>adenoma</strong> (page 2.1) and a
+malignant one a <strong>carcinoma</strong>. <strong>Hyperplastic</strong> means "with too many cells" (hyper = too much, plasia = growth): the first, mild overgrowth. Three gene names:</p>
+<table class="cmp">
+  <tr><th>Gene</th><th>What it is</th></tr>
+  <tr><td><em>Apc</em></td><td>a tumor suppressor gene; its protein APC holds the cells of the gut lining back from proliferating (named after a hereditary polyp disease, adenomatous polyposis coli)</td></tr>
+  <tr><td><em>K-Ras</em></td><td>one of the three human <em>Ras</em> genes, a proto-oncogene (page 2.7: Ras = the switch that passes growth signals into the cell)</td></tr>
+  <tr><td><em>p53</em></td><td>the stress-sensor tumor suppressor of section 1</td></tr>
+  <tr><td>DNA mismatch repair genes</td><td>genes for the repair system that corrects wrongly paired letters after replication (BIO01 ch 4); losing them makes the cell genetically unstable</td></tr>
+</table>
+<p>In what order do these genes mutate, and what does each contribute? There is no single answer: colorectal cancer can arise by more than one route. In some cases the first
+mutation is in a <strong>DNA mismatch repair gene</strong>, in others in a gene regulating proliferation; and a general feature like genetic instability or excessive proliferation can arise
+through different genes. Nevertheless certain mutations are particularly common and occur in a <strong>characteristic order</strong>. The evidence is <em>where</em> each mutation is found:</p>
+<ol>
+  <li><strong><em>Apc</em> inactivation is the first, or a very early, step</strong>: it is found at the <strong>same high frequency in small benign polyps as in large malignant tumors</strong>.
+  If it were a late event, small polyps would rarely have it.</li>
+  <li>Changes that cause <strong>genetic and epigenetic instability</strong> also arise <strong>early</strong>, because they are needed to drive the later steps.</li>
+  <li><strong>Activating <em>K-Ras</em> mutations come later</strong>: rare in small polyps, common in larger polyps that show disturbed differentiation and tissue pattern.</li>
+  <li><strong>Inactivating <em>p53</em> mutations come later still</strong>: rare in polyps, common in carcinomas.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 900 230" width="900" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- gene changes above -->
+    <text x="130" y="22" class="txt red">loss of Apc</text>
+    <text x="330" y="22" class="txt red">activation of K-Ras</text>
+    <text x="500" y="22" class="txt red">loss of Smad4, other</text><text x="500" y="36" class="txt red">tumor suppressors</text>
+    <text x="680" y="22" class="txt red">loss of p53</text>
+    <text x="830" y="22" class="txt red">other, unknown</text>
+    <path d="M130,30 L130,52 M330,30 L330,52 M500,42 L500,52 M680,30 L680,52 M830,30 L830,52" class="path" style="stroke:var(--c-O)" marker-end="url(#ar2)"/>
+    <!-- stages -->
+    <g>
+      <rect x="20" y="60" width="90" height="70" rx="6" class="stage"/>
+      <path d="M26,120 L104,120" class="lamina"/><rect x="28" y="104" width="74" height="14" class="epi"/>
+      <text x="65" y="150" class="txt small">normal</text><text x="65" y="163" class="txt small">epithelium</text>
+    </g>
+    <path d="M112,95 L138,95" class="path accent" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="140" y="60" width="90" height="70" rx="6" class="stage"/>
+      <path d="M146,120 L224,120" class="lamina"/><rect x="148" y="98" width="74" height="20" class="epi"/>
+      <text x="185" y="150" class="txt small">hyperplastic</text><text x="185" y="163" class="txt small">epithelium</text>
+    </g>
+    <path d="M232,95 L258,95" class="path accent" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="260" y="60" width="90" height="70" rx="6" class="stage"/>
+      <path d="M266,120 L344,120" class="lamina"/><rect x="268" y="104" width="74" height="14" class="epi"/><ellipse cx="305" cy="96" rx="16" ry="10" class="epi hi"/>
+      <text x="305" y="150" class="txt small">early</text><text x="305" y="163" class="txt small">adenoma</text>
+    </g>
+    <path d="M352,95 L378,95" class="path accent" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="380" y="60" width="90" height="70" rx="6" class="stage"/>
+      <path d="M386,120 L464,120" class="lamina"/><rect x="388" y="104" width="74" height="14" class="epi"/><ellipse cx="425" cy="90" rx="22" ry="16" class="epi hi"/>
+      <text x="425" y="150" class="txt small">intermediate</text><text x="425" y="163" class="txt small">adenoma</text>
+    </g>
+    <path d="M472,95 L498,95" class="path accent" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="500" y="60" width="90" height="70" rx="6" class="stage"/>
+      <path d="M506,120 L584,120" class="lamina"/><rect x="508" y="104" width="74" height="14" class="epi"/><ellipse cx="545" cy="86" rx="28" ry="20" class="epi hi"/>
+      <text x="545" y="150" class="txt small">late</text><text x="545" y="163" class="txt small">adenoma</text>
+    </g>
+    <path d="M592,95 L618,95" class="path accent" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="620" y="60" width="90" height="70" rx="6" class="stage bad"/>
+      <path d="M626,120 L704,120" class="lamina broken"/><rect x="628" y="104" width="74" height="14" class="epi"/><ellipse cx="665" cy="90" rx="30" ry="24" class="epi tum"/>
+      <text x="665" y="150" class="txt small">carcinoma</text><text x="665" y="163" class="txt small">(malignant)</text>
+    </g>
+    <path d="M712,95 L738,95" class="path accent" marker-end="url(#ar2)"/>
+    <g>
+      <rect x="740" y="60" width="140" height="70" rx="6" class="stage bad"/>
+      <path d="M746,120 L874,120" class="lamina broken"/><ellipse cx="780" cy="88" rx="22" ry="18" class="epi tum"/><ellipse cx="830" cy="112" rx="12" ry="9" class="epi tum"/><ellipse cx="858" cy="124" rx="9" ry="7" class="epi tum"/>
+      <text x="810" y="150" class="txt small">invasion and</text><text x="810" y="163" class="txt small">metastasis</text>
+    </g>
+    <!-- instability bar -->
+    <path d="M140,190 L880,190" class="path accent" marker-end="url(#ar2)"/>
+    <text x="510" y="210" class="txt small muted">acquisition of increasing genetic and epigenetic instability (starts early, drives the later steps)</text>
+    <text x="450" y="226" class="txt small muted">blue line = basal lamina (dashed = broken through) · green = epithelial cells · yellow = benign overgrowth · red = cancer cells</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-27: a suggested typical sequence for colorectal carcinoma. Oversimplified: many other mutations are involved and different colon cancers take different routes,
+  but the order Apc → K-Ras → p53 is the one to remember. (Smad4 is another tumor suppressor the syllabus figure names; you do not need to know what it does.)</figcaption>
+</figure>
+
+<h3>Why p53 is lost late: oncogenes beyond the safe limit</h3>
+<p>Losing p53 lets cancer cells endure stress and avoid apoptosis and arrest. But there is a second link: loss of p53 is tied to the <strong>heightened activation of oncogenes</strong> such
+as Ras. Experiments in mice show that an initial <strong>low level</strong> of oncogene activation gives a slowly growing tumor <strong>even while p53 is functional</strong>: genes like <em>Ras</em> are
+part of the normal growth machinery, and moderate activation is not stressful for a cell, so p53 is not called into play. Progression from slow to rapid, malignant growth, however, needs
+oncogenes driven <strong>beyond their normal limits to a higher, stressful level</strong>. If p53 is present and working, that leads to arrest or death. <strong>Only by losing p53 can cells with
+hyperactive oncogenes survive and progress.</strong> That is why the p53 hit comes late, when the tumor needs to shift gears.</p>
+<p>The syllabus stresses that this is only part of the picture: <strong>each case of colorectal cancer is different</strong>, with its own combination of mutations, and even for the shared ones
+the order may vary.</p>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>APC is a brake on the Wnt signaling pathway: it helps destroy a protein called β-catenin that would otherwise go to the nucleus and keep gut stem cells dividing. Lose APC, and the stem-cell
+population expands massively. People with the hereditary disease familial adenomatous polyposis inherit one bad <em>Apc</em> copy and grow hundreds of polyps. A second hereditary form, Lynch syndrome,
+comes from a bad copy of a DNA mismatch repair gene: no extra polyps, but a 100-fold higher mutation rate once the second copy is lost, and a tumor with an almost normal karyotype. Most colorectal
+cancers show either visible chromosomal instability or mismatch-repair failure, rarely both.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Darmkanker ontstaat uit het epitheel van <strong>colon en rectum</strong>; een <strong>poliep</strong> is een uitstulping, een goedaardige is een <strong>adenoom</strong>. Typische volgorde:
+<strong><em>Apc</em> eerst</strong> (even vaak in kleine poliepen als in grote tumoren), <strong>instabiliteit vroeg</strong>, <strong><em>K-Ras</em> later</strong> (grotere poliepen),
+<strong><em>p53</em> het laatst</strong> (carcinomen). Waarom p53 laat: een matig geactiveerd oncogen is niet stresserend en geeft een traag groeiende tumor met werkend p53; voor snelle, kwaadaardige
+groei moet het oncogen over zijn grens, en dat overleeft de cel alleen zonder p53. Elke tumor is anders; ook de volgorde kan verschillen.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Chapter summary (2.3)</h2>
+<p>The syllabus closes with these points, which tie the whole chapter together:</p>
+<ul>
+  <li>Two classes of cancer-critical genes: <strong>oncogenes</strong> and <strong>tumor suppressor genes</strong>, altered by genetic and epigenetic accidents, drive tumor progression. Many code for parts of the <strong>social control pathways</strong> that decide when cells grow, divide, differentiate or die; a subclass of tumor suppressors are <strong>genome maintenance genes</strong>.</li>
+  <li><strong>Inactivation of the p53 pathway</strong>, in nearly all cancers, lets damaged cells escape apoptosis and keep proliferating; <strong>inactivation of the Rb pathway</strong> also occurs in most cancers. A cancer needs heritable disturbances in all three controls: <strong>cell cycle, cell proliferation, cell survival</strong>.</li>
+  <li>Except for childhood cancers, cancers acquire <strong>multiple driver mutations</strong> over a long progression, plus many more <strong>passengers</strong>. Subclones arise and die out; tumors are heterogeneous, and some cells, the so-called <strong>cancer stem cells</strong>, are more dangerous than others (cancer stem cell: a cell in the tumor that, like a normal stem cell, can renew itself and regrow the whole tumor).</li>
+  <li>The steps of progression can often be matched with specific mutations (colon cancer as the example), but combinations differ between cancer types and between patients, because the changes arise at random; still, the same changes recur, so there are a limited number of ways to breach our defences.</li>
+  <li>The molecular basis of the final, most deadly step, <strong>metastasis</strong>, remains poorly understood.</li>
+</ul>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Samenvatting van het hoofdstuk: oncogenen en tumorsuppressorgenen (plus genome maintenance genes) drijven de progressie; de <strong>p53-route</strong> (bijna alle kankers) en de
+<strong>Rb-route</strong> (de meeste) zijn uitgeschakeld; drie controles moeten kapot: <strong>celcyclus, proliferatie, overleving</strong>. Veel drivers plus nog meer passengers; subklonen,
+heterogeniteit, kankerstamcellen. Volgorde van mutaties soms te koppelen aan stappen (darmkanker), maar elke patiënt verschilt. <strong>Metastase</strong> blijft slecht begrepen.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>p53, <em>TP53</em></td><td>a transcription regulator of 53 kilodaltons that senses stress and triggers arrest or apoptosis; <em>TP53</em> is its gene, mutated in ~50 % of cancers</td></tr>
+  <tr><td>degraded</td><td>broken down; normal cells make p53 and degrade it at once, so the level stays low</td></tr>
+  <tr><td>pathological condition</td><td>a state that endangers the cell (damage, lack of oxygen, overdrive)</td></tr>
+  <tr><td>hypoxia</td><td>too little oxygen</td></tr>
+  <tr><td>osmotic stress, oxidative stress</td><td>swelling or shrivelling by water movement; damage by free radicals (highly reactive oxygen molecules)</td></tr>
+  <tr><td>Myc</td><td>a protein in the nucleus that stimulates growth and division; overexpressed in many cancers; too much Myc raises p53</td></tr>
+  <tr><td>cell-cycle arrest</td><td>a temporary stop of the cycle</td></tr>
+  <tr><td>senescence</td><td>a permanent, irreversible stop of division</td></tr>
+  <tr><td>apoptosis vs necrosis</td><td>neat programmed death, recycled by neighbours vs bursting, spilling contents, inflammation</td></tr>
+  <tr><td>DNA-binding domain</td><td>the part of p53 that grips DNA; where most cancer mutations sit</td></tr>
+  <tr><td>p21</td><td>a protein switched on by p53 that binds and blocks Cdk complexes, so the cell cannot enter S phase</td></tr>
+  <tr><td>pro-apoptotic genes</td><td>genes whose products push the cell into apoptosis; switched on by p53</td></tr>
+  <tr><td>colon, rectum, colorectal</td><td>large intestine, its last part; "colorectal cancer" arises from their lining</td></tr>
+  <tr><td>polyp, adenoma</td><td>a lump sticking out of the gut lining; a benign gland-like tumor</td></tr>
+  <tr><td>hyperplastic</td><td>with too many cells; a mild overgrowth</td></tr>
+  <tr><td><em>Apc</em>, APC</td><td>tumor suppressor gene / protein that restrains proliferation in the gut lining; lost first in most colorectal cancers</td></tr>
+  <tr><td><em>K-Ras</em></td><td>a <em>Ras</em> family proto-oncogene; activated in larger polyps</td></tr>
+  <tr><td>DNA mismatch repair</td><td>the system that corrects wrongly paired letters; losing it causes instability; can be the first hit</td></tr>
+  <tr><td>cancer stem cell</td><td>a tumor cell that can renew itself and regrow the tumor</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "the student describes the main characteristics of the Rb and TP53 gene, its significance in cancer development in humans, and its biological mechanisms of action".</p>
+<ol>
+  <li>State that <em>p53</em> is mutated in about 50 % of cancers, more than any other gene, and that most cancers have a defect somewhere in the p53 pathway.</li>
+  <li>Explain why normal cells have little p53 (made and rapidly degraded) and what the p53-knockout mice show (normal, but all cancer before 10 months).</li>
+  <li>List the stresses that raise p53: DNA damage, telomere shortening, hypoxia, osmotic and oxidative stress, oncogene overdrive (Myc).</li>
+  <li>Give the two responses: arrest (temporary or senescence) or apoptosis; and contrast apoptosis (good death) with necrosis (bad death).</li>
+  <li>Describe the mechanism: p53 is a transcription regulator; mutations hit its DNA-binding domain; p53 → p21 → Cdk complexes blocked → no S phase; p53 also switches on pro-apoptotic genes.</li>
+  <li>Answer exam Q7 (p53 = guardian of the genome: repair, arrest, apoptosis) and Q6 (p53 = tumor suppressor mutated in about half of cancers).</li>
+  <li>Give the typical colorectal order (Apc early, instability early, K-Ras later, p53 last) with the evidence (where each mutation is found), and explain why p53 loss comes late.</li>
+  <li>Reproduce the chapter summary: three controls, drivers and passengers, heterogeneity, metastasis poorly understood.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>How common are p53 mutations?</dt>
+  <dd>About 50 % of all cancers carry a mutated <em>p53</em>, more than for any other cancer-critical gene; counting the closely linked genes, most cancers have a defect in the p53 pathway.</dd>
+
+  <dt>Why is there so little p53 in a normal cell, and what do the knockout mice tell us?</dt>
+  <dd>The protein is synthesized but rapidly degraded. Mice lacking both copies look normal but all develop cancer before 10 months, so p53 is needed only in special circumstances: emergencies.</dd>
+
+  <dt>Which conditions raise the p53 level?</dt>
+  <dd>DNA damage, telomere loss or shortening, hypoxia, osmotic stress, oxidative stress, and regulatory signals so intense that the cell is driven beyond its limits (e.g. Myc overexpressed to oncogenic levels). All are pathological for the cell.</dd>
+
+  <dt>What are the two responses p53 can trigger?</dt>
+  <dd>(1) Block the cycle to repair or recover: temporary arrest, or permanent arrest (senescence). (2) Die by apoptosis, the good death: the cell is eaten by neighbours and recycled. Necrosis is the bad death: bursting, spilling contents, inflammation.</dd>
+
+  <dt>Why must a cancer cell inactivate p53?</dt>
+  <dd>Cancer cells are deranged and stressed; with an active p53 pathway they would be halted or die. A cell with unrepaired DNA damage and working p53 cannot proliferate.</dd>
+
+  <dt>How does p53 stop the cell cycle at the molecular level?</dt>
+  <dd>p53 is a transcription regulator. It induces transcription of <em>p21</em>; the p21 protein binds and inhibits the cyclin-dependent kinase complexes needed for progression, so the cell cannot pass through S phase and replicate its DNA.</dd>
+
+  <dt>Where do the common cancer mutations of p53 lie, and why does that make sense?</dt>
+  <dd>In its DNA-binding domain. Since p53 works by binding DNA target sequences and switching genes on, crippling that domain switches p53 off.</dd>
+
+  <dt>Why is p53 called the guardian of the genome (exam Q7)?</dt>
+  <dd>Because it prevents genomic instability: on DNA damage it halts the cell cycle so the damage can be repaired, and if that fails it induces apoptosis. Ras passes growth signals and Rb gates cell-cycle entry; neither guards the genome.</dd>
+
+  <dt>In what order do the typical colorectal cancer mutations occur, and what is the evidence?</dt>
+  <dd>Apc inactivation first (same high frequency in small polyps as in carcinomas), instability early, K-Ras activation later (rare in small polyps, common in larger ones), p53 inactivation last (rare in polyps, common in carcinomas).</dd>
+
+  <dt>Why does the p53 mutation come late?</dt>
+  <dd>Moderate oncogene activation is not stressful and does not call p53 into play, so a slow tumor can grow with working p53. Malignant growth needs oncogenes driven to a stressful level, which active p53 would answer with arrest or death; only after losing p53 can such cells survive.</dd>
+
+  <dt>Is the Apc → K-Ras → p53 order a law?</dt>
+  <dd>No. Colorectal cancer can start with a mismatch repair gene or a proliferation gene; each case has its own combination, and even shared mutations can come in a different order.</dd>
+
+  <dt>What are the three types of control a cancer must disturb, according to the chapter summary?</dt>
+  <dd>The cell cycle (Rb pathway), cell proliferation (RTK/Ras/PI 3-kinase pathway) and cell survival (p53 pathway).</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong><em>p53</em> mutated in ~50 % of cancers</strong>, the most of any gene; most cancers have a p53-pathway defect.</li>
+  <li>Normal cells: <strong>little p53</strong> (made, quickly degraded). <strong>Knockout mice</strong>: normal but all cancer before 10 months.</li>
+  <li>p53 rises on: <strong>DNA damage, telomere shortening, hypoxia, osmotic and oxidative stress, oncogene overdrive (Myc)</strong>.</li>
+  <li>Responses: <strong>arrest</strong> (temporary) or <strong>senescence</strong> (permanent) or <strong>apoptosis</strong> (good death) — not necrosis (bad death, inflammation).</li>
+  <li>p53 = <strong>transcription regulator</strong>; mutations in its <strong>DNA-binding domain</strong>.</li>
+  <li>Stop chain: <strong>p53 → p21 → Cdk complexes blocked → no S phase</strong>. Death chain: p53 → pro-apoptotic genes.</li>
+  <li>Exam: p53 = <strong>guardian of the genome</strong> (repair, arrest, apoptosis); Rb = cell-cycle entry; Ras = growth signal.</li>
+  <li>Colorectal order: <strong>Apc first, instability early, K-Ras later, p53 last</strong>; evidence = where each is found (polyps vs carcinomas).</li>
+  <li>p53 lost late because <strong>moderate oncogene activity is not stressful; high activity is</strong>, and only without p53 can those cells survive.</li>
+  <li>Every case is different; the order can vary.</li>
+  <li>Summary: three controls broken (<strong>cycle, proliferation, survival</strong>); drivers + passengers; heterogeneity, cancer stem cells; <strong>metastasis poorly understood</strong>.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Which cancer-critical gene is mutated most often in human cancers, and in what fraction?
+    <ul class="opts"><li data-l="a">Ras, about 90 %</li><li data-l="b">Rb, about 50 %</li><li data-l="c">p53, about 50 %</li><li data-l="d">Myc, about 10 %</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> <em>p53</em> is mutated in about half of all cancers, a higher proportion than any other known cancer-critical gene.</p></div></details></li>
+  <li>True or false: "A healthy cell contains a large stock of p53 protein, ready for emergencies."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> p53 is made continuously but rapidly degraded, so the level is very low. It <em>rises</em> only when a stress stabilises it. (Rb, by contrast, is present all the time.)</p></div></details></li>
+  <li>What does the p53-knockout mouse experiment show?
+    <details><summary>Answer</summary><div class="ans"><p>Mice without any p53 develop normally but <strong>all get cancer before 10 months</strong>: p53 is not needed for ordinary life, only to deal with dangerous situations.</p></div></details></li>
+  <li>Name four conditions that raise the p53 level.
+    <details><summary>Answer</summary><div class="ans"><p>Any four of: DNA damage, telomere shortening, hypoxia, osmotic stress, oxidative stress, oncogene overdrive (Myc overexpressed to oncogenic levels). What they share: they endanger the cell.</p></div></details></li>
+  <li>A cell with unrepaired DNA damage has a working p53 pathway. What can happen to it, and what cannot?
+    <details><summary>Answer</summary><div class="ans"><p>It will <strong>stop dividing</strong> (arrest, possibly permanent senescence) or <strong>die by apoptosis</strong>. What cannot happen: proliferate. That is exactly why cancer cells need p53 gone.</p></div></details></li>
+  <li>What is the difference between apoptosis and necrosis, and which does p53 choose?
+    <details><summary>Answer</summary><div class="ans"><p>Apoptosis: the "good death", the cell is phagocytosed by neighbours and recycled. Necrosis: the "bad death", the cell bursts, spills its contents and causes inflammation. p53 triggers <strong>apoptosis</strong>.</p></div></details></li>
+  <li>Fill in: stress → p53 up → transcription of ___ → ___ complexes inhibited → the cell cannot enter ___ phase.
+    <details><summary>Answer</summary><div class="ans"><p><strong>p21</strong> → <strong>cyclin-dependent kinase (Cdk)</strong> complexes inhibited → no <strong>S</strong> phase, so no DNA replication. p53 works here as a transcription regulator switching the <em>p21</em> gene on.</p></div></details></li>
+  <li>Why are most cancer mutations of p53 found in its DNA-binding domain?
+    <details><summary>Answer</summary><div class="ans"><p>Because p53 works by binding DNA and switching target genes on. Breaking the DNA-binding domain stops it from binding its targets, which inactivates the whole pathway.</p></div></details></li>
+  <li>Exam-style: which gene is the "guardian angel of the genome"? (a) RAS because it controls cell-cycle entry, (b) p53 because it repairs DNA, induces apoptosis and halts the cycle, (c) RB1 because it stops inappropriate entry into S phase.
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> p53 protects the genome by arrest-for-repair and by apoptosis of cells that cannot be repaired. RB1's description is true but it guards cell-cycle entry, not the genome; Ras passes growth signals and is a proto-oncogene.</p></div></details></li>
+  <li>Put in the typical order for colorectal cancer: loss of p53, loss of Apc, activation of K-Ras.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Apc → K-Ras → p53.</strong> Apc loss is already in small polyps; K-Ras activation appears in larger polyps; p53 loss mainly in carcinomas.</p></div></details></li>
+  <li>How do we know that <em>Apc</em> inactivation is an early step?
+    <details><summary>Answer</summary><div class="ans"><p>It is found at the <strong>same high frequency in small benign polyps as in large malignant tumors</strong>. A late event would be rare in small polyps.</p></div></details></li>
+  <li>Why can a tumor with moderately activated Ras grow while p53 still works, but not a tumor with strongly activated Ras?
+    <details><summary>Answer</summary><div class="ans"><p>Ras is part of normal growth control; <strong>moderate</strong> activation is not stressful and does not call p53 into play. <strong>Strong</strong> activation drives the cell beyond its limits, a stress that working p53 answers with arrest or death. Only after losing p53 can those cells survive, which is why p53 loss comes late.</p></div></details></li>
+  <li>What is a cancer stem cell, mentioned in the chapter summary?
+    <details><summary>Answer</summary><div class="ans"><p>A tumor cell that, like a normal stem cell, can renew itself and regrow the whole tumor. Tumors are heterogeneous, and these cells are the most dangerous ones.</p></div></details></li>
+  <li>Which step of cancer is still the least understood at the molecular level?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Metastasis</strong>, the final and most deadly step. No mutations characteristic of metastatic disease have been found; the chapter summary calls its molecular basis poorly understood.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.07_cancer_genomes_and_pathways.html">← 2.7 Cancer genomes and pathways</a><a href="index.html">Chapter 2 index</a><a href="../chapter_3/index.html">Chapter 3 index →</a></nav>
+</main>
+</body>
+</html>

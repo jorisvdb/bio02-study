@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.3 PCR and cDNA</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .st { stroke: var(--c-C); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .st.new { stroke: var(--c-N); }
+  .st.rna { stroke: var(--c-O); }
+  .pr { stroke: var(--c-Cl); stroke-width: 5; stroke-linecap: round; fill: none; }
+  .pr.b { stroke: var(--c-P); }
+  .pol { fill: var(--c-S); fill-opacity: .6; stroke: var(--c-S); stroke-width: 1; }
+  .box2 { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.02_stem_cells_and_virus_culture.html">← 4.2 Stem cells and virus culture</a><a href="index.html">Chapter 4 index</a><a href="4.04_cloning_and_restriction_enzymes.html">4.4 Cloning and restriction enzymes →</a></nav>
+
+<h1>4.3 PCR and cDNA: making millions of copies of one piece of DNA</h1>
+<p class="lede">In one sentence: PCR copies one chosen stretch of DNA over and over by heating (strands apart), cooling (two short primers bind) and
+letting a heat-proof DNA polymerase extend them, so that 20 cycles turn a few molecules into more than a million; and when you start from RNA, a
+reverse transcriptase first turns it into DNA (cDNA).</p>
+
+<p>Almost every other technique in this chapter starts with "amplify the DNA by PCR" (amplify = make many copies). Cloning, sequencing, measuring
+gene expression, detecting a virus: all need more material than a cell gives you. Three example exam questions are about this page
+(the dodo DNA, the ingredients of a PCR, and what reverse transcriptase does).</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder (BIO01 chapters 3, 4 and 5)</th></tr>
+  <tr><td>double-stranded DNA</td><td>two strands held together by base pairs (A with T, G with C); the strands run in opposite directions</td></tr>
+  <tr><td>5′ and 3′ end</td><td>read "five prime" and "three prime": the two different ends of a DNA strand; a strand is always written 5′ → 3′</td></tr>
+  <tr><td>complementary</td><td>two sequences that fit by base pairing (A–T, G–C), so they can stick together</td></tr>
+  <tr><td>template</td><td>the strand that is read to build a new, complementary strand (mal)</td></tr>
+  <tr><td>DNA polymerase</td><td>the enzyme that builds DNA: it needs a <strong>primer</strong> (a short starting piece with a free 3′ OH end) and adds nucleotides to that 3′ end, so the new strand grows <strong>5′ → 3′</strong></td></tr>
+  <tr><td>dNTPs</td><td>read "d-N-T-P": the four building blocks of DNA (dATP, dCTP, dGTP, dTTP), "deoxynucleoside triphosphates"; what DNA polymerase adds</td></tr>
+  <tr><td>mRNA, intron, exon, splicing</td><td>mRNA = the working copy of a gene; in eukaryotes the gene has introns (pieces cut out) and exons (pieces kept); splicing cuts the introns out, so mature mRNA has only exons</td></tr>
+  <tr><td>retrovirus, reverse transcriptase</td><td>(chapter 3) a virus with an RNA genome and an enzyme that copies RNA into DNA, the reverse of the usual direction</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: DNA-polymerase heeft een <strong>primer</strong> nodig (startstukje met vrij 3′-OH-uiteinde) en bouwt de nieuwe streng <strong>5′ → 3′</strong> uit
+<strong>dNTP's</strong> langs een <strong>template</strong> (mal). Mature mRNA heeft alleen exons (introns zijn weggeknipt). <strong>Reverse transcriptase</strong> (uit een retrovirus)
+kopieert RNA naar DNA.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. What PCR is for (4.3, 4.3.1)</h2>
+<p>Begin state: a sample with very little DNA, maybe only a few molecules, in which you are interested in <em>one</em> particular stretch (for example one gene).
+Goal: millions of copies of exactly that stretch, so you can see it, sequence it or clone it. The method is the <strong>polymerase chain reaction</strong>,
+<strong>PCR</strong> (read "P-C-R"). "Chain reaction" because each round doubles the number of molecules and the products of one round are the templates of the next.</p>
+<p>Virtually any DNA segment can be amplified. The trick is to choose the <strong>boundaries</strong>: you decide where the copied piece starts and ends with two
+<strong>primers</strong>.</p>
+
+<h3>The primers</h3>
+<p>A <strong>primer</strong> here is a short piece of single-stranded DNA made chemically in a machine: a synthetic <strong>oligonucleotide</strong> (oligo = few: a chain of a
+few nucleotides, typically about <strong>20 bases</strong> long). You order two of them:</p>
+<ul>
+  <li>primer 1 is complementary to the <strong>3′ end of one strand</strong> of the stretch,</li>
+  <li>primer 2 is complementary to the <strong>3′ end of the other strand</strong>.</li>
+</ul>
+<p>Because DNA polymerase can only extend a primer at its 3′ end and build 5′ → 3′, each primer starts a new strand that runs <em>towards</em> the other primer.
+Everything between the two primers gets copied; nothing outside. Primers must be designed with care (there are computer programs for this), because
+a primer that also fits somewhere else by partial complementarity would copy the wrong piece.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>PCR</strong> (polymerasekettingreactie) maakt miljoenen kopieën van één gekozen stuk DNA. De grenzen bepaal je met twee <strong>primers</strong>: synthetische
+<strong>oligonucleotiden</strong> van ±20 basen, elk complementair aan het 3′-uiteinde van één streng. Elke primer wordt door DNA-polymerase verlengd richting de
+andere primer, dus alleen het stuk ertussen wordt gekopieerd.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. One cycle: three temperatures (Figures 4-10, 4-11)</h2>
+<p>Everything is mixed in one tube: the template DNA, the two primers (in large excess), the four dNTPs, and a DNA polymerase. The tube goes into a
+<strong>thermocycler</strong> (a machine that switches between set temperatures automatically). One cycle has three steps:</p>
+<ol>
+  <li><strong>Denaturation</strong> (denatureren = losmaken), <strong>94 to 98 °C</strong> (°C = degrees Celsius): the heat breaks the hydrogen bonds between the base pairs, and the double helix falls apart into two single strands.</li>
+  <li><strong>Annealing</strong> (hybridisation; aanhechten), <strong>50 to 65 °C</strong>: the sample cools and the primers find and bind their complementary sites on the single strands. (The two old strands could also re-pair, but the primers are short, fast and present in huge excess, so they win.)</li>
+  <li><strong>Extension</strong> (verlenging), typically <strong>72 °C</strong>: DNA polymerase uses each primer as a starting point and adds dNTPs to its 3′ end, copying the template strand.</li>
+</ol>
+<p>After one cycle there are <strong>two</strong> copies of the chosen sequence; the cycle is repeated, and each time the number of template strands <strong>doubles</strong>:
+2, 4, 8, 16 ... After <strong>20 cycles</strong> one double-stranded template has given more than <strong>a million</strong> copies (2²⁰ ≈ 1 million); a run is usually 20 to 40 cycles.
+The temperatures and how long each step lasts decide how efficient and how specific the reaction is.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 300" width="880" height="300" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arP" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- step 0 template -->
+    <text x="90" y="18" class="txt bold">start: template</text>
+    <path d="M20,50 L160,50" class="st"/><path d="M20,66 L160,66" class="st"/>
+    <text x="14" y="45" class="txt small left muted">5′</text><text x="150" y="45" class="txt small left muted">3′</text>
+    <text x="14" y="80" class="txt small left muted">3′</text><text x="150" y="80" class="txt small left muted">5′</text>
+    <text x="90" y="100" class="txt small">double-stranded DNA</text>
+    <!-- step 1 denaturation -->
+    <path d="M175,58 L205,58" class="path accent" marker-end="url(#arP)"/>
+    <text x="300" y="18" class="txt bold">1 denaturation 94–98 °C</text>
+    <path d="M220,36 L380,36" class="st"/>
+    <path d="M220,84 L380,84" class="st"/>
+    <text x="300" y="62" class="txt small muted">strands come apart</text>
+    <text x="300" y="100" class="txt small">two single strands</text>
+    <!-- step 2 annealing -->
+    <path d="M395,58 L425,58" class="path accent" marker-end="url(#arP)"/>
+    <text x="520" y="18" class="txt bold">2 annealing 50–65 °C</text>
+    <path d="M440,36 L600,36" class="st"/>
+    <path d="M560,46 L600,46" class="pr"/>
+    <path d="M440,84 L600,84" class="st"/>
+    <path d="M440,74 L480,74" class="pr b"/>
+    <text x="520" y="100" class="txt small">primers bind the 3′ ends</text>
+    <!-- step 3 extension -->
+    <path d="M615,58 L645,58" class="path accent" marker-end="url(#arP)"/>
+    <text x="750" y="18" class="txt bold">3 extension 72 °C</text>
+    <path d="M660,36 L820,36" class="st"/>
+    <path d="M780,46 L820,46" class="pr"/><path d="M780,46 L690,46" class="st new"/>
+    <circle cx="690" cy="46" r="7" class="pol"/>
+    <path d="M660,84 L820,84" class="st"/>
+    <path d="M660,74 L700,74" class="pr b"/><path d="M700,74 L790,74" class="st new"/>
+    <circle cx="790" cy="74" r="7" class="pol"/>
+    <text x="740" y="100" class="txt small">polymerase extends each primer: 2 copies</text>
+    <!-- doubling row -->
+    <rect x="20" y="130" width="840" height="150" rx="8" class="box2"/>
+    <text x="440" y="150" class="txt bold">repeat the cycle: the number of copies doubles every time</text>
+    <text x="110" y="180" class="txt">cycle 1</text><text x="110" y="200" class="txt bold">2 copies</text>
+    <path d="M160,190 L200,190" class="path accent" marker-end="url(#arP)"/>
+    <text x="260" y="180" class="txt">cycle 2</text><text x="260" y="200" class="txt bold">4 copies</text>
+    <path d="M310,190 L350,190" class="path accent" marker-end="url(#arP)"/>
+    <text x="410" y="180" class="txt">cycle 3</text><text x="410" y="200" class="txt bold">8 copies</text>
+    <path d="M460,190 L500,190" class="path accent" marker-end="url(#arP)"/>
+    <text x="560" y="180" class="txt">cycle 20</text><text x="560" y="200" class="txt bold">&gt; 1 000 000</text>
+    <path d="M620,190 L660,190" class="path accent" marker-end="url(#arP)"/>
+    <text x="740" y="180" class="txt">cycle 30</text><text x="740" y="200" class="txt bold">≈ 10⁹</text>
+    <text x="440" y="232" class="txt small muted">only the region between the two primers is copied; from cycle 3 on, almost all products are exactly that region</text>
+    <text x="440" y="252" class="txt small muted">green and orange = the two primers · blue = newly made DNA · yellow dot = DNA polymerase (Taq, heat-stable)</text>
+    <text x="440" y="270" class="txt small muted">a thermocycler runs the three temperatures automatically, 20 to 40 times</text>
+  </svg>
+  <figcaption>Syllabus Figures 4-10 and 4-11: one PCR cycle (denature, anneal, extend) and the doubling over cycles.</figcaption>
+</figure>
+
+<h3>Why the polymerase must be heat-stable</h3>
+<p>Every cycle heats the tube to about 95 °C, which would destroy ("cook") an ordinary enzyme. PCR therefore uses a DNA polymerase from a bacterium that
+lives in hot springs, <strong>Thermus aquaticus</strong>; its enzyme is called <strong>Taq polymerase</strong> and survives the repeated heating. That is what made
+PCR automatic: you add the enzyme once and let the machine cycle.</p>
+
+<div class="callout key"><span class="tag">Technique card: PCR</span>
+<table>
+  <tr><td>principle</td><td>repeated cycles of strand separation and copying double the chosen DNA every cycle</td></tr>
+  <tr><td>you need</td><td>template DNA, <strong>two primers</strong>, the four <strong>dNTPs</strong> (nucleotides), a <strong>heat-stable DNA polymerase</strong> (Taq), a buffer, a thermocycler</td></tr>
+  <tr><td>steps</td><td>denature 94–98 °C → anneal 50–65 °C → extend 72 °C, repeated 20–40 times</td></tr>
+  <tr><td>used for</td><td>amplifying any DNA segment from tiny amounts (old tissue, a single cell, a virus in a patient); the first step of cloning and of most sequencing; detecting and measuring RNA after reverse transcription (page 4.13)</td></tr>
+  <tr><td>trap</td><td>the exam lists "ribosomes, amino acids, tRNA" as distractors: those are for <em>translation</em>, not for copying DNA; and ligase is not needed (nothing is joined, the strand is built nucleotide by nucleotide)</td></tr>
+</table></div>
+
+<h3>Caveats (the syllabus names three)</h3>
+<ol>
+  <li><strong>Wrong binding site:</strong> a primer can hybridise to a site that only partly matches; then the wrong DNA is amplified. Careful primer design prevents this.</li>
+  <li><strong>Copying errors:</strong> the polymerase sometimes inserts a wrong base (misincorporation). A mistake made in an <strong>early</strong> cycle is copied in every later cycle and ends up in a large share of the product.</li>
+  <li><strong>Length:</strong> fragments longer than about <strong>4000 to 5000 base pairs</strong> (bp = base pairs, the unit of DNA length) need special polymerases and conditions.</li>
+</ol>
+<p>Point 2 can be turned into a tool: under special conditions (changed salt concentration, which lowers the polymerase's accuracy, or unequal amounts of the four
+dNTPs, which favours wrong insertions) PCR makes <strong>random mutants</strong> of the fragment. Such a mutant collection can be put into cells and screened for altered protein function.</p>
+
+<div class="callout quiz"><span class="tag">Exam links</span>
+<p><strong>Question 12:</strong> a bit of 400-year-old dodo skin; which technique increases the amount of dodo DNA? <strong>PCR</strong>. Gel electrophoresis only separates
+fragments (page 4.8), SNP analysis compares sequence variants; neither makes more DNA.<br>
+<strong>Question 13:</strong> what does a biologist add to a DNA fragment to copy it by PCR? <strong>Nucleotides, primers and polymerase.</strong> "Nucleotides and ligase": no, ligase joins
+pieces, it does not build. "Ribosomes, amino acids, primers" and "tRNA and amino acids": those make proteins, not DNA.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Eén PCR-cyclus: <strong>denaturatie</strong> (94–98 °C, strengen los), <strong>annealing</strong> (50–65 °C, primers binden), <strong>extensie</strong> (72 °C, polymerase verlengt de
+primers). Elke cyclus verdubbelt het aantal kopieën: 20 cycli → meer dan een miljoen; 20–40 cycli in een <strong>thermocycler</strong>. De polymerase moet hittebestendig
+zijn: <strong>Taq</strong> uit <em>Thermus aquaticus</em>. Ingrediënten: template, 2 primers, dNTP's, Taq. Valkuilen: primer bindt ergens anders, fouten in vroege cycli
+worden vermenigvuldigd, &gt; 4000–5000 bp is lastig. Met opzet foutgevoelige PCR geeft willekeurige mutanten.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. From RNA to DNA: reverse transcription and cDNA (4.3.2, Figure 4-12)</h2>
+<p>Sometimes the molecule you want to copy or sequence is an <strong>RNA</strong>: for example all the mRNAs a cell is making right now. PCR only works on DNA.
+The solution is to first make a DNA copy of the RNA. Begin state: a sample of mRNAs. Goal: double-stranded DNA with the same sequences, ready for PCR.</p>
+<ol>
+  <li>The enzyme <strong>reverse transcriptase</strong> (taken from a <strong>retrovirus</strong>, chapter 3: it is the enzyme HIV uses to copy its RNA genome into DNA) reads each mRNA as a template and builds a complementary DNA strand. This first DNA strand is a <strong>reverse transcript</strong>, and the DNA is called <strong>complementary DNA</strong>, <strong>cDNA</strong>. At this point each molecule is an RNA–DNA hybrid (one strand RNA, one strand DNA).</li>
+  <li>The mRNA strand is <strong>degraded</strong> by adding a specific enzyme that breaks down RNA, leaving the single DNA strand.</li>
+  <li>A <strong>DNA polymerase</strong> builds the second DNA strand, complementary to the first. The result is <strong>double-stranded cDNA</strong>.</li>
+  <li>The cDNA is amplified by <strong>PCR</strong> as usual.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 150" width="880" height="150" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="100" y="18" class="txt bold">1 mRNA</text>
+    <path d="M30,50 L170,50" class="st rna"/>
+    <text x="100" y="76" class="txt small">single-stranded RNA</text>
+    <text x="100" y="90" class="txt small">(exons only)</text>
+    <path d="M185,50 L215,50" class="path accent" marker-end="url(#arC)"/>
+    <text x="200" y="40" class="txt small muted">RT</text>
+    <text x="310" y="18" class="txt bold">2 RNA–DNA hybrid</text>
+    <path d="M240,44 L380,44" class="st rna"/><path d="M240,58 L380,58" class="st new"/>
+    <text x="310" y="76" class="txt small">reverse transcriptase builds</text>
+    <text x="310" y="90" class="txt small">the first cDNA strand</text>
+    <path d="M395,50 L425,50" class="path accent" marker-end="url(#arC)"/>
+    <text x="520" y="18" class="txt bold">3 RNA removed</text>
+    <path d="M450,58 L590,58" class="st new"/>
+    <text x="520" y="76" class="txt small">an RNA-degrading enzyme</text>
+    <text x="520" y="90" class="txt small">eats the mRNA</text>
+    <path d="M605,50 L635,50" class="path accent" marker-end="url(#arC)"/>
+    <text x="740" y="18" class="txt bold">4 double-stranded cDNA</text>
+    <path d="M660,44 L800,44" class="st new"/><path d="M660,58 L800,58" class="st new"/>
+    <text x="740" y="76" class="txt small">DNA polymerase makes</text>
+    <text x="740" y="90" class="txt small">the second strand → PCR</text>
+    <text x="440" y="130" class="txt small muted">red = RNA · blue = DNA · RT = reverse transcriptase (from a retrovirus)</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-12: making complementary DNA (cDNA) from mRNA. Only one mRNA is drawn; a real sample gives a cDNA for every mRNA in the cell.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">cDNA has no introns</span>
+<p>The mRNA was already spliced in the cell, so it contains only exons. cDNA made from it therefore has <strong>no introns</strong>, unlike the gene in the genome.
+This is useful: a cDNA of a human gene can be put into bacteria, which cannot splice, and still give the right protein. It also means cDNA reflects
+<strong>which genes the cell was expressing</strong> and how much (page 4.13: qRT-PCR, microarrays, RNA-seq).</p></div>
+
+<div class="callout key"><span class="tag">Technique card: reverse transcription (RT)</span>
+<table>
+  <tr><td>principle</td><td>an RNA template is copied into DNA by reverse transcriptase; the RNA is removed and a second DNA strand made</td></tr>
+  <tr><td>you need</td><td>mRNA, reverse transcriptase, a primer, dNTPs; an RNA-degrading enzyme; DNA polymerase</td></tr>
+  <tr><td>steps</td><td>RT makes first strand → degrade RNA → DNA polymerase makes second strand → PCR</td></tr>
+  <tr><td>used for</td><td>copying or sequencing RNAs; cDNA libraries (page 4.5); measuring gene expression (page 4.13)</td></tr>
+  <tr><td>trap</td><td>reverse transcriptase uses <em>viral or sample RNA</em> as a template to make <em>DNA</em>; it does not make RNA, does not cut DNA and does not translate anything (exam questions 8 and 11)</td></tr>
+</table></div>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p><strong>Question 11</strong> asks which pairing is wrong. "Reverse transcriptase – production of cDNA from mRNA" is <strong>correct</strong>. The wrong pair is
+"DNA ligase – cutting DNA": ligase <em>joins</em> DNA; <em>restriction enzymes</em> cut it (page 4.4). (Chapter 3, question 8, asks the same thing from the virus side:
+reverse transcriptase uses viral RNA as a template for DNA synthesis.)</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>PCR werkt alleen op DNA, dus RNA wordt eerst omgezet: <strong>reverse transcriptase</strong> (uit een retrovirus) maakt op het mRNA een DNA-streng (<strong>cDNA</strong>,
+complementair DNA; eerst een RNA–DNA-hybride), het RNA wordt afgebroken, DNA-polymerase maakt de tweede streng → dubbelstrengs cDNA → PCR. cDNA heeft
+<strong>geen introns</strong> (het mRNA was al gesplitst) en weerspiegelt welke genen de cel gebruikt.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>amplify / amplification</td><td>make many copies of a DNA sequence</td></tr>
+  <tr><td>PCR (polymerase chain reaction)</td><td>repeated cycles of denaturing, primer binding and extension that double the chosen DNA every cycle</td></tr>
+  <tr><td>oligonucleotide</td><td>a short, chemically made chain of nucleotides (about 20); used as a primer</td></tr>
+  <tr><td>primer</td><td>a short single-stranded DNA that binds a complementary site and gives DNA polymerase a 3′ end to start from</td></tr>
+  <tr><td>denaturation</td><td>separating the two DNA strands by heat (94–98 °C)</td></tr>
+  <tr><td>annealing / hybridisation</td><td>a single strand binding to its complementary partner (primers to template, 50–65 °C)</td></tr>
+  <tr><td>extension</td><td>DNA polymerase lengthening the primer along the template (72 °C)</td></tr>
+  <tr><td>thermocycler</td><td>the machine that cycles the tube between the set temperatures</td></tr>
+  <tr><td>Thermus aquaticus / Taq polymerase</td><td>a hot-spring bacterium / its heat-stable DNA polymerase, used in PCR</td></tr>
+  <tr><td>dNTPs</td><td>the four DNA building blocks that the polymerase adds</td></tr>
+  <tr><td>bp (base pair)</td><td>unit of DNA length; one rung of the ladder</td></tr>
+  <tr><td>misincorporation</td><td>the polymerase putting in a wrong base</td></tr>
+  <tr><td>fidelity</td><td>accuracy of copying (lowered by salt changes, used for random mutagenesis)</td></tr>
+  <tr><td>reverse transcriptase (RT)</td><td>retroviral enzyme that builds DNA on an RNA template</td></tr>
+  <tr><td>reverse transcript / cDNA</td><td>the DNA copy of an RNA; complementary DNA; has no introns</td></tr>
+  <tr><td>RNA–DNA hybrid</td><td>a double strand with one RNA and one DNA strand (the stage after the first cDNA strand)</td></tr>
+  <tr><td>SNP analysis</td><td>(exam distractor) comparing single-letter differences between DNA sequences; does not amplify</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes the principle, methodology and applications of different forms of nucleic acid based technologies, including PCR ..." and "utilizes fundamental concepts of nucleic acid-based technologies ... to solve problems".</p>
+<ol>
+  <li>Explain the principle of PCR: two primers set the boundaries, each cycle doubles the DNA.</li>
+  <li>Name the ingredients (template, two primers, dNTPs, heat-stable polymerase) and recognise wrong ones (ribosomes, tRNA, amino acids, ligase).</li>
+  <li>Give the three steps with their temperatures and what happens in each; 20–40 cycles; 20 cycles → over a million copies.</li>
+  <li>Say why Taq polymerase from Thermus aquaticus is used.</li>
+  <li>Know the caveats (primer mis-binding, early errors amplified, length limit) and that PCR can be used for random mutagenesis.</li>
+  <li>Choose PCR when the problem is "too little DNA" (dodo question).</li>
+  <li>Explain reverse transcription: reverse transcriptase makes cDNA from mRNA; RNA degraded; second strand; no introns; then PCR.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What problem does PCR solve?</dt>
+  <dd>Too little DNA. From a few molecules it makes millions of copies of one chosen stretch, enough to analyse, sequence or clone.</dd>
+
+  <dt>How do the primers decide what gets copied?</dt>
+  <dd>Each primer is complementary to the 3′ end of one strand of the target. DNA polymerase extends each primer towards the other, so only the region between the two primers is copied.</dd>
+
+  <dt>What are the three steps of a PCR cycle, with temperatures?</dt>
+  <dd>Denaturation at 94–98 °C (strands separate), annealing at 50–65 °C (primers bind), extension at 72 °C (polymerase builds the new strands).</dd>
+
+  <dt>Why is the number of copies after 20 cycles about a million?</dt>
+  <dd>Each cycle doubles the number of templates: 2 to the power 20 is about 1 048 000.</dd>
+
+  <dt>Why Taq polymerase?</dt>
+  <dd>It comes from Thermus aquaticus, a hot-spring bacterium, and survives the repeated heating to about 95 °C that would destroy an ordinary polymerase. So the enzyme is added once and the machine can cycle automatically.</dd>
+
+  <dt>What do you add to a DNA fragment to amplify it?</dt>
+  <dd>The two primers, the four nucleotides (dNTPs) and a DNA polymerase (plus buffer). Not ribosomes, tRNA or amino acids (those make protein) and not ligase (that joins fragments).</dd>
+
+  <dt>Why is a copying error in cycle 2 worse than one in cycle 25?</dt>
+  <dd>An error made early is copied in every following cycle and ends up in a large fraction of the product; a late error is in only a few molecules.</dd>
+
+  <dt>How can PCR be used to make mutants?</dt>
+  <dd>Run it under conditions that lower the polymerase's accuracy (changed salt concentration) or favour wrong bases (unequal dNTP ratios); the product is a collection of random mutants to screen for altered protein function.</dd>
+
+  <dt>Why can PCR not be used directly on mRNA?</dt>
+  <dd>DNA polymerase copies DNA. The RNA must first be reverse-transcribed into cDNA by reverse transcriptase.</dd>
+
+  <dt>Describe how double-stranded cDNA is made.</dt>
+  <dd>Reverse transcriptase copies the mRNA into a complementary DNA strand (RNA–DNA hybrid); an enzyme degrades the RNA; DNA polymerase makes the second DNA strand. Then PCR amplifies it.</dd>
+
+  <dt>Why has cDNA no introns?</dt>
+  <dd>It is copied from mature mRNA, from which the cell already removed the introns by splicing.</dd>
+
+  <dt>Which pairing is wrong: electrophoresis–separation, DNA ligase–cutting DNA, DNA polymerase–PCR, reverse transcriptase–cDNA from mRNA?</dt>
+  <dd>DNA ligase–cutting: ligase joins DNA; restriction enzymes cut it. The other three are correct.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>PCR</strong> = millions of copies of one DNA stretch; the <strong>two primers</strong> set the boundaries.</li>
+  <li>Primer = synthetic <strong>oligonucleotide</strong>, ≈ 20 bases, complementary to the <strong>3′ end</strong> of each strand.</li>
+  <li>Cycle: <strong>denature 94–98 °C → anneal 50–65 °C → extend 72 °C</strong>; 20–40 cycles in a thermocycler.</li>
+  <li>Each cycle <strong>doubles</strong>: 20 cycles → <strong>&gt; 1 million</strong> copies.</li>
+  <li>Ingredients: <strong>template, primers, dNTPs, polymerase</strong> (not ribosomes, tRNA, amino acids, ligase).</li>
+  <li><strong>Taq</strong> polymerase from <strong>Thermus aquaticus</strong>: heat-stable, survives the cycles.</li>
+  <li>Caveats: primer binds elsewhere; <strong>early errors are amplified</strong>; &gt; 4000–5000 bp needs special conditions.</li>
+  <li>Error-prone PCR (salt, dNTP ratios) → random mutants for screens.</li>
+  <li>"Increase the amount of old DNA" = <strong>PCR</strong> (dodo question).</li>
+  <li><strong>Reverse transcriptase</strong> (retrovirus) copies <strong>mRNA → cDNA</strong>; RNA degraded; DNA polymerase makes strand 2; then PCR.</li>
+  <li><strong>cDNA has no introns</strong> (made from spliced mRNA).</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Put the three PCR steps in order and give the temperature of each.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Denaturation</strong> (94–98 °C) → <strong>annealing</strong> (50–65 °C) → <strong>extension</strong> (72 °C). Hot to separate, cooler to let primers bind, warm for the polymerase to work.</p></div></details></li>
+  <li>Which component is NOT needed for PCR?
+    <ul class="opts"><li data-l="a">primers</li><li data-l="b">dNTPs</li><li data-l="c">DNA ligase</li><li data-l="d">heat-stable DNA polymerase</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Ligase joins DNA pieces; in PCR nothing is joined. The strand is built nucleotide by nucleotide from a primer by the polymerase.</p></div></details></li>
+  <li>Why do you need two primers and not one?
+    <details><summary>Answer</summary><div class="ans"><p>Each strand needs its own starting point, and the two primers together mark <strong>both ends</strong> of the region. With one primer only one strand would be copied and the product would not double each cycle.</p></div></details></li>
+  <li>After 10 cycles, how many copies has one template become?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>2¹⁰ = 1024</strong>. Doubling every cycle; 20 cycles give about a million, 30 about a billion.</p></div></details></li>
+  <li>True or false: "The high temperature of the denaturation step would destroy an ordinary DNA polymerase."
+    <details><summary>Answer</summary><div class="ans"><p><strong>True.</strong> That is why PCR uses Taq polymerase from Thermus aquaticus, which survives repeated heating to about 95 °C.</p></div></details></li>
+  <li>What happens during annealing, and why do the primers win against the old strands re-pairing?
+    <details><summary>Answer</summary><div class="ans"><p>The primers bind (hybridise) to their complementary sites on the single strands. They are short, find their sites quickly and are present in <strong>huge excess</strong>, so they bind before the long strands can find each other.</p></div></details></li>
+  <li>A primer is designed carelessly and partly matches a second site in the genome. What goes wrong?
+    <details><summary>Answer</summary><div class="ans"><p>The primer can hybridise there too, so the <strong>wrong DNA sequence is amplified</strong> along with (or instead of) the intended one. Primer design programs exist to avoid this.</p></div></details></li>
+  <li>A forensic scientist has a tiny bloodstain. Which technique first?
+    <ul class="opts"><li data-l="a">gel electrophoresis</li><li data-l="b">PCR</li><li data-l="c">SNP analysis</li><li data-l="d">reverse transcription</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Too little DNA → amplify it first. Electrophoresis and SNP analysis analyse DNA you already have; reverse transcription is for RNA.</p></div></details></li>
+  <li>You want to amplify a 9000-bp region in one piece. What should you expect?
+    <details><summary>Answer</summary><div class="ans"><p>Trouble: fragments over about <strong>4000–5000 bp</strong> need specialised polymerases and conditions.</p></div></details></li>
+  <li>How would you deliberately make random mutants of a gene with PCR?
+    <details><summary>Answer</summary><div class="ans"><p>Run the PCR under conditions that make the polymerase sloppy: an altered <strong>salt concentration</strong> (lower fidelity) or <strong>unequal dNTP ratios</strong> (more misincorporation). Then put the mutant pool into cells and screen.</p></div></details></li>
+  <li>What is a reverse transcript?
+    <details><summary>Answer</summary><div class="ans"><p>A DNA strand made by reverse transcriptase on an RNA template: the first strand of <strong>cDNA</strong> (complementary DNA).</p></div></details></li>
+  <li>Put in order: RNA degraded; reverse transcriptase makes the first strand; PCR; DNA polymerase makes the second strand.
+    <details><summary>Answer</summary><div class="ans"><p>Reverse transcriptase makes the first strand → RNA degraded → DNA polymerase makes the second strand → PCR.</p></div></details></li>
+  <li>A cDNA and the genomic gene it came from have different lengths. Why?
+    <details><summary>Answer</summary><div class="ans"><p>The cDNA was copied from spliced mRNA and therefore <strong>lacks the introns</strong>; the gene in the genome still contains them, so it is longer.</p></div></details></li>
+  <li>Which statement about reverse transcriptase is correct?
+    <ul class="opts"><li data-l="a">it translates RNA into protein</li><li data-l="b">it uses RNA as a template to make DNA</li><li data-l="c">it cuts DNA at specific sites</li><li data-l="d">it makes RNA from RNA</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> RNA → DNA, the reverse of the usual direction; the enzyme comes from retroviruses such as HIV (chapter 3, exam question 8).</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.02_stem_cells_and_virus_culture.html">← 4.2 Stem cells and virus culture</a><a href="index.html">Chapter 4 index</a><a href="4.04_cloning_and_restriction_enzymes.html">4.4 Cloning and restriction enzymes →</a></nav>
+</main>
+</body>
+</html>

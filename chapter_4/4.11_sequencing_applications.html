@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.11 Sequencing applications</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .gdna { stroke: var(--c-C); stroke-width: 5; stroke-linecap: round; }
+  .exon { stroke: var(--c-R); stroke-width: 7; stroke-linecap: butt; }
+  .probe { stroke: var(--c-Cl); stroke-width: 4; stroke-linecap: round; }
+  .biot { fill: var(--c-O); }
+  .bead { fill: var(--panel); stroke: var(--c-N); stroke-width: 2; }
+  .strep { fill: var(--c-N); }
+  .ref { stroke: var(--muted); stroke-width: 3; }
+  .read { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+  .rna { stroke: var(--c-O); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .cdna { stroke: var(--c-N); stroke-width: 4; stroke-linecap: round; }
+  .adap { stroke: var(--c-P); stroke-width: 4; }
+  .stepbox { fill: var(--panel); stroke: var(--line); }
+  table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.10_genome_sequencing.html">← 4.10 Genome sequencing</a><a href="index.html">Chapter 4 index</a><a href="4.12_detecting_dna_sequences.html">4.12 Detecting DNA sequences →</a></nav>
+
+<h1>4.11 What you can sequence: whole genomes, exomes, targets, microbial communities, epigenomes and transcriptomes</h1>
+<p class="lede">In one sentence: the same sequencing machines can read everything (a whole genome), only the protein-coding parts (the exome), a few chosen regions, all the microbes in a
+sample, the chemical labels on the DNA, or all the RNA of a cell; the choice is a trade-off between completeness, depth and cost.</p>
+
+<p>Page 4.10 explained <em>how</em> a sequencer reads DNA. This page is about <em>what</em> you feed it and why. The exam objectives name <strong>metagenomics</strong> and
+<strong>transcriptomics</strong> explicitly, and the chapter-2 pages on cancer genomes (exome sequencing, methylation, RNA levels) use the methods described here. The syllabus
+figures for this page are 4-39 (overview), 4-40 (exome capture), 4-41 (WGS versus WES versus targeted) and 4-42 (RNA-seq).</p>
+
+<!-- ============================================================ -->
+<h2>0. Words used on this page</h2>
+<table class="tech">
+  <tr><th>Word</th><th>Meaning</th></tr>
+  <tr><td>exon, intron</td><td>BIO01 chapter 5: an exon is a part of a gene that ends up in the mRNA (and for most genes codes for protein); an intron is cut out</td></tr>
+  <tr><td>exome</td><td>all the exons of all protein-coding genes together: about 21 000 genes, <strong>1.5 %</strong> of the human genome</td></tr>
+  <tr><td>promoter, splice site</td><td>BIO01 chapter 5 and 6: the DNA where transcription starts; the border where an intron is cut out. Both are outside the exons</td></tr>
+  <tr><td>DNA methylation</td><td>BIO01 chapter 6: a methyl group (–CH₃) added to a C of the DNA; usually silences the gene; part of epigenetics</td></tr>
+  <tr><td>epigenome, epigenetics</td><td>all the chemical labels on DNA and histones that change gene use without changing the DNA letters</td></tr>
+  <tr><td>histone, chromatin</td><td>BIO01 chapter 3 and 6: the proteins DNA is wound around; DNA plus histones; labels on histones open or close the chromatin</td></tr>
+  <tr><td>transcriptome</td><td>all the RNA molecules present in a cell or tissue at one moment</td></tr>
+  <tr><td>cDNA, reverse transcriptase</td><td>page 4.3: DNA copied from RNA by the retroviral enzyme reverse transcriptase</td></tr>
+  <tr><td>deep sequencing</td><td>sequencing a sample so many times that even rare molecules are read; another word for high-depth NGS</td></tr>
+  <tr><td>biotin, streptavidin</td><td>biotin is a small vitamin; streptavidin is a bacterial protein that grips biotin extremely tightly. Together they are molecular Velcro: attach biotin to something and streptavidin will catch it</td></tr>
+  <tr><td>magnetic beads</td><td>tiny iron-containing balls coated with a protein (here streptavidin); a magnet on the tube wall pulls them, and whatever they hold, out of the liquid</td></tr>
+  <tr><td>metagenome</td><td>all the genomes of all the organisms in one sample (soil, sea water, the gut) sequenced together, without growing anything</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Exoom</strong> = alle exonen van alle eiwitcoderende genen (21 000 genen, 1,5 % van het genoom). <strong>Epigenoom</strong> = alle chemische labels op DNA en histonen.
+<strong>Transcriptoom</strong> = al het RNA in een cel. <strong>Biotine</strong> (een vitamine) en <strong>streptavidine</strong> (een eiwit) kleven extreem sterk aan elkaar: moleculair klittenband.
+<strong>Magnetische korrels</strong> met streptavidine trek je met een magneet uit de vloeistof. <strong>Metagenoom</strong> = alle genomen in één staal samen.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Whole genome sequencing (WGS): everything (4.9.5)</h2>
+<p><strong>WGS</strong> reads the complete DNA of an organism. With second- and third-generation methods it is now cheap enough to use routinely.</p>
+<table class="tech">
+  <tr><th>Uses</th><th>Drawbacks</th></tr>
+  <tr><td style="white-space:normal;font-weight:400">
+    <ul>
+      <li>find genomic sequence variations linked to human <strong>disease</strong></li>
+      <li><strong>re-sequence</strong> a genome quickly: align the new short reads to a <strong>reference genome</strong> instead of assembling from scratch, which is far simpler</li>
+      <li>catalogue naturally occurring <strong>variation</strong> between individuals</li>
+      <li>as costs drop: find disease-associated mutations in individual patients</li>
+    </ul></td>
+    <td>
+    <ul>
+      <li>the <strong>volume of data</strong> needs large computers and skilled <strong>bioinformatics</strong>, especially for large or complex genomes</li>
+      <li><strong>variable coverage</strong>: regions with low depth can miss rare mutations or structural variants</li>
+      <li>an incomplete or biased <strong>reference</strong> leads to assembly and alignment errors</li>
+      <li><strong>ethics</strong>: privacy of genetic data; and the clinical meaning of many variants is still uncertain</li>
+    </ul></td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>WGS</strong> leest het hele genoom. Gebruik: ziektevarianten vinden, snel <strong>hersequencen</strong> tegen een referentie, variatie catalogiseren. Nadelen: enorme
+<strong>datahoeveelheid</strong> en bio-informatica, <strong>wisselende dekking</strong> mist zeldzame varianten, een <strong>gebrekkige referentie</strong> geeft fouten, en <strong>ethiek</strong>
+(privacy, onzekere betekenis van varianten).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Exome sequencing (WES) and targeted sequencing: read less, read deeper (4.9.5, 4.9.6)</h2>
+<p><strong>The reasoning:</strong> protein-coding genes are only <strong>1.5 %</strong> of the human genome, yet many diseases are caused by changes in exactly that part. If you sequence only the
+exome, you have to produce and sift through far less data (trillions of bases become a manageable set), so you can afford more depth and more patients. <strong>Whole exome sequencing (WES)</strong>
+reads all the exons of all known protein-coding genes.</p>
+
+<h3>How the exons are fished out (Figure 4-40)</h3>
+<p><strong>Begin state:</strong> fragmented genomic DNA with linkers, amplified by PCR (as in page 4.10). <strong>Goal:</strong> keep only the fragments that contain an exon.</p>
+<ol>
+  <li><strong>Denature</strong> the double-stranded fragments to single strands.</li>
+  <li>Add <strong>RNA probes</strong>: synthetic RNA molecules whose sequences match all known exons. Each probe carries a <strong>biotin</strong>. Fragments that contain an exon <strong>hybridise</strong> to a probe (base-pair with it); fragments from the other 98.5 % of the genome find no partner.</li>
+  <li>Add <strong>magnetic beads coated with streptavidin</strong>. Streptavidin grips the biotin, so every probe, with its captured DNA fragment, is now stuck to a bead.</li>
+  <li>Hold the beads with a <strong>magnet</strong> and <strong>wash away</strong> the unbound DNA (the 98.5 %).</li>
+  <li><strong>Release</strong> (elute) the DNA from the probes and sequence it with Illumina or another deep-sequencing method.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 240" width="860" height="240" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- step 1: fragments -->
+    <text x="120" y="20" class="txt bold">1 · single-stranded fragments</text>
+    <line x1="30" y1="50" x2="130" y2="50" class="gdna"/><line x1="70" y1="50" x2="100" y2="50" class="exon"/>
+    <line x1="150" y1="50" x2="230" y2="50" class="gdna"/>
+    <line x1="40" y1="80" x2="120" y2="80" class="gdna"/>
+    <line x1="140" y1="80" x2="230" y2="80" class="gdna"/><line x1="170" y1="80" x2="205" y2="80" class="exon"/>
+    <line x1="30" y1="110" x2="110" y2="110" class="gdna"/>
+    <line x1="130" y1="110" x2="220" y2="110" class="gdna"/>
+    <text x="120" y="140" class="txt small">purple = exon (1.5 %), grey = the rest (98.5 %)</text>
+    <path d="M250,80 L285,80" class="path accent" marker-end="url(#ar11)"/>
+    <!-- step 2: probes with biotin -->
+    <text x="400" y="20" class="txt bold">2 · biotinylated RNA probes</text>
+    <line x1="320" y1="50" x2="420" y2="50" class="gdna"/><line x1="360" y1="50" x2="390" y2="50" class="exon"/>
+    <line x1="360" y1="62" x2="390" y2="62" class="probe"/><circle cx="394" cy="62" r="5" class="biot"/>
+    <line x1="330" y1="110" x2="420" y2="110" class="gdna"/><line x1="360" y1="110" x2="395" y2="110" class="exon"/>
+    <line x1="360" y1="122" x2="395" y2="122" class="probe"/><circle cx="399" cy="122" r="5" class="biot"/>
+    <line x1="440" y1="80" x2="520" y2="80" class="gdna"/>
+    <text x="480" y="100" class="txt small muted">no exon: no probe</text>
+    <text x="400" y="150" class="txt small">green = RNA probe pairs with the exon</text>
+    <text x="400" y="164" class="txt small">red dot = biotin</text>
+    <path d="M540,80 L575,80" class="path accent" marker-end="url(#ar11)"/>
+    <!-- step 3: beads + magnet -->
+    <text x="710" y="20" class="txt bold">3 · streptavidin beads + magnet</text>
+    <circle cx="640" cy="90" r="26" class="bead"/><text x="640" y="94" class="txt small">bead</text>
+    <circle cx="666" cy="82" r="6" class="strep"/><circle cx="672" cy="82" r="5" class="biot"/>
+    <line x1="680" y1="82" x2="712" y2="82" class="probe"/><line x1="680" y1="70" x2="760" y2="70" class="gdna"/><line x1="680" y1="70" x2="712" y2="70" class="exon"/>
+    <circle cx="650" cy="116" r="6" class="strep"/><circle cx="656" cy="121" r="5" class="biot"/>
+    <line x1="664" y1="124" x2="698" y2="124" class="probe"/><line x1="664" y1="136" x2="750" y2="136" class="gdna"/><line x1="664" y1="136" x2="698" y2="136" class="exon"/>
+    <rect x="600" y="170" width="80" height="18" rx="3" style="fill:var(--c-C)"/><text x="640" y="183" class="txt small" style="fill:#fff">magnet</text>
+    <text x="760" y="110" class="txt small">blue = streptavidin</text>
+    <text x="760" y="124" class="txt small">holds the biotin</text>
+    <text x="770" y="180" class="txt small muted">wash: unbound</text>
+    <text x="770" y="194" class="txt small muted">98.5 % goes away</text>
+    <text x="430" y="222" class="txt small">4 · release the exon fragments from the probes → sequence (Illumina)</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-40, exome capture. Only fragments that pair with a biotinylated exon probe are caught by the streptavidin beads; the magnet holds the beads while everything else is washed away.</figcaption>
+</figure>
+
+<p><strong>The price of reading less:</strong> WES misses mutations in <strong>promoters</strong> and <strong>splice sites</strong> and all other non-coding regions, which can also disturb a gene.
+For many questions the gain (1.5 % of the data to interpret) outweighs that loss, so WES has become common. As WGS keeps getting cheaper and analysis tools better, the syllabus
+expects WES to decline in favour of WGS.</p>
+
+<h3>Targeted region sequencing and the depth trade-off (Figure 4-41)</h3>
+<p><strong>Targeted sequencing</strong> goes one step further: only a few chosen regions (for example a panel of known cancer genes) are captured and read. The smaller the region, the more
+depth you can afford for the same cost:</p>
+<table class="tech">
+  <tr><th>Approach</th><th>Region</th><th>Typical depth</th><th>Finds</th><th>Cost</th></tr>
+  <tr><td>WGS</td><td>the whole genome</td><td>&gt; 30X</td><td>all variant types: SNPs, small insertions/deletions (indels), structural variants</td><td>highest</td></tr>
+  <tr><td>WES</td><td>exons, 1.5 %</td><td>&gt; 50X to ~100X</td><td>all variant types, but only in coding regions</td><td>lower</td></tr>
+  <tr><td>targeted</td><td>chosen regions</td><td>&gt; 500X</td><td>variants in the selected regions only; rare variants reliably</td><td>lowest</td></tr>
+</table>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 190" width="860" height="190" xmlns="http://www.w3.org/2000/svg">
+    <!-- WGS -->
+    <text x="140" y="20" class="txt bold">WGS: everything, ~30X</text>
+    <line x1="30" y1="150" x2="250" y2="150" class="ref"/>
+    <g class="read"><line x1="30" y1="136" x2="250" y2="136"/><line x1="30" y1="124" x2="250" y2="124"/><line x1="30" y1="112" x2="250" y2="112"/></g>
+    <text x="140" y="172" class="txt small muted">whole genome</text>
+    <!-- WES -->
+    <text x="430" y="20" class="txt bold">WES: exons only, ~50–100X</text>
+    <line x1="320" y1="150" x2="540" y2="150" class="ref"/>
+    <line x1="350" y1="150" x2="380" y2="150" class="exon"/><line x1="440" y1="150" x2="475" y2="150" class="exon"/>
+    <g class="read"><line x1="350" y1="136" x2="380" y2="136"/><line x1="350" y1="124" x2="380" y2="124"/><line x1="350" y1="112" x2="380" y2="112"/><line x1="350" y1="100" x2="380" y2="100"/><line x1="350" y1="88" x2="380" y2="88"/>
+    <line x1="440" y1="136" x2="475" y2="136"/><line x1="440" y1="124" x2="475" y2="124"/><line x1="440" y1="112" x2="475" y2="112"/><line x1="440" y1="100" x2="475" y2="100"/><line x1="440" y1="88" x2="475" y2="88"/></g>
+    <text x="430" y="172" class="txt small muted">purple = exons; nothing in between</text>
+    <!-- targeted -->
+    <text x="720" y="20" class="txt bold">targeted: one region, &gt; 500X</text>
+    <line x1="610" y1="150" x2="830" y2="150" class="ref"/>
+    <line x1="700" y1="150" x2="740" y2="150" class="exon"/>
+    <g class="read"><line x1="700" y1="136" x2="740" y2="136"/><line x1="700" y1="128" x2="740" y2="128"/><line x1="700" y1="120" x2="740" y2="120"/><line x1="700" y1="112" x2="740" y2="112"/><line x1="700" y1="104" x2="740" y2="104"/><line x1="700" y1="96" x2="740" y2="96"/><line x1="700" y1="88" x2="740" y2="88"/><line x1="700" y1="80" x2="740" y2="80"/><line x1="700" y1="72" x2="740" y2="72"/><line x1="700" y1="64" x2="740" y2="64"/><line x1="700" y1="56" x2="740" y2="56"/><line x1="700" y1="48" x2="740" y2="48"/></g>
+    <text x="720" y="172" class="txt small muted">many reads on a small region</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-41. Grey = the genome, purple = the part that is captured, blue = reads. Same sequencing effort, spent wide and shallow (WGS) or narrow and deep (targeted).</figcaption>
+</figure>
+
+<h3>Metagenome sequencing: a whole community at once</h3>
+<p>Page 4.2 noted that most microbes cannot be grown in the lab. <strong>Metagenome sequencing</strong> skips the growing: DNA is extracted directly from a sample (sea water, soil, the human gut)
+and all of it is sequenced together. The reads reveal <strong>which species</strong> are present (the diversity of the community) and <strong>which genes</strong> they carry (the functional potential, for
+example genes for breaking down a pollutant). Applications: environmental samples and host-associated microbiomes (the community of microbes living on or in a host).</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>The chapter-2 cancer pages use these methods: a tumour's "complete genome sequence" is WGS, "the 21 000 genes that code for protein (the exome)" is WES, and The Cancer Genome Atlas
+combined WGS/WES, methylation and RNA sequencing on more than 10 000 tumours. The example exam asks which technique is "most useful for increasing the amount of DNA" (that is PCR, page 4.3)
+and which identifies the genes two cell types express (a DNA microarray or RNA-seq, page 4.13).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>WES</strong> leest alleen de exonen (1,5 %, 21 000 genen): minder data, meer diepte. <strong>Exoomvangst</strong>: fragmenten denatureren → <strong>biotine-RNA-probes</strong> voor alle exonen
+hybridiseren → <strong>streptavidine-magneetkorrels</strong> vangen de probes → magneet + wassen (98,5 % weg) → DNA losmaken → sequencen. Mist <strong>promotors en splice sites</strong>.
+<strong>Gerichte sequencing</strong>: enkele regio's, &gt; 500X. Diepte: WGS &gt; 30X, WES &gt; 50–100X, gericht &gt; 500X. <strong>Metagenoom</strong>: alle DNA van een staal (bodem, darm) samen
+lezen: welke soorten, welke genen, zonder te kweken.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Epigenome sequencing: reading the labels, not the letters (Figure 4-39b)</h2>
+<p>The epigenome decides which genes are open for use. Four methods, all ending in "-seq" (= followed by deep sequencing), map different labels genome-wide:</p>
+<table class="tech">
+  <tr><th>Method</th><th>What it maps</th><th>How, in one line</th></tr>
+  <tr><td>bisulfite sequencing</td><td><strong>DNA methylation</strong>: which C's carry a methyl group</td><td>the chemical bisulfite changes unmethylated C into U (read as T) but leaves methylated C untouched; comparing the sequence before and after shows every methylated C</td></tr>
+  <tr><td>ChIP-seq</td><td><strong>histone modifications</strong> (chemical marks on histone proteins that control chromatin accessibility)</td><td>an antibody that recognises one histone mark pulls out the DNA wrapped around those histones; that DNA is sequenced ("ChIP" = chromatin immunoprecipitation: fishing chromatin out with an antibody)</td></tr>
+  <tr><td>ATAC-seq</td><td><strong>open chromatin</strong>: regions where regulatory elements are active</td><td>an enzyme (a transposase) can only cut and tag DNA that is not packed away; the tagged, accessible pieces are sequenced ("ATAC" = Assay for Transposase-Accessible Chromatin)</td></tr>
+  <tr><td>DRIP-seq</td><td><strong>R-loops</strong>: places where RNA stays bound to the DNA</td><td>an antibody against DNA–RNA hybrids pulls those regions out, then sequencing ("DRIP" = DNA-RNA immunoprecipitation); R-loops influence gene regulation and genome stability</td></tr>
+</table>
+<p>Together these methods support everything from broad genetic surveys to targeted questions about regulation. (Remember from page 4.10 that Nanopore can read methylation directly, without bisulfite.)</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Vier "-seq"-methoden voor het epigenoom: <strong>bisulfiet-sequencing</strong> (DNA-methylering: ongemethyleerd C wordt U/T, gemethyleerd C blijft C), <strong>ChIP-seq</strong>
+(histonmodificaties, via een antilichaam dat het chromatine met dat label uit de oplossing vist), <strong>ATAC-seq</strong> (open chromatine, een transposase knipt alleen toegankelijk DNA),
+<strong>DRIP-seq</strong> (R-loops: RNA dat aan het DNA gebonden blijft).</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Transcriptome sequencing: RNA-seq (4.9.7, Figure 4-42)</h2>
+<p><strong>Begin state:</strong> cells of a tissue, each containing thousands of different RNAs in different amounts. <strong>Goal:</strong> know which RNAs are there and how much of each: the
+<strong>transcriptome</strong>. Because sequencers read DNA, the RNA is first converted to cDNA (page 4.3).</p>
+<ol>
+  <li><strong>Isolate total RNA</strong> from the sample.</li>
+  <li><strong>Fragment</strong> the RNA into pieces of sequencing size.</li>
+  <li><strong>Convert to cDNA</strong> with reverse transcriptase; cDNA is more stable and is what the machine can read.</li>
+  <li><strong>Ligate adapters</strong> and <strong>amplify</strong> by PCR: a sequencing library.</li>
+  <li><strong>Sequence</strong> by NGS (deep sequencing: many millions of reads).</li>
+  <li><strong>Map the reads</strong> to the reference genome or transcriptome and count them per gene.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 150" width="860" height="150" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar11b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <g>
+      <rect x="10" y="30" width="120" height="70" rx="8" class="stepbox"/>
+      <path d="M25,60 C40,45 55,75 70,60 S100,45 115,60" class="rna"/>
+      <text x="70" y="88" class="txt small">1 · total RNA</text>
+    </g>
+    <path d="M136,65 L156,65" class="path accent" marker-end="url(#ar11b)"/>
+    <g>
+      <rect x="160" y="30" width="120" height="70" rx="8" class="stepbox"/>
+      <path d="M175,58 C182,50 190,66 198,58" class="rna"/><path d="M212,64 C219,56 227,72 235,64" class="rna"/><path d="M248,56 C255,48 263,64 270,56" class="rna"/>
+      <text x="220" y="88" class="txt small">2 · fragment</text>
+    </g>
+    <path d="M286,65 L306,65" class="path accent" marker-end="url(#ar11b)"/>
+    <g>
+      <rect x="310" y="30" width="120" height="70" rx="8" class="stepbox"/>
+      <line x1="325" y1="56" x2="355" y2="56" class="cdna"/><line x1="365" y1="64" x2="395" y2="64" class="cdna"/><line x1="400" y1="54" x2="420" y2="54" class="cdna"/>
+      <text x="370" y="88" class="txt small">3 · cDNA (RT)</text>
+    </g>
+    <path d="M436,65 L456,65" class="path accent" marker-end="url(#ar11b)"/>
+    <g>
+      <rect x="460" y="30" width="120" height="70" rx="8" class="stepbox"/>
+      <line x1="474" y1="60" x2="482" y2="60" class="adap"/><line x1="482" y1="60" x2="518" y2="60" class="cdna"/><line x1="518" y1="60" x2="526" y2="60" class="adap"/>
+      <line x1="536" y1="60" x2="544" y2="60" class="adap"/><line x1="544" y1="60" x2="564" y2="60" class="cdna"/><line x1="564" y1="60" x2="572" y2="60" class="adap"/>
+      <text x="520" y="88" class="txt small">4 · adapters + PCR</text>
+    </g>
+    <path d="M586,65 L606,65" class="path accent" marker-end="url(#ar11b)"/>
+    <g>
+      <rect x="610" y="30" width="120" height="70" rx="8" class="stepbox"/>
+      <text x="670" y="58" class="txt small" style="font-family:monospace">ACGTTGCA</text>
+      <text x="670" y="72" class="txt small" style="font-family:monospace">GGATCCTA</text>
+      <text x="670" y="88" class="txt small">5 · NGS reads</text>
+    </g>
+    <path d="M736,65 L756,65" class="path accent" marker-end="url(#ar11b)"/>
+    <g>
+      <rect x="760" y="30" width="90" height="70" rx="8" class="stepbox"/>
+      <line x1="770" y1="80" x2="840" y2="80" class="ref"/>
+      <g class="read"><line x1="775" y1="70" x2="795" y2="70"/><line x1="780" y1="62" x2="800" y2="62"/><line x1="784" y1="54" x2="804" y2="54"/><line x1="820" y1="70" x2="836" y2="70"/></g>
+      <text x="805" y="94" class="txt small">6 · map, count</text>
+    </g>
+    <text x="430" y="130" class="txt small muted">red = RNA, blue = cDNA, orange = adapters; many reads on a gene = that gene is strongly expressed</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-42, the RNA-seq workflow. The number of reads that map to a gene measures how much RNA that gene produced.</figcaption>
+</figure>
+
+<p><strong>What RNA-seq tells you:</strong> how strongly each gene is expressed in those cells (the <strong>prevalence</strong> of each transcript), which <strong>splice variants</strong> are made,
+which <strong>non-coding RNAs</strong> are present, and RNA variants. Page 4.13 compares it with the older microarray method. RNA can also be treated with enzymes or chemicals that react with
+<strong>modified ribonucleotides</strong> in a way that shows up in the sequence, which maps RNA modifications across the whole transcriptome.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>RNA-seq</strong>: totaal RNA isoleren → fragmenteren → <strong>cDNA</strong> maken met reverse transcriptase → adapters + PCR → <strong>diep sequencen</strong> → reads
+<strong>mappen</strong> op het genoom en tellen per gen. Resultaat: hoeveel elk gen tot expressie komt, welke <strong>splice-varianten</strong> en <strong>niet-coderende RNA's</strong> er zijn;
+met speciale behandelingen ook RNA-modificaties.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Which approach for which question?</h2>
+<table class="tech">
+  <tr><th>Question</th><th>Approach</th><th>Why</th></tr>
+  <tr><td>all variants of one patient, including non-coding and structural ones</td><td>WGS</td><td>covers everything; ~30X</td></tr>
+  <tr><td>disease mutations in protein-coding genes, many patients, lower cost</td><td>WES</td><td>1.5 % of the data, 50–100X; misses promoters and splice sites</td></tr>
+  <tr><td>rare variants in a known set of genes (a diagnostic panel)</td><td>targeted sequencing</td><td>&gt; 500X on a small region, cheapest</td></tr>
+  <tr><td>which microbes live in the gut and what can they do</td><td>metagenome sequencing</td><td>no culturing needed; species and genes together</td></tr>
+  <tr><td>which C's are methylated</td><td>bisulfite sequencing (or Nanopore)</td><td>methylated C resists bisulfite</td></tr>
+  <tr><td>where is a histone mark; which chromatin is open; where are R-loops</td><td>ChIP-seq; ATAC-seq; DRIP-seq</td><td>antibody or accessibility selects the DNA to sequence</td></tr>
+  <tr><td>which genes are expressed, how strongly, which splice forms</td><td>RNA-seq</td><td>counts cDNA reads per gene</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Alles → WGS; coderende genen, goedkoper → WES; enkele genen, zeer diep → gericht; micro-organismen zonder kweken → metagenoom; methylering → bisulfiet; histonmarkeringen,
+open chromatine, R-loops → ChIP-, ATAC-, DRIP-seq; genexpressie → RNA-seq.</p></div>
+
+<!-- ============================================================ -->
+<h2>6. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>whole genome sequencing (WGS)</td><td>reading all the DNA of an organism; typical depth &gt; 30X</td></tr>
+  <tr><td>re-sequencing</td><td>sequencing an individual and aligning the reads to an existing reference genome</td></tr>
+  <tr><td>exome, whole exome sequencing (WES)</td><td>all protein-coding exons (1.5 %, ~21 000 genes); sequencing only those, &gt; 50–100X</td></tr>
+  <tr><td>exome capture / enrichment</td><td>fishing out exon fragments with biotinylated RNA probes and streptavidin beads</td></tr>
+  <tr><td>biotinylated</td><td>carrying a biotin molecule as a handle</td></tr>
+  <tr><td>elute</td><td>release bound molecules back into the liquid</td></tr>
+  <tr><td>targeted region sequencing</td><td>only chosen regions, &gt; 500X, cheapest</td></tr>
+  <tr><td>indel, structural variant</td><td>a small insertion or deletion; a large rearrangement</td></tr>
+  <tr><td>metagenome sequencing</td><td>all genomes of a sample sequenced together, no culturing</td></tr>
+  <tr><td>microbiome</td><td>the community of microbes in a place, for example in the gut</td></tr>
+  <tr><td>bisulfite sequencing</td><td>maps methylated C's: bisulfite converts only unmethylated C</td></tr>
+  <tr><td>ChIP-seq</td><td>chromatin immunoprecipitation + sequencing: DNA around histones with a given mark</td></tr>
+  <tr><td>ATAC-seq</td><td>sequencing of transposase-accessible (open) chromatin</td></tr>
+  <tr><td>DRIP-seq</td><td>DNA-RNA immunoprecipitation + sequencing: R-loops</td></tr>
+  <tr><td>R-loop</td><td>a place where RNA stays paired to the DNA</td></tr>
+  <tr><td>transcriptome, RNA-seq</td><td>all RNA of a cell; deep sequencing of its cDNA</td></tr>
+  <tr><td>prevalence of a transcript</td><td>how much of that RNA is present</td></tr>
+  <tr><td>splice variant</td><td>a different mRNA from the same gene by using different exons</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "... nucleic acid based technologies, including PCR, FISH, microarrays, sequencing technologies, metagenomics and transcriptomics" and "utilizes fundamental concepts ... to solve problems".</p>
+<ol>
+  <li>Give uses and drawbacks of WGS.</li>
+  <li>Explain what the exome is (1.5 %, 21 000 genes) and why sequencing only it is attractive; and what it misses (promoters, splice sites).</li>
+  <li>Describe exome capture step by step: denature, biotinylated RNA probes, streptavidin magnetic beads, wash, elute, sequence.</li>
+  <li>Compare WGS, WES and targeted sequencing by region, depth (30X / 50–100X / 500X) and cost.</li>
+  <li>Say what metagenome sequencing is and why it is used for unculturable communities.</li>
+  <li>Name the four epigenome methods and what each maps (bisulfite: methylation; ChIP-seq: histone marks; ATAC-seq: open chromatin; DRIP-seq: R-loops).</li>
+  <li>Give the six steps of RNA-seq and what it reveals (expression level, splicing, non-coding RNA).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>8. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why is re-sequencing a genome much easier than sequencing it the first time?</dt>
+  <dd>Because the reads can be aligned to an existing reference genome instead of being assembled from scratch; the computer only needs to place each read and note the differences.</dd>
+
+  <dt>Name three drawbacks of whole genome sequencing.</dt>
+  <dd>Huge data volume needing computing power and bioinformatics; variable coverage that can miss rare mutations or structural variants; errors from an incomplete or biased reference. Plus ethical issues: privacy and variants of uncertain meaning.</dd>
+
+  <dt>What is the exome, and what fraction of the genome is it?</dt>
+  <dd>All the exons of all protein-coding genes, about 21 000 genes: about 1.5 % of the human genome.</dd>
+
+  <dt>What is the assumption behind exome sequencing?</dt>
+  <dd>That many of the changes underlying human disease lie in protein-coding genes, so reading only the exons finds most disease mutations while cutting the data to be analysed enormously.</dd>
+
+  <dt>How are exon-containing fragments separated from the rest?</dt>
+  <dd>The fragments are denatured and hybridised with biotinylated RNA probes for all known exons. Streptavidin-coated magnetic beads catch the biotin; a magnet holds the beads while the unbound 98.5 % of the DNA is washed away; the exon DNA is then released and sequenced.</dd>
+
+  <dt>What does exome sequencing miss?</dt>
+  <dd>Mutations outside exons: in promoters, splice sites and other non-coding regions that can also change how a gene works.</dd>
+
+  <dt>Compare the typical depth of WGS, WES and targeted sequencing.</dt>
+  <dd>WGS more than 30X; WES more than 50X up to about 100X; targeted sequencing more than 500X. The smaller the region, the deeper and cheaper.</dd>
+
+  <dt>What is metagenome sequencing and when is it useful?</dt>
+  <dd>Sequencing all the DNA in a sample (soil, water, gut) without growing the organisms. It shows which species are present and which genes they carry. Useful because most microbes cannot be cultured.</dd>
+
+  <dt>How does bisulfite sequencing reveal methylation?</dt>
+  <dd>Bisulfite converts unmethylated cytosine to uracil (read as T) but does not change methylated cytosine. Any C that is still read as C after treatment was methylated.</dd>
+
+  <dt>What do ChIP-seq, ATAC-seq and DRIP-seq map?</dt>
+  <dd>ChIP-seq: histone modifications (an antibody pulls out chromatin with that mark). ATAC-seq: open, accessible chromatin (a transposase tags only accessible DNA). DRIP-seq: R-loops, where RNA is bound to DNA (antibody against DNA–RNA hybrids).</dd>
+
+  <dt>Why does RNA-seq start by making cDNA?</dt>
+  <dd>Sequencers read DNA, and cDNA is more stable. Reverse transcriptase copies the RNA fragments into cDNA, which then gets adapters and is sequenced.</dd>
+
+  <dt>How does RNA-seq measure gene expression?</dt>
+  <dd>Reads are mapped to the genome or transcriptome and counted per gene; a gene with many reads produced much RNA. The reads also show which exons were joined (splice variants) and which non-coding RNAs exist.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>9. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>WGS</strong> = everything, &gt; 30X; uses: disease variants, re-sequencing against a <strong>reference</strong>, variation catalogue.</li>
+  <li>WGS drawbacks: <strong>data volume</strong>, <strong>variable coverage</strong>, <strong>biased reference</strong>, <strong>ethics</strong>.</li>
+  <li><strong>Exome</strong> = all exons = <strong>1.5 %</strong>, ~21 000 genes; <strong>WES</strong> &gt; 50–100X; misses <strong>promoters and splice sites</strong>.</li>
+  <li>Exome capture: denature → <strong>biotin RNA probes</strong> → <strong>streptavidin magnetic beads</strong> → magnet + wash (98.5 % gone) → elute → sequence.</li>
+  <li><strong>Targeted</strong> sequencing: a few regions, <strong>&gt; 500X</strong>, cheapest.</li>
+  <li><strong>Metagenome</strong>: all DNA of a sample together, <strong>no culturing</strong>: species + genes.</li>
+  <li><strong>Bisulfite-seq</strong> = methylation (unmethylated C → U/T, methylated C stays).</li>
+  <li><strong>ChIP-seq</strong> = histone marks; <strong>ATAC-seq</strong> = open chromatin; <strong>DRIP-seq</strong> = R-loops (RNA on DNA).</li>
+  <li><strong>RNA-seq</strong>: isolate RNA → fragment → <strong>cDNA</strong> → adapters + PCR → NGS → <strong>map and count</strong>.</li>
+  <li>RNA-seq shows <strong>expression level, splice variants, non-coding RNAs</strong> (and modifications with special treatments).</li>
+  <li>Trade-off: <strong>wide and shallow (WGS) versus narrow and deep (targeted)</strong>.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>10. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>What percentage of the human genome does the exome represent?
+    <ul class="opts"><li data-l="a">15 %</li><li data-l="b">1.5 %</li><li data-l="c">50 %</li><li data-l="d">98.5 %</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Protein-coding exons are about 1.5 % of the genome (about 21 000 genes). The other 98.5 % is washed away in exome capture.</p></div></details></li>
+  <li>What is the job of biotin and streptavidin in exome capture?
+    <details><summary>Answer</summary><div class="ans"><p>Biotin is the handle on each RNA probe; streptavidin, on the magnetic beads, grips biotin extremely tightly. So every probe with its captured exon fragment ends up on a bead, which a magnet can hold while the rest is washed away.</p></div></details></li>
+  <li>Why are the probes made for exons and not for introns?
+    <details><summary>Answer</summary><div class="ans"><p>Because the aim is to read only the protein-coding part. Probes matching exons pair with (hybridise to) fragments that contain an exon; intron-only fragments find no probe and are discarded.</p></div></details></li>
+  <li>A patient's disease is caused by a mutation in a promoter. Would exome sequencing find it?
+    <details><summary>Answer</summary><div class="ans"><p><strong>No.</strong> A promoter lies outside the exons, so it is not captured. That is the known weakness of WES; WGS would find it.</p></div></details></li>
+  <li>Which approach gives the deepest coverage for the least money, and what is its limitation?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Targeted sequencing</strong> (&gt; 500X): only chosen regions are read, so each gets many reads. Limitation: it finds variants only in those regions; anything elsewhere is invisible.</p></div></details></li>
+  <li>True or false: "Metagenome sequencing first requires growing each microbe in culture."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> The point of metagenome sequencing is to sequence the DNA of the whole community directly from the sample, which is why it reveals organisms that cannot be cultured.</p></div></details></li>
+  <li>After bisulfite treatment and sequencing, a position that was C in the original reads as T. Was that C methylated?
+    <details><summary>Answer</summary><div class="ans"><p><strong>No.</strong> Bisulfite converts <em>unmethylated</em> C to U, which is read as T. A methylated C is protected and still reads as C.</p></div></details></li>
+  <li>Which method would you use to find all regions of open chromatin in a cell type?
+    <ul class="opts"><li data-l="a">bisulfite sequencing</li><li data-l="b">ChIP-seq</li><li data-l="c">ATAC-seq</li><li data-l="d">RNA-seq</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> ATAC-seq uses a transposase that can only tag accessible DNA. ChIP-seq maps a specific histone mark; bisulfite maps methylation; RNA-seq measures RNA.</p></div></details></li>
+  <li>What is a DNA–RNA hybrid region called, and which method maps it?
+    <details><summary>Answer</summary><div class="ans"><p>An <strong>R-loop</strong>, mapped by <strong>DRIP-seq</strong> (an antibody against DNA–RNA hybrids pulls those regions out, then sequencing). R-loops affect gene regulation and genome stability.</p></div></details></li>
+  <li>Put the RNA-seq steps in order: map reads, isolate RNA, make cDNA, fragment RNA, sequence, add adapters and amplify.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Isolate RNA → fragment → cDNA → adapters + amplify → sequence → map and count.</strong></p></div></details></li>
+  <li>Gene A gets 10 000 reads and gene B 50 reads in an RNA-seq experiment. What do you conclude?
+    <details><summary>Answer</summary><div class="ans"><p>Gene A is much more strongly expressed than gene B in those cells: far more of its RNA was present, so far more cDNA reads map to it.</p></div></details></li>
+  <li>A cancer study reports "copy number variations, aneuploidy and methylation changes" in tumours. Which methods from this page gave each?
+    <details><summary>Answer</summary><div class="ans"><p>Copy number and chromosome gains or losses come from <strong>WGS</strong> (or WES) read depth across regions; methylation from <strong>bisulfite sequencing</strong> (or direct Nanopore reading). Expression changes would come from <strong>RNA-seq</strong>.</p></div></details></li>
+  <li>Why does the syllabus expect exome sequencing to decline?
+    <details><summary>Answer</summary><div class="ans"><p>Because whole genome sequencing keeps getting cheaper and faster and analysis tools improve. Once WGS costs little more than WES, its completeness (promoters, splice sites, structural variants) wins.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.10_genome_sequencing.html">← 4.10 Genome sequencing</a><a href="index.html">Chapter 4 index</a><a href="4.12_detecting_dna_sequences.html">4.12 Detecting DNA sequences →</a></nav>
+</main>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.2 Changes in chromosome structure</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .seg { fill: var(--panel); stroke: var(--muted); stroke-width: 1.2; }
+  .seg.hit { fill: var(--c-Na); fill-opacity: .45; stroke: var(--c-Na); }
+  .seg.other { fill: var(--key-bg); stroke: var(--c-N); }
+  .seg.otherhit { fill: var(--c-Cl); fill-opacity: .45; stroke: var(--c-Cl); }
+  .seglbl { font-size: 12px; font-weight: 700; text-anchor: middle; fill: var(--fg); }
+  .brk { stroke: var(--c-O); stroke-width: 2.2; fill: none; }
+  .brkhead { fill: var(--c-O); }
+  .cen { fill: var(--muted); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .chr { stroke: var(--c-O); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .chr.blue { stroke: var(--c-N); }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="1.01_abnormal_chromosome_number.html">← 1.1 Abnormal chromosome number</a><a href="index.html">Chapter 1 index</a><a href="1.03_human_conditions.html">1.3 Human conditions →</a></nav>
+
+<h1>1.2 Changes in chromosome structure: deletion, duplication, inversion, translocation</h1>
+<p class="lede">In one sentence: a chromosome can break, and the broken piece can get lost, be added as an extra copy, be put back the wrong way round,
+or be stuck onto a different chromosome; even when no gene is lost, moving genes around can change how they work.</p>
+
+<p>Page 1.1 was about the <strong>number</strong> of chromosomes. This page is about their <strong>structure</strong> (bouw): what happens when a chromosome
+breaks and the pieces are rejoined wrongly. There are only four possible outcomes, and the whole page hangs on those four words: <strong>deletion,
+duplication, inversion, translocation</strong>. Page 1.3 uses them for real human conditions: a deletion that causes cri du chat syndrome and a
+translocation that causes a leukemia. The example exam asks about these mechanisms when it lists "translocation", "duplication", "inversion" and "deletion"
+as answer options next to nondisjunction.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>chromosome</td><td>one long DNA molecule with its proteins; its genes lie along it in a fixed order, like houses along a street</td></tr>
+  <tr><td>homologous chromosomes</td><td>the two chromosomes of one pair, one from each parent, with the same genes in the same order</td></tr>
+  <tr><td>non-homologous chromosomes</td><td>chromosomes that are <em>not</em> a pair: for example chromosome 9 and chromosome 22, with completely different genes</td></tr>
+  <tr><td>sister chromatids</td><td>the two identical copies of one chromosome after the DNA has been copied; <strong>non-sister chromatids</strong> are chromatids of the two <em>different</em> homologs</td></tr>
+  <tr><td>crossing over</td><td>in meiosis I, the two homologs lie side by side and swap pieces of equal length (BIO01 chapter 7); normally each partner gives and receives exactly the same genes</td></tr>
+  <tr><td>homozygous / heterozygous</td><td>homozygous = both homologs carry the same version of something; heterozygous = the two homologs differ (here: only one homolog has the change)</td></tr>
+  <tr><td>gene expression</td><td>how much a gene is used (read into RNA and protein); it depends on control DNA near the gene and on the neighbourhood (BIO01 chapter 6)</td></tr>
+  <tr><td>gene dose</td><td>how many copies of a gene the cell has (page 1.1)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: genen liggen in een vaste volgorde op een chromosoom. <strong>Homologen</strong> zijn de twee chromosomen van één paar; <strong>niet-homologe</strong>
+chromosomen horen niet bij elkaar (bv. 9 en 22). <strong>Zusterchromatiden</strong> zijn identieke kopieën; <strong>niet-zusterchromatiden</strong> horen bij de twee
+verschillende homologen. Bij <strong>crossing-over</strong> wisselen homologen normaal even grote stukken uit.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Where the breaks come from (1.1.2)</h2>
+<p>A chromosome does not change its structure by itself. First it has to <strong>break</strong>. The syllabus gives two causes:</p>
+<ul>
+  <li><strong>Errors in meiosis</strong>, especially during crossing over, when the homologs are being cut and rejoined on purpose.</li>
+  <li><strong>Damaging agents</strong> such as <strong>radiation</strong> (straling: for example X-rays), which snap the DNA.</li>
+</ul>
+<p>After a break, the cell's repair machinery tries to glue the ends back together (BIO01 chapter 4 described DNA repair). If it glues the wrong ends,
+or loses a piece, one of the four changes below is the result.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Eerst moet een chromosoom <strong>breken</strong>: door fouten in de meiose (vooral bij crossing-over) of door beschadiging zoals <strong>straling</strong>. Bij het
+herstellen kunnen de verkeerde uiteinden aan elkaar worden gelijmd, of een stuk gaat verloren.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. The four possible outcomes (Figure 1-2)</h2>
+<p>Think of a chromosome as a row of lettered segments, <strong>A B C D E F G H</strong>, each segment holding some genes. A break happens at the red arrows.
+What can happen to the broken piece?</p>
+<ol>
+  <li><strong>Deletion</strong> (deletie): the fragment is <strong>lost</strong>. The chromosome is now missing certain genes.</li>
+  <li><strong>Duplication</strong> (duplicatie): the broken fragment becomes <strong>reattached as an extra segment</strong> to a sister or non-sister chromatid. That chromosome now has a part of itself twice.</li>
+  <li><strong>Inversion</strong> (inversie): the fragment reattaches to the <strong>original</strong> chromosome, but <strong>in the reverse orientation</strong> (turned around, omgekeerd). Nothing is lost or doubled; the order is changed.</li>
+  <li><strong>Translocation</strong> (translocatie): the fragment joins a <strong>non-homologous chromosome</strong>. Genes move to a different chromosome.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 560" width="880" height="560" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="brk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="brkhead"/></marker>
+          <marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- ===== deletion ===== -->
+    <text x="12" y="22" class="txt bold left">1 · Deletion: a piece is lost</text>
+    <g transform="translate(20,34)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg hit"/><text x="85" y="18" class="seglbl">C</text>
+      <rect x="102" y="0" width="34" height="26" class="seg hit"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg"/><text x="153" y="18" class="seglbl">E</text>
+      <rect x="170" y="0" width="34" height="26" class="seg"/><text x="187" y="18" class="seglbl">F</text>
+      <rect x="204" y="0" width="34" height="26" class="seg"/><text x="221" y="18" class="seglbl">G</text>
+      <rect x="238" y="0" width="34" height="26" class="seg"/><text x="255" y="18" class="seglbl">H</text>
+      <path d="M68,46 L68,30 M136,46 L136,30" class="brk" marker-end="url(#brk)"/>
+    </g>
+    <path d="M300,47 L350,47" class="path accent" marker-end="url(#ar2)"/>
+    <g transform="translate(370,34)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg"/><text x="85" y="18" class="seglbl">E</text>
+      <rect x="102" y="0" width="34" height="26" class="seg"/><text x="119" y="18" class="seglbl">F</text>
+      <rect x="136" y="0" width="34" height="26" class="seg"/><text x="153" y="18" class="seglbl">G</text>
+      <rect x="170" y="0" width="34" height="26" class="seg"/><text x="187" y="18" class="seglbl">H</text>
+    </g>
+    <text x="600" y="52" class="txt small left">C and D are gone: genes missing</text>
+    <!-- ===== duplication ===== -->
+    <text x="12" y="142" class="txt bold left">2 · Duplication: a piece is added twice</text>
+    <g transform="translate(20,154)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg hit"/><text x="85" y="18" class="seglbl">C</text>
+      <rect x="102" y="0" width="34" height="26" class="seg hit"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg"/><text x="153" y="18" class="seglbl">E</text>
+      <rect x="170" y="0" width="34" height="26" class="seg"/><text x="187" y="18" class="seglbl">F</text>
+      <rect x="204" y="0" width="34" height="26" class="seg"/><text x="221" y="18" class="seglbl">G</text>
+      <rect x="238" y="0" width="34" height="26" class="seg"/><text x="255" y="18" class="seglbl">H</text>
+      <text x="136" y="48" class="txt small">fragment C D from the other chromatid comes in</text>
+    </g>
+    <path d="M300,167 L350,167" class="path accent" marker-end="url(#ar2)"/>
+    <g transform="translate(370,154)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg hit"/><text x="85" y="18" class="seglbl">C</text>
+      <rect x="102" y="0" width="34" height="26" class="seg hit"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg hit"/><text x="153" y="18" class="seglbl">C</text>
+      <rect x="170" y="0" width="34" height="26" class="seg hit"/><text x="187" y="18" class="seglbl">D</text>
+      <rect x="204" y="0" width="34" height="26" class="seg"/><text x="221" y="18" class="seglbl">E</text>
+      <rect x="238" y="0" width="34" height="26" class="seg"/><text x="255" y="18" class="seglbl">F</text>
+      <rect x="272" y="0" width="34" height="26" class="seg"/><text x="289" y="18" class="seglbl">G</text>
+      <rect x="306" y="0" width="34" height="26" class="seg"/><text x="323" y="18" class="seglbl">H</text>
+    </g>
+    <text x="730" y="172" class="txt small left">C D twice: extra dose</text>
+    <!-- ===== inversion ===== -->
+    <text x="12" y="262" class="txt bold left">3 · Inversion: a piece is put back the wrong way round</text>
+    <g transform="translate(20,274)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg hit"/><text x="85" y="18" class="seglbl">C</text>
+      <rect x="102" y="0" width="34" height="26" class="seg hit"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg hit"/><text x="153" y="18" class="seglbl">E</text>
+      <rect x="170" y="0" width="34" height="26" class="seg"/><text x="187" y="18" class="seglbl">F</text>
+      <rect x="204" y="0" width="34" height="26" class="seg"/><text x="221" y="18" class="seglbl">G</text>
+      <rect x="238" y="0" width="34" height="26" class="seg"/><text x="255" y="18" class="seglbl">H</text>
+      <path d="M68,46 L68,30 M170,46 L170,30" class="brk" marker-end="url(#brk)"/>
+    </g>
+    <path d="M300,287 L350,287" class="path accent" marker-end="url(#ar2)"/>
+    <g transform="translate(370,274)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg hit"/><text x="85" y="18" class="seglbl">E</text>
+      <rect x="102" y="0" width="34" height="26" class="seg hit"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg hit"/><text x="153" y="18" class="seglbl">C</text>
+      <rect x="170" y="0" width="34" height="26" class="seg"/><text x="187" y="18" class="seglbl">F</text>
+      <rect x="204" y="0" width="34" height="26" class="seg"/><text x="221" y="18" class="seglbl">G</text>
+      <rect x="238" y="0" width="34" height="26" class="seg"/><text x="255" y="18" class="seglbl">H</text>
+    </g>
+    <text x="660" y="292" class="txt small left">same genes, order C D E → E D C</text>
+    <!-- ===== translocation ===== -->
+    <text x="12" y="382" class="txt bold left">4 · Translocation: a piece moves to a non-homologous chromosome</text>
+    <g transform="translate(20,394)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg"/><text x="85" y="18" class="seglbl">C</text>
+      <rect x="102" y="0" width="34" height="26" class="seg"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg hit"/><text x="153" y="18" class="seglbl">E</text>
+      <rect x="170" y="0" width="34" height="26" class="seg hit"/><text x="187" y="18" class="seglbl">F</text>
+      <rect x="204" y="0" width="34" height="26" class="seg hit"/><text x="221" y="18" class="seglbl">G</text>
+      <rect x="238" y="0" width="34" height="26" class="seg hit"/><text x="255" y="18" class="seglbl">H</text>
+      <path d="M136,46 L136,30" class="brk" marker-end="url(#brk)"/>
+      <text x="0" y="72" class="txt small left muted">chromosome 1</text>
+    </g>
+    <g transform="translate(20,480)">
+      <rect x="0" y="0" width="34" height="26" class="seg other"/><text x="17" y="18" class="seglbl">M</text>
+      <rect x="34" y="0" width="34" height="26" class="seg other"/><text x="51" y="18" class="seglbl">N</text>
+      <rect x="68" y="0" width="34" height="26" class="seg other"/><text x="85" y="18" class="seglbl">O</text>
+      <rect x="102" y="0" width="34" height="26" class="seg otherhit"/><text x="119" y="18" class="seglbl">P</text>
+      <rect x="136" y="0" width="34" height="26" class="seg otherhit"/><text x="153" y="18" class="seglbl">Q</text>
+      <path d="M102,46 L102,30" class="brk" marker-end="url(#brk)"/>
+      <text x="0" y="72" class="txt small left muted">chromosome 2 (not a homolog)</text>
+    </g>
+    <path d="M300,450 L350,450" class="path accent" marker-end="url(#ar2)"/>
+    <g transform="translate(370,394)">
+      <rect x="0" y="0" width="34" height="26" class="seg"/><text x="17" y="18" class="seglbl">A</text>
+      <rect x="34" y="0" width="34" height="26" class="seg"/><text x="51" y="18" class="seglbl">B</text>
+      <rect x="68" y="0" width="34" height="26" class="seg"/><text x="85" y="18" class="seglbl">C</text>
+      <rect x="102" y="0" width="34" height="26" class="seg"/><text x="119" y="18" class="seglbl">D</text>
+      <rect x="136" y="0" width="34" height="26" class="seg otherhit"/><text x="153" y="18" class="seglbl">P</text>
+      <rect x="170" y="0" width="34" height="26" class="seg otherhit"/><text x="187" y="18" class="seglbl">Q</text>
+    </g>
+    <g transform="translate(370,480)">
+      <rect x="0" y="0" width="34" height="26" class="seg other"/><text x="17" y="18" class="seglbl">M</text>
+      <rect x="34" y="0" width="34" height="26" class="seg other"/><text x="51" y="18" class="seglbl">N</text>
+      <rect x="68" y="0" width="34" height="26" class="seg other"/><text x="85" y="18" class="seglbl">O</text>
+      <rect x="102" y="0" width="34" height="26" class="seg hit"/><text x="119" y="18" class="seglbl">E</text>
+      <rect x="136" y="0" width="34" height="26" class="seg hit"/><text x="153" y="18" class="seglbl">F</text>
+      <rect x="170" y="0" width="34" height="26" class="seg hit"/><text x="187" y="18" class="seglbl">G</text>
+      <rect x="204" y="0" width="34" height="26" class="seg hit"/><text x="221" y="18" class="seglbl">H</text>
+    </g>
+    <text x="620" y="440" class="txt small left">reciprocal: the two chromosomes</text>
+    <text x="620" y="456" class="txt small left">swap their end pieces; all genes</text>
+    <text x="620" y="472" class="txt small left">still present, but on another chromosome</text>
+  </svg>
+  <figcaption>Syllabus Figure 1-2 redrawn. Letters are chromosome segments (each with genes); red arrows mark the breakage points; the purple and green
+  segments are the parts affected by the rearrangement. The translocation shown is a <em>reciprocal</em> one (the two chromosomes exchange pieces).</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Two questions sort the four changes</span>
+<p><strong>Is any DNA lost or doubled?</strong> Deletion loses, duplication doubles. <strong>Does DNA stay on its own chromosome?</strong> Inversion: yes, but
+turned around. Translocation: no, it moves to a non-homologous chromosome. Inversion and reciprocal translocation keep <em>all</em> genes in their normal dose.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Vier mogelijke uitkomsten na een breuk: <strong>deletie</strong> (stuk verloren, genen weg), <strong>duplicatie</strong> (stuk er extra bij op een zuster- of
+niet-zusterchromatide: dubbele dosis), <strong>inversie</strong> (stuk teruggeplakt maar omgekeerd: zelfde genen, andere volgorde), <strong>translocatie</strong> (stuk
+aan een niet-homoloog chromosoom). Bij een <strong>reciproke</strong> translocatie wisselen twee chromosomen stukken uit.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Unequal crossing over: how deletion and duplication arise together</h2>
+<p>Deletions and duplications are especially likely <strong>during meiosis</strong>, and the reason is crossing over. Normally, when two non-sister chromatids
+swap pieces, the pieces are the same size, so both partners end up with the same genes they had. Sometimes the two chromatids are not lined up exactly, and
+they <strong>exchange unequal-sized segments</strong>: one partner <strong>gives up more genes than it receives</strong>. This is an <strong>unequal crossover</strong>.
+Its products are always a pair:</p>
+<ul>
+  <li>one chromosome <strong>with a deletion</strong> (it gave more than it got), and</li>
+  <li>one chromosome <strong>with a duplication</strong> (it got more than it gave).</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 760 210" width="760" height="210" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="150" y="18" class="txt bold">before: two non-sister chromatids, shifted</text>
+    <g transform="translate(20,30)">
+      <rect x="0" y="0" width="30" height="22" class="seg"/><text x="15" y="16" class="seglbl">A</text>
+      <rect x="30" y="0" width="30" height="22" class="seg"/><text x="45" y="16" class="seglbl">B</text>
+      <rect x="60" y="0" width="30" height="22" class="seg hit"/><text x="75" y="16" class="seglbl">C</text>
+      <rect x="90" y="0" width="30" height="22" class="seg hit"/><text x="105" y="16" class="seglbl">D</text>
+      <rect x="120" y="0" width="30" height="22" class="seg"/><text x="135" y="16" class="seglbl">E</text>
+      <rect x="150" y="0" width="30" height="22" class="seg"/><text x="165" y="16" class="seglbl">F</text>
+    </g>
+    <g transform="translate(80,70)">
+      <rect x="0" y="0" width="30" height="22" class="seg other"/><text x="15" y="16" class="seglbl">A</text>
+      <rect x="30" y="0" width="30" height="22" class="seg other"/><text x="45" y="16" class="seglbl">B</text>
+      <rect x="60" y="0" width="30" height="22" class="seg other"/><text x="75" y="16" class="seglbl">C</text>
+      <rect x="90" y="0" width="30" height="22" class="seg other"/><text x="105" y="16" class="seglbl">D</text>
+      <rect x="120" y="0" width="30" height="22" class="seg other"/><text x="135" y="16" class="seglbl">E</text>
+      <rect x="150" y="0" width="30" height="22" class="seg other"/><text x="165" y="16" class="seglbl">F</text>
+    </g>
+    <path d="M80,55 L140,67 M140,55 L80,67" class="brk"/>
+    <text x="150" y="118" class="txt small">crossover point: the chromatids are not aligned</text>
+    <path d="M300,60 L350,60" class="path accent" marker-end="url(#ar3)"/>
+    <text x="560" y="18" class="txt bold">after: one deletion, one duplication</text>
+    <g transform="translate(380,30)">
+      <rect x="0" y="0" width="30" height="22" class="seg"/><text x="15" y="16" class="seglbl">A</text>
+      <rect x="30" y="0" width="30" height="22" class="seg"/><text x="45" y="16" class="seglbl">B</text>
+      <rect x="60" y="0" width="30" height="22" class="seg other"/><text x="75" y="16" class="seglbl">E</text>
+      <rect x="90" y="0" width="30" height="22" class="seg other"/><text x="105" y="16" class="seglbl">F</text>
+      <text x="140" y="16" class="txt small left">C D missing: deletion</text>
+    </g>
+    <g transform="translate(380,70)">
+      <rect x="0" y="0" width="30" height="22" class="seg other"/><text x="15" y="16" class="seglbl">A</text>
+      <rect x="30" y="0" width="30" height="22" class="seg other"/><text x="45" y="16" class="seglbl">B</text>
+      <rect x="60" y="0" width="30" height="22" class="seg other"/><text x="75" y="16" class="seglbl">C</text>
+      <rect x="90" y="0" width="30" height="22" class="seg other"/><text x="105" y="16" class="seglbl">D</text>
+      <rect x="120" y="0" width="30" height="22" class="seg hit"/><text x="135" y="16" class="seglbl">C</text>
+      <rect x="150" y="0" width="30" height="22" class="seg hit"/><text x="165" y="16" class="seglbl">D</text>
+      <rect x="180" y="0" width="30" height="22" class="seg"/><text x="195" y="16" class="seglbl">E</text>
+      <rect x="210" y="0" width="30" height="22" class="seg"/><text x="225" y="16" class="seglbl">F</text>
+      <text x="260" y="16" class="txt small left">C D twice: duplication</text>
+    </g>
+    <text x="380" y="150" class="txt small left muted">grey = chromatid from one homolog, blue = chromatid from the other homolog</text>
+    <text x="380" y="166" class="txt small left muted">(in reality the two chromatids are the same colour; the colours only show who gave what)</text>
+  </svg>
+  <figcaption>An unequal crossover. The top chromatid gives away C D E F and receives only E F: deletion. The bottom one gives E F and receives C D E F: duplication.</figcaption>
+</figure>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Bij een <strong>ongelijke crossing-over</strong> liggen twee niet-zusterchromatiden niet precies tegenover elkaar en wisselen ze stukken van verschillende
+lengte uit: de ene geeft meer genen dan ze krijgt. Resultaat: altijd een paar: één chromosoom met een <strong>deletie</strong> en één met een
+<strong>duplicatie</strong>. Daarom komen deleties en duplicaties vooral tijdens de meiose voor.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. How harmful is each change?</h2>
+
+<h3>Deletions: usually lethal when nothing compensates</h3>
+<p>A deletion removes genes. Whether that matters depends on whether the <em>other</em> homolog still has a good copy. The syllabus describes the worst case:
+a diploid embryo that is <strong>homozygous for a large deletion</strong> (both homologs have the deletion), or a <strong>male with a single X chromosome</strong> that has a
+large deletion (a male has only one X, so there is no second copy to compensate). Such an embryo is "missing a number of essential genes", and this is
+<strong>typically lethal</strong> (dodelijk). Page 1.3 shows that even a <strong>heterozygous</strong> deletion (only one homolog affected) can cause severe
+problems, such as cri du chat syndrome: one copy of those genes is apparently not enough.</p>
+
+<h3>Duplications and translocations: also tend to be harmful</h3>
+<p>A duplication gives an extra dose of the duplicated genes; the syllabus simply says that duplications and translocations "also tend to be harmful".</p>
+
+<h3>Reciprocal translocations and inversions: the balance is normal, and yet</h3>
+<p>In a <strong>reciprocal translocation</strong> (segments are <em>exchanged</em> between two non-homologous chromosomes) and in an <strong>inversion</strong>, the
+<strong>balance of genes is not abnormal</strong>: all genes are present in their normal doses. Nevertheless they can alter the phenotype, because
+<strong>a gene's expression can be influenced by its location among neighbouring genes</strong>. A gene that is moved next to other control DNA may be
+switched on too strongly, switched off, or even fused to another gene; this can have devastating effects. The leukemia on page 1.3 (the Philadelphia
+chromosome) is exactly this: a translocation that fuses two genes into a new one.</p>
+
+<table>
+  <tr><th>Change</th><th>DNA lost?</th><th>DNA doubled?</th><th>Gene dose</th><th>Why it can still harm</th></tr>
+  <tr><td>deletion</td><td>yes</td><td>no</td><td>too low (zero if homozygous)</td><td>essential genes missing: usually lethal; heterozygous can be severe (cri du chat)</td></tr>
+  <tr><td>duplication</td><td>no</td><td>yes</td><td>too high for the duplicated part</td><td>extra dose; tends to be harmful</td></tr>
+  <tr><td>inversion</td><td>no</td><td>no</td><td>normal</td><td>position effect: a gene in a new neighbourhood can be expressed differently</td></tr>
+  <tr><td>reciprocal translocation</td><td>no</td><td>no</td><td>normal</td><td>position effect; genes can be fused (CML, page 1.3)</td></tr>
+</table>
+
+<div class="callout key"><span class="tag">Must remember</span>
+<p><strong>Normal gene dose is not the same as a normal phenotype.</strong> Inversions and reciprocal translocations keep every gene, but <strong>where</strong> a
+gene sits decides how it is expressed. Moving it can be as bad as losing it.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Deleties</strong>: essentiële genen ontbreken; homozygoot (beide homologen) of op de enige X van een man meestal <strong>dodelijk</strong>; zelfs
+heterozygoot kan ernstig zijn. <strong>Duplicaties en translocaties</strong> zijn meestal ook schadelijk. Bij <strong>inversie</strong> en <strong>reciproke
+translocatie</strong> is de <strong>gendosis normaal</strong>, maar de <strong>plaats</strong> van een gen tussen zijn buren bepaalt mee hoe sterk het wordt afgelezen
+(positie-effect); dat kan toch zware gevolgen hebben.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Number versus structure: putting pages 1.1 and 1.2 together</h2>
+<table class="cmp">
+  <tr><th>Question on the exam</th><th>Number (page 1.1)</th><th>Structure (this page)</th></tr>
+  <tr><td>What went wrong?</td><td>chromosomes not shared out: nondisjunction</td><td>a chromosome broke and was rejoined wrongly</td></tr>
+  <tr><td>When?</td><td>meiosis I, meiosis II or mitosis</td><td>meiosis (crossing over) or after radiation / chemicals</td></tr>
+  <tr><td>Result</td><td>aneuploidy (2n ± 1) or polyploidy (3n, 4n)</td><td>deletion, duplication, inversion, translocation</td></tr>
+  <tr><td>Whole chromosome or part?</td><td>whole chromosome(s)</td><td>a part of a chromosome</td></tr>
+  <tr><td>Examples (page 1.3)</td><td>Down (trisomy 21), Klinefelter (XXY), Turner (X0)</td><td>cri du chat (deletion 5p), CML (translocation 9;22)</td></tr>
+</table>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 1 lists "nondisjunction during meiosis", "translocation during meiosis", "polyploidy" and "duplication" for Klinefelter syndrome. Only
+nondisjunction gives a whole extra X. A translocation or a duplication would add a <em>piece</em>, not a chromosome. Question 2 (Down syndrome) names
+"duplication", "inversion" and "deletion": of these only a duplication of chromosome-21 material could add a dose of those genes; an inversion or a deletion cannot.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Aantal (1.1): non-disjunctie → heel chromosoom te veel of te weinig. Bouw (1.2): breuk → stuk weg, dubbel, omgekeerd of verplaatst. Op het examen: een extra X
+(Klinefelter) komt door non-disjunctie, niet door translocatie of duplicatie; alleen een duplicatie van chromosoom-21-materiaal kan bijdragen aan Down, een inversie of deletie niet.</p></div>
+
+<!-- ============================================================ -->
+<h2>6. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>chromosome breakage</td><td>a chromosome snaps in two; caused by errors in meiosis or by damaging agents such as radiation</td></tr>
+  <tr><td>fragment</td><td>the broken-off piece</td></tr>
+  <tr><td>deletion</td><td>a fragment is lost; the chromosome misses genes</td></tr>
+  <tr><td>duplication</td><td>a fragment is added as an extra copy to a sister or non-sister chromatid; genes doubled</td></tr>
+  <tr><td>inversion</td><td>a fragment is rejoined to its own chromosome in reverse orientation; same genes, reversed order</td></tr>
+  <tr><td>translocation</td><td>a fragment joins a non-homologous chromosome</td></tr>
+  <tr><td>reciprocal translocation</td><td>two non-homologous chromosomes exchange segments; no gene lost</td></tr>
+  <tr><td>non-homologous chromosome</td><td>a chromosome that is not the partner of the pair (different genes)</td></tr>
+  <tr><td>non-sister chromatids</td><td>chromatids belonging to the two different homologs</td></tr>
+  <tr><td>unequal crossover</td><td>a crossing over in which the two chromatids exchange pieces of different size: one gets a deletion, the other a duplication</td></tr>
+  <tr><td>homozygous for a deletion</td><td>both homologs carry the deletion; no good copy left</td></tr>
+  <tr><td>heterozygous</td><td>only one of the two homologs carries the change</td></tr>
+  <tr><td>lethal</td><td>causing death (of the embryo)</td></tr>
+  <tr><td>gene balance / gene dose</td><td>the normal number of copies of every gene; kept by inversion and reciprocal translocation</td></tr>
+  <tr><td>position effect</td><td>a gene's expression changes because of its new neighbours (not a syllabus term, but the idea the syllabus describes)</td></tr>
+  <tr><td>phenotype</td><td>the visible and measurable traits of an organism</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes how alterations of chromosome number or structure cause genetic disorders."</p>
+<ol>
+  <li>Name the two causes of chromosome breakage (errors in meiosis, damaging agents such as radiation).</li>
+  <li>Define the four structural changes and recognise each from a drawing with lettered segments (A B C D E F G H).</li>
+  <li>Explain an unequal crossover and why it yields one deletion and one duplication at the same time, especially during meiosis.</li>
+  <li>Say why a homozygous large deletion, or a large deletion on a male's single X, is typically lethal.</li>
+  <li>Explain why inversions and reciprocal translocations keep the gene balance and yet can change the phenotype (a gene's expression depends on its neighbours).</li>
+  <li>Tell number changes (nondisjunction, aneuploidy, polyploidy) apart from structure changes in exam options.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>8. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What has to happen before a chromosome can change its structure?</dt>
+  <dd>It has to break. Errors in meiosis (especially during crossing over) and damaging agents such as radiation cause breakage; the wrong repair of the break gives the structural change.</dd>
+
+  <dt>Name the four types of structural change and say in one phrase what happens to the fragment.</dt>
+  <dd>Deletion: the fragment is lost. Duplication: it is reattached as an extra segment to a sister or non-sister chromatid. Inversion: it reattaches to the original chromosome in reverse orientation. Translocation: it joins a non-homologous chromosome.</dd>
+
+  <dt>Which two of the four keep all genes present in their normal dose?</dt>
+  <dd>Inversion and reciprocal translocation. Nothing is lost or doubled; genes only change place or order.</dd>
+
+  <dt>Why can an inversion or translocation still change the phenotype?</dt>
+  <dd>Because a gene's expression is influenced by its location among neighbouring genes. In a new neighbourhood the gene can be read more, less, or be fused to another gene, with possibly devastating effects.</dd>
+
+  <dt>What is an unequal crossover, and what does it produce?</dt>
+  <dd>A crossing over in meiosis in which two non-sister chromatids exchange segments of different size, so one partner gives up more genes than it receives. It produces one chromosome with a deletion and one with a duplication.</dd>
+
+  <dt>Why are deletions and duplications especially likely during meiosis?</dt>
+  <dd>Because crossing over, the exchange of pieces between homologs, happens in meiosis; when the exchange is unequal, a deletion and a duplication result.</dd>
+
+  <dt>When is a large deletion typically lethal?</dt>
+  <dd>When the embryo is homozygous for it (both homologs have the deletion) or when a male has it on his single X chromosome. In both cases essential genes are completely missing; no good copy remains.</dd>
+
+  <dt>What is a reciprocal translocation?</dt>
+  <dd>Two non-homologous chromosomes exchange segments with each other. All genes are still present, but part of each chromosome now sits on the other.</dd>
+
+  <dt>What is the difference between a translocation and a duplication?</dt>
+  <dd>A translocation moves a fragment to another, non-homologous chromosome (no extra copy). A duplication adds the fragment as an extra copy to a sister or non-sister chromatid, so the genes are present twice.</dd>
+
+  <dt>How is an inversion different from a translocation?</dt>
+  <dd>In an inversion the fragment stays on its own chromosome but is turned around; in a translocation it goes to a different chromosome.</dd>
+
+  <dt>Can a translocation cause an extra X chromosome (Klinefelter)?</dt>
+  <dd>No. A translocation moves a piece of a chromosome; it does not add a whole chromosome. Only nondisjunction gives a gamete with an extra X.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>9. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Breakage comes from <strong>errors in meiosis</strong> or <strong>damaging agents (radiation)</strong>; wrong rejoining gives the change.</li>
+  <li><strong>Deletion</strong> = fragment <strong>lost</strong>; genes missing.</li>
+  <li><strong>Duplication</strong> = fragment <strong>added as extra segment</strong> to a sister or non-sister chromatid; genes doubled.</li>
+  <li><strong>Inversion</strong> = fragment back on the <strong>same chromosome, reversed</strong>; same genes, reversed order.</li>
+  <li><strong>Translocation</strong> = fragment joins a <strong>non-homologous</strong> chromosome; <strong>reciprocal</strong> = two chromosomes swap pieces.</li>
+  <li><strong>Unequal crossover</strong> (meiosis) → one <strong>deletion</strong> + one <strong>duplication</strong>, always as a pair.</li>
+  <li>Large deletion, <strong>homozygous</strong> or on a <strong>male's single X</strong> → essential genes missing → typically <strong>lethal</strong>.</li>
+  <li>Duplications and translocations also tend to be harmful.</li>
+  <li><strong>Inversion and reciprocal translocation: gene balance normal</strong>, yet phenotype can change: <strong>expression depends on the neighbours</strong>.</li>
+  <li>Number change (nondisjunction) ≠ structure change (break): an extra whole X is nondisjunction, never translocation or duplication.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>10. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>A chromosome A B C D E F G H becomes A B E F G H. Which change is this?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Deletion.</strong> The fragment C D is lost, so the chromosome misses the genes on it.</p></div></details></li>
+  <li>A chromosome A B C D E F G H becomes A B E D C F G H. Which change?
+    <ul class="opts"><li data-l="a">deletion</li><li data-l="b">duplication</li><li data-l="c">inversion</li><li data-l="d">translocation</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> The piece C D E is still there and still on the same chromosome, but in reverse order: an inversion. No gene is lost or doubled.</p></div></details></li>
+  <li>A chromosome A B C D E F G H becomes A B C D C D E F G H. Which change, and what happens to the gene dose?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Duplication.</strong> Segment C D is present twice, so the genes in it have a double dose. The extra copy came from a sister or non-sister chromatid.</p></div></details></li>
+  <li>Chromosome 1 (A B C D E F G H) ends as A B C D P Q and chromosome 2 (M N O P Q) ends as M N O E F G H. Which change, and is any gene lost?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Reciprocal translocation.</strong> The two non-homologous chromosomes exchanged their end pieces. No gene is lost: all of A to H and M to Q are still present, just on different chromosomes.</p></div></details></li>
+  <li>True or false: "A translocation always makes the cell lose genes."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> In a reciprocal translocation the pieces are exchanged, so all genes stay present in their normal dose. The danger is the new position of the genes, not a missing gene.</p></div></details></li>
+  <li>Which two structural changes leave the gene balance normal?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Inversion and reciprocal translocation.</strong> Deletion lowers the dose (genes missing); duplication raises it (genes doubled).</p></div></details></li>
+  <li>If the gene balance is normal after an inversion, why can the phenotype still change?
+    <details><summary>Answer</summary><div class="ans"><p>Because <strong>a gene's expression depends on its location among neighbouring genes</strong>. After the inversion a gene has new neighbours and new nearby control DNA, so it may be read more, less, or wrongly. The syllabus says this can have devastating effects.</p></div></details></li>
+  <li>What do you always get as a pair from an unequal crossover?
+    <ul class="opts"><li data-l="a">two deletions</li><li data-l="b">a deletion and a duplication</li><li data-l="c">an inversion and a translocation</li><li data-l="d">two duplications</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> One chromatid gives away more than it receives (deletion); the other receives more than it gives (duplication). What one loses, the other gains.</p></div></details></li>
+  <li>In which phase of the cell's life are deletions and duplications especially likely, and why?
+    <details><summary>Answer</summary><div class="ans"><p>In <strong>meiosis</strong>, because that is when homologs cross over and exchange pieces; an unequal exchange produces a deletion and a duplication.</p></div></details></li>
+  <li>Why is a large deletion usually lethal in a male when it is on the X chromosome, even if it is "only" on one chromosome?
+    <details><summary>Answer</summary><div class="ans"><p>A male has <strong>only one X</strong>. There is no second X to supply good copies of the missing genes, so essential genes are completely absent, just as in an embryo that is homozygous for the deletion.</p></div></details></li>
+  <li>Name the two causes of chromosome breakage given in the syllabus.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Errors in meiosis</strong> and <strong>damaging agents such as radiation</strong>.</p></div></details></li>
+  <li>An exam option says Klinefelter syndrome (XXY) is caused by "translocation during meiosis". What is wrong with it?
+    <details><summary>Answer</summary><div class="ans"><p>A translocation moves a <strong>piece</strong> of a chromosome onto another chromosome. It cannot give a cell a <strong>whole extra X</strong>. An extra X comes from <strong>nondisjunction</strong>: the sex chromosomes were not shared out correctly in meiosis (page 1.1).</p></div></details></li>
+  <li>Correct this statement: "In a duplication, the extra piece always comes from the same chromatid that broke."
+    <details><summary>Answer</summary><div class="ans"><p>The extra segment is reattached to a <strong>sister or non-sister chromatid</strong>: the receiving chromatid gets a piece that it already had, from one of its partners. That is how a region ends up present twice on one chromosome.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="1.01_abnormal_chromosome_number.html">← 1.1 Abnormal chromosome number</a><a href="index.html">Chapter 1 index</a><a href="1.03_human_conditions.html">1.3 Human conditions →</a></nav>
+</main>
+</body>
+</html>

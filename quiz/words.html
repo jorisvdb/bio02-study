@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Difficult words</title>
+<link rel="stylesheet" href="app.css">
+<style>
+.w-term { font-size: 2rem; font-weight: 700; margin: 18px 0 4px; line-height: 1.2; }
+.w-nl { color: var(--muted); font-size: 1rem; margin: 0 0 8px; }
+.w-ask { color: var(--muted); margin: 0 0 14px; }
+.w-def { font-size: 1.15rem; margin: 8px 0 12px; padding: 12px 16px; border: 2px solid var(--accent); border-left-width: 6px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 8%, var(--card)); }
+.w-def::before { content: "Definition"; display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); margin-bottom: 2px; }
+.w-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.w-chip { border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; font-size: .92rem; background: var(--card); }
+.w-chip b { color: var(--muted); font-weight: 600; margin-right: 4px; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; }
+.w-chip.at { border-color: var(--accent); border-width: 2px; }
+.w-trap { background: var(--bad-bg); border: 1px solid var(--bad); border-radius: 8px; padding: 6px 10px; margin: 8px 0; font-size: .95rem; }
+.w-trap::before { content: "⚠ Don't confuse: "; font-weight: 700; color: var(--bad); }
+.w-judge { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.w-judge button { flex: 1 1 200px; padding: 12px; font-size: 1rem; font-weight: 600; }
+.w-judge .yes { border-color: var(--ok); color: var(--ok); }
+.w-judge .no { border-color: var(--bad); color: var(--bad); }
+.w-judge .yes:hover { background: var(--ok-bg); } .w-judge .no:hover { background: var(--bad-bg); }
+.w-reveal { font-size: 1.05rem; padding: 12px 22px; }
+.qpic .term-ring { fill: none; stroke: #f5a623; stroke-width: 3; rx: 6; }
+.qpic text.term-lbl { font-weight: 700; }
+.w-groups { width: 100%; }
+.w-groups td.n { white-space: nowrap; color: var(--muted); font-size: .85rem; }
+.w-groups tr.chrow td { font-weight: 700; padding-top: 14px; border-bottom: 2px solid var(--line); }
+.w-list dt { font-weight: 700; margin-top: 10px; }
+.w-list dd { margin: 2px 0 0 0; }
+.w-list dd > .w-defl { padding: 6px 10px; border-left: 4px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--card)); border-radius: 6px; }
+.w-list .w-chip { font-size: .8rem; padding: 1px 7px; }
+.w-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: var(--new); vertical-align: middle; }
+.w-dot.ok { background: var(--master); } .w-dot.bad { background: var(--bad); }
+</style>
+</head>
+<body>
+<main id="app"><p>Loading words…</p></main>
+<script>window.QTERMS = [];</script>
+<script src="data/terms_ch1.js"></script>
+<script src="data/terms_ch2.js"></script>
+<script src="data/terms_ch3.js"></script>
+<script src="data/terms_ch4.js"></script>
+<script src="pics/cs_pics.js"></script>
+<script src="pics/pics_ch12.js"></script>
+<script src="pics/pics_ch34.js"></script>
+<script src="pics/proc_chrom.js"></script>
+<script src="pics/proc_cancer.js"></script>
+<script src="pics/proc_virus.js"></script>
+<script src="pics/proc_tech.js"></script>
+<script src="words.js"></script>
+</body>
+</html>

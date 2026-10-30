@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.1 What cancer is</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .epi { fill: var(--hl-polar); stroke: var(--c-Cl); stroke-width: 1.2; }
+  .ben { fill: var(--hl-acid); stroke: var(--c-R); stroke-width: 1.2; }
+  .mal { fill: var(--c-O); stroke: var(--c-O); stroke-width: 1.2; opacity: .85; }
+  .lam { stroke: var(--c-S); stroke-width: 4; fill: none; stroke-linecap: round; }
+  .lam.broken { stroke-dasharray: 6 8; }
+  .ct { fill: var(--panel); stroke: none; }
+  .fate { fill: var(--key-bg); stroke: var(--key-border); stroke-width: 1.4; }
+  .fate.stop { fill: var(--warn-bg); stroke: var(--warn-border); }
+  .fate.rest { fill: var(--quiz-bg); stroke: var(--quiz-border); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="index.html">← Chapter 2 index</a><a href="index.html">Chapter 2 index</a><a href="2.02_one_cell_and_tumor_progression.html">2.2 One cell and tumor progression →</a></nav>
+
+<h1>2.1 What cancer is: cells that break the social rules</h1>
+<p class="lede">In one sentence: cancer is a group of cells that keeps dividing when it should not and that invades the territory of other cells;
+a growth that stays in place is benign, a growth that invades is malignant and can spread (metastasis).</p>
+
+<p>Chapter 2 is the longest chapter of the course, and its learning objectives are precise: explain benign, malignant, metastasis,
+proto-oncogene, oncogene, tumor suppressor gene, the multiple hit theory of Knudson, the hallmarks of cancer and intratumor heterogeneity; explain
+the roles of the genes Rb and TP53; and pick, from a list of mutations, the ones that make an oncogene. This first page gives the vocabulary that every
+later page uses. Three of the fifteen questions of the example exam are about exactly this page: the matching question with "malignant, sarcoma, primary tumor,
+tumor progression, benign, senescence", the question on angiogenesis, and the question "which alteration could make a cell proliferate more than it should".</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>cell cycle</td><td>the sequence G1 → S (DNA copied) → G2 → M (mitosis, the cell divides) that a dividing cell goes through (BIO01 ch 7)</td></tr>
+  <tr><td>checkpoint</td><td>a moment in the cycle (G1, G2, M) where the cell checks whether it may go on; "control point" in the syllabus figure</td></tr>
+  <tr><td>growth factor</td><td>a protein made by other cells that tells a cell "divide"; most cells only divide when they receive it</td></tr>
+  <tr><td>receptor</td><td>a protein, usually in the cell membrane, that catches a signal molecule and passes the message on into the cell</td></tr>
+  <tr><td>cell signalling</td><td>cells sending and receiving such messages (signaal = bericht)</td></tr>
+  <tr><td>apoptosis</td><td>programmed cell death: a damaged or unneeded cell kills itself in a tidy way and is recycled by its neighbours</td></tr>
+  <tr><td>mutation</td><td>a change in the DNA sequence; a mutation in a body cell is passed on to the descendants of that cell by mitosis</td></tr>
+  <tr><td>germ cells, somatic cells</td><td>germ cells make sperm and eggs (kiemcellen); somatic cells are all other body cells</td></tr>
+  <tr><td>tissue</td><td>a group of cells that work together (muscle, skin, blood) (weefsel)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>1. The body is a society of cells (syllabus 2.1)</h2>
+<p>The syllabus starts with a picture: an animal's body works like a <strong>society</strong> or an <strong>ecosystem</strong> (a community of living things that
+depend on each other). Its members are cells. They divide, and they organise themselves into tissues. But this society is odd: the rule is
+<strong>self-sacrifice</strong>, not "survival of the fittest". Every somatic cell lives only to support the <strong>germ cells</strong>, because only sperm and eggs go on to the next
+generation. That is not a loss for the somatic cell: it has the same genome as the germ cells, so by helping them it still passes copies of its own genes on.</p>
+<p>Free-living cells such as bacteria or yeast compete with each other. The cells of a multicellular body must <strong>collaborate</strong>. To coordinate, they send,
+receive and interpret an elaborate set of <strong>extracellular signals</strong> (signals from outside the cell) that act as <strong>social controls</strong>: they tell a cell
+whether to rest, grow, divide, differentiate (specialise) or die. A normal cell behaves "socially": it does what the body needs.</p>
+
+<h3>The balance of two kinds of signals (Figure 2-1)</h3>
+<ul>
+  <li><strong>Growth factors</strong> bind to receptors on the cell surface and <strong>promote</strong> growth, division and survival. They switch on signalling pathways
+  (chains of proteins inside the cell that pass the message on) that push the cell through the cell cycle. Needed for tissue growth and repair.</li>
+  <li><strong>Growth-inhibiting factors</strong> do the opposite: they <strong>stop</strong> the cell cycle, so that cells do not divide uncontrollably. They keep the tissue in
+  <strong>homeostasis</strong> (homeostase: a stable state, where cell birth and cell death are in balance) and keep its architecture healthy.</li>
+</ul>
+<p>Figure 2-2 of the syllabus is the cell-cycle control points from BIO01 chapter 7: the G1, G2 and M checkpoints. Cancer is, in the end, a failure of these controls.</p>
+
+<h3>What a cell can do: the seven fates (Figure 2-3)</h3>
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- central dividing cell -->
+    <rect x="330" y="20" width="200" height="54" rx="10" class="fate"/>
+    <text x="430" y="42" class="txt bold">proliferation</text>
+    <text x="430" y="60" class="txt small muted">cells divide, number goes up</text>
+    <!-- arrows -->
+    <path d="M330,47 L250,47" class="path accent" marker-end="url(#arA)"/>
+    <path d="M530,47 L610,47" class="path accent" marker-end="url(#arA)"/>
+    <path d="M430,74 L430,120" class="path accent" marker-end="url(#arA)"/>
+    <path d="M520,74 L700,150" class="path accent" marker-end="url(#arA)"/>
+    <path d="M340,74 L160,150" class="path accent" marker-end="url(#arA)"/>
+    <!-- quiescence -->
+    <rect x="60" y="20" width="190" height="54" rx="10" class="fate rest"/>
+    <text x="155" y="42" class="txt bold">quiescence</text>
+    <text x="155" y="60" class="txt small muted">rest (G0), can come back</text>
+    <!-- dormancy -->
+    <rect x="610" y="20" width="190" height="54" rx="10" class="fate rest"/>
+    <text x="705" y="42" class="txt bold">dormancy</text>
+    <text x="705" y="60" class="txt small muted">long rest, can come back</text>
+    <!-- differentiation -> maturation -->
+    <rect x="330" y="122" width="200" height="54" rx="10" class="fate"/>
+    <text x="430" y="144" class="txt bold">differentiation</text>
+    <text x="430" y="162" class="txt small muted">becomes a specific cell type</text>
+    <path d="M430,176 L430,200" class="path accent" marker-end="url(#arA)"/>
+    <rect x="330" y="202" width="200" height="42" rx="10" class="fate"/>
+    <text x="430" y="222" class="txt bold">maturation</text>
+    <text x="430" y="238" class="txt small muted">fully functional in its job</text>
+    <!-- senescence -->
+    <rect x="60" y="152" width="190" height="54" rx="10" class="fate stop"/>
+    <text x="155" y="174" class="txt bold">senescence</text>
+    <text x="155" y="192" class="txt small muted">stops dividing for ever, stays alive</text>
+    <!-- apoptosis -->
+    <rect x="610" y="152" width="190" height="54" rx="10" class="fate stop"/>
+    <text x="705" y="174" class="txt bold">apoptosis</text>
+    <text x="705" y="192" class="txt small muted">programmed death, cell removed</text>
+    <text x="155" y="232" class="txt small muted">red = irreversible brakes against tumours</text>
+    <text x="705" y="232" class="txt small muted">yellow = reversible rest</text>
+  </svg>
+  <figcaption>The fates of a cell in normal tissue (syllabus Figure 2-3). Blue: the normal path of making and using cells; yellow: reversible rest; red: two irreversible ways out that protect the body against uncontrolled growth.</figcaption>
+</figure>
+<table class="cmp">
+  <tr><th>Fate</th><th>What it means</th></tr>
+  <tr><td>proliferation</td><td>cells divide and increase in number (prolifereren = zich vermenigvuldigen); for growth, repair and renewal</td></tr>
+  <tr><td>differentiation</td><td>a dividing cell specialises into a specific cell type with its own job (a skin cell, a nerve cell)</td></tr>
+  <tr><td>maturation</td><td>the last steps of development: the cell reaches full function in its specialised role (matuur = volwassen)</td></tr>
+  <tr><td>quiescence</td><td>a reversible resting state: the cell is not dividing but can re-enter the cycle on a signal (this is G0 from BIO01)</td></tr>
+  <tr><td>dormancy</td><td>a prolonged, reversible state of low activity, as an adaptation to bad conditions; the cell does not divide until conditions improve (dormant = slapend)</td></tr>
+  <tr><td>senescence</td><td>an <strong>irreversible</strong> stop of cell division, often triggered by stress or damage; the cell stays alive but never divides again. A tumor-suppressive mechanism (it stops damaged cells from making more damaged cells)</td></tr>
+  <tr><td>apoptosis</td><td>programmed cell death: a controlled process that removes damaged or unneeded cells</td></tr>
+</table>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>The matching question of the example exam asks for the definition of <strong>senescence</strong>: "an irreversible growth arrest that prevents further cell division, often
+triggered by cellular stress or damage". Do not confuse it with quiescence (reversible) or apoptosis (the cell dies).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Het lichaam is een <strong>samenleving van cellen</strong>: lichaamscellen offeren zich op voor de kiemcellen. Cellen sturen elkaar <strong>signalen</strong> die als sociale
+controle werken: <strong>groeifactoren</strong> zeggen "deel", <strong>groeiremmende factoren</strong> zeggen "stop"; de balans houdt het weefsel in <strong>homeostase</strong>.
+Zeven lotsbestemmingen van een cel: proliferatie, differentiatie, maturatie, quiescentie (omkeerbare rust, G0), dormantie (lange rust), <strong>senescentie</strong>
+(onomkeerbare deelstop, cel blijft leven) en <strong>apoptose</strong> (geprogrammeerde dood).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. One mutant cell can become a clone that takes over</h2>
+<p>Begin state: a human body of more than <strong>10<sup>13</sup></strong> cells (read: ten to the power thirteen, 10 000 000 000 000). Every day, <strong>billions</strong> of these cells
+experience a mutation. Most mutations do no harm. The dangerous case is a mutation that gives one cell a <strong>selective advantage</strong>: it grows and divides a little more
+vigorously, or survives a little more readily, than its neighbours. That cell becomes the founder of a growing <strong>mutant clone</strong> (a clone = all the descendants of one cell, genetically identical to it, kloon).</p>
+<p>Over time the clone goes through repeated rounds of <strong>mutation, competition and natural selection</strong>, exactly the process that drives the evolution of species, but
+now among the somatic cells of one body and within one human life span. The syllabus calls this cancer as a <strong>microevolutionary process</strong>. Cancer is a disease in which
+one mutant clone prospers at the expense of its neighbours; in the end, as the clone evolves and spreads, it can destroy the whole cellular society.</p>
+
+<div class="callout key"><span class="tag">Keep this picture</span>
+<p>Cancer = <strong>Darwinian evolution inside the body</strong>. The three ingredients are the same as in nature: variation (mutations), heredity (a mutation is copied into all
+descendants by mitosis) and selection (the cell that divides faster or dies less takes over). Page 2.2 follows this process step by step.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Van de 10<sup>13</sup> cellen krijgen er elke dag miljarden een mutatie. Een mutatie die een cel een <strong>selectief voordeel</strong> geeft (sneller delen, minder doodgaan)
+maakt die cel tot stichter van een <strong>mutante kloon</strong>. Herhaalde rondes van mutatie, concurrentie en natuurlijke selectie maken het erger: kanker is
+<strong>micro-evolutie</strong> binnen één lichaam.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. The two defining properties of a cancer cell (2.1.1)</h2>
+<p>Cancer cells are defined by two heritable properties (heritable = passed on to their daughter cells):</p>
+<ol>
+  <li>They <strong>reproduce in defiance of the normal restraints</strong> on cell growth and division.</li>
+  <li>They <strong>invade and colonize</strong> territories normally reserved for other cells.</li>
+</ol>
+<p>The combination is what makes cancer dangerous. The words that follow all hang on these two properties:</p>
+<table class="cmp">
+  <tr><th>Word</th><th>Meaning</th></tr>
+  <tr><td>tumor, neoplasm</td><td>a mass of cells made by an abnormal cell that went through repeated, inappropriate rounds of growth and division; neoplasm literally means "new growth" (gezwel)</td></tr>
+  <tr><td>benign</td><td>the tumor cells have <strong>not</strong> become invasive: the mass stays in place. Removing or destroying it locally usually cures it completely (goedaardig)</td></tr>
+  <tr><td>malignant</td><td>the cells have acquired the ability to <strong>invade the surrounding tissue</strong>. Only a malignant tumor is a true cancer (kwaadaardig)</td></tr>
+  <tr><td>invasiveness</td><td>breaking loose and growing into neighbouring tissue; the essential characteristic of cancer cells</td></tr>
+  <tr><td>metastasis (plural metastases)</td><td>a <strong>secondary tumor</strong> at another site of the body, founded by cancer cells that entered blood or lymphatic vessels (uitzaaiing). <strong>Metastases usually kill the patient</strong>, by making a vital organ fail</td></tr>
+</table>
+<p>The more widely a cancer has spread, the harder it is to eradicate. A benign tumor can be cut out; metastases in many organs cannot.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg">
+    <!-- panel 1 normal duct -->
+    <text x="140" y="16" class="txt bold">normal duct</text>
+    <rect x="30" y="40" width="220" height="140" rx="12" class="ct"/>
+    <path d="M60,60 L220,60 M60,160 L220,160" class="lam"/>
+    <g>
+      <rect x="62" y="64" width="20" height="18" rx="4" class="epi"/><rect x="88" y="64" width="20" height="18" rx="4" class="epi"/><rect x="114" y="64" width="20" height="18" rx="4" class="epi"/><rect x="140" y="64" width="20" height="18" rx="4" class="epi"/><rect x="166" y="64" width="20" height="18" rx="4" class="epi"/><rect x="192" y="64" width="20" height="18" rx="4" class="epi"/>
+      <rect x="62" y="138" width="20" height="18" rx="4" class="epi"/><rect x="88" y="138" width="20" height="18" rx="4" class="epi"/><rect x="114" y="138" width="20" height="18" rx="4" class="epi"/><rect x="140" y="138" width="20" height="18" rx="4" class="epi"/><rect x="166" y="138" width="20" height="18" rx="4" class="epi"/><rect x="192" y="138" width="20" height="18" rx="4" class="epi"/>
+    </g>
+    <text x="140" y="114" class="txt small muted">lumen (the open space)</text>
+    <text x="140" y="200" class="txt small">one orderly layer of epithelial cells</text>
+    <text x="140" y="216" class="txt small muted">inside the basal lamina (yellow)</text>
+    <!-- panel 2 benign -->
+    <text x="430" y="16" class="txt bold">benign tumor (adenoma)</text>
+    <rect x="320" y="40" width="220" height="140" rx="12" class="ct"/>
+    <path d="M350,60 L510,60 M350,160 L510,160" class="lam"/>
+    <g>
+      <rect x="352" y="64" width="20" height="18" rx="4" class="epi"/><rect x="378" y="64" width="20" height="18" rx="4" class="ben"/><rect x="404" y="64" width="20" height="18" rx="4" class="ben"/><rect x="430" y="64" width="20" height="18" rx="4" class="ben"/><rect x="456" y="64" width="20" height="18" rx="4" class="ben"/><rect x="482" y="64" width="20" height="18" rx="4" class="epi"/>
+      <rect x="390" y="86" width="20" height="18" rx="4" class="ben"/><rect x="416" y="86" width="20" height="18" rx="4" class="ben"/><rect x="442" y="86" width="20" height="18" rx="4" class="ben"/>
+      <rect x="404" y="108" width="20" height="18" rx="4" class="ben"/><rect x="430" y="108" width="20" height="18" rx="4" class="ben"/>
+      <rect x="352" y="138" width="20" height="18" rx="4" class="epi"/><rect x="378" y="138" width="20" height="18" rx="4" class="epi"/><rect x="404" y="138" width="20" height="18" rx="4" class="epi"/><rect x="430" y="138" width="20" height="18" rx="4" class="epi"/><rect x="456" y="138" width="20" height="18" rx="4" class="epi"/><rect x="482" y="138" width="20" height="18" rx="4" class="epi"/>
+    </g>
+    <text x="430" y="200" class="txt small">too many cells, but still inside</text>
+    <text x="430" y="216" class="txt small muted">the basal lamina: not invasive</text>
+    <!-- panel 3 malignant -->
+    <text x="720" y="16" class="txt bold">malignant (adenocarcinoma)</text>
+    <rect x="610" y="40" width="220" height="140" rx="12" class="ct"/>
+    <path d="M640,60 L700,60 M740,60 L800,60 M640,160 L800,160" class="lam"/>
+    <path d="M700,60 L740,60" class="lam broken"/>
+    <g>
+      <rect x="642" y="64" width="20" height="18" rx="4" class="epi"/><rect x="668" y="64" width="20" height="18" rx="4" class="mal"/><rect x="694" y="64" width="20" height="18" rx="4" class="mal"/><rect x="720" y="64" width="20" height="18" rx="4" class="mal"/><rect x="746" y="64" width="20" height="18" rx="4" class="mal"/><rect x="772" y="64" width="20" height="18" rx="4" class="epi"/>
+      <rect x="680" y="86" width="20" height="18" rx="4" class="mal"/><rect x="706" y="86" width="20" height="18" rx="4" class="mal"/><rect x="732" y="86" width="20" height="18" rx="4" class="mal"/>
+      <rect x="694" y="38" width="20" height="18" rx="4" class="mal" transform="rotate(-15 704 47)"/><rect x="722" y="30" width="20" height="18" rx="4" class="mal" transform="rotate(20 732 39)"/><rect x="760" y="24" width="20" height="18" rx="4" class="mal" transform="rotate(-30 770 33)"/>
+      <rect x="642" y="138" width="20" height="18" rx="4" class="epi"/><rect x="668" y="138" width="20" height="18" rx="4" class="epi"/><rect x="694" y="138" width="20" height="18" rx="4" class="epi"/><rect x="720" y="138" width="20" height="18" rx="4" class="epi"/><rect x="746" y="138" width="20" height="18" rx="4" class="epi"/><rect x="772" y="138" width="20" height="18" rx="4" class="epi"/>
+    </g>
+    <text x="720" y="200" class="txt small">cells break through the basal lamina</text>
+    <text x="720" y="216" class="txt small muted">and grow into the connective tissue: invasive</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-4. A duct (a small tube in a gland) is lined by a layer of epithelial cells (green). The yellow line is the <strong>basal lamina</strong>: a thin sheet of
+  protein that marks the boundary of the tissue. A benign tumor (pink) stays inside it; a malignant tumor (red) breaks through and destroys the tissue.</figcaption>
+</figure>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 5 asks which alteration could make a cell proliferate more than it should: a protein that normally promotes apoptosis is altered; a protein that normally
+stops the cycle when something is wrong is altered; a growth-factor receptor is overexpressed; a proto-oncogene is activated into an oncogene. <strong>All of them</strong> are mechanisms
+of excess proliferation: less death, a broken brake, more "divide" signal, or an overactive gas pedal (pages 2.5 to 2.8 give the gene names).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Twee eigenschappen definiëren een kankercel: ze <strong>deelt ondanks de remmen</strong> en ze <strong>dringt binnen</strong> in andermans weefsel. Een <strong>tumor</strong> (neoplasma,
+"nieuwe groei") is <strong>benigne</strong> zolang hij niet invasief is: lokaal wegnemen geneest. Pas een <strong>invasieve</strong> tumor is <strong>maligne</strong> = echte kanker. Cellen die via
+bloed of lymfe elders een tweede tumor stichten geven <strong>metastasen</strong> (uitzaaiingen); die doden meestal de patiënt. De <strong>basale lamina</strong> is de grens: erbinnen blijven = benigne,
+erdoorheen breken = maligne.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Naming cancers by the tissue they come from</h2>
+<p>Cancers are traditionally classified by the <strong>tissue and cell type</strong> they arise from. First some tissue words:</p>
+<ul>
+  <li><strong>Epithelium</strong> (epitheel): the sheets of cells that cover the body surface and line all its tubes and cavities: skin, gut lining, airways, glands. Epithelial cells sit on a basal lamina.</li>
+  <li><strong>Connective tissue</strong> (bindweefsel): the supporting tissue between organs: fibres, bone, cartilage, fat, and the cells that make them.</li>
+  <li><strong>Hemopoietic cells</strong> (bloedvormende cellen): the white blood cells and the precursor cells in the bone marrow that make them.</li>
+</ul>
+<table class="cmp">
+  <tr><th>Name</th><th>Arises from</th><th>How common</th></tr>
+  <tr><td>carcinoma</td><td>epithelial cells</td><td>by far the most common: about <strong>85 %</strong> of cancers</td></tr>
+  <tr><td>myeloma, leukemia, lymphoma</td><td>white blood cells and their precursors (hemopoietic cells)</td><td>the next most common group</td></tr>
+  <tr><td>sarcoma</td><td>connective tissue or muscle cells</td><td>much less common</td></tr>
+  <tr><td>(cancers of the nervous system)</td><td>cells of the nervous system</td><td>much less common</td></tr>
+</table>
+<p>Why are carcinomas so common? Two reasons from the syllabus: most of the normal cell turnover (cells dying and being replaced) in an adult happens in epithelia, and the cell types that go
+through the most division cycles have the greatest chance of accumulating the several mutations needed for cancer. In addition, epithelia are the tissues most exposed to physical and
+chemical damage (sunlight on the skin, smoke in the airways, food in the gut).</p>
+
+<h3>Benign names and malignant names go in pairs</h3>
+<p>An <strong>adenoma</strong> is a benign epithelial tumor with a glandular organisation (gland = klier, a structure that makes and releases a substance; "adeno" means gland). Its malignant
+counterpart is an <strong>adenocarcinoma</strong>. Figure 2-4 above shows both.</p>
+
+<h3>Cancers keep traits of the cell they came from</h3>
+<p>Two skin examples. A <strong>basal-cell carcinoma</strong> comes from a keratinocyte stem cell (a keratinocyte is the ordinary skin cell that makes the protein keratin; a stem cell is a cell that
+keeps dividing to renew a tissue). These cancer cells generally keep making their cytokeratin filaments (the protein fibres of a skin cell). A <strong>melanoma</strong> comes from a pigment cell of the skin and
+often keeps making pigment granules. And the two are very different diseases: basal-cell carcinomas are only locally invasive, rarely metastasize and are readily cured by surgery or local
+irradiation; melanomas can become much more malignant, often form metastases and are then frequently fatal.</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Matching question (example exam Q3): <strong>sarcoma</strong> = a cancer arising from connective tissue or muscle cells; <strong>malignant</strong> = cells that invade surrounding tissue;
+<strong>benign</strong> = a tumor that has not become invasive and stays in place; <strong>primary tumor</strong> = the original tumor, in the organ where the cancer started (page 2.2);
+<strong>tumor progression</strong> = the gradual evolution of a mild disorder into a full-blown cancer (page 2.2); <strong>senescence</strong> = irreversible growth arrest.</p></div>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>In the United States about 1.76 million new cancers were diagnosed in 2018 and about 607 000 people died of cancer: well under half of the people who develop cancer die of it. The most
+common sites are the digestive organs, the lungs, the reproductive tract and the breast. Alberts also mentions a newer way to classify cancers that cuts across the tissue names: by the
+mutations that drive them, which matters for choosing a treatment.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Kankers heten naar hun weefsel: <strong>carcinoom</strong> uit epitheel (85 %, want epitheel deelt het meest en krijgt de meeste schade), <strong>myeloom / leukemie / lymfoom</strong> uit witte
+bloedcellen, <strong>sarcoom</strong> uit bindweefsel of spier, en kankers van het zenuwstelsel. Benigne en maligne namen vormen paren: <strong>adenoom</strong> (goedaardig, klierweefsel) tegenover
+<strong>adenocarcinoom</strong>. Kankercellen houden kenmerken van hun oorsprong (basaalcelcarcinoom maakt keratine, melanoom pigment); basaalcelcarcinoom is lokaal en geneesbaar,
+melanoom zaait vaak uit.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>social controls</td><td>the extracellular signals that tell a cell to rest, grow, divide, differentiate or die</td></tr>
+  <tr><td>growth factor / growth-inhibiting factor</td><td>signal protein that promotes / stops cell division; their balance keeps homeostasis</td></tr>
+  <tr><td>homeostasis</td><td>a stable state in which cell production and cell death are balanced</td></tr>
+  <tr><td>proliferation</td><td>cells dividing and increasing in number</td></tr>
+  <tr><td>differentiation, maturation</td><td>specialising into a cell type; reaching full function</td></tr>
+  <tr><td>quiescence</td><td>reversible rest (G0)</td></tr>
+  <tr><td>dormancy</td><td>long, reversible low-activity state in bad conditions</td></tr>
+  <tr><td>senescence</td><td>irreversible stop of division; the cell lives on; a tumor-suppressive mechanism</td></tr>
+  <tr><td>apoptosis</td><td>programmed, tidy cell death</td></tr>
+  <tr><td>selective advantage</td><td>a property that lets a cell out-divide or out-survive its neighbours</td></tr>
+  <tr><td>clone</td><td>all descendants of one cell; a mutant clone carries that cell's mutation</td></tr>
+  <tr><td>microevolution</td><td>mutation, competition and selection among the cells of one body, within one life</td></tr>
+  <tr><td>tumor, neoplasm</td><td>a mass of cells from uncontrolled division ("new growth")</td></tr>
+  <tr><td>benign / malignant</td><td>not invasive, stays in place / invades surrounding tissue (= cancer)</td></tr>
+  <tr><td>invasiveness</td><td>growing into neighbouring tissue; the defining property of malignancy</td></tr>
+  <tr><td>metastasis</td><td>a secondary tumor at a distant site, seeded through blood or lymph vessels</td></tr>
+  <tr><td>basal lamina</td><td>thin protein sheet under an epithelium marking the tissue boundary</td></tr>
+  <tr><td>epithelium</td><td>the cell sheets covering the body and lining its tubes and glands</td></tr>
+  <tr><td>connective tissue</td><td>supporting tissue between organs (fibres, bone, fat and their cells)</td></tr>
+  <tr><td>hemopoietic cells</td><td>blood-forming cells: white blood cells and their precursors</td></tr>
+  <tr><td>carcinoma, sarcoma, leukemia/lymphoma/myeloma</td><td>cancer of epithelium (85 %), of connective tissue or muscle, of white blood cells</td></tr>
+  <tr><td>adenoma / adenocarcinoma</td><td>benign / malignant tumor with glandular organisation</td></tr>
+  <tr><td>basal-cell carcinoma, melanoma</td><td>skin cancer from a keratinocyte stem cell (local, curable); from a pigment cell (often metastasizes)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "The student explains the molecular basis of cancer" and "can explain the following concepts: benign, malignant, metastasis ... 'hallmarks of cancer'".</p>
+<ol>
+  <li>Define benign, malignant, invasive, metastasis, primary tumor, tumor/neoplasm, and give the definition of senescence (irreversible growth arrest) versus quiescence (reversible).</li>
+  <li>State the two defining properties of cancer cells.</li>
+  <li>Explain the "society of cells" idea: social controls, growth factors versus growth-inhibiting factors, homeostasis, and cancer as microevolution of a mutant clone.</li>
+  <li>Classify a cancer by its tissue: carcinoma (epithelial, 85 %), sarcoma (connective tissue, muscle), leukemia/lymphoma/myeloma (white blood cells); adenoma versus adenocarcinoma.</li>
+  <li>Explain why carcinomas are the most common (most cell turnover, most exposure to damage).</li>
+  <li>Recognise that less apoptosis, a broken checkpoint brake, an overexpressed growth-factor receptor and an activated oncogene all lead to excess proliferation (exam Q5).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why does the syllabus call the body a society of cells?</dt>
+  <dd>Because the cells must collaborate rather than compete: somatic cells sacrifice themselves for the germ cells, and extracellular signals act as social controls that tell each cell when to rest, grow, divide, differentiate or die.</dd>
+
+  <dt>What are the two kinds of signals in Figure 2-1 and what is their balance for?</dt>
+  <dd>Growth factors (promote growth, division and survival) and growth-inhibiting factors (stop the cell cycle). Their balance keeps tissue homeostasis and prevents tumor formation.</dd>
+
+  <dt>What is the difference between quiescence, dormancy and senescence?</dt>
+  <dd>Quiescence: reversible rest (G0), the cell re-enters the cycle on a signal. Dormancy: a prolonged reversible low-activity state in bad conditions. Senescence: an irreversible stop of division, triggered by stress or damage; the cell stays alive. Senescence protects against tumors.</dd>
+
+  <dt>What are the two defining properties of cancer cells?</dt>
+  <dd>They reproduce in defiance of the normal restraints on growth and division, and they invade and colonize territory reserved for other cells.</dd>
+
+  <dt>When is a tumor benign, and when is it a true cancer?</dt>
+  <dd>Benign as long as its cells are not invasive; it stays in place and local removal usually cures it. It is a true cancer (malignant) when the cells can invade the surrounding tissue.</dd>
+
+  <dt>What is a metastasis and why does it matter?</dt>
+  <dd>A secondary tumor at another site, founded by cancer cells that broke loose and travelled through blood or lymphatic vessels. Metastases usually kill the patient by making a vital organ fail, and a widely spread cancer is very hard to eradicate.</dd>
+
+  <dt>How does a single mutant cell become a cancer?</dt>
+  <dd>A mutation gives it a selective advantage; it founds a growing clone; repeated rounds of mutation, competition and natural selection among somatic cells make the clone more and more abnormal: microevolution inside the body.</dd>
+
+  <dt>Name the main cancer classes by tissue of origin.</dt>
+  <dd>Carcinoma from epithelial cells (about 85 %); myeloma, leukemia and lymphoma from white blood cells and their precursors; sarcoma from connective tissue or muscle; cancers of the nervous system (rare).</dd>
+
+  <dt>Why are carcinomas so much more common than sarcomas?</dt>
+  <dd>Most cell turnover in adults happens in epithelia, so these cells go through the most division cycles and accumulate the most mutations, and epithelia are the most exposed to physical and chemical damage.</dd>
+
+  <dt>What is the difference between an adenoma and an adenocarcinoma?</dt>
+  <dd>Both are glandular epithelial tumors. The adenoma is benign and stays inside the basal lamina; the adenocarcinoma is malignant, breaks through the basal lamina and destroys the tissue.</dd>
+
+  <dt>Compare basal-cell carcinoma and melanoma.</dt>
+  <dd>Basal-cell carcinoma comes from a keratinocyte stem cell, keeps making cytokeratin, is only locally invasive and is cured by surgery or local irradiation. Melanoma comes from a pigment cell, often keeps making pigment, often metastasizes and is then frequently fatal.</dd>
+
+  <dt>Which of these makes a cell proliferate too much: a lost apoptosis protein, a broken checkpoint protein, too much growth-factor receptor, an activated oncogene?</dt>
+  <dd>All four. Less death, no brake, more "divide" signal and an overactive growth gene each tip the balance toward more cells.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Body = <strong>society of cells</strong>; somatic cells serve the germ cells; <strong>social controls</strong> = extracellular signals.</li>
+  <li><strong>Growth factors</strong> push, <strong>growth-inhibiting factors</strong> brake; balance = <strong>homeostasis</strong>.</li>
+  <li>Fates: proliferation, differentiation, maturation, <strong>quiescence (reversible, G0)</strong>, dormancy (long, reversible), <strong>senescence (irreversible stop, alive)</strong>, <strong>apoptosis (death)</strong>.</li>
+  <li>10<sup>13</sup> cells, billions of mutations a day; a <strong>selective advantage</strong> → a <strong>mutant clone</strong> → microevolution.</li>
+  <li>Cancer cell: <strong>divides despite restraints</strong> + <strong>invades</strong> other territory.</li>
+  <li><strong>Benign</strong> = not invasive, stays in place, local removal cures. <strong>Malignant</strong> = invasive = true cancer.</li>
+  <li><strong>Metastasis</strong> = secondary tumor elsewhere via blood or lymph; metastases usually kill.</li>
+  <li><strong>Basal lamina</strong> = the boundary; benign stays inside, malignant breaks through.</li>
+  <li><strong>Carcinoma</strong> epithelium 85 %; <strong>sarcoma</strong> connective tissue/muscle; <strong>leukemia, lymphoma, myeloma</strong> white blood cells.</li>
+  <li><strong>Adenoma</strong> (benign, gland) ↔ <strong>adenocarcinoma</strong> (malignant).</li>
+  <li>Basal-cell carcinoma: local, curable. Melanoma: metastasizes, often fatal.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>A tumor is found in a gland and completely removed; it had not grown through the basal lamina. Benign or malignant, and what is its name?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Benign</strong>, an <strong>adenoma</strong>. Not invasive means not a true cancer; local removal usually cures it. If it had broken through, it would be an adenocarcinoma.</p></div></details></li>
+  <li>Which property makes a tumor a true cancer?
+    <ul class="opts"><li data-l="a">it is large</li><li data-l="b">it grows fast</li><li data-l="c">its cells invade the surrounding tissue</li><li data-l="d">it is found in an epithelium</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Malignant = invasive. Size, speed and tissue type do not decide it; a large, fast benign tumor is still benign.</p></div></details></li>
+  <li>Define senescence in one sentence, and say how it differs from quiescence.
+    <details><summary>Answer</summary><div class="ans"><p>Senescence is an <strong>irreversible growth arrest</strong>, often triggered by stress or damage, that stops a cell from ever dividing again while it stays alive. Quiescence is <strong>reversible</strong> rest (G0).</p></div></details></li>
+  <li>What is a metastasis?
+    <details><summary>Answer</summary><div class="ans"><p>A <strong>secondary tumor</strong> at a different site, founded by cancer cells that broke loose, entered blood or lymphatic vessels and settled elsewhere. These usually cause death by making a vital organ fail.</p></div></details></li>
+  <li>A cancer arises from muscle cells. What is it called?
+    <ul class="opts"><li data-l="a">carcinoma</li><li data-l="b">sarcoma</li><li data-l="c">lymphoma</li><li data-l="d">adenoma</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Sarcomas arise from connective tissue or muscle. Carcinoma = epithelium, lymphoma = white blood cells, adenoma is benign.</p></div></details></li>
+  <li>About what fraction of human cancers are carcinomas, and why?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>85 %</strong>. Epithelia have the most cell turnover (most divisions, so most chance to accumulate mutations) and the most exposure to physical and chemical damage.</p></div></details></li>
+  <li>True or false: "A somatic cell that sacrifices itself for the germ cells loses its genes."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Somatic cells have the same genome as the germ cells, so by supporting the germ cells they still pass copies of their own genes on.</p></div></details></li>
+  <li>What do growth-inhibiting factors do, and what happens when they are ignored?
+    <details><summary>Answer</summary><div class="ans"><p>They stop the cell cycle so that cells do not divide uncontrollably, keeping the tissue in homeostasis. A cell that ignores them keeps dividing: one of the ways a tumor starts.</p></div></details></li>
+  <li>Explain "cancer is a microevolutionary process".
+    <details><summary>Answer</summary><div class="ans"><p>Among the body's cells there is variation (mutations), heredity (mitosis copies the mutation into all descendants) and selection (a cell with a selective advantage out-divides its neighbours). Repeated rounds of mutation, competition and selection turn a mutant clone into a cancer, within one human life span.</p></div></details></li>
+  <li>Which of these two skin cancers often metastasizes: basal-cell carcinoma or melanoma?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Melanoma</strong> (from pigment cells). Basal-cell carcinoma (from keratinocyte stem cells) is only locally invasive and is cured by surgery or local irradiation.</p></div></details></li>
+  <li>What is the basal lamina and why does it matter in Figure 2-4?
+    <details><summary>Answer</summary><div class="ans"><p>A thin protein sheet under an epithelium that marks the boundary of the tissue. A benign tumor stays inside it; a malignant tumor breaks through it, which is the first step of invasion.</p></div></details></li>
+  <li>A protein that normally triggers apoptosis is mutated and no longer works. Could this contribute to cancer?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Yes.</strong> Fewer cells die, so the number of cells rises even if division is normal. The exam lists this together with a broken checkpoint brake, an overexpressed growth-factor receptor and an activated oncogene: all give excess proliferation.</p></div></details></li>
+  <li>Give the pair of words for a glandular tumor: benign and malignant.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Adenoma</strong> (benign) and <strong>adenocarcinoma</strong> (malignant). "Adeno" = gland, "carcinoma" = cancer of epithelium.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="index.html">← Chapter 2 index</a><a href="index.html">Chapter 2 index</a><a href="2.02_one_cell_and_tumor_progression.html">2.2 One cell and tumor progression →</a></nav>
+</main>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.1 Model organisms and cell culture</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .glass { fill: none; stroke: var(--muted); stroke-width: 2; }
+  .broth { fill: var(--c-S); fill-opacity: .45; stroke: none; }
+  .agar { fill: var(--c-S); fill-opacity: .3; stroke: var(--muted); stroke-width: 1.5; }
+  .col { fill: var(--c-O); stroke: none; }
+  .yeast { fill: var(--c-C); fill-opacity: .6; stroke: none; }
+  .dish { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .cl { fill: var(--c-N); fill-opacity: .55; stroke: var(--c-N); stroke-width: 1; }
+  .cl.pile { fill: var(--c-O); fill-opacity: .55; stroke: var(--c-O); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="index.html">← Chapter 4 index</a><a href="index.html">Chapter 4 index</a><a href="4.02_stem_cells_and_virus_culture.html">4.2 Stem cells and virus culture →</a></nav>
+
+<h1>4.1 Model organisms and cell culture: where the experiments are done</h1>
+<p class="lede">In one sentence: molecular biologists study a few easy-to-grow organisms and cells grown in a dish, because what they find there
+(how DNA is copied, read, repaired) is the same in almost every living thing, including us.</p>
+
+<p>Chapter 4 is a toolbox chapter: it describes the techniques behind everything in BIO01 and in chapters 1 to 3 of this course. Six of the
+fifteen example exam questions come from this chapter, so it is worth learning well. Before any technique can be used, you need <em>material</em>:
+organisms or cells that grow reliably in the laboratory. That is what this first page is about. The pages after it cover the techniques
+themselves: copying DNA (PCR), cutting and pasting it (cloning), changing genomes (CRISPR), detecting molecules, reading sequences, and so on.</p>
+
+<!-- ============================================================ -->
+<h2>0. Two ideas that run through the whole chapter</h2>
+<table class="cmp">
+  <tr><th>Term</th><th>Meaning</th></tr>
+  <tr><td>in vivo</td><td>Latin for "in the living": an experiment inside a living cell or organism</td></tr>
+  <tr><td>in vitro</td><td>Latin for "in glass": an experiment in a test tube, with <strong>purified components</strong> (molecules taken out of cells and cleaned up). You rebuild a cell process, for example making mRNA, with only the parts you add. That tells you the <strong>minimal requirements</strong>: the smallest set of molecules that is enough. In vitro work is limited (a test tube is not a cell) but it is the best way to measure things precisely and to find the core players.</td></tr>
+  <tr><td>high-throughput</td><td>doing thousands of measurements at once (throughput = how much goes through per hour). Made possible by whole-genome sequencing (reading all the DNA of an organism), robots, printed microarrays (chips with thousands of DNA spots, page 4.13) and better microscopes.</td></tr>
+  <tr><td>conserved</td><td>unchanged through evolution: a molecule or process that is (nearly) the same in bacteria, yeast, flies and humans. This is why a model organism tells us something about ourselves.</td></tr>
+</table>
+<p>The chapter's learning objectives: describe the principle, method and applications of nucleic-acid techniques (PCR, FISH, microarrays, sequencing,
+metagenomics, transcriptomics) and of protein and metabolite techniques (mass spectrometry, chromatography), and use them to solve problems.
+Every technique page therefore gives you: the principle, what you need, the steps in order, what it is used for, and one trap.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>In vivo</strong> = in een levende cel of organisme; <strong>in vitro</strong> = in een proefbuis, met <strong>gezuiverde onderdelen</strong>, om de minimale
+set moleculen voor een proces te vinden. <strong>High-throughput</strong> = duizenden metingen tegelijk (sequencing, robots, chips). <strong>Geconserveerd</strong> =
+onveranderd door de evolutie, dus wat je in een bacterie vindt geldt vaak ook voor de mens.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Model organisms: a few species for all of biology (4.1)</h2>
+<p>Millions of species exist, but only a few dozen are used in most research. They are called <strong>model organisms</strong> (modelorganismen). They
+are not chosen because they are economically important or cause disease, but because they are <strong>easy to grow</strong> and still show the general
+molecular processes, which can then be extrapolated (carried over) to other organisms, including humans and their diseases. That works because so
+many molecules and processes are <strong>conserved</strong> by evolution. The syllabus quotes the biologist Jacques Monod:
+<em>"What is true for E. coli is true for the elephant."</em></p>
+
+<h3>What makes a good model organism</h3>
+<ul>
+  <li>simple, well-defined <strong>nutritional requirements</strong> (you know exactly what to feed it) and a known life cycle, so it grows safely in large amounts;</li>
+  <li>a <strong>short generation time</strong> (time from one generation to the next: minutes for a bacterium, weeks for a mouse) and a <strong>small size</strong>;</li>
+  <li>stocks can be <strong>stored</strong> for years (frozen, or as seeds);</li>
+  <li><strong>genetic analysis</strong> is possible: mutations that reduce or change a gene's function can be made, kept, found and characterised;</li>
+  <li>modified genes can be <strong>introduced</strong> into the organism (recombinant DNA technology, page 4.4), so the effect of any mutation can be tested;</li>
+  <li>its <strong>genome is sequenced</strong>, and the research community keeps <strong>databases</strong>: genome sequences, mutant strains and their phenotypes, gene expression, enzyme activities, protein–protein interactions.</li>
+</ul>
+<p>One warning from the syllabus: the <strong>naming rules for genes and proteins differ</strong> from organism to organism (nomenclature = the system of names). The same gene can be written in capitals, italics or lower case depending on the species.</p>
+
+<h3>The main model organisms (Figure 4-3)</h3>
+<table>
+  <tr><th>Organism</th><th>What it is</th><th>Best for</th></tr>
+  <tr><td><em>Escherichia coli</em> (E. coli)</td><td>a gut bacterium (prokaryote: no nucleus); most strains are harmless but similar to bacteria that are not</td><td>DNA replication, transcription and translation were first worked out here: huge numbers of cells, easy to mutate; also the standard host for cloning (page 4.4)</td></tr>
+  <tr><td><em>Saccharomyces cerevisiae</em></td><td>baker's yeast, a single-celled eukaryote (has a nucleus)</td><td>the inner workings of the nucleus, the cell cycle</td></tr>
+  <tr><td><em>Caenorhabditis elegans</em></td><td>a tiny roundworm (nematode, about 1 mm), transparent, with a fixed number of cells</td><td>how a multicellular animal develops from one fertilized egg</td></tr>
+  <tr><td><em>Drosophila melanogaster</em></td><td>the fruit fly</td><td>development, genetics</td></tr>
+  <tr><td><em>Arabidopsis thaliana</em></td><td>a small flowering plant (a weed, not a crop)</td><td>plant biology</td></tr>
+  <tr><td>mouse (<em>Mus musculus</em>)</td><td>a mammal</td><td>anything unique to vertebrates or mammals, including human disease; knockout mice (page 4.6)</td></tr>
+</table>
+<p><strong>How to choose:</strong> it depends on the question and on the tools available. Phenomena unique to eukaryotes must be studied in a eukaryote (yeast for
+the nucleus); how a body is built from an egg needs a higher eukaryote (fly, worm); something unique to mammals needs a mammal (mouse). The syllabus
+says model organisms were covered in chapter 1 (of the lecturer's slides) and refers you to those slides for the details.</p>
+
+<div class="callout key"><span class="tag">The logic in one line</span>
+<p>Conserved processes + an organism that is cheap, fast and genetically tractable (easy to manipulate) = a model. Study the process in the model, then carry the answer over to humans.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Modelorganismen</strong>: enkele tientallen soorten die makkelijk te kweken zijn en waarvan de kennis overdraagbaar is omdat moleculaire processen
+<strong>geconserveerd</strong> zijn ("wat waar is voor E. coli is waar voor de olifant"). Eisen: eenvoudig te voeden, korte generatietijd, klein, bewaarbaar,
+genetisch te manipuleren, genoom gesequenced, databanken. Keuze hangt af van de vraag: bacterie (E. coli) voor replicatie/transcriptie/translatie, gist voor de
+kern, worm en fruitvlieg voor ontwikkeling, muis voor zoogdieren. Let op: naamgeving van genen verschilt per organisme.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Growing single cells: liquid culture and agar plates (4.2, 4.2.1)</h2>
+<p>Biochemistry needs isolated molecules, ideally from a <strong>homogeneous</strong> population of cells (all the same), so that every copy of a protein or DNA
+is identical. You can take proteins from a large uniform organ (a cow's heart), but most foundational experiments used <strong>one cell type grown in culture</strong>:
+cells kept alive and multiplying outside the body, in a flask or on a plate. This is called <strong>cell culture</strong> (celkweek). Growing cells either float in
+liquid (<strong>suspension</strong>) or sit on a solid surface.</p>
+
+<p>Single-celled organisms are the easiest. <em>E. coli</em> and yeast grow in two ways (Figure 4-4):</p>
+<ul>
+  <li><strong>Liquid culture</strong>: a liquid medium (a mixture of nutrients) <strong>buffered</strong> at the right pH (a buffer keeps the acidity constant). As the cells multiply the liquid turns <strong>turbid</strong> (cloudy, troebel): about 10⁸ yeast cells per millilitre, read "ten to the eighth" = 100 million.</li>
+  <li><strong>Solid medium</strong>: the same nutrients with <strong>agar</strong> added. Agar is a polysaccharide (a long sugar chain, BIO01 chapter 2) from algae (seaweed) that is liquid when hot and sets into a gel when cool, like jelly. The cells are spread on the agar surface at <strong>low density</strong> (few cells, far apart). Each cell grows and divides on the spot, and its millions of descendants form a visible dot: a <strong>colony</strong> (kolonie). One colony = the offspring of one cell = genetically identical.</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 620 210" width="620" height="210" xmlns="http://www.w3.org/2000/svg">
+    <!-- tube -->
+    <path d="M60,20 L60,160 A30,30 0 0 0 120,160 L120,20" class="glass"/>
+    <path d="M62,70 L62,160 A28,28 0 0 0 118,160 L118,70 Z" class="broth"/>
+    <circle cx="75" cy="95" r="2.5" class="yeast"/><circle cx="95" cy="110" r="2.5" class="yeast"/><circle cx="108" cy="90" r="2.5" class="yeast"/>
+    <circle cx="70" cy="130" r="2.5" class="yeast"/><circle cx="90" cy="145" r="2.5" class="yeast"/><circle cx="105" cy="130" r="2.5" class="yeast"/>
+    <circle cx="82" cy="165" r="2.5" class="yeast"/><circle cx="100" cy="170" r="2.5" class="yeast"/><circle cx="85" cy="120" r="2.5" class="yeast"/>
+    <text x="90" y="200" class="txt bold">liquid culture</text>
+    <text x="150" y="90" class="txt small left">nutrient broth, buffered pH;</text>
+    <text x="150" y="104" class="txt small left">cells float, liquid turns turbid</text>
+    <text x="150" y="118" class="txt small left">(~10⁸ cells per ml)</text>
+    <!-- plate -->
+    <ellipse cx="450" cy="100" rx="130" ry="75" class="dish"/>
+    <ellipse cx="450" cy="100" rx="122" ry="68" class="agar"/>
+    <circle cx="410" cy="80" r="7" class="col"/><circle cx="470" cy="70" r="6" class="col"/><circle cx="500" cy="105" r="7" class="col"/>
+    <circle cx="430" cy="120" r="6" class="col"/><circle cx="380" cy="105" r="5" class="col"/><circle cx="460" cy="135" r="6" class="col"/>
+    <circle cx="520" cy="80" r="5" class="col"/><circle cx="395" cy="135" r="5" class="col"/>
+    <text x="450" y="200" class="txt bold">agar plate</text>
+    <text x="450" y="22" class="txt small">cells spread far apart; each grows into one colony</text>
+    <path d="M540,130 L560,160" class="path"/>
+    <text x="562" y="174" class="txt small left">1 colony =</text>
+    <text x="562" y="188" class="txt small left">offspring of 1 cell</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-4: yeast in a tube of liquid medium (turbid because of the cells) and on an agar plate, where each cell spread at low density grows into a single colony of millions of identical cells.</figcaption>
+</figure>
+
+<p><strong>Why culture is useful:</strong> the conditions are under your control. You can bubble air through the liquid or shake it (more oxygen), grow the cells with
+no oxygen at all, change the temperature, or change the food source. Bacteria, algae, fungi and some archaea can all be grown this way.</p>
+<p><strong>The limit:</strong> many organisms (those from unusual environments, even some soil organisms) <strong>cannot be grown</strong> in the laboratory, because nobody
+knows which conditions they need. So our biochemical knowledge is <strong>biased</strong> towards culturable organisms. Information about the non-culturable ones now comes
+from <strong>sequencing their genomes</strong> directly (metagenomics, page 4.11).</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Celkweek</strong> = cellen buiten het lichaam laten groeien, zodat je zuivere moleculen uit één homogeen celtype haalt. Eencelligen (E. coli, gist) groeien in
+<strong>vloeibaar medium</strong> (gebufferde voedingsoplossing, wordt troebel, ~10⁸ cellen/ml) of op een <strong>agarplaat</strong> (agar = gel uit zeewier). Dun uitgespreid groeit
+elke cel uit tot één <strong>kolonie</strong> van identieke nakomelingen. Voordeel: alles is te sturen (zuurstof, temperatuur, voedsel). Nadeel: veel organismen zijn niet
+kweekbaar; die kennen we alleen via genoomsequencing.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Cells from a multicellular organism: primary cells and cell lines (4.2.2)</h2>
+<p>Cells from an animal can also be cultured, but it takes more care. You start with a piece of tissue and <strong>dissociate</strong> it (break it up into single cells).
+These freshly isolated cells are <strong>primary cells</strong>. They are grown in a plastic flask or plate (Figure 4-5) under conditions that let them
+<strong>adhere</strong> (stick) to the surface; some cell types, such as blood cells, can be grown floating in liquid for a short time. The medium is often pink because of a pH indicator dye (a dye whose colour shows the acidity).</p>
+
+<h3>Why primary cells stop growing</h3>
+<ol>
+  <li><strong>Contact inhibition</strong> (contactinhibitie): when cells on a solid surface touch each other, the contact triggers a cell-cycle arrest (they stop dividing; cell cycle = BIO01 chapter 7). So they form one layer, a <strong>monolayer</strong>, and then stop.</li>
+  <li><strong>A limited number of divisions</strong>: most primary cells can divide only a fixed number of times. The main reason is <strong>telomere shortening</strong>. Reminder from BIO01 chapter 4: a telomere is the repeated DNA at the end of a chromosome; it gets a little shorter at every division, because DNA polymerase cannot copy the very end. When the telomeres become too short the cell enters <strong>senescence</strong> (senescentie, "ageing": a permanent stop of division). The enzyme <strong>telomerase</strong> can rebuild telomeres, but most normal body cells do not make it.</li>
+</ol>
+
+<h3>Cell lines: cells that never stop</h3>
+<p>To avoid these limits, researchers often use special strains of cells that <strong>bypass senescence</strong>: <strong>cell lines</strong> (cellijnen). They are usually derived from
+<strong>tumours</strong>; such cells actively express telomerase and have other genetic changes that remove the normal brakes on division (chapter 2 explains why cancer
+cells behave like this). Cells can also be made to grow continuously by <strong>infecting them with a cancer-causing virus</strong>. The syllabus (Figure 4-6) lists
+commonly used cell lines; they have been central to the study of eukaryotic cells.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 640 190" width="640" height="190" xmlns="http://www.w3.org/2000/svg">
+    <!-- normal: monolayer -->
+    <rect x="30" y="110" width="250" height="8" class="dish"/>
+    <g>
+      <ellipse cx="50" cy="100" rx="16" ry="9" class="cl"/><ellipse cx="82" cy="100" rx="16" ry="9" class="cl"/><ellipse cx="114" cy="100" rx="16" ry="9" class="cl"/>
+      <ellipse cx="146" cy="100" rx="16" ry="9" class="cl"/><ellipse cx="178" cy="100" rx="16" ry="9" class="cl"/><ellipse cx="210" cy="100" rx="16" ry="9" class="cl"/>
+      <ellipse cx="242" cy="100" rx="16" ry="9" class="cl"/>
+    </g>
+    <text x="155" y="50" class="txt bold">normal primary cells</text>
+    <text x="155" y="68" class="txt small">one layer; they touch → stop dividing</text>
+    <text x="155" y="140" class="txt small">contact inhibition; after 20–50 divisions: senescence</text>
+    <text x="155" y="156" class="txt small muted">(telomeres too short, no telomerase)</text>
+    <!-- cell line: piling up -->
+    <rect x="360" y="110" width="250" height="8" class="dish"/>
+    <g>
+      <ellipse cx="380" cy="100" rx="16" ry="9" class="cl pile"/><ellipse cx="412" cy="100" rx="16" ry="9" class="cl pile"/><ellipse cx="444" cy="100" rx="16" ry="9" class="cl pile"/>
+      <ellipse cx="476" cy="100" rx="16" ry="9" class="cl pile"/><ellipse cx="508" cy="100" rx="16" ry="9" class="cl pile"/><ellipse cx="540" cy="100" rx="16" ry="9" class="cl pile"/>
+      <ellipse cx="572" cy="100" rx="16" ry="9" class="cl pile"/>
+      <ellipse cx="396" cy="84" rx="16" ry="9" class="cl pile"/><ellipse cx="428" cy="84" rx="16" ry="9" class="cl pile"/><ellipse cx="492" cy="84" rx="16" ry="9" class="cl pile"/>
+      <ellipse cx="524" cy="84" rx="16" ry="9" class="cl pile"/><ellipse cx="556" cy="84" rx="16" ry="9" class="cl pile"/>
+      <ellipse cx="412" cy="68" rx="16" ry="9" class="cl pile"/><ellipse cx="508" cy="68" rx="16" ry="9" class="cl pile"/><ellipse cx="540" cy="68" rx="16" ry="9" class="cl pile"/>
+    </g>
+    <text x="485" y="30" class="txt bold">cell line (from a tumour)</text>
+    <text x="485" y="48" class="txt small">keeps dividing, piles up in layers</text>
+    <text x="485" y="140" class="txt small">no contact inhibition; telomerase on → no senescence</text>
+    <text x="485" y="156" class="txt small muted">(immortal, but changed and may carry new mutations)</text>
+    <text x="320" y="180" class="txt muted">grey bar = the plastic surface of the flask</text>
+  </svg>
+  <figcaption>Primary cells (blue) grow as a single layer and stop; a cell line (red) ignores contact and keeps growing.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Caution with cell lines (the syllabus insists on this)</span>
+<ul>
+  <li>The very changes that let them grow forever also make them <strong>different from cells in a real tissue</strong>.</li>
+  <li>While they are kept in culture their genomes <strong>acquire new mutations or rearrangements</strong>.</li>
+  <li>Cell lines have been <strong>mixed up</strong> when passed between laboratories, so the cells you receive may not be what the label says.</li>
+</ul>
+<p>So: be vigilant about which cells you have, and remember that results may not hold for intact tissue.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Primaire cellen</strong> komen vers uit een weefsel (losgemaakt), hechten aan plastic en groeien in één laag. Ze stoppen door <strong>contactinhibitie</strong>
+(cellen raken elkaar → celcyclus stopt) en na een beperkt aantal delingen door <strong>telomeerverkorting</strong> → <strong>senescentie</strong> (geen telomerase).
+<strong>Cellijnen</strong> (meestal uit tumoren, of via een kankervirus) maken telomerase, missen de remmen en delen eindeloos. Let op: ze verschillen van echt
+weefsel, krijgen nieuwe mutaties en worden soms verwisseld.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>in vivo / in vitro</td><td>in a living organism / in a test tube with purified components</td></tr>
+  <tr><td>purified components</td><td>molecules isolated from cells and cleaned, used to rebuild a process in a tube</td></tr>
+  <tr><td>minimal requirements</td><td>the smallest set of molecules that is enough for a process to run</td></tr>
+  <tr><td>high-throughput</td><td>thousands of measurements at once</td></tr>
+  <tr><td>conserved</td><td>unchanged by evolution, so the same in many species</td></tr>
+  <tr><td>model organism</td><td>an easy-to-grow species used to study general processes that apply to others</td></tr>
+  <tr><td>generation time</td><td>time from one generation of cells or organisms to the next</td></tr>
+  <tr><td>genetic analysis / genetically tractable</td><td>making, keeping and studying mutants is possible</td></tr>
+  <tr><td>nomenclature</td><td>the naming system for genes and proteins; differs per organism</td></tr>
+  <tr><td>extrapolate</td><td>carry a result over to a case you did not test (another organism)</td></tr>
+  <tr><td>cell culture</td><td>growing cells outside the body, in liquid or on a surface</td></tr>
+  <tr><td>homogeneous population</td><td>cells that are all the same type</td></tr>
+  <tr><td>medium</td><td>the nutrient mixture cells grow in; buffered = kept at a constant pH</td></tr>
+  <tr><td>turbid</td><td>cloudy, because of the many cells</td></tr>
+  <tr><td>agar</td><td>sugar polymer from algae; liquid when hot, a gel when cool; solid medium</td></tr>
+  <tr><td>colony</td><td>a visible dot of millions of identical cells, grown from one cell on a plate</td></tr>
+  <tr><td>primary cells</td><td>cells freshly dissociated from a tissue</td></tr>
+  <tr><td>adhere</td><td>stick to the surface of the flask</td></tr>
+  <tr><td>contact inhibition</td><td>cells that touch each other stop dividing; gives a monolayer</td></tr>
+  <tr><td>telomere, telomerase</td><td>the end of a chromosome, shortened at each division; the enzyme that can rebuild it (BIO01 ch 4)</td></tr>
+  <tr><td>senescence</td><td>a permanent stop of cell division, e.g. when telomeres are too short</td></tr>
+  <tr><td>cell line</td><td>cells that bypass senescence and divide indefinitely, usually from a tumour</td></tr>
+  <tr><td>pH indicator dye</td><td>a dye whose colour shows the acidity (the pink medium)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objective of the chapter: "The student describes the principle, methodology and applications of different forms of nucleic acid based technologies" and "utilizes fundamental concepts ... to solve problems". This page is the groundwork; the syllabus says model organisms themselves were covered in the lecturer's chapter 1 slides.</p>
+<ol>
+  <li>Explain in vivo versus in vitro, and why in vitro work with purified components tells you the minimal requirements of a process.</li>
+  <li>Give the properties of a good model organism and name the main ones with what each is used for.</li>
+  <li>Explain why results in E. coli can be carried over to humans (conservation).</li>
+  <li>Describe liquid culture and agar plates, and what a colony is.</li>
+  <li>Explain why primary cells stop dividing (contact inhibition, telomere shortening, senescence) and how cell lines escape this (telomerase, tumour origin, cancer virus).</li>
+  <li>List the three cautions about cell lines.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What does "in vitro" mean, and what is the point of such experiments?</dt>
+  <dd>In glass: a process rebuilt in a test tube from purified components. It shows the minimal set of molecules needed and allows precise, quantitative measurements. Its limit: a tube is not a cell.</dd>
+
+  <dt>Why can a result from a bacterium tell us something about humans?</dt>
+  <dd>Because core molecular processes are conserved: they were inherited from a common ancestor and have changed little. "What is true for E. coli is true for the elephant."</dd>
+
+  <dt>Name five properties of a good model organism.</dt>
+  <dd>Simple, defined nutritional needs and a known life cycle; short generation time; small size; stocks can be stored; genetic analysis and introduction of modified genes are possible; a sequenced genome with community databases.</dd>
+
+  <dt>Which model organism would you choose to study (a) DNA replication, (b) the nucleus, (c) embryonic development, (d) a human disease of mammals?</dt>
+  <dd>(a) E. coli, a bacterium; (b) yeast, a single-celled eukaryote; (c) the fruit fly or the roundworm C. elegans; (d) the mouse.</dd>
+
+  <dt>What is a colony on an agar plate?</dt>
+  <dd>A visible spot of millions of cells that all descend from one cell that landed there, so they are genetically identical.</dd>
+
+  <dt>Why is our knowledge of biochemistry biased?</dt>
+  <dd>Because it comes mostly from organisms that can be grown in culture. Many organisms cannot be cultured; for those, information now comes from sequencing their genomes.</dd>
+
+  <dt>What are primary cells and why do they stop dividing?</dt>
+  <dd>Cells freshly dissociated from a tissue. They stop through contact inhibition (touching cells arrest the cell cycle, giving a monolayer) and through telomere shortening, which after a limited number of divisions causes senescence.</dd>
+
+  <dt>What is a cell line and how does it escape senescence?</dt>
+  <dd>A strain of cells that divides indefinitely. Usually from a tumour: it expresses telomerase and has lost the normal brakes on division. Cells can also be immortalised by infection with a cancer-causing virus.</dd>
+
+  <dt>Give three reasons for caution when using cell lines.</dt>
+  <dd>They differ in fundamental ways from cells in tissue; their genomes acquire mutations and rearrangements in culture; cell lines have been mixed up between laboratories.</dd>
+
+  <dt>Why is the medium in a flask of mammalian cells pink?</dt>
+  <dd>It contains a pH indicator dye; the colour shows whether the acidity is still right.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>In vivo</strong> = in the living organism; <strong>in vitro</strong> = in a tube with <strong>purified components</strong> → minimal requirements.</li>
+  <li>Model organisms work because processes are <strong>conserved</strong>: "what is true for E. coli is true for the elephant".</li>
+  <li>Good model: easy to feed, <strong>short generation time</strong>, small, storable, <strong>genetics possible</strong>, genome sequenced, databases.</li>
+  <li><strong>E. coli</strong> bacterium (replication, transcription, translation; cloning host) · <strong>yeast</strong> (nucleus) · <strong>C. elegans</strong> worm and <strong>Drosophila</strong> fly (development) · <strong>Arabidopsis</strong> (plant) · <strong>mouse</strong> (mammal).</li>
+  <li>Gene naming (nomenclature) differs per organism.</li>
+  <li><strong>Liquid culture</strong>: buffered broth, turbid, ~10⁸ cells/ml. <strong>Agar plate</strong>: one cell → one <strong>colony</strong>.</li>
+  <li>Many organisms are <strong>not culturable</strong> → known only from genome sequencing.</li>
+  <li><strong>Primary cells</strong> stop by <strong>contact inhibition</strong> (monolayer) and <strong>telomere shortening → senescence</strong>.</li>
+  <li><strong>Cell lines</strong>: from tumours, <strong>telomerase on</strong>, divide forever; or immortalised by a cancer virus.</li>
+  <li>Cell-line cautions: differ from tissue, gain mutations, get mixed up.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>A researcher mixes purified RNA polymerase, DNA and nucleotides in a tube and gets mRNA. Is this in vivo or in vitro, and what has she learned?
+    <details><summary>Answer</summary><div class="ans"><p><strong>In vitro</strong> (in a tube, purified components). She has learned the <strong>minimal requirements</strong> for making mRNA: these components alone are enough.</p></div></details></li>
+  <li>Which is NOT a reason to pick an organism as a model?
+    <ul class="opts"><li data-l="a">short generation time</li><li data-l="b">it causes an important human disease</li><li data-l="c">its genome is sequenced</li><li data-l="d">mutants can be made and kept</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Models are chosen for practicality and general insight, not because they are medically or economically important. (Most E. coli strains are not pathogens.)</p></div></details></li>
+  <li>Why was so much about DNA replication learned first in bacteria?
+    <details><summary>Answer</summary><div class="ans"><p>Bacteria were among the first models: huge numbers of cells are easy to obtain and easy to mutate. Later it turned out that much of the process is <strong>universal</strong>, which validated the choice.</p></div></details></li>
+  <li>You want to study how a fertilized egg becomes an animal with organs. Which organism?
+    <details><summary>Answer</summary><div class="ans"><p>A higher eukaryote such as the <strong>fruit fly</strong> or the roundworm <strong>C. elegans</strong>. Yeast is single-celled and has no development of a body; E. coli is not even a eukaryote.</p></div></details></li>
+  <li>True or false: "A gene has the same written name in every model organism."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> The syllabus warns that the nomenclature for gene and protein names varies from organism to organism.</p></div></details></li>
+  <li>What is agar and why is it used?
+    <details><summary>Answer</summary><div class="ans"><p>A polysaccharide from algae that is liquid when hot and sets as a gel when cool. Added to medium it gives a <strong>solid surface</strong> on which spread-out cells grow into separate colonies.</p></div></details></li>
+  <li>A plate shows 200 colonies. How many cells were spread on it, roughly, and why?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>200</strong>: at low density each cell grows into exactly one colony, so colonies count the original living cells.</p></div></details></li>
+  <li>Name two conditions you can control in a liquid culture.
+    <details><summary>Answer</summary><div class="ans"><p>Oxygen supply (bubbling air or shaking, or no oxygen at all), temperature, and the nutrient source.</p></div></details></li>
+  <li>What is contact inhibition?
+    <details><summary>Answer</summary><div class="ans"><p>When cultured cells on a surface touch each other, the contact triggers a <strong>cell-cycle arrest</strong>: they stop dividing. The result is a single layer (monolayer).</p></div></details></li>
+  <li>Why do primary cells stop dividing after a limited number of divisions, even with space to grow?
+    <details><summary>Answer</summary><div class="ans"><p>Their <strong>telomeres shorten</strong> at every division (no telomerase in most body cells). Very short telomeres trigger <strong>senescence</strong>, a permanent stop.</p></div></details></li>
+  <li>Which property do tumour-derived cell lines have that lets them divide indefinitely?
+    <ul class="opts"><li data-l="a">they have no DNA</li><li data-l="b">they actively express telomerase and have lost normal brakes on division</li><li data-l="c">they are larger</li><li data-l="d">they do not need nutrients</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Telomerase keeps the telomeres long, and other genetic changes remove the normal inhibitions on continued division.</p></div></details></li>
+  <li>Give a second way, besides using tumour cells, to make cells grow continuously in culture.
+    <details><summary>Answer</summary><div class="ans"><p>Infect them with a <strong>cancer-causing virus</strong>, which switches off the normal controls on division.</p></div></details></li>
+  <li>A laboratory receives a cell line from a colleague. Name two things that can go wrong with it.
+    <details><summary>Answer</summary><div class="ans"><p>It may <strong>not be the cell line it is labelled as</strong> (mix-ups when distributing lines), and it may have <strong>acquired mutations or rearrangements</strong> during culture. Also, in general, it differs from cells in intact tissue.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="index.html">← Chapter 4 index</a><a href="index.html">Chapter 4 index</a><a href="4.02_stem_cells_and_virus_culture.html">4.2 Stem cells and virus culture →</a></nav>
+</main>
+</body>
+</html>

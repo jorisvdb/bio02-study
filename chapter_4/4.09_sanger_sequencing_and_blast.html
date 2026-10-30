@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.9 Sanger sequencing and BLAST</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .lane { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
+  .band { stroke-width: 5; stroke-linecap: round; }
+  .band.a { stroke: var(--c-Cl); } .band.c { stroke: var(--c-N); } .band.g { stroke: var(--c-C); } .band.t { stroke: var(--c-O); }
+  .peak { fill: none; stroke-width: 2.5; }
+  .peak.a { stroke: var(--c-Cl); } .peak.c { stroke: var(--c-N); } .peak.g { stroke: var(--c-C); } .peak.t { stroke: var(--c-O); }
+  .sugar { fill: var(--panel); stroke: var(--fg); stroke-width: 1.5; }
+  .ok { fill: var(--hl-polar); stroke: var(--c-Cl); stroke-width: 1.5; }
+  .no { fill: var(--hl-acid); stroke: var(--c-O); stroke-width: 1.5; }
+  .mono { font-family: ui-monospace, Consolas, monospace; font-size: 14px; fill: var(--fg); }
+  .mono.hl { fill: var(--c-O); font-weight: 700; }
+  .mono.sim { fill: var(--accent); font-weight: 700; }
+  table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.08_gels_and_mass_spectrometry.html">← 4.8 Gels and mass spectrometry</a><a href="index.html">Chapter 4 index</a><a href="4.10_genome_sequencing.html">4.10 Genome sequencing →</a></nav>
+
+<h1>4.9 Reading the letters of DNA: Sanger sequencing, and BLAST to compare sequences</h1>
+<p class="lede">In one sentence: Sanger sequencing reads the order of the bases in a piece of DNA by making copies that stop at random at one kind of base,
+and BLAST then compares that sequence with all known sequences to guess what the gene does.</p>
+
+<p>The previous pages were about separating and identifying molecules. This page is about determining the <strong>composition</strong> of DNA: its
+<strong>sequence</strong>, the exact order of the four letters A, C, G and T. Sanger sequencing, invented in the 1970s, was the method for decades and is
+still used for single genes. Page 4.10 explains the fast "next generation" methods that followed. The second half of this page is about what you do
+with a sequence once you have it: compare it with a database using <strong>BLAST</strong>. The exam objective for this chapter is that you can describe
+the <em>principle, methodology and applications</em> of sequencing technologies, so for each method you should be able to say what you need, the steps, and what it is for.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="tech">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>nucleotide</td><td>one building block of DNA: a sugar (deoxyribose), a phosphate and a base (A, C, G or T)</td></tr>
+  <tr><td>dNTP</td><td>a free nucleotide with three phosphates, the form DNA polymerase uses as building material; read "d-N-T-P" (deoxy-nucleoside tri-phosphate); dATP, dCTP, dGTP, dTTP are the four kinds</td></tr>
+  <tr><td>3′ OH ("three prime O-H")</td><td>the hydroxyl group (an oxygen with a hydrogen) on carbon number 3 of the sugar. DNA polymerase can only attach the next nucleotide <em>to this OH</em>; that is why a strand grows 5′ → 3′ (BIO01 chapter 4)</td></tr>
+  <tr><td>primer</td><td>a short piece of DNA (about 20 letters) that pairs with the template and gives the polymerase a 3′ OH to start from</td></tr>
+  <tr><td>template</td><td>the strand that is read; the new strand is its complement (A opposite T, C opposite G) (mal)</td></tr>
+  <tr><td>anneal / hybridise</td><td>two complementary single strands pair up and stick together by base pairing</td></tr>
+  <tr><td>gel electrophoresis</td><td>page 4.8: DNA is negative, so in an electric field it moves through a gel towards the positive pole; short fragments move faster than long ones</td></tr>
+  <tr><td>homology, homolog</td><td>two genes (or proteins) that descend from one common ancestor gene (BIO01 chapter 1)</td></tr>
+  <tr><td>domain</td><td>a part of a protein that folds on its own and has its own job (BIO01 chapter 2)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: een <strong>dNTP</strong> is een losse nucleotide met drie fosfaten, het bouwmateriaal van DNA-polymerase. Het enzym kan alleen een
+nucleotide vastmaken aan een vrije <strong>3′ OH</strong>-groep; daarom is een <strong>primer</strong> nodig en groeit de streng 5′ → 3′. In een <strong>gel</strong>
+lopen korte stukken DNA sneller dan lange. <strong>Homologen</strong> stammen af van één voorouder-gen; een <strong>domein</strong> is een zelfstandig vouwend stuk van een eiwit.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. The trick: a nucleotide that stops the chain (4.8.2, Figure 4-27)</h2>
+<p><strong>Begin state:</strong> we have many identical copies of a DNA fragment (for example after PCR, page 4.3) and we want to know the order of its bases.
+<strong>The idea:</strong> let DNA polymerase copy the fragment, but mix in a few "poisoned" building blocks that stop the copy. If the copies stop at every position
+where, say, an A belongs, the <em>lengths</em> of the stopped copies tell us where the A's are.</p>
+<p>The poisoned building block is a <strong>dideoxynucleotide</strong>, written <strong>ddNTP</strong> (read "d-d-N-T-P"; "dideoxy" = two oxygens missing). A normal dNTP
+has one oxygen missing from its sugar compared with the RNA sugar (that is why it is "deoxy"). A ddNTP also lacks the oxygen of the <strong>3′ OH</strong>: on carbon 3 it has only an
+H instead of an OH. DNA polymerase can still build a ddNTP into the growing strand, but after that there is <strong>no 3′ OH</strong> to attach the next nucleotide to.
+The chain is terminated at that point, for good. That is why the method is called <strong>chain-termination sequencing</strong> (Sanger sequencing, after Frederick Sanger who invented it).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 760 200" width="760" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- dNTP -->
+    <text x="180" y="18" class="txt bold">normal dNTP</text>
+    <path d="M150,60 L185,45 L220,60 L208,98 L162,98 Z" class="sugar"/>
+    <text x="185" y="78" class="txt small">sugar</text>
+    <text x="185" y="40" class="txt small">base (A, C, G or T)</text>
+    <path d="M130,70 L150,62" class="path"/><text x="105" y="74" class="txt small">5′ phosphates</text>
+    <rect x="196" y="104" width="60" height="22" rx="6" class="ok"/><text x="226" y="119" class="txt small bold">3′ OH</text>
+    <path d="M226,128 L226,150" class="path accent" marker-end="url(#ar9)"/>
+    <text x="226" y="168" class="txt small">next nucleotide can be attached</text>
+    <text x="226" y="184" class="txt small muted">chain keeps growing</text>
+    <!-- ddNTP -->
+    <text x="560" y="18" class="txt bold">ddNTP (dideoxy)</text>
+    <path d="M530,60 L565,45 L600,60 L588,98 L542,98 Z" class="sugar"/>
+    <text x="565" y="78" class="txt small">sugar</text>
+    <text x="565" y="40" class="txt small">base (A, C, G or T)</text>
+    <path d="M510,70 L530,62" class="path"/><text x="485" y="74" class="txt small">5′ phosphates</text>
+    <rect x="576" y="104" width="60" height="22" rx="6" class="no"/><text x="606" y="119" class="txt small bold">3′ H</text>
+    <path d="M606,128 L606,150" class="path" marker-end="url(#ar9)"/>
+    <text x="606" y="168" class="txt small">nothing can be attached here</text>
+    <text x="606" y="184" class="txt small muted">chain terminated</text>
+    <text x="380" y="110" class="txt muted">the only difference</text>
+    <path d="M300,110 L336,110" class="path"/><path d="M424,110 L460,110" class="path"/>
+  </svg>
+  <figcaption>Syllabus Figure 4-27, schematic. Drawn as boxes, not atom by atom: the sugar is a pentagon, and the only thing that matters is the group on its
+  carbon number 3. With OH there the polymerase can add the next nucleotide; with only H it cannot.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Must remember</span>
+<p>A ddNTP <strong>can be built in</strong> (it still has its 5′ phosphates) but <strong>nothing can be built onto it</strong> (no 3′ OH). One ddNTP = one stop. The
+polymerase picks a normal dNTP or a ddNTP by chance, so in a big population of copies the stops happen at <em>every</em> possible position of that base.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>ddNTP</strong> (dideoxynucleotide) mist de <strong>3′ OH</strong>-groep: er zit alleen een H op koolstof 3. DNA-polymerase kan hem nog inbouwen, maar
+daarna kan er niets meer aan vast: de keten is <strong>beëindigd</strong> (chain termination). Omdat het enzym per positie toevallig een dNTP of een ddNTP kiest, stoppen
+de kopieën in de hele populatie op <strong>elke</strong> plek waar die base hoort.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. The Sanger reaction, step by step (Figure 4-28)</h2>
+<table class="tech">
+  <tr><th>What you need</th><th>Why</th></tr>
+  <tr><td>template DNA</td><td>many copies of the fragment to read (single-stranded during the reaction)</td></tr>
+  <tr><td>one primer</td><td>pairs just before the region to read; gives the 3′ OH to start</td></tr>
+  <tr><td>DNA polymerase</td><td>the copying enzyme (DNA polymerase I in the syllabus figure; reverse transcriptase if RNA is being read)</td></tr>
+  <tr><td>all four dNTPs</td><td>normal building blocks, in large amounts</td></tr>
+  <tr><td>a <em>small</em> amount of ddNTP</td><td>the stoppers; small so that most positions get a normal dNTP and the copies reach every length</td></tr>
+  <tr><td>a label</td><td>radioactive dNTPs (classic), or fluorescent ddNTPs with a different colour per base (modern); without a label you cannot see the fragments</td></tr>
+</table>
+
+<h3>Classic version: four reactions, four lanes, read by eye</h3>
+<ol>
+  <li>Split the mixture into <strong>four tubes</strong>. Each tube gets all four dNTPs plus a small amount of <strong>one</strong> ddNTP: ddA in the first, ddC in the second, ddG in the third, ddT in the fourth. The dNTP-to-ddNTP ratio is chosen so that the stopper is built in only now and then.</li>
+  <li>The primer anneals and the polymerase extends it. In the ddA tube, every copy stops at some A position, chosen by chance. Together the copies form a <strong>pool of fragments ending at every A</strong>; the same for C, G and T in the other tubes.</li>
+  <li>Run the four tubes in four lanes of a polyacrylamide gel (page 4.8). The fragments sort by length: the <strong>shortest at the bottom</strong>, each next band one nucleotide longer.</li>
+  <li>Make the bands visible (radioactive label: lay a photographic film on the gel, <strong>autoradiography</strong>).</li>
+  <li><strong>Read from the bottom to the top</strong>: the lowest band tells you the first base after the primer, the next band up the second base, and so on. The lane the band is in tells you which letter.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 300" width="860" height="300" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar9b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- gel with 4 lanes -->
+    <text x="150" y="16" class="txt bold">A · gel: four lanes, one ddNTP each</text>
+    <rect x="60" y="28" width="180" height="230" rx="4" class="lane"/>
+    <g class="txt small"><text x="82" y="44">ddA</text><text x="128" y="44">ddC</text><text x="172" y="44">ddG</text><text x="218" y="44">ddT</text></g>
+    <!-- sequence read bottom->top: G A T C C A G T  (8 bands, bottom y=245 step 24) -->
+    <line x1="162" y1="245" x2="182" y2="245" class="band g"/>
+    <line x1="72" y1="221" x2="92" y2="221" class="band a"/>
+    <line x1="208" y1="197" x2="228" y2="197" class="band t"/>
+    <line x1="118" y1="173" x2="138" y2="173" class="band c"/>
+    <line x1="118" y1="149" x2="138" y2="149" class="band c"/>
+    <line x1="72" y1="125" x2="92" y2="125" class="band a"/>
+    <line x1="162" y1="101" x2="182" y2="101" class="band g"/>
+    <line x1="208" y1="77" x2="228" y2="77" class="band t"/>
+    <path d="M250,250 L250,70" class="path accent" marker-end="url(#ar9b)"/>
+    <text x="258" y="258" class="txt small left">shortest</text>
+    <text x="258" y="64" class="txt small left">longest</text>
+    <text x="300" y="160" class="txt small left">read bottom → top:</text>
+    <text x="300" y="180" class="mono">G A T C C A G T</text>
+    <text x="300" y="200" class="txt small left muted">= the new strand, 5′ → 3′</text>
+    <text x="150" y="282" class="txt small muted">+ pole at the bottom: short fragments run furthest</text>
+    <!-- chromatogram -->
+    <text x="640" y="16" class="txt bold">B · one reaction, four colours: chromatogram</text>
+    <rect x="470" y="28" width="360" height="230" rx="4" class="lane"/>
+    <line x1="490" y1="230" x2="820" y2="230" class="path"/>
+    <path d="M490,230 C500,230 505,120 515,120 C525,120 530,230 540,230" class="peak g"/>
+    <path d="M530,230 C540,230 545,110 555,110 C565,110 570,230 580,230" class="peak a"/>
+    <path d="M570,230 C580,230 585,125 595,125 C605,125 610,230 620,230" class="peak t"/>
+    <path d="M610,230 C620,230 625,115 635,115 C645,115 650,230 660,230" class="peak c"/>
+    <path d="M650,230 C660,230 665,130 675,130 C685,130 690,230 700,230" class="peak c"/>
+    <path d="M690,230 C700,230 705,112 715,112 C725,112 730,230 740,230" class="peak a"/>
+    <path d="M730,230 C740,230 745,122 755,122 C765,122 770,230 780,230" class="peak g"/>
+    <path d="M770,230 C780,230 785,118 795,118 C805,118 810,230 820,230" class="peak t"/>
+    <g class="mono"><text x="515" y="252">G</text><text x="555" y="252">A</text><text x="595" y="252">T</text><text x="635" y="252">C</text><text x="675" y="252">C</text><text x="715" y="252">A</text><text x="755" y="252">G</text><text x="795" y="252">T</text></g>
+    <text x="650" y="282" class="txt small muted">fragments pass a laser one length at a time; the colour of each peak = the last base</text>
+    <text x="650" y="60" class="txt small muted">green A · blue C · black G · red T (colours of this drawing)</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-28 (c) and (d/e). Left: the classic four-lane gel; read upwards, each band one nucleotide longer than the one below. Right: the automated version, where
+  all four ddNTPs are in one tube, each with its own fluorescent colour; a capillary gel sorts the fragments by length and a detector reads the colour of each one as it passes.</figcaption>
+</figure>
+
+<h3>Automated version: one reaction, four colours</h3>
+<p>The modern form uses <strong>fluorescently labelled ddNTPs</strong>: each of the four stoppers carries a dye of a different colour (a <strong>fluorophore</strong>, a molecule that
+glows in a chosen colour when a laser shines on it). Now all four ddNTPs can go into <strong>one</strong> tube, because the colour of a fragment says at which base it stopped.
+The fragments are sorted by <strong>capillary gel electrophoresis</strong>: the same principle as a slab gel, but the gel is inside a thin glass tube (a capillary) and it separates
+one sample at a time. As each fragment passes the laser, its colour is recorded. The output is a <strong>chromatogram</strong>: a row of coloured peaks, one per base, which the
+computer translates into letters. One reaction reads up to about <strong>900 bases</strong>.</p>
+
+<div class="callout key"><span class="tag">Where to use it</span>
+<p>Sanger sequencing is accurate and simple, so it is still the standard for reading <strong>one gene or one PCR product</strong>, or for checking a cloned fragment. For a whole genome
+it is far too slow: one machine reads about 1000 reactions a day, and the first human genome took 100 machines about two years (page 4.10).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Nodig: template, één primer, DNA-polymerase, de vier dNTP's en een <strong>kleine</strong> hoeveelheid ddNTP, plus een label. Klassiek: <strong>vier buisjes</strong>, elk met één
+ddNTP (ddA, ddC, ddG, ddT); elke kopie stopt toevallig op een plek van die base; de fragmenten lopen in <strong>vier banen</strong> van een gel, kortste onderaan; je leest
+<strong>van onder naar boven</strong>. Modern: elke ddNTP heeft een eigen <strong>fluorescente kleur</strong>, alles in één buisje, gesorteerd in een <strong>capillaire gel</strong>, de
+detector leest per fragment de kleur: een <strong>chromatogram</strong> met pieken. Eén reactie leest tot ongeveer 900 basen.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. BLAST: what does this sequence look like? (4.8.3)</h2>
+<p><strong>Begin state:</strong> you have a new sequence (DNA, RNA or protein) and no idea what it does. <strong>The idea:</strong> if it looks like a gene whose job is known, it probably
+does something similar, because the two are <strong>homologs</strong>: they come from one common ancestor gene and kept most of their letters.</p>
+<p>Comparing two sequences letter by letter is called an <strong>alignment</strong> (uitlijning): the sequences are written under each other so that matching positions line up.
+The computer then gives the alignment a <strong>score</strong>: points for identical letters, fewer points for similar ones (for proteins: amino acids with similar properties), and a
+<strong>penalty</strong> (strafpunten) for every <strong>gap</strong> that had to be inserted in one sequence to keep the rest aligned.</p>
+
+<h3>BLAST, the standard program</h3>
+<ul>
+  <li><strong>BLAST</strong> = Basic Local Alignment Search Tool, free at the NCBI website (the US National Center for Biotechnology Information). "Local" means it looks for pieces that match well, not necessarily the whole length.</li>
+  <li>It makes <strong>pairwise</strong> alignments: your <strong>query</strong> (the sequence you ask about) against each sequence in a database, one pair at a time.</li>
+  <li><strong>BLASTN</strong> aligns <strong>DNA</strong> (N = nucleotide); it starts from a string of <strong>11 nucleotides</strong> that matches exactly and then extends outward.</li>
+  <li><strong>BLASTP</strong> aligns <strong>proteins</strong> (P = protein); it starts from a string of <strong>3 amino acids</strong> and then looks in a "window" next to it for more similarity.</li>
+  <li>The result for each hit is a score and an <strong>E value</strong>: the probability that an alignment this good could have appeared <strong>by chance</strong>. <strong>The lower the E value, the better the match</strong> (an E value of 10⁻⁵⁰ is excellent; 1 means "you would expect one such hit by chance").</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 760 150" width="760" height="150" xmlns="http://www.w3.org/2000/svg">
+    <text x="20" y="22" class="txt small left muted">Hermes transposase (housefly) as query, Hobo transposase (fruit fly) as subject; made-up stretch, syllabus Figure 4-29 style</text>
+    <text x="20" y="56" class="mono">Query   9   </text>
+    <g class="mono"><text x="150" y="56">M</text><text x="168" y="56">K</text><text x="186" y="56">L</text><text x="204" y="56">S</text><text x="222" y="56">D</text><text x="240" y="56">E</text><text x="258" y="56">-</text><text x="276" y="56">G</text><text x="294" y="56">R</text><text x="312" y="56">V</text><text x="330" y="56">L</text><text x="348" y="56">P</text></g>
+    <text x="380" y="56" class="mono">20</text>
+    <g class="mono"><text x="150" y="80" class="mono hl">M</text><text x="168" y="80" class="mono hl">K</text><text x="186" y="80" class="mono sim">+</text><text x="204" y="80" class="mono hl">S</text><text x="222" y="80" class="mono sim">+</text><text x="240" y="80" class="mono hl">E</text><text x="276" y="80" class="mono hl">G</text><text x="294" y="80" class="mono sim">+</text><text x="312" y="80" class="mono hl">V</text><text x="330" y="80" class="mono hl">L</text><text x="348" y="80" class="mono hl">P</text></g>
+    <text x="20" y="104" class="mono">Sbjct   57  </text>
+    <g class="mono"><text x="150" y="104">M</text><text x="168" y="104">K</text><text x="186" y="104">I</text><text x="204" y="104">S</text><text x="222" y="104">E</text><text x="240" y="104">E</text><text x="258" y="104">A</text><text x="276" y="104">G</text><text x="294" y="104">K</text><text x="312" y="104">V</text><text x="330" y="104">L</text><text x="348" y="104">P</text></g>
+    <text x="380" y="104" class="mono">69</text>
+    <text x="430" y="52" class="txt small left">letter in the middle row = identical</text>
+    <text x="430" y="70" class="txt small left">+ = similar amino acid (not identical)</text>
+    <text x="430" y="88" class="txt small left">space = different</text>
+    <text x="430" y="106" class="txt small left">- in a row = gap inserted (costs points)</text>
+    <text x="430" y="124" class="txt small left">numbers = position in each protein</text>
+    <text x="20" y="136" class="txt small left muted">Query starts at amino acid 9 of Hermes, Sbjct at 57 of Hobo: the matching region does not need to start at the same place.</text>
+  </svg>
+  <figcaption>How to read a BLASTP output (syllabus Figure 4-29). Query = your sequence, Sbjct (subject) = the database hit. The real Hermes–Hobo alignment is many lines long; this is a short made-up example in the same layout.</figcaption>
+</figure>
+
+<h3>From a match to a function</h3>
+<p>A good hit tells you the two sequences are probably homologs, so they probably do similar things. The similarity may cover the whole protein or only one <strong>domain</strong>,
+for example a <strong>kinase domain</strong> (a kinase is an enzyme that attaches phosphate groups), a <strong>zinc-finger DNA-binding domain</strong> (a small fold held by a zinc ion that
+grips DNA) or a carbohydrate-binding domain. Finding a known domain in an unknown protein is often the first clue to its job. The syllabus example: a search with the
+<strong>Hermes transposase</strong> of the housefly (a transposase is an enzyme that cuts a jumping piece of DNA out and pastes it elsewhere) found the <strong>Hobo transposase</strong> of the fruit fly, an
+<strong>ortholog</strong> (the same gene in another species, BIO01 chapter 1).</p>
+
+<div class="callout warn"><span class="tag">Be critical</span>
+<p>Similar is not the same. A protein can share a whole domain, even the same 3D shape, with an enzyme and still be inactive, because one or two <strong>active-site</strong> amino acids (the ones that
+do the chemistry) are substituted. So "BLAST says it looks like a kinase" is a hypothesis to test, not a conclusion. There are many other programs for domains, modification sites and
+interaction domains, and more and more database entries also include structural information.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Alignment</strong> = twee sequenties letter voor letter onder elkaar leggen; de <strong>score</strong> telt identieke en gelijkaardige letters en geeft <strong>strafpunten per gap</strong>.
+<strong>BLAST</strong> (NCBI) vergelijkt je <strong>query</strong> paarsgewijs met elke sequentie in een databank: <strong>BLASTN</strong> voor DNA (start met 11 nucleotiden), <strong>BLASTP</strong> voor eiwitten
+(start met 3 aminozuren). De <strong>E-waarde</strong> = de kans dat zo'n match toeval is: <strong>hoe lager, hoe beter</strong>. Een goede hit betekent waarschijnlijk <strong>homologie</strong> en dus een
+gelijkaardige functie, vaak via een herkenbaar <strong>domein</strong> (kinase, zinkvinger). Blijf kritisch: één ander aminozuur in de actieve plaats kan de functie wegnemen.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. The two techniques side by side</h2>
+<table class="tech">
+  <tr><th></th><th>Sanger sequencing</th><th>BLAST</th></tr>
+  <tr><td>question</td><td>what is the order of the bases in this DNA?</td><td>what does this sequence resemble, and what might it do?</td></tr>
+  <tr><td>principle</td><td>copies stopped at random by ddNTPs; length + label of each stopped copy = position + identity of a base</td><td>align the query with every database sequence; score similarity, penalise gaps; E value for chance</td></tr>
+  <tr><td>you need</td><td>template, primer, polymerase, dNTPs, a little ddNTP, a label, a gel or capillary</td><td>a sequence and a computer with internet (NCBI)</td></tr>
+  <tr><td>output</td><td>a sequence of up to ~900 bases (gel ladder or chromatogram)</td><td>a list of hits with alignments, scores and E values</td></tr>
+  <tr><td>used for</td><td>reading one gene, one PCR product, checking a clone; the first genomes</td><td>finding homologs and orthologs, recognising domains, guessing function</td></tr>
+  <tr><td>trap</td><td>the ddNTP can be built in but nothing after it; read the gel bottom → top</td><td>low E value = good; similar sequence ≠ same activity</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Sanger beantwoordt "welke letters?", BLAST beantwoordt "waarop lijkt dit en wat doet het misschien?". Onthoud de valkuilen: de ddNTP wordt nog ingebouwd maar er komt niets
+meer achter; lezen van onder naar boven; en bij BLAST is een <strong>lage</strong> E-waarde goed.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>sequence, sequencing</td><td>the order of the bases (or amino acids); determining that order</td></tr>
+  <tr><td>Sanger / chain-termination / dideoxy sequencing</td><td>three names for the same method: copies stopped by ddNTPs, sorted by length</td></tr>
+  <tr><td>dNTP</td><td>normal nucleotide building block with three phosphates and a 3′ OH</td></tr>
+  <tr><td>ddNTP (dideoxynucleotide)</td><td>building block without 3′ OH: can be added, but ends the chain</td></tr>
+  <tr><td>primer extension</td><td>the polymerase lengthens the primer along the template</td></tr>
+  <tr><td>dNTP-to-ddNTP ratio</td><td>many normal blocks, few stoppers, so copies of every length are made</td></tr>
+  <tr><td>autoradiography</td><td>a photographic film darkened by radioactive bands in the gel</td></tr>
+  <tr><td>fluorophore / fluorescent label</td><td>a dye molecule that glows in its own colour under a laser</td></tr>
+  <tr><td>capillary gel electrophoresis</td><td>gel inside a thin tube; separates one sample by length; fragments pass a detector</td></tr>
+  <tr><td>chromatogram</td><td>the row of coloured peaks, one per base, that the machine produces</td></tr>
+  <tr><td>alignment</td><td>two sequences written under each other so that matching positions line up</td></tr>
+  <tr><td>gap, gap penalty</td><td>a space inserted to keep the rest aligned; it lowers the score</td></tr>
+  <tr><td>BLAST, BLASTN, BLASTP</td><td>the NCBI search tool; the DNA version (11-nucleotide seed) and the protein version (3-amino-acid seed)</td></tr>
+  <tr><td>query, subject</td><td>your sequence; the database sequence it is compared with</td></tr>
+  <tr><td>E value</td><td>probability that the alignment is a chance match; lower = better</td></tr>
+  <tr><td>homolog, ortholog</td><td>genes from one ancestor; the same gene in two species</td></tr>
+  <tr><td>domain (kinase, zinc finger)</td><td>a self-folding part of a protein with its own job; recognisable in alignments</td></tr>
+  <tr><td>transposase</td><td>enzyme that moves a jumping piece of DNA (Hermes in the housefly, Hobo in the fruit fly)</td></tr>
+  <tr><td>active site</td><td>the few amino acids of an enzyme that do the chemistry</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes the principle, methodology and applications of ... sequencing technologies" and "utilizes fundamental concepts of nucleic acid-based technologies ... to solve problems".</p>
+<ol>
+  <li>Explain why a ddNTP stops the chain (no 3′ OH) and why the polymerase can still build it in.</li>
+  <li>List what a Sanger reaction needs: template, primer, polymerase, four dNTPs, a little of one ddNTP, a label.</li>
+  <li>Describe the classic four-lane gel and read a sequence from it (bottom = shortest = first base after the primer).</li>
+  <li>Describe the automated version: four fluorescent ddNTPs in one reaction, capillary electrophoresis, chromatogram, about 900 bases per read.</li>
+  <li>Say what an alignment, a score, a gap penalty and an E value are, and that a lower E value means a better match.</li>
+  <li>Tell BLASTN (DNA, 11-nucleotide start) from BLASTP (protein, 3-amino-acid start).</li>
+  <li>Explain how homology and domains are used to guess the function of an unknown gene, and why that guess must be tested.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is a dideoxynucleotide and why does it terminate DNA synthesis?</dt>
+  <dd>A nucleotide whose sugar has no 3′ OH group (only an H on carbon 3). DNA polymerase can add it to the chain, but the next nucleotide must be attached to a 3′ OH, and there is none, so the chain ends there.</dd>
+
+  <dt>Why is only a small amount of ddNTP added?</dt>
+  <dd>So that at each position most copies get a normal dNTP and keep growing, while a few stop. Across the whole population the stops then occur at every position of that base, giving fragments of every length.</dd>
+
+  <dt>What do the four tubes of a classic Sanger reaction contain?</dt>
+  <dd>Each tube has template, primer, polymerase and all four dNTPs; tube 1 also has a little ddATP, tube 2 ddCTP, tube 3 ddGTP, tube 4 ddTTP. Each tube produces fragments that all end at one kind of base.</dd>
+
+  <dt>How do you read the sequence from the gel?</dt>
+  <dd>From the bottom to the top. The shortest fragment (lowest band) ends at the first base after the primer; each band above it is one nucleotide longer. The lane of the band gives the letter. The result is the newly made strand, 5′ → 3′.</dd>
+
+  <dt>How does the automated method avoid four separate lanes?</dt>
+  <dd>Each ddNTP carries a different fluorescent colour, so all four can be in one reaction. Capillary gel electrophoresis sorts the fragments by length, and a detector reads the colour of each fragment as it passes the laser; the output is a chromatogram.</dd>
+
+  <dt>How many bases can one Sanger reaction read?</dt>
+  <dd>Up to about 900 bases. For a whole genome many thousands or millions of reads are needed (page 4.10).</dd>
+
+  <dt>What is an alignment, and how is it scored?</dt>
+  <dd>Two sequences laid under each other so that matching positions line up. The score rewards identical and similar residues and subtracts a penalty for each gap inserted; it also grows with the length of the similar region.</dd>
+
+  <dt>What is the E value, and is a high or a low value good?</dt>
+  <dd>The probability that an alignment this good would occur by chance. A low E value is good: the match is unlikely to be accidental, so the sequences are probably homologs.</dd>
+
+  <dt>What is the difference between BLASTN and BLASTP?</dt>
+  <dd>BLASTN aligns DNA sequences and starts from an exactly matching string of 11 nucleotides; BLASTP aligns protein sequences and starts from a string of 3 amino acids, then widens the search in a window next to it.</dd>
+
+  <dt>How can an alignment suggest the function of an unknown gene?</dt>
+  <dd>Homologs share an ancestor and usually a function. If the unknown protein aligns with a protein of known function, or contains a known domain (kinase, zinc finger, carbohydrate-binding), that is a clue to what it does.</dd>
+
+  <dt>Why must BLAST results be interpreted with care?</dt>
+  <dd>A protein can resemble an enzyme over a whole domain and still lack its activity if key active-site amino acids are substituted. Similarity suggests, it does not prove.</dd>
+
+  <dt>What did the BLAST search with Hermes transposase find?</dt>
+  <dd>Other versions of Hermes in the database, and the Hobo transposase of Drosophila (the fruit fly), an orthologous protein.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>ddNTP = no 3′ OH</strong> → can be built in, nothing can follow → <strong>chain termination</strong>.</li>
+  <li>Sanger needs: <strong>template, primer, DNA polymerase, 4 dNTPs, a little ddNTP, a label</strong>.</li>
+  <li>Classic: <strong>4 tubes, 4 lanes</strong> (ddA, ddC, ddG, ddT); fragments end at every position of that base.</li>
+  <li><strong>Read the gel bottom → top</strong>: shortest fragment = first base after the primer.</li>
+  <li>Automated: <strong>4 fluorescent ddNTPs in 1 tube</strong>, capillary electrophoresis, <strong>chromatogram</strong> of coloured peaks.</li>
+  <li>One Sanger read ≈ <strong>900 bases</strong>; good for one gene, too slow for a genome.</li>
+  <li><strong>Alignment</strong> = sequences lined up; score = identical + similar − <strong>gap penalties</strong>.</li>
+  <li><strong>BLAST</strong> (NCBI): <strong>BLASTN</strong> DNA, 11-nucleotide seed; <strong>BLASTP</strong> protein, 3-amino-acid seed; pairwise query vs database.</li>
+  <li><strong>E value = chance match probability; lower = better.</strong></li>
+  <li>Homology → shared ancestor → probably similar function; <strong>domains</strong> (kinase, zinc finger) are clues.</li>
+  <li>Be critical: same domain, one changed active-site residue, no activity. Hermes (housefly) found Hobo (fruit fly) = orthologs.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Which part of a ddNTP is different from a dNTP, and what is the consequence?
+    <details><summary>Answer</summary><div class="ans"><p>The <strong>3′ OH</strong> is missing (an H instead). The polymerase can still add the ddNTP, but it cannot add anything after it, because the next nucleotide must be joined to a 3′ OH. The chain is terminated.</p></div></details></li>
+  <li>In the ddG tube, where do the copies stop?
+    <ul class="opts"><li data-l="a">all at the first G</li><li data-l="b">each copy at a random G position, so together at every G</li><li data-l="c">at every base</li><li data-l="d">at the last G only</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> At each G position the polymerase picks a dNTP or a ddNTP by chance. Because the ddNTP is rare, each copy stops at a different G; the whole population covers every G.</p></div></details></li>
+  <li>A classic Sanger gel shows, from bottom to top, bands in the lanes T, T, A, G, C. What is the sequence of the new strand?
+    <details><summary>Answer</summary><div class="ans"><p><strong>5′-TTAGC-3′.</strong> The lowest band is the shortest fragment, so the first base added after the primer. Each higher band is one base longer.</p></div></details></li>
+  <li>True or false: "In the automated Sanger method the four ddNTPs must still be kept in four separate reactions."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Each ddNTP has its own fluorescent colour, so all four are in one reaction. The detector reads the colour of each fragment as it leaves the capillary, which tells it the last base.</p></div></details></li>
+  <li>What is the role of the primer in a sequencing reaction?
+    <details><summary>Answer</summary><div class="ans"><p>It pairs with the template just before the region to be read and provides the free <strong>3′ OH</strong> the polymerase needs to start. It also fixes where reading begins, so all fragments share the same start.</p></div></details></li>
+  <li>Why does a chromatogram have exactly one peak per base?
+    <details><summary>Answer</summary><div class="ans"><p>Because the fragments differ by exactly one nucleotide in length. Capillary electrophoresis lets them pass the laser one length after the other, and each length has the colour of the ddNTP that stopped it.</p></div></details></li>
+  <li>Why is Sanger sequencing not used to read a whole human genome today?
+    <details><summary>Answer</summary><div class="ans"><p>One reaction reads at most about 900 bases, and a machine handles about 1000 reactions a day. The first human genome needed about 70 million reads, 100 machines and two years. Massively parallel methods (page 4.10) are far faster and cheaper.</p></div></details></li>
+  <li>Which BLAST result is the better match?
+    <ul class="opts"><li data-l="a">E value 0.5</li><li data-l="b">E value 10⁻³⁰</li><li data-l="c">E value 5</li><li data-l="d">they are equal; only the score counts</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The E value is the probability that the match arose by chance. 10⁻³⁰ (one in a million trillion trillion) is essentially impossible by chance; 0.5 or 5 means such a hit is expected by accident.</p></div></details></li>
+  <li>What is a gap in an alignment, and why does it cost points?
+    <details><summary>Answer</summary><div class="ans"><p>A space inserted in one sequence so that the following letters line up again (as if a few residues were inserted or deleted during evolution). Each gap lowers the score, otherwise the program could "match" anything by inserting gaps everywhere.</p></div></details></li>
+  <li>You have an unknown protein sequence. Which program do you use, and what does it start from?
+    <details><summary>Answer</summary><div class="ans"><p><strong>BLASTP</strong>, the protein version. It starts from a string of <strong>3 amino acids</strong> that matches a database sequence and then examines the neighbouring window. (BLASTN, for DNA, starts from 11 nucleotides.)</p></div></details></li>
+  <li>BLAST finds that your protein contains a kinase domain. What may you conclude, and what may you not?
+    <details><summary>Answer</summary><div class="ans"><p>You may conclude it is probably a homolog of kinases and may add phosphate groups to proteins. You may not conclude that it <em>is</em> an active kinase: if active-site amino acids are substituted, the protein can look like a kinase and do nothing. The guess must be tested.</p></div></details></li>
+  <li>In a BLASTP output the query starts at position 9 and the subject at position 57. Is that a problem?
+    <details><summary>Answer</summary><div class="ans"><p>No. BLAST makes <strong>local</strong> alignments: it reports the stretch that matches, wherever it lies in each protein. The numbers simply say where the matching region begins in each sequence.</p></div></details></li>
+  <li>Correct this statement: "Hermes and Hobo transposases are paralogs."
+    <details><summary>Answer</summary><div class="ans"><p>They are <strong>orthologs</strong>: the same gene in two species (housefly and fruit fly), separated by the birth of the species. Paralogs are copies inside one genome (BIO01 chapter 1).</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.08_gels_and_mass_spectrometry.html">← 4.8 Gels and mass spectrometry</a><a href="index.html">Chapter 4 index</a><a href="4.10_genome_sequencing.html">4.10 Genome sequencing →</a></nav>
+</main>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.7 Cancer genomes and the three pathways</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .bar { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .dom { fill: var(--c-N); opacity: .35; }
+  .dom2 { fill: var(--c-R); opacity: .35; }
+  .mis { fill: var(--c-N); }
+  .trunc { fill: var(--c-S); }
+  .box3 { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .box3.cycle { stroke: var(--c-N); stroke-width: 2.5; }
+  .box3.prolif { stroke: var(--c-Cl); stroke-width: 2.5; }
+  .box3.surv { stroke: var(--c-O); stroke-width: 2.5; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.06_rb_and_losing_the_second_copy.html">← 2.6 Rb and losing the second copy</a><a href="index.html">Chapter 2 index</a><a href="2.08_p53_and_colorectal_cancer.html">2.8 p53 and colorectal cancer →</a></nav>
+
+<h1>2.7 Reading cancer genomes: hundreds of genes, three pathways</h1>
+<p class="lede">In one sentence: sequencing thousands of tumors showed that about 300 genes can drive cancer, but almost every cancer breaks the same three
+controls (cell-cycle entry via Rb, growth signals via Ras, stress response via p53), and one broken gene per control is enough.</p>
+
+<p>Pages 2.5 and 2.6 found cancer genes one at a time. This page is about what we learned when it became possible to read a tumor's whole genome: which kinds of
+mutations oncogenes and tumor suppressors carry (you can tell them apart by the pattern), how many cancer-critical genes there are, and the simplifying discovery that
+all those genes fall into a handful of pathways. The exam objectives behind it: "explain the role of various proto-oncogenes and tumor suppressor genes" and
+"explain how mutations in a proto-oncogene and in a tumor suppressor gene have different effects at the protein level".</p>
+
+<!-- ============================================================ -->
+<h2>0. Reminders from BIO01</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>exon, intron</td><td>exons are the parts of a gene that end up in the mRNA; introns are cut out (BIO01 ch 5)</td></tr>
+  <tr><td>codon</td><td>three mRNA letters = one amino acid; three codons mean "stop"</td></tr>
+  <tr><td>missense mutation</td><td>one letter changes and the codon now codes for a <em>different amino acid</em></td></tr>
+  <tr><td>nonsense mutation</td><td>one letter changes and the codon becomes a <em>stop</em>: the protein is cut short</td></tr>
+  <tr><td>frameshift mutation</td><td>letters are inserted or deleted (not a multiple of 3), so every codon after it is read wrongly; usually a stop follows soon</td></tr>
+  <tr><td>truncating mutation</td><td>any mutation that cuts the protein short (nonsense, frameshift); "truncate" = cut off</td></tr>
+  <tr><td>domain</td><td>a part of a protein that folds on its own and has its own job (BIO01 ch 2)</td></tr>
+  <tr><td>kinase</td><td>an enzyme that adds a phosphate group to another protein, as an on/off switch (BIO01 ch 7)</td></tr>
+  <tr><td>receptor</td><td>a protein that catches a signal molecule and passes the message on (BIO01 ch 6)</td></tr>
+  <tr><td>signaling pathway</td><td>a chain of proteins that passes a signal from the outside of a cell to its inside, each switching on the next</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: <strong>missense</strong> = ander aminozuur; <strong>nonsense</strong> = vroegtijdig stopcodon; <strong>frameshift</strong> = leesraam verschoven; de laatste twee zijn
+<strong>truncerend</strong> (eiwit afgeknot). Een <strong>kinase</strong> plakt een fosfaatgroep op een ander eiwit; een <strong>signaalroute</strong> is een keten van eiwitten die een
+signaal van buiten naar binnen doorgeeft.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Reading the whole picture: how cancer genomes are scanned (2.2.5)</h2>
+<p>The genes of pages 2.5 and 2.6 were found piece by piece. Since the human genome was sequenced and sequencing became cheap (chapter 4), we can look at a cancer cell's
+genome <strong>in its entirety</strong>. Several levels can be scanned, from most to least expensive:</p>
+<table>
+  <tr><th>What is read</th><th>What it shows</th></tr>
+  <tr><td><strong>Whole genome</strong> sequence of the tumor</td><td>every mutation, anywhere (most costly, but no longer prohibitively so)</td></tr>
+  <tr><td>The <strong>exome</strong>: only the roughly <strong>21 000 protein-coding genes</strong></td><td>cheaper; finds mutations that change the amino acid sequence or prevent the protein from being made</td></tr>
+  <tr><td>Copy number</td><td>which regions are deleted or duplicated, and which chromosomes are lost or gained (aneuploidy)</td></tr>
+  <tr><td>Epigenetic changes</td><td>methylation patterns and other marks that silence or activate genes without changing the sequence</td></tr>
+  <tr><td>RNA sequencing</td><td>levels of gene expression: how much mRNA of each gene, and of regulatory non-coding RNAs</td></tr>
+  <tr><td>Mass spectrometry of the tumor's proteins</td><td>how much of each known cancer-critical protein is present (chapter 4)</td></tr>
+</table>
+<p>In every case the cancer cells are compared with <strong>normal controls</strong>, ideally noncancerous cells from the same tissue of the same person. A big consortium,
+<strong>The Cancer Genome Atlas</strong> (coordinated by the US National Institutes of Health), applied these methods to <strong>more than 10 000 tumors of 33 cancer types</strong>.
+Free international databases such as <strong>COSMIC</strong> (the Catalog of Somatic Mutations in Cancer) keep compiling new data. These projects showed what types of
+alterations a cancer genome holds, which genes and pathways are altered across and within cancer types, how heterogeneous the cells in one tumor are, and how the
+pattern evolves during progression and treatment.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een tumorgenoom kan op meerdere niveaus gelezen worden: het <strong>hele genoom</strong>, alleen het <strong>exoom</strong> (de ~21 000 eiwitcoderende genen, goedkoper),
+<strong>kopieaantal</strong> (deleties, duplicaties, aneuploïdie), <strong>epigenetische</strong> merktekens, <strong>RNA</strong> (expressie) en <strong>eiwitten</strong>
+(massaspectrometrie), telkens vergeleken met normale cellen van dezelfde persoon. <strong>The Cancer Genome Atlas</strong>: >10 000 tumoren, 33 kankertypes; <strong>COSMIC</strong>:
+catalogus van somatische mutaties.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. You can recognise an oncogene by its mutation pattern (Figure 2-24)</h2>
+<p>When you line up all the mutations found in one gene across many patients, oncogenes and tumor suppressors look different:</p>
+<ul>
+  <li><strong>Oncogene</strong>: the <strong>same nucleotide change</strong> turns up again and again, at one or a few spots. Only a few possible changes can make a protein
+  <em>hyperactive</em>, so selection keeps picking those. The syllabus example is <em>PIK3CA</em>, the gene for a subunit of PI 3-kinase (an enzyme in the growth-signal
+  chain of section 4). Its mutations are <strong>missense</strong> mutations clustered in the kinase domain.</li>
+  <li><strong>Tumor suppressor</strong>: <strong>truncating</strong> mutations that create stop codons, spread <strong>all over</strong> the gene. Inactivation is easy: a missense,
+  nonsense or frameshift mutation almost anywhere will do. The example is <em>Rb</em>.</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 230" width="880" height="230" xmlns="http://www.w3.org/2000/svg">
+    <!-- A oncogene -->
+    <text x="20" y="18" class="txt bold left">A · oncogene (example: PIK3CA, a PI 3-kinase subunit)</text>
+    <rect x="60" y="50" width="760" height="22" rx="4" class="bar"/>
+    <rect x="520" y="50" width="220" height="22" rx="4" class="dom"/>
+    <text x="40" y="66" class="txt small">N</text><text x="840" y="66" class="txt small">C</text>
+    <text x="630" y="94" class="txt small muted">kinase domain</text>
+    <g class="mis">
+      <path d="M560,30 L554,44 L566,44 Z"/><path d="M566,30 L560,44 L572,44 Z"/><path d="M572,30 L566,44 L578,44 Z"/><path d="M578,30 L572,44 L584,44 Z"/>
+      <path d="M700,30 L694,44 L706,44 Z"/><path d="M706,30 L700,44 L712,44 Z"/><path d="M712,30 L706,44 L718,44 Z"/>
+      <path d="M250,30 L244,44 L256,44 Z"/>
+    </g>
+    <text x="300" y="94" class="txt small muted">the same missense change, found again and again at a few spots</text>
+    <!-- B tumor suppressor -->
+    <text x="20" y="134" class="txt bold left">B · tumor suppressor (example: Rb)</text>
+    <rect x="60" y="166" width="760" height="22" rx="4" class="bar"/>
+    <rect x="300" y="166" width="300" height="22" rx="4" class="dom2"/>
+    <text x="40" y="182" class="txt small">N</text><text x="840" y="182" class="txt small">C</text>
+    <text x="450" y="210" class="txt small muted">domain that binds a transcription regulator</text>
+    <g class="trunc">
+      <path d="M90,146 L84,160 L96,160 Z"/><path d="M140,146 L134,160 L146,160 Z"/><path d="M205,146 L199,160 L211,160 Z"/><path d="M260,146 L254,160 L266,160 Z"/>
+      <path d="M330,146 L324,160 L336,160 Z"/><path d="M380,146 L374,160 L386,160 Z"/><path d="M450,146 L444,160 L456,160 Z"/><path d="M510,146 L504,160 L516,160 Z"/>
+      <path d="M590,146 L584,160 L596,160 Z"/><path d="M650,146 L644,160 L656,160 Z"/><path d="M720,146 L714,160 L726,160 Z"/><path d="M790,146 L784,160 L796,160 Z"/>
+    </g>
+    <g class="mis"><path d="M170,146 L164,160 L176,160 Z"/><path d="M560,146 L554,160 L566,160 Z"/></g>
+    <text x="440" y="226" class="txt small muted">blue = missense (one amino acid changed) · yellow = truncating (stop codon: protein cut short) · N, C = the two ends of the protein</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-24. Each triangle is a mutation found in a patient. Oncogene: few spots, same change, missense. Tumor suppressor: truncating mutations anywhere, because
+  breaking a protein is easy and activating it is hard.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">At the protein level</span>
+<p>Only a <strong>few</strong> of all possible mutations in a coding sequence can <em>activate</em> a protein (you have to hit exactly the right spot in the right way). But
+<strong>inactivation</strong> can come from missense, nonsense or frameshift mutations almost anywhere. That is why oncogene mutations cluster and tumor-suppressor mutations scatter.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Oncogen</strong>: steeds <strong>dezelfde missense-mutatie</strong> op enkele plekken (voorbeeld <em>PIK3CA</em>), want maar weinig veranderingen maken een eiwit hyperactief.
+<strong>Tumorsuppressor</strong>: <strong>truncerende</strong> mutaties (stopcodons) <strong>overal</strong> in het gen (voorbeeld <em>Rb</em>), want kapotmaken kan op veel manieren.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Hundreds of genes contribute to cancer (2.2.6)</h2>
+<p>Among the billions of somatic mutations now catalogued in cancer cells, how do we find the <strong>drivers</strong>? Most are <strong>passengers</strong>: they happened in the same unstable
+cell but are irrelevant. The main criterion is <strong>frequency</strong>: a driver mutation in a gene that matters is seen <strong>repeatedly, in many different patients</strong> with a
+particular cancer type; a passenger gives no advantage and is seen only rarely.</p>
+<p>Compiling the data for all cancer types gives a catalogue of genes strongly suspected to be cancer-critical for at least one tumor type: about <strong>300 genes, about 1 %
+of the genes in the human genome</strong>. They are amazingly diverse. Some encode the classical signaling and cell-cycle proteins you would expect, but others belong to
+surprising categories: <strong>metabolism, chromatin biology, RNA splicing, protein homeostasis</strong> (keeping proteins in balance) and <strong>cell differentiation</strong>. Changes in any of these
+processes can, in one tissue or another, help cells evolve cancerous properties. That sounds daunting, but the next section shows the complexity is smaller than it seems.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Drivers</strong> herken je aan <strong>frequentie</strong>: steeds opnieuw in veel patiënten; <strong>passengers</strong> zijn zeldzaam. Zo'n <strong>300 genen</strong> (~1 % van het
+genoom) zijn cancer-critical, van zeer uiteenlopende soorten: signalering en celcyclus, maar ook stofwisseling, chromatine, RNA-splicing, eiwithuishouding en differentiatie.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. A handful of pathways are broken in almost every cancer (2.2.7)</h2>
+<p>Some genes, like <em>Rb</em> and <em>Ras</em>, are mutated in many cancers of many types. No surprise: they control fundamental processes of division and growth. But even these
+common culprits are mutated in <strong>well under half</strong> of individual cases. What is happening in the many cancers where Rb is intact or Ras is not mutated? The answer came from
+looking at <strong>pathways</strong> instead of single genes. Three names you need:</p>
+<table class="cmp">
+  <tr><th>Name</th><th>What it is</th></tr>
+  <tr><td>Ras</td><td>a switch protein inside the cell that passes growth signals from receptors on the surface into the cell; a famous proto-oncogene</td></tr>
+  <tr><td>RTK</td><td>receptor tyrosine kinase: a receptor in the cell membrane that adds phosphate groups (to the amino acid tyrosine) when a growth factor binds it; the EGF receptor of page 2.5 is one</td></tr>
+  <tr><td>PI 3-kinase</td><td>phosphoinositide 3-kinase: an enzyme further down the same signaling chain, which drives cell growth; <em>PIK3CA</em> codes for one of its subunits</td></tr>
+</table>
+
+<h3>The glioblastoma study</h3>
+<p>Glioblastoma is the most common human brain cancer (page 2.5). The genomes of tumor cells from <strong>91 patients</strong> were analysed, and at least <strong>79 genes</strong> were
+found mutated in more than one patient. Because the normal functions of most of these genes were known, they could be sorted into pathways. <strong>Three groups</strong> stood out,
+holding 21 of the recurrently mutated genes:</p>
+<ol>
+  <li>the <strong>Rb pathway</strong>: Rb itself and the genes that directly regulate Rb; it governs the <strong>start of the cell-division cycle</strong>;</li>
+  <li>the <strong>RTK / Ras / PI 3-kinase pathway</strong>, named after three of its core parts; it carries signals for <strong>cell growth and division from outside the cell to the inside</strong>;</li>
+  <li>the <strong>p53 pathway</strong>: the response to <strong>stress and DNA damage</strong> (page 2.8).</li>
+</ol>
+<p>Of the 91 glioblastomas, <strong>74 % had identifiable mutations in all three pathways</strong>, and that percentage would be even higher if every upstream component were included.
+In other words: in almost every glioblastoma, the control of <strong>cell growth</strong>, the control of <strong>cell division</strong> and the control of <strong>responses to stress and DNA
+damage</strong> are all three disrupted.</p>
+
+<div class="callout key"><span class="tag">One hit per pathway is enough</span>
+<p>Strikingly, in a given tumor clone there is a strong tendency for <strong>no more than one gene per pathway</strong> to be mutated. If Rb itself is intact, some other part of the Rb
+pathway is hit, with the same effect. What matters for the tumor is that the <em>control</em> is disabled, not by which gene. Once a pathway is broken by one mutation, there is
+<strong>no further selection</strong> for a second mutation in the same pathway: it would give no extra advantage.</p></div>
+
+<p>The same pattern appears in other cancers. In the major form of <strong>ovarian cancer</strong>: <strong>67 %</strong> of patients had mutations in the Rb pathway, <strong>45 %</strong> in the
+Ras / PI 3-kinase pathway (defined more narrowly than in the glioblastoma study) and <strong>more than 96 %</strong> in the p53 pathway. It seems these three fundamental controls are
+subverted in one way or another in <strong>virtually every type of cancer</strong>, although different tissues break them in different ways, through the different signaling pathways that
+relay signals to the core machinery.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 250" width="880" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <rect x="20" y="30" width="260" height="150" rx="10" class="box3 cycle"/>
+    <text x="150" y="56" class="txt big">CELL CYCLE</text>
+    <text x="150" y="84" class="txt bold">Rb pathway</text>
+    <text x="150" y="104" class="txt small">controls entry into the cycle (G1 → S)</text>
+    <text x="150" y="124" class="txt small muted">glioblastoma: hit in most tumors</text>
+    <text x="150" y="140" class="txt small muted">ovarian cancer: 67 %</text>
+    <text x="150" y="166" class="txt small">lost → cell starts dividing without permission</text>
+    <rect x="310" y="30" width="260" height="150" rx="10" class="box3 prolif"/>
+    <text x="440" y="56" class="txt big">CELL PROLIFERATION</text>
+    <text x="440" y="84" class="txt bold">RTK / Ras / PI 3-kinase pathway</text>
+    <text x="440" y="104" class="txt small">carries growth signals from outside to inside</text>
+    <text x="440" y="124" class="txt small muted">receptor → Ras switch → PI 3-kinase → growth</text>
+    <text x="440" y="140" class="txt small muted">ovarian cancer: 45 %</text>
+    <text x="440" y="166" class="txt small">overactive → "grow" signal without a signal</text>
+    <rect x="600" y="30" width="260" height="150" rx="10" class="box3 surv"/>
+    <text x="730" y="56" class="txt big">CELL SURVIVAL</text>
+    <text x="730" y="84" class="txt bold">p53 pathway</text>
+    <text x="730" y="104" class="txt small">response to stress and DNA damage</text>
+    <text x="730" y="124" class="txt small muted">p53 mutated in ~50 % of all cancers</text>
+    <text x="730" y="140" class="txt small muted">ovarian cancer: > 96 %</text>
+    <text x="730" y="166" class="txt small">lost → damaged cell neither stops nor dies</text>
+    <path d="M150,180 L150,205 L730,205 L730,180" class="path accent" style="fill:none"/>
+    <path d="M440,180 L440,205" class="path accent"/>
+    <text x="440" y="228" class="txt bold">all three broken in almost every cancer, one mutated gene per pathway is enough</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-25: the three major pathways that contribute to tumor formation, in the syllabus's short names (cell cycle, cell proliferation, cell survival). The chapter has already treated Rb (page 2.6) and treats p53 next (page 2.8).</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>The growth pathway explains an old observation. Tumor cells import glucose up to 100 times faster than their neighbours and burn it wastefully (the "Warburg effect", noticed by
+Otto Warburg a century ago). Alberts explains why: the PI 3-kinase chain, when switched on by mutation, drives the protein kinases Akt and mTOR, which push up glucose uptake and turn
+the sugar into building blocks for new proteins, DNA and membranes. The high glucose uptake is what makes tumors light up in whole-body PET scans. A frequent way to switch this chain
+on is losing PTEN, a phosphatase (an enzyme that removes phosphate groups) that normally counteracts PI 3-kinase.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Zelfs <em>Rb</em> en <em>Ras</em> zijn in minder dan de helft van de gevallen gemuteerd; kijk daarom naar <strong>routes</strong> (pathways). Glioblastoom (91 patiënten, 79 genen): drie groepen
+springen eruit: de <strong>Rb-route</strong> (start van de celcyclus), de <strong>RTK/Ras/PI 3-kinase-route</strong> (groeisignalen van buiten naar binnen) en de <strong>p53-route</strong>
+(stress en DNA-schade); <strong>74 %</strong> had alle drie. <strong>Eén gemuteerd gen per route volstaat</strong>: is de route kapot, dan is er geen selectie meer voor een tweede mutatie
+in dezelfde route. Eierstokkanker: 67 %, 45 %, >96 %. Vrijwel elke kanker breekt deze drie controles: <strong>celcyclus, celproliferatie, celöverleving</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>exome</td><td>all protein-coding genes of a genome (about 21 000 in humans); exome sequencing reads only those</td></tr>
+  <tr><td>copy number variation</td><td>a region that is present in more or fewer copies than the normal two (deletion, duplication)</td></tr>
+  <tr><td>The Cancer Genome Atlas</td><td>a consortium that analysed more than 10 000 tumors of 33 types with the high-throughput methods</td></tr>
+  <tr><td>COSMIC</td><td>Catalog of Somatic Mutations in Cancer, a free database</td></tr>
+  <tr><td>missense / nonsense / frameshift</td><td>amino acid changed / early stop / reading frame shifted</td></tr>
+  <tr><td>truncating mutation</td><td>a mutation that cuts the protein short; typical for tumor suppressors</td></tr>
+  <tr><td><em>PIK3CA</em></td><td>gene for a subunit of PI 3-kinase; its oncogenic mutations are the same missense changes at a few spots</td></tr>
+  <tr><td>driver / passenger</td><td>mutation that matters, seen repeatedly / accidental mutation, rare</td></tr>
+  <tr><td>cancer-critical genes</td><td>about 300 genes, 1 % of the genome, of very diverse function</td></tr>
+  <tr><td>protein homeostasis</td><td>keeping the amounts and quality of proteins in the cell in balance</td></tr>
+  <tr><td>pathway</td><td>a chain of proteins working in sequence to carry out one control or signal</td></tr>
+  <tr><td>Rb pathway</td><td>Rb and its direct regulators; controls the start of the cell cycle</td></tr>
+  <tr><td>RTK / Ras / PI 3-kinase pathway</td><td>receptor tyrosine kinase → Ras switch → PI 3-kinase: carries growth signals into the cell</td></tr>
+  <tr><td>p53 pathway</td><td>the response to stress and DNA damage</td></tr>
+  <tr><td>upstream</td><td>earlier in a pathway, closer to the signal that starts it</td></tr>
+  <tr><td>glioblastoma</td><td>the most common human brain cancer, used as the example study (91 patients)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "the student explains the role of various proto-oncogenes and tumor suppressor genes in the development of cancer" and "can precisely explain how mutations in a proto-oncogene and in a tumor suppressor gene have different effects at the protein level".</p>
+<ol>
+  <li>Name the ways a cancer genome can be scanned (whole genome, exome, copy number, epigenetic marks, RNA, proteins) and what a normal control is for.</li>
+  <li>Explain the mutation pattern that distinguishes an oncogene (same missense change at a few spots) from a tumor suppressor (truncating mutations anywhere), and why.</li>
+  <li>Say how drivers are told from passengers (frequency across patients) and how many cancer-critical genes there are (about 300, 1 %).</li>
+  <li>Name the three pathways and what each controls: Rb (cell-cycle entry), RTK/Ras/PI 3-kinase (growth signals into the cell), p53 (stress and DNA damage).</li>
+  <li>Explain "one mutated gene per pathway is enough" and why there is no further selection within a broken pathway.</li>
+  <li>Remember the numbers: glioblastoma 91 tumors, 79 genes, 74 % with all three pathways hit; ovarian cancer 67 % / 45 % / more than 96 %.</li>
+  <li>Give one-line descriptions of Ras, RTK and PI 3-kinase.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is the exome, and why sequence only that?</dt>
+  <dd>The roughly 21 000 protein-coding genes of the genome. Sequencing only the exome is much cheaper than the whole genome and still finds mutations that change the amino acid sequence or prevent synthesis of a protein.</dd>
+
+  <dt>Besides the DNA sequence, what else can be scanned in a tumor?</dt>
+  <dd>Copy number (deletions, duplications, chromosome gains or losses), epigenetic changes such as methylation, RNA levels (gene expression, including regulatory non-coding RNAs) and protein levels by mass spectrometry; always compared with normal cells, ideally from the same tissue and person.</dd>
+
+  <dt>What are The Cancer Genome Atlas and COSMIC?</dt>
+  <dd>The Cancer Genome Atlas is a consortium (US National Institutes of Health) that applied these methods to more than 10 000 tumors of 33 cancer types. COSMIC is the free Catalog of Somatic Mutations in Cancer.</dd>
+
+  <dt>How do you recognise an oncogene from its mutations across patients?</dt>
+  <dd>The same nucleotide change turns up repeatedly at one or a few spots, usually missense mutations (example: <em>PIK3CA</em>). Only a few changes can make a protein hyperactive.</dd>
+
+  <dt>How do you recognise a tumor suppressor gene from its mutations?</dt>
+  <dd>Truncating mutations (stop codons from nonsense or frameshift changes) scattered over the whole gene (example: <em>Rb</em>). Inactivating a protein is possible almost anywhere.</dd>
+
+  <dt>How do you tell a driver mutation from a passenger?</dt>
+  <dd>By frequency: a driver is seen repeatedly in many patients with that cancer type; a passenger, giving no advantage, is seen only rarely.</dd>
+
+  <dt>How many cancer-critical genes are there, and what kinds?</dt>
+  <dd>About 300, around 1 % of human genes. Besides classical signaling and cell-cycle genes they include genes for metabolism, chromatin biology, RNA splicing, protein homeostasis and cell differentiation.</dd>
+
+  <dt>Name the three pathways found in the glioblastoma study and what each controls.</dt>
+  <dd>The Rb pathway (start of the cell cycle), the RTK/Ras/PI 3-kinase pathway (transmits growth and division signals from outside the cell to the inside) and the p53 pathway (response to stress and DNA damage). 74 % of the 91 tumors had mutations in all three.</dd>
+
+  <dt>Why is there usually only one mutated gene per pathway in a tumor clone?</dt>
+  <dd>Because what matters is disabling the control, not which gene does it. Once one mutation has broken the pathway, a second mutation in it gives no extra advantage, so it is not selected for.</dd>
+
+  <dt>Give the ovarian-cancer numbers.</dt>
+  <dd>Rb pathway 67 %, Ras/PI 3-kinase pathway 45 % (narrowly defined), p53 pathway more than 96 %.</dd>
+
+  <dt>What are Ras, an RTK and PI 3-kinase?</dt>
+  <dd>Ras: a switch protein that passes growth signals from surface receptors into the cell. RTK: receptor tyrosine kinase, a membrane receptor that adds phosphate groups when a growth factor binds. PI 3-kinase: an enzyme further down that chain that drives growth; <em>PIK3CA</em> codes for a subunit of it.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Scans: <strong>whole genome</strong>, <strong>exome (~21 000 genes)</strong>, <strong>copy number</strong>, <strong>methylation</strong>, <strong>RNA</strong>, <strong>proteins</strong>; always versus a <strong>normal control</strong>.</li>
+  <li><strong>The Cancer Genome Atlas</strong>: >10 000 tumors, 33 types. <strong>COSMIC</strong>: catalog of somatic mutations.</li>
+  <li><strong>Oncogene</strong> pattern: <strong>same missense mutation at a few spots</strong> (<em>PIK3CA</em>). <strong>Tumor suppressor</strong> pattern: <strong>truncating mutations anywhere</strong> (<em>Rb</em>).</li>
+  <li>Reason: <strong>activating is hard (few spots), inactivating is easy (anywhere)</strong>.</li>
+  <li><strong>Driver</strong> = frequent across patients; <strong>passenger</strong> = rare. About <strong>300 cancer-critical genes = 1 %</strong> of the genome.</li>
+  <li>Three pathways: <strong>Rb = cell-cycle entry</strong>, <strong>RTK/Ras/PI 3-kinase = growth signals in</strong>, <strong>p53 = stress and DNA damage</strong>.</li>
+  <li>Glioblastoma: <strong>91 tumors, 79 genes, 74 % all three pathways</strong>.</li>
+  <li>Ovarian cancer: <strong>Rb 67 %, Ras/PI 3-K 45 %, p53 > 96 %</strong>.</li>
+  <li><strong>One mutated gene per pathway</strong>; no further selection once the pathway is broken.</li>
+  <li>Short names: <strong>cell cycle, cell proliferation, cell survival</strong>: disturbed in virtually every cancer.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Sequencing only the exome of a tumor means reading:
+    <ul class="opts"><li data-l="a">the whole genome</li><li data-l="b">only the protein-coding genes</li><li data-l="c">only the RNA</li><li data-l="d">only the methylated regions</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The exome is the roughly 21 000 protein-coding genes. It is cheaper than the whole genome and catches mutations that change or abolish a protein.</p></div></details></li>
+  <li>Why are tumor cells always compared with normal cells, ideally from the same person?
+    <details><summary>Answer</summary><div class="ans"><p>To see which changes are <em>somatic</em>, specific to the tumor, rather than normal differences between people. Cells from the same tissue and person are the best control.</p></div></details></li>
+  <li>In a gene, mutations from 200 patients all turn out to be the same amino-acid change at two spots. Oncogene or tumor suppressor?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Oncogene.</strong> Only a few specific changes can make a protein hyperactive, so selection keeps picking the same missense mutations (like <em>PIK3CA</em>).</p></div></details></li>
+  <li>In another gene the mutations are stop codons spread over the whole length. Oncogene or tumor suppressor?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Tumor suppressor.</strong> Truncating mutations anywhere destroy the protein, which is what a loss-of-function gene needs (like <em>Rb</em>).</p></div></details></li>
+  <li>What is a truncating mutation? Name two kinds.
+    <details><summary>Answer</summary><div class="ans"><p>A mutation that cuts the protein short: a <strong>nonsense</strong> mutation (a codon becomes a stop) or a <strong>frameshift</strong> (insertion or deletion that shifts the reading frame, soon hitting a stop).</p></div></details></li>
+  <li>How do researchers decide that a mutation is a driver and not a passenger?
+    <details><summary>Answer</summary><div class="ans"><p>By <strong>frequency</strong>: drivers in a gene that matters are found repeatedly in many patients with that cancer type; passengers give no advantage and are rare.</p></div></details></li>
+  <li>About how many cancer-critical genes are there, and which fraction of the genome is that?
+    <ul class="opts"><li data-l="a">about 30, 0.1 %</li><li data-l="b">about 300, 1 %</li><li data-l="c">about 3000, 10 %</li><li data-l="d">all 21 000</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Around 300 genes, about 1 % of human genes, of surprisingly diverse function (signaling, cell cycle, metabolism, chromatin, splicing, protein homeostasis, differentiation).</p></div></details></li>
+  <li>Name the three pathways and what each controls.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Rb pathway</strong>: start of the cell-division cycle. <strong>RTK/Ras/PI 3-kinase pathway</strong>: growth and division signals from outside to inside. <strong>p53 pathway</strong>: response to stress and DNA damage.</p></div></details></li>
+  <li>In the glioblastoma study, what fraction of tumors had mutations in all three pathways?
+    <details><summary>Answer</summary><div class="ans"><p><strong>74 %</strong> of 91 tumors (79 genes were mutated in more than one patient; 21 of those fell into the three pathways). Counting unknown upstream components, the fraction would be even higher.</p></div></details></li>
+  <li>A tumor has no mutation in <em>Rb</em> itself. Does that mean its cell-cycle control is intact?
+    <details><summary>Answer</summary><div class="ans"><p>Usually <strong>not</strong>: in such tumors there is generally a mutation in another component of the Rb pathway, with the same biological effect. What matters is the disabled control, not the gene.</p></div></details></li>
+  <li>Why does a tumor clone rarely carry two mutated genes in the same pathway?
+    <details><summary>Answer</summary><div class="ans"><p>Once one mutation has disabled the pathway, a second one gives <strong>no extra advantage</strong>, so there is no selection for it.</p></div></details></li>
+  <li>Which pathway is mutated in more than 96 % of the major form of ovarian cancer?
+    <ul class="opts"><li data-l="a">Rb pathway</li><li data-l="b">Ras / PI 3-kinase pathway</li><li data-l="c">p53 pathway</li><li data-l="d">none; ovarian cancer is different</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> p53 pathway > 96 %, Rb pathway 67 %, Ras/PI 3-kinase 45 %. Most cases break all three controls.</p></div></details></li>
+  <li>What is Ras, in one sentence?
+    <details><summary>Answer</summary><div class="ans"><p>A switch protein inside the cell that passes growth signals from receptors on the surface (such as RTKs) into the cell; mutated in many cancers, a proto-oncogene.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.06_rb_and_losing_the_second_copy.html">← 2.6 Rb and losing the second copy</a><a href="index.html">Chapter 2 index</a><a href="2.08_p53_and_colorectal_cancer.html">2.8 p53 and colorectal cancer →</a></nav>
+</main>
+</body>
+</html>

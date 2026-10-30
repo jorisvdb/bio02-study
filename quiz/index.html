@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIO02 Quiz Trainer</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="banner" class="banner" hidden></div>
+<main id="app"><p>Loading questions…</p></main>
+
+<script>
+  window.QBANK = window.QBANK || [];
+  window.QCONCEPTS = window.QCONCEPTS || {};
+  window.QMISSING = [];
+  window.QERRORS = [];
+  function qmiss(e) { window.QMISSING.push(e.target.getAttribute('src')); }
+  window.addEventListener('error', function (e) {
+    var f = (e && e.filename) || '';
+    if (f.indexOf('/data/') >= 0 || f === '' ) window.QERRORS.push((f ? f.split('/').pop() + ': ' : '') + (e.message || 'script error'));
+  });
+</script>
+<script src="data/ch1.js" onerror="qmiss(event)"></script>
+<script src="data/ch2.js" onerror="qmiss(event)"></script>
+<script src="data/ch3.js" onerror="qmiss(event)"></script>
+<script src="data/ch4.js" onerror="qmiss(event)"></script>
+<script src="data/sample.js" onerror="qmiss(event)"></script>
+<script src="data/typein.js" onerror="qmiss(event)"></script>
+<!-- pictures shown after an answer: drawings of the cheatsheets + extra concept drawings + process maps, and which question gets which -->
+<script src="pics/cs_pics.js"></script>
+<script src="pics/pics_ch12.js"></script>
+<script src="pics/pics_ch34.js"></script>
+<script src="pics/proc_chrom.js"></script>
+<script src="pics/proc_cancer.js"></script>
+<script src="pics/proc_virus.js"></script>
+<script src="pics/proc_tech.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

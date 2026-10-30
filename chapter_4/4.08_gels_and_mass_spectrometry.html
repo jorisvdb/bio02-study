@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.8 Gels and mass spectrometry</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .gel { fill: var(--key-bg); stroke: var(--accent); stroke-width: 2; }
+  .well { fill: var(--panel); stroke: var(--muted); stroke-width: 1.2; }
+  .band { fill: var(--c-P); }
+  .band.blue { fill: var(--c-N); }
+  .pole { font-size: 20px; font-weight: 700; }
+  .prot { fill: none; stroke: var(--c-O); stroke-width: 3; stroke-linecap: round; }
+  .sds { fill: var(--c-N); }
+  .boxp { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .axis { stroke: var(--fg); stroke-width: 1.5; fill: none; }
+  .peak { stroke: var(--c-N); stroke-width: 3; stroke-linecap: round; }
+  .peak.hi { stroke: var(--c-O); }
+  .ion { fill: var(--c-Cl); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.07_detecting_molecules.html">← 4.7 Detecting molecules</a><a href="index.html">Chapter 4 index</a><a href="4.09_sanger_sequencing_and_blast.html">4.9 Sanger sequencing and BLAST →</a></nav>
+
+<h1>4.8 Separating molecules on gels, and weighing them by mass spectrometry</h1>
+<p class="lede">In one sentence: an electric field pulls DNA fragments (always negative) or SDS-coated proteins (made negative) through a gel, so that small ones run far and big ones stay
+behind, which sorts them by size; and a mass spectrometer identifies a molecule by weighing its ions with extreme precision.</p>
+
+<p>Most of what the syllabus describes was learned from experiments on purified molecules. To purify a molecule you must <strong>separate</strong> it from the thousands of others in a cell
+(syllabus 4.7), and then find out what you have (4.8). This page covers the two work-horses of every lab: <strong>gel electrophoresis</strong> for DNA, RNA and proteins, and
+<strong>mass spectrometry</strong> for identifying proteins and other molecules. The example exam (question 11) checks that you can pair "electrophoresis" with "separation of DNA fragments".
+The gel of this page is also the read-out of Sanger sequencing (page 4.9) and of the Western blot (page 4.13).</p>
+
+<!-- ============================================================ -->
+<h2>0. Words and units used on this page</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Meaning</th></tr>
+  <tr><td>phosphate backbone</td><td>the chain of sugars and phosphates along a DNA or RNA strand; every phosphate carries a negative charge, so DNA and RNA are negatively charged (BIO01 chapter 2 and 3)</td></tr>
+  <tr><td>denature</td><td>unfold a protein (or separate the two strands of DNA) by heat or chemicals; the shape is lost (BIO01 chapter 2)</td></tr>
+  <tr><td>disulfide bond</td><td>a sulfur–sulfur bridge between two cysteines that holds parts of a protein together; broken by a reducing agent (BIO01 chapter 2)</td></tr>
+  <tr><td>detergent</td><td>a soap-like molecule with a water-loving head and a fat-loving tail; it dissolves fat and wraps around proteins</td></tr>
+  <tr><td>polymer, polyacrylamide, agarose</td><td>a long chain of repeated units; two such materials that form a porous gel (a jelly with tiny holes) when set</td></tr>
+  <tr><td>dalton (Da), kilodalton (kDa)</td><td>the unit of molecular mass: 1 Da ≈ the mass of one hydrogen atom; 1 kDa = 1,000 Da. A typical protein weighs 20 to 100 kDa</td></tr>
+  <tr><td>ion</td><td>an atom or molecule with an electric charge (it gained or lost electrons or protons)</td></tr>
+  <tr><td>m/z</td><td>"m over z": the mass of an ion divided by its charge; what a mass spectrometer measures</td></tr>
+  <tr><td>trypsin, protease</td><td>a protease is an enzyme that cuts proteins; trypsin is a protease that cuts after the amino acids lysine and arginine, giving predictable pieces (peptides)</td></tr>
+  <tr><td>peptide</td><td>a short chain of amino acids, a piece of a protein</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: DNA/RNA zijn <strong>negatief</strong> geladen door hun fosfaten. <strong>Denatureren</strong> = ontvouwen. Een <strong>disulfidebrug</strong> (S–S) houdt delen van een eiwit samen.
+Een <strong>detergent</strong> is een zeepachtig molecuul. <strong>Dalton (Da)</strong> = massa-eenheid, ongeveer één waterstofatoom; <strong>kDa</strong> = 1000 Da. Een <strong>ion</strong> is een geladen deeltje;
+<strong>m/z</strong> = massa gedeeld door lading. <strong>Trypsine</strong> is een protease die eiwitten in voorspelbare stukken (<strong>peptiden</strong>) knipt.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Separating molecules: by what? (syllabus 4.7)</h2>
+<p>To study one molecule you must separate it from the rest. You do that by using a property in which it differs from the others: its <strong>mass</strong>, <strong>shape</strong>,
+<strong>overall charge</strong>, or its ability to <strong>bind a specific reagent</strong>. A trick that comes back on later pages: build a <strong>tag</strong> (a known extra piece) into the protein or nucleic acid
+by cloning, and then catch the tagged molecule with something that binds the tag. This page uses charge and size.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Scheiden kan op <strong>massa, vorm, lading</strong> of <strong>binding</strong> aan een specifiek reagens; of je bouwt een <strong>tag</strong> in het molecuul en vangt die.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Gel electrophoresis of DNA and RNA (4.7.1, Figure 4-24)</h2>
+<p>Begin state: a tube with a mixture of DNA fragments of different lengths (for example after a restriction digest, page 4.4, or a PCR, page 4.3). Goal: sort them by size and see them.</p>
+<p>The principle rests on two facts. First, <strong>DNA and RNA are negatively charged</strong> (the phosphates), so in an electric field they move toward the <strong>positive pole</strong>
+("electrophoresis" = carried by electricity). Second, if they have to move through a <strong>porous gel</strong>, a jelly full of tiny holes, <strong>small molecules slip through faster than large ones</strong>.
+Put together: in a given time, short fragments travel far and long fragments stay near the start. This is <strong>gel electrophoresis</strong>.</p>
+<ol>
+  <li>Pour a slab of gel made of <strong>agarose</strong> (a sugar polymer from seaweed) or <strong>polyacrylamide</strong>, with small <strong>wells</strong> (slots) at one end.</li>
+  <li>Put the gel in a tank of buffer (salt solution) and connect a power supply: the end with the wells at the <strong>negative</strong> pole, the far end at the <strong>positive</strong> pole.</li>
+  <li>Pipette the DNA samples into the wells (at the negative end).</li>
+  <li>Switch on the voltage. All DNA moves toward the positive pole; small fragments move fastest.</li>
+  <li>Switch off, soak the gel in <strong>ethidium bromide</strong> (page 4.7) and look under <strong>UV light</strong>: every size appears as a glowing <strong>band</strong>. A lane with fragments of known sizes (a "ladder") is run next to the samples to read off sizes.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 600 276" width="600" height="276" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="300" y="22" class="txt pole" style="fill:var(--c-N)">− (negative pole)</text>
+    <rect x="100" y="40" width="420" height="180" rx="6" class="gel"/>
+    <!-- wells -->
+    <rect x="120" y="46" width="50" height="12" class="well"/><rect x="200" y="46" width="50" height="12" class="well"/>
+    <rect x="280" y="46" width="50" height="12" class="well"/><rect x="360" y="46" width="50" height="12" class="well"/><rect x="440" y="46" width="50" height="12" class="well"/>
+    <text x="92" y="56" class="txt small muted" style="text-anchor:end">wells</text>
+    <!-- ladder lane 1 -->
+    <rect x="120" y="74" width="50" height="5" class="band"/><rect x="120" y="94" width="50" height="5" class="band"/><rect x="120" y="118" width="50" height="5" class="band"/>
+    <rect x="120" y="146" width="50" height="5" class="band"/><rect x="120" y="178" width="50" height="5" class="band"/><rect x="120" y="204" width="50" height="5" class="band"/>
+    <text x="145" y="238" class="txt small">ladder (known sizes)</text>
+    <text x="92" y="80" class="txt small muted" style="text-anchor:end">10 000 bp</text>
+    <text x="92" y="150" class="txt small muted" style="text-anchor:end">1 000 bp</text>
+    <text x="92" y="208" class="txt small muted" style="text-anchor:end">100 bp</text>
+    <!-- sample lanes -->
+    <rect x="200" y="94" width="50" height="5" class="band"/><rect x="200" y="178" width="50" height="5" class="band"/>
+    <rect x="280" y="118" width="50" height="5" class="band"/>
+    <rect x="360" y="74" width="50" height="5" class="band"/><rect x="360" y="146" width="50" height="5" class="band"/><rect x="360" y="204" width="50" height="5" class="band"/>
+    <rect x="440" y="204" width="50" height="5" class="band"/>
+    <text x="345" y="238" class="txt small">samples: each band = DNA fragments of one size</text>
+    <path d="M545,70 L545,200" class="path accent" marker-end="url(#arg)"/>
+    <text x="560" y="135" class="txt small left">DNA runs</text>
+    <text x="560" y="149" class="txt small left">this way</text>
+    <text x="300" y="268" class="txt pole" style="fill:var(--c-O)">+ (positive pole)</text>
+  </svg>
+  <figcaption>An agarose gel seen from above, after staining (syllabus Figure 4-24). Orange bands = DNA glowing with ethidium bromide under UV. Small fragments have travelled farthest toward the plus pole; a ladder of known sizes is the ruler.</figcaption>
+</figure>
+
+<table class="cmp">
+  <tr><td>principle</td><td>DNA/RNA is negative → moves to +; the gel's pores slow big molecules more than small ones → sorted by size</td></tr>
+  <tr><td>what you need</td><td>agarose or polyacrylamide gel with wells, buffer tank, power supply, DNA dye (ethidium bromide or a safer one), UV light, a size ladder</td></tr>
+  <tr><td>steps</td><td>pour gel → samples in wells at the − end → voltage on → DNA runs to + → stain → look under UV → read sizes against the ladder</td></tr>
+  <tr><td>used for</td><td>checking the size and amount of PCR products, restriction fragments, RNA; read-out of sequencing (4.9), Southern and Western blots (4.12, 4.13)</td></tr>
+  <tr><td>trap</td><td>small = far; the wells are at the <em>negative</em> end; DNA needs no extra charge (proteins do, see below)</td></tr>
+</table>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 11 asks which tool is <em>incorrectly</em> paired with its use. "Electrophoresis – separation of DNA fragments" is a <strong>correct</strong> pair. The wrong pair in that question is
+"DNA ligase – cutting DNA, creating sticky ends": ligase <em>glues</em>, restriction enzymes cut (page 4.4). PCR with DNA polymerase and reverse transcriptase making cDNA are also correct pairs.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Gelelektroforese</strong>: DNA en RNA zijn negatief (fosfaten) en bewegen in een elektrisch veld naar de <strong>positieve pool</strong>; in een poreuze gel (<strong>agarose</strong> of
+<strong>polyacrylamide</strong>) gaan <strong>kleine fragmenten sneller</strong> dan grote → gesorteerd op grootte. Monsters in de putjes aan de negatieve kant; na de run kleuren met ethidiumbromide
+en bekijken onder UV: elke <strong>band</strong> = fragmenten van één grootte; een <strong>ladder</strong> met bekende groottes is de meetlat.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. SDS-PAGE: separating proteins by size (4.7.2, Figure 4-25)</h2>
+<p>Proteins can be run on a gel too, but they are not as simple as DNA. DNA always has the same charge per length; proteins <strong>vary in charge and in shape</strong> (some are positive, some negative,
+some round, some long), so they would not move in a predictable way. The trick: make every protein the same shape and the same kind of charge, so that only <strong>size</strong> decides.</p>
+<ol>
+  <li><strong>Denature</strong> the protein: add the strong detergent <strong>SDS</strong> (sodium dodecyl sulfate; a negatively charged soap) and usually <strong>heat</strong> the sample. The protein unfolds and SDS molecules bind all along its hydrophobic (fat-loving) parts.</li>
+  <li>Often also add a <strong>reducing agent</strong>, which breaks the <strong>disulfide bonds</strong>, so that nothing holds the chain folded or holds chains together.</li>
+  <li>Now every protein is an <strong>unstructured chain coated with negative charge</strong>, in proportion to its length. Big protein, more SDS, more charge, but also more drag in the gel: the net effect is that they separate by <strong>molecular weight</strong>.</li>
+  <li>Run them on a <strong>polyacrylamide</strong> gel: this is <strong>SDS-PAGE</strong> (SDS-polyacrylamide gel electrophoresis). The gel has two parts: a <strong>stacking gel</strong> on top that squeezes each sample into one tight band, then a <strong>resolving gel</strong> that separates by size.</li>
+  <li>Stain the proteins with the dye <strong>Coomassie Brilliant Blue</strong>. Run a lane of proteins of known mass as markers; their sizes are given in <strong>kilodaltons (kDa)</strong>.</li>
+</ol>
+<p>The syllabus heading also mentions <strong>two-dimensional</strong> gels, which separate by charge in one direction and then by size in the other; the text gives no details.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 640 230" width="640" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- folded protein -->
+    <path d="M30,80 C50,40 90,40 100,80 C110,120 60,130 50,100 C40,70 80,60 90,90" class="prot"/>
+    <text x="65" y="150" class="txt small">folded protein</text>
+    <text x="65" y="164" class="txt small muted">own shape, own charge</text>
+    <path d="M118,90 L168,90" class="path accent" marker-end="url(#arp)"/>
+    <text x="143" y="76" class="txt small muted">SDS + heat</text>
+    <text x="150" y="120" class="txt small muted">(+ reducing agent)</text>
+    <!-- unfolded, SDS coated -->
+    <path d="M180,90 L330,90" class="prot"/>
+    <g class="sds">
+      <circle cx="190" cy="78" r="4"/><circle cx="206" cy="102" r="4"/><circle cx="222" cy="78" r="4"/><circle cx="238" cy="102" r="4"/>
+      <circle cx="254" cy="78" r="4"/><circle cx="270" cy="102" r="4"/><circle cx="286" cy="78" r="4"/><circle cx="302" cy="102" r="4"/><circle cx="318" cy="78" r="4"/>
+    </g>
+    <text x="255" y="130" class="txt small bold" style="fill:var(--c-N)">− − − − − − − − −</text>
+    <text x="255" y="150" class="txt small">unfolded chain coated with SDS:</text>
+    <text x="255" y="164" class="txt small muted">same shape, negative charge ∝ length</text>
+    <!-- gel -->
+    <rect x="380" y="30" width="230" height="180" rx="6" class="gel"/>
+    <rect x="380" y="30" width="230" height="30" rx="6" class="well" style="fill-opacity:.5"/>
+    <text x="495" y="50" class="txt small muted">stacking gel</text>
+    <text x="495" y="78" class="txt small muted">resolving gel</text>
+    <rect x="400" y="90" width="40" height="5" class="band blue"/><rect x="400" y="115" width="40" height="5" class="band blue"/>
+    <rect x="400" y="140" width="40" height="5" class="band blue"/><rect x="400" y="168" width="40" height="5" class="band blue"/><rect x="400" y="192" width="40" height="5" class="band blue"/>
+    <text x="448" y="95" class="txt small left muted">100 kDa</text><text x="448" y="120" class="txt small left muted">70</text>
+    <text x="448" y="145" class="txt small left muted">50</text><text x="448" y="173" class="txt small left muted">30</text><text x="448" y="197" class="txt small left muted">20</text>
+    <rect x="500" y="128" width="40" height="5" class="band blue"/>
+    <rect x="555" y="100" width="40" height="5" class="band blue"/><rect x="555" y="160" width="40" height="5" class="band blue"/>
+    <text x="420" y="224" class="txt small">marker</text><text x="520" y="224" class="txt small">sample 1</text><text x="575" y="224" class="txt small">sample 2</text>
+    <text x="620" y="60" class="txt small left" style="fill:var(--c-N)">−</text>
+    <text x="620" y="208" class="txt small left" style="fill:var(--c-O)">+</text>
+  </svg>
+  <figcaption>SDS-PAGE (syllabus Figure 4-25). Left: SDS (blue dots) unfolds the protein and gives it a uniform negative coat. Right: the gel after Coomassie staining; the marker lane gives sizes in kDa, and sample 1 contains one protein of about 60 kDa.</figcaption>
+</figure>
+
+<table class="cmp">
+  <tr><td>principle</td><td>SDS makes every protein an unfolded, negatively charged chain, so the polyacrylamide gel sorts them by molecular weight only</td></tr>
+  <tr><td>what you need</td><td>SDS, heat, (reducing agent), a polyacrylamide gel with stacking and resolving part, Coomassie Brilliant Blue, a marker of known kDa</td></tr>
+  <tr><td>steps</td><td>denature with SDS (+ heat, reducing agent) → load → run (to +) → stain with Coomassie → compare with the marker lane</td></tr>
+  <tr><td>used for</td><td>seeing which proteins (sizes) a sample contains, how pure a preparation is; the first step of a Western blot (page 4.13); cutting out a band for mass spectrometry</td></tr>
+  <tr><td>trap</td><td>without SDS, charge and shape would decide, not size; the reducing agent is for disulfide bonds, SDS for unfolding and charge</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Eiwitten verschillen in lading en vorm, dus eerst gelijkmaken: <strong>denatureren</strong> met het negatief geladen detergent <strong>SDS</strong> (+ verwarmen; een <strong>reducerend middel</strong>
+breekt de disulfidebruggen). Elk eiwit wordt een ontvouwen keten met een negatieve mantel, dus de polyacrylamidegel sorteert alleen op <strong>molecuulgewicht</strong>: <strong>SDS-PAGE</strong>.
+Stapelgel (één strakke band) + scheidingsgel; kleuren met <strong>Coomassie Brilliant Blue</strong>; markerbaan met bekende massa's in <strong>kDa</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Mass spectrometry: weighing molecules to identify them (4.8, 4.8.1)</h2>
+<p>Once a molecule is purified (for example a band cut out of an SDS-PAGE gel), you want to know <strong>what</strong> it is. <strong>Mass spectrometry</strong> (MS) identifies the widest range of molecules,
+even in small amounts: proteins first of all, but also carbohydrates, nucleic acids and small molecules. It determines the <strong>molecular weight</strong> of a molecule with very high accuracy by measuring its
+<strong>mass-to-charge ratio (m/z)</strong>. Begin state: a small amount of the sample. Goal: its exact mass, and from that its identity.</p>
+<ol>
+  <li><strong>Make gas-phase ions:</strong> the molecules must fly through a vacuum as charged particles. Two ways: <strong>MALDI</strong> (matrix-assisted laser desorption/ionization: the sample is embedded in a chemical matrix and hit with a laser, which kicks charged molecules loose) or <strong>ESI</strong> (electrospray ionization: a fine spray of the sample in a strong electric field).</li>
+  <li><strong>Separate the ions</strong> by their mass-to-charge ratio (m/z): in the instrument, light ions and heavy ions behave differently in electric or magnetic fields.</li>
+  <li><strong>Detect:</strong> the ions strike a detector; the result is a spectrum: a plot of signal intensity against m/z, with one peak per kind of ion.</li>
+</ol>
+<p>For small molecules the mass is found to within a <strong>single dalton</strong>; for large molecules somewhat less accurately. That is why big molecules are usually first <strong>cut into pieces</strong>.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 640 200" width="640" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <rect x="10" y="50" width="110" height="60" rx="6" class="boxp"/>
+    <text x="65" y="74" class="txt small">sample</text><text x="65" y="90" class="txt small muted">e.g. peptides</text>
+    <path d="M124,80 L156,80" class="path accent" marker-end="url(#arm)"/>
+    <rect x="160" y="50" width="110" height="60" rx="6" class="boxp"/>
+    <text x="215" y="70" class="txt small">ionization</text><text x="215" y="84" class="txt small muted">MALDI (laser)</text><text x="215" y="98" class="txt small muted">or ESI (spray)</text>
+    <path d="M274,80 L306,80" class="path accent" marker-end="url(#arm)"/>
+    <rect x="310" y="50" width="110" height="60" rx="6" class="boxp"/>
+    <text x="365" y="70" class="txt small">separation</text><text x="365" y="84" class="txt small muted">by m/z in</text><text x="365" y="98" class="txt small muted">a field (vacuum)</text>
+    <g class="ion"><circle cx="330" cy="40" r="3"/><circle cx="350" cy="36" r="4"/><circle cx="372" cy="40" r="5"/><circle cx="398" cy="36" r="6"/></g>
+    <path d="M424,80 L456,80" class="path accent" marker-end="url(#arm)"/>
+    <rect x="460" y="50" width="70" height="60" rx="6" class="boxp"/>
+    <text x="495" y="84" class="txt small">detector</text>
+    <!-- spectrum -->
+    <path d="M30,185 L30,130 M30,185 L610,185" class="axis"/>
+    <text x="320" y="198" class="txt small muted">m/z →</text>
+    <text x="22" y="140" class="txt small muted" style="text-anchor:end">signal</text>
+    <path d="M90,185 L90,160" class="peak"/><path d="M150,185 L150,145" class="peak"/><path d="M230,185 L230,170" class="peak"/>
+    <path d="M300,185 L300,138" class="peak hi"/><path d="M370,185 L370,165" class="peak"/><path d="M470,185 L470,150" class="peak"/><path d="M560,185 L560,172" class="peak"/>
+    <text x="300" y="130" class="txt small bold" style="fill:var(--c-O)">one peak per ion: its m/z gives its mass</text>
+  </svg>
+  <figcaption>A mass spectrometer in four steps and the spectrum it produces (after syllabus Figure 4-26). Each peak is one kind of ion; the position on the x axis is its mass-to-charge ratio, which gives its mass to within about one dalton.</figcaption>
+</figure>
+
+<h3>Identifying a protein</h3>
+<ol>
+  <li>The protein is <strong>digested</strong> (cut) with a specific protease such as <strong>trypsin</strong>, which cuts at predictable places. The result is a set of <strong>peptides</strong>.</li>
+  <li>The mass of each peptide is measured. Because trypsin cuts predictably, a computer can calculate, for every protein that the organism's genome can encode, which peptide masses it <em>should</em> give. For an organism with a known genome, matching the measured masses to the predicted ones is usually enough to <strong>identify the protein</strong>.</li>
+  <li>If that is not enough, <strong>tandem mass spectrometry (MS/MS)</strong>: a peptide is first weighed, then broken further into its amino acids and those are weighed too, which gives the exact amino acid composition and sequence of the peptide.</li>
+</ol>
+<p>Mass spectrometry can therefore give not only the sequence of a protein but also whether its amino acids are <strong>modified</strong>, for example by <strong>phosphorylation</strong> (a phosphate group adds a known mass).
+It works after purification, but also on <strong>complex mixtures</strong> of hundreds of proteins: the composition of a large protein complex, or how growth conditions change the abundance of all the cell's proteins.</p>
+
+<table class="cmp">
+  <tr><td>principle</td><td>turn molecules into gas-phase ions, sort them by mass-to-charge ratio, read their exact mass; match peptide masses to the genome's predicted proteins</td></tr>
+  <tr><td>what you need</td><td>a small amount of sample, a protease (trypsin), an ionization source (MALDI or ESI), the mass analyser and detector, the organism's genome sequence for matching</td></tr>
+  <tr><td>steps</td><td>digest with trypsin → ionize → separate by m/z → detect → compare peptide masses with predicted ones → if needed MS/MS to sequence the peptides</td></tr>
+  <tr><td>used for</td><td>identifying proteins (also from gel bands), finding modifications such as phosphorylation, analysing whole complexes and mixtures (proteomics, chapter 2 mentions it for tumours); also carbohydrates, nucleic acids, small molecules</td></tr>
+  <tr><td>trap</td><td>MS measures m/z, not mass directly; big molecules are cut into peptides first because small pieces are weighed more accurately</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Massaspectrometrie</strong> bepaalt het molecuulgewicht zeer nauwkeurig via de <strong>massa/lading-verhouding (m/z)</strong>. Stappen: moleculen omzetten in <strong>ionen</strong> in de gasfase
+(<strong>MALDI</strong>: laser op een matrix; <strong>ESI</strong>: elektrospray) → scheiden op m/z → <strong>detector</strong> → spectrum met pieken. Kleine moleculen tot op 1 dalton. Eiwitten worden eerst
+met <strong>trypsine</strong> in <strong>peptiden</strong> geknipt; hun massa's worden vergeleken met wat het genoom voorspelt → identificatie. <strong>MS/MS</strong> breekt peptiden verder tot aminozuren (sequentie).
+Ziet ook <strong>modificaties</strong> zoals fosforylering en werkt in complexe mengsels.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>separate / isolate</td><td>get one molecule away from the others, using a property in which it differs (mass, shape, charge, binding)</td></tr>
+  <tr><td>tag</td><td>a known extra piece built into a protein or nucleic acid so it can be caught</td></tr>
+  <tr><td>gel electrophoresis</td><td>pulling charged molecules through a porous gel with an electric field; sorts by size</td></tr>
+  <tr><td>agarose, polyacrylamide</td><td>the two gel materials (agarose for DNA, polyacrylamide for proteins and fine DNA separations)</td></tr>
+  <tr><td>well</td><td>the slot at the negative end of the gel into which the sample is pipetted</td></tr>
+  <tr><td>band</td><td>a stripe in a lane: all molecules of one size</td></tr>
+  <tr><td>ladder / marker</td><td>a lane of fragments or proteins of known size, the ruler of the gel</td></tr>
+  <tr><td>SDS</td><td>sodium dodecyl sulfate: a negatively charged detergent that unfolds proteins and coats them</td></tr>
+  <tr><td>reducing agent</td><td>a chemical that breaks disulfide bonds</td></tr>
+  <tr><td>SDS-PAGE</td><td>SDS-polyacrylamide gel electrophoresis: proteins separated by molecular weight</td></tr>
+  <tr><td>stacking gel / resolving gel</td><td>the top part that compacts the sample into one band / the part that separates by size</td></tr>
+  <tr><td>Coomassie Brilliant Blue</td><td>the dye that stains proteins in a gel</td></tr>
+  <tr><td>kilodalton (kDa)</td><td>unit of protein mass, 1,000 daltons</td></tr>
+  <tr><td>two-dimensional gel</td><td>separation by charge in one direction, then by size in the other</td></tr>
+  <tr><td>mass spectrometry (MS)</td><td>identifying molecules by weighing their ions (mass-to-charge ratio)</td></tr>
+  <tr><td>m/z</td><td>mass divided by charge of an ion</td></tr>
+  <tr><td>MALDI, ESI</td><td>two ways to make gas-phase ions: laser on a matrix; electrospray in an electric field</td></tr>
+  <tr><td>trypsin</td><td>a protease that cuts proteins at predictable places into peptides</td></tr>
+  <tr><td>tandem MS (MS/MS)</td><td>weigh a peptide, then break it up and weigh the pieces: gives the amino acid sequence</td></tr>
+  <tr><td>phosphorylation</td><td>a phosphate group added to a protein; visible in MS as extra mass</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective of the chapter: "The student describes various techniques used in the analysis of proteins and metabolites, including mass spectrometry and chromatography, proteomics and metabolomics" and "describes the principle, methodology and applications of ... nucleic acid based technologies".</p>
+<ol>
+  <li>Explain why DNA moves to the positive pole and why small fragments run farther; describe the set-up (wells at −, run to +, stain, UV, ladder).</li>
+  <li>Pair "electrophoresis" with "separation of DNA fragments" (exam Q11) and know which pairing in that question is wrong (ligase does not cut).</li>
+  <li>Explain why proteins need SDS (and heat, and a reducing agent) before a gel, and what SDS-PAGE separates by.</li>
+  <li>Name the parts: stacking and resolving gel, Coomassie stain, marker in kDa.</li>
+  <li>Describe mass spectrometry: ionization (MALDI, ESI), separation by m/z, detector, spectrum; accuracy about one dalton.</li>
+  <li>Explain how a protein is identified: trypsin → peptides → masses matched to the genome's predicted proteins → MS/MS for the sequence; modifications such as phosphorylation; complex mixtures.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why do DNA fragments move toward the positive pole in a gel?</dt>
+  <dd>Because DNA is negatively charged: every phosphate in the backbone carries a negative charge. In an electric field it is pulled toward the plus pole.</dd>
+
+  <dt>Why do short fragments end up farther from the wells than long ones?</dt>
+  <dd>The gel is a network of tiny pores. Small molecules slip through the pores faster than large ones, so in the same time they travel farther.</dd>
+
+  <dt>Where do you load the samples, and how do you see the result?</dt>
+  <dd>In the wells at the negative end of the gel. After the run the gel is stained with ethidium bromide (or a safer dye) and viewed under UV light; each band is a set of fragments of one size, read against a ladder of known sizes.</dd>
+
+  <dt>Why can proteins not simply be run on a gel like DNA?</dt>
+  <dd>Proteins vary in charge (some positive, some negative) and in shape, so they would not migrate in a predictable way. They must first be made uniform.</dd>
+
+  <dt>What do SDS, heat and the reducing agent each do in SDS-PAGE?</dt>
+  <dd>SDS is a negatively charged detergent that binds along the unfolded protein and coats it with negative charge. Heat helps the protein unfold so SDS can bind. The reducing agent breaks disulfide bonds. Together they turn every protein into an unstructured, negatively charged chain, so the gel separates by molecular weight only.</dd>
+
+  <dt>What are the stacking gel and the resolving gel?</dt>
+  <dd>The stacking gel is the top part, which compacts each sample into a single tight band; the resolving gel below separates the proteins according to size.</dd>
+
+  <dt>How are proteins seen on an SDS-PAGE gel, and how is their size read?</dt>
+  <dd>They are stained with Coomassie Brilliant Blue. A marker lane with proteins of known mass (in kilodaltons) is run alongside; a sample band is compared with the marker bands.</dd>
+
+  <dt>What does a mass spectrometer actually measure?</dt>
+  <dd>The mass-to-charge ratio (m/z) of ions. From that the molecular weight is obtained, for small molecules to within about one dalton.</dd>
+
+  <dt>Name the two ways of making ions, and the three stages of the instrument.</dt>
+  <dd>MALDI (laser on a sample in a matrix) and ESI (electrospray in a strong electric field). Stages: ionization, separation of the ions by m/z, detection (giving a spectrum of peaks).</dd>
+
+  <dt>How is an unknown protein identified by mass spectrometry?</dt>
+  <dd>It is digested with trypsin into peptides whose masses are measured. Because trypsin cuts predictably, the masses are compared with the peptide masses predicted for every protein of the organism's known genome; the matching protein is the identity. If needed, tandem MS breaks the peptides into amino acids to read their sequence.</dd>
+
+  <dt>What else can mass spectrometry tell you about a protein, and can it work in a mixture?</dt>
+  <dd>Whether amino acids are modified, for example phosphorylated (extra mass). Yes: it can analyse complex mixtures of hundreds of proteins, such as a whole protein complex or how growth conditions change the abundance of the cell's proteins.</dd>
+
+  <dt>Why cut a big protein into peptides before weighing?</dt>
+  <dd>Because the mass of large molecules is measured less accurately; small fragments can be weighed to one dalton, and their individual masses identify the protein unambiguously.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Separate by <strong>mass, shape, charge or binding</strong>; or add a <strong>tag</strong>.</li>
+  <li><strong>DNA/RNA is negative</strong> (phosphates) → runs to the <strong>+ pole</strong>; <strong>small fragments run farthest</strong>.</li>
+  <li>Gel = <strong>agarose</strong> or <strong>polyacrylamide</strong>; samples in <strong>wells at the − end</strong>; stain (ethidium bromide), <strong>UV</strong>; <strong>ladder</strong> = ruler.</li>
+  <li>Exam Q11: electrophoresis = separation of DNA fragments (correct); <strong>ligase glues, it does not cut</strong>.</li>
+  <li>Proteins vary in charge and shape → <strong>SDS</strong> (negative detergent) + <strong>heat</strong> unfold and coat them; <strong>reducing agent</strong> breaks <strong>disulfide bonds</strong>.</li>
+  <li><strong>SDS-PAGE</strong> separates proteins by <strong>molecular weight</strong>; <strong>stacking gel</strong> compacts, <strong>resolving gel</strong> separates.</li>
+  <li>Stain with <strong>Coomassie Brilliant Blue</strong>; marker lane in <strong>kDa</strong> (1 kDa = 1,000 daltons).</li>
+  <li><strong>Mass spectrometry</strong> measures <strong>m/z</strong> → molecular weight to ≈ 1 dalton; ionize by <strong>MALDI</strong> (laser) or <strong>ESI</strong> (spray) → separate → <strong>detector</strong>.</li>
+  <li>Protein ID: <strong>trypsin → peptides → masses matched to the genome's predicted proteins</strong>; <strong>MS/MS</strong> = sequence of the peptide.</li>
+  <li>MS also sees <strong>modifications (phosphorylation)</strong> and works in <strong>complex mixtures</strong>.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>On a DNA gel, which band is closest to the wells?
+    <ul class="opts"><li data-l="a">the smallest fragment</li><li data-l="b">the largest fragment</li><li data-l="c">the most abundant fragment</li><li data-l="d">the most negatively charged fragment</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Large fragments are held back most by the pores. All fragments have the same charge per length, so charge does not decide.</p></div></details></li>
+  <li>At which end of the gel are the wells, and why?
+    <details><summary>Answer</summary><div class="ans"><p>At the <strong>negative</strong> end. DNA is negative and moves away from the minus pole toward the plus pole, so it must start at the minus side.</p></div></details></li>
+  <li>Which of these tool–use pairs is wrong?
+    <ul class="opts"><li data-l="a">electrophoresis – separation of DNA fragments</li><li data-l="b">DNA ligase – cutting DNA to create sticky ends</li><li data-l="c">DNA polymerase – PCR</li><li data-l="d">reverse transcriptase – making cDNA from mRNA</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Ligase <strong>joins</strong> DNA ends; cutting and sticky ends are the work of restriction enzymes. This is example exam question 11.</p></div></details></li>
+  <li>You forgot to add SDS to your protein samples before the gel. What goes wrong?
+    <details><summary>Answer</summary><div class="ans"><p>The proteins keep their own shape and charge, so they migrate unpredictably (some may not even move toward the plus pole). The gel no longer sorts by <strong>size</strong>.</p></div></details></li>
+  <li>What does the reducing agent do in SDS-PAGE?
+    <details><summary>Answer</summary><div class="ans"><p>It breaks the <strong>disulfide bonds</strong> (sulfur–sulfur bridges between cysteines), so that nothing holds a chain folded or two chains together; every polypeptide becomes a separate, fully unfolded chain.</p></div></details></li>
+  <li>A protein band lies between the 50 kDa and 70 kDa marker bands. What do you conclude?
+    <details><summary>Answer</summary><div class="ans"><p>Its molecular weight is roughly <strong>between 50 000 and 70 000 daltons</strong>. The marker lane is the ruler; position in SDS-PAGE depends on size only.</p></div></details></li>
+  <li>What is the stacking gel for?
+    <details><summary>Answer</summary><div class="ans"><p>To <strong>compact</strong> each loaded sample into one tight band before it enters the resolving gel, so that the bands are sharp.</p></div></details></li>
+  <li>Which dye stains DNA on a gel, and which stains proteins?
+    <details><summary>Answer</summary><div class="ans"><p>DNA: <strong>ethidium bromide</strong> (or SYBR Safe, GelRed), seen under UV. Proteins: <strong>Coomassie Brilliant Blue</strong>.</p></div></details></li>
+  <li>Mass spectrometry measures:
+    <ul class="opts"><li data-l="a">the colour of a molecule</li><li data-l="b">the mass-to-charge ratio of ions</li><li data-l="c">the length of DNA fragments in base pairs</li><li data-l="d">the absorbance at 280 nm</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The molecules are made into gas-phase ions, separated by m/z and detected; from m/z the mass follows.</p></div></details></li>
+  <li>Name the two ionization methods and say in one phrase how each works.
+    <details><summary>Answer</summary><div class="ans"><p><strong>MALDI</strong>: the sample embedded in a matrix is hit by a laser. <strong>ESI</strong>: the sample is sprayed in a strong electric field. Both produce charged molecules flying in a vacuum.</p></div></details></li>
+  <li>Why is trypsin used before identifying a protein by MS?
+    <details><summary>Answer</summary><div class="ans"><p>It cuts the protein at <strong>predictable</strong> places into peptides. Small peptides are weighed accurately, and because the cutting is predictable, a computer can calculate what peptide masses each protein of the genome should give and find the match.</p></div></details></li>
+  <li>What does MS/MS add to a single MS measurement?
+    <details><summary>Answer</summary><div class="ans"><p>After weighing a peptide, it <strong>breaks the peptide further</strong> and weighs the pieces (down to amino acids), giving the exact <strong>amino acid composition and sequence</strong> when the peptide masses alone are not enough.</p></div></details></li>
+  <li>True or false: "Mass spectrometry only works on a single purified protein."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> It also identifies proteins in <strong>complex mixtures</strong> of hundreds of proteins, such as a whole protein complex or all the proteins of a cell under different growth conditions, and it can detect modifications such as phosphorylation.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.07_detecting_molecules.html">← 4.7 Detecting molecules</a><a href="index.html">Chapter 4 index</a><a href="4.09_sanger_sequencing_and_blast.html">4.9 Sanger sequencing and BLAST →</a></nav>
+</main>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheatsheet 4 – Tools and techniques</title>
+<link rel="stylesheet" href="cs.css">
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="../chapter_4/index.html">Chapter 4 pages</a><a href="cs3_viruses.html">← 3 Viruses</a></nav>
+<h1>4 · Tools and techniques in molecular biology</h1>
+<div class="anims"><b>Watch first: animations for this chapter</b>
+<ul>
+  <li><a href="../animations/techniques.html#pcr=1">▶ 1 · PCR</a> <span class="note">denature, anneal, extend; 20 cycles → a million copies; cDNA · card <a href="#c-pcr">PCR</a></span></li>
+  <li><a href="../animations/techniques.html#clo=1">▶ 2 · Cloning</a> <span class="note">restriction enzyme, sticky ends, ligase, transformation, selection · card <a href="#c-cloning">Cloning by ligation</a></span></li>
+  <li><a href="../animations/techniques.html#seq=1">▶ 3 · Sequencing: Sanger and Illumina</a> <span class="note">ddNTP ladder, shotgun, reversible terminators, nanopore · cards <a href="#c-sanger">Sanger</a>, <a href="#c-ngs">Illumina and Nanopore</a></span></li>
+</ul></div>
+
+<div class="kapstok"><b>Kapstok – map of this chapter</b>
+<p>Four questions a lab asks: how do I <b>grow</b> cells, how do I <b>copy and change</b> DNA, how do I <b>see and separate</b> molecules, and how do I <b>read</b> sequences and <b>detect</b> a specific DNA, RNA or protein? Click a name to jump to its card.</p>
+<ul class="tree">
+  <li><a href="#c-culture">Grow: model organisms and cell culture</a>
+    <ul><li><a href="#c-stem">Stem cells (ES, iPS) and viruses (plaque assay)</a></li></ul></li>
+  <li><a href="#c-pcr">Copy: PCR and cDNA</a>
+    <ul>
+      <li><a href="#c-vector">Vectors and restriction enzymes</a> → <a href="#c-cloning">cloning by ligation</a> → <a href="#c-library">libraries, forward and reverse genetics</a></li>
+      <li><a href="#c-rnai">Change a genome: RNAi, CRISPR-Cas9</a> · <a href="#c-knockout">knockout mouse</a></li>
+    </ul></li>
+  <li><a href="#c-detect">See: absorbance, dyes, activity assays</a>
+    <ul><li><a href="#c-gels">Separate: gels (DNA, SDS-PAGE); identify: mass spectrometry</a></li></ul></li>
+  <li><a href="#c-sanger">Read: Sanger sequencing and BLAST</a>
+    <ul>
+      <li><a href="#c-shotgun">Whole genomes: shotgun, over-sequencing, coverage</a> · <a href="#c-ngs">Illumina, Nanopore</a></li>
+      <li><a href="#c-wgs">Applications: WGS, exome, targeted, metagenome</a> · <a href="#c-epirna">epigenomics, RNA-seq</a></li>
+    </ul></li>
+  <li><a href="#c-cyto">Detect DNA: karyotype, FISH, aCGH</a> · <a href="#c-rna">RNA: qRT-PCR, reporters, microarray</a> · <a href="#c-protein">protein and cells: Western blot, flow cytometry</a>
+    <ul><li><a href="#c-which">Which technique for which question?</a></li></ul></li>
+  <li><a href="#c-traps">Quick traps</a></li>
+</ul></div>
+
+<h2 class="sec">A · Growing cells<small>Everything starts with a homogeneous population of cells or molecules to work with.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-culture">
+<p class="crumb">Grow › <b>Model organisms and cell culture</b></p>
+<h2>Model organisms; cells in liquid culture, on agar, in a flask</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <!-- tube -->
+  <path d="M40 20 v90 a20 20 0 0 0 40 0 v-90" fill="#e9c46a" fill-opacity=".5" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#8a8f98"><circle cx="50" cy="60" r="2"/><circle cx="66" cy="80" r="2"/><circle cx="58" cy="100" r="2"/><circle cx="70" cy="50" r="2"/><circle cx="48" cy="88" r="2"/></g>
+  <text x="60" y="140" text-anchor="middle" fill="currentColor" font-weight="700">liquid culture</text>
+  <text x="60" y="152" text-anchor="middle" fill="currentColor">turbid: 10⁸ cells/ml</text>
+  <!-- plate -->
+  <ellipse cx="180" cy="70" rx="60" ry="45" fill="#e9c46a" fill-opacity=".5" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#2a9d8f"><circle cx="160" cy="55" r="5"/><circle cx="195" cy="48" r="5"/><circle cx="205" cy="80" r="5"/><circle cx="170" cy="90" r="5"/><circle cx="145" cy="78" r="5"/><circle cx="185" cy="68" r="5"/></g>
+  <text x="180" y="140" text-anchor="middle" fill="currentColor" font-weight="700">agar plate</text>
+  <text x="180" y="152" text-anchor="middle" fill="currentColor">1 cell → 1 colony (millions)</text>
+  <!-- flask -->
+  <path d="M290 40 h110 l20 60 h-150 z" fill="#f4a261" fill-opacity=".35" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="none" stroke="#457b9d" stroke-width="1.5"><ellipse cx="300" cy="94" rx="12" ry="5"/><ellipse cx="326" cy="94" rx="12" ry="5"/><ellipse cx="352" cy="94" rx="12" ry="5"/><ellipse cx="378" cy="94" rx="12" ry="5"/><ellipse cx="404" cy="94" rx="12" ry="5"/></g>
+  <text x="355" y="140" text-anchor="middle" fill="currentColor" font-weight="700">tissue culture flask</text>
+  <text x="355" y="152" text-anchor="middle" fill="currentColor">animal cells stick to the plastic</text>
+  <text x="355" y="164" text-anchor="middle" fill="currentColor">one layer, pink medium (pH dye)</text>
+  <text x="470" y="60" text-anchor="middle" fill="currentColor">agar = algae</text>
+  <text x="470" y="72" text-anchor="middle" fill="currentColor">jelly, melts</text>
+  <text x="470" y="84" text-anchor="middle" fill="currentColor">when hot</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><th>cells</th><th>what limits them</th><th>the fix</th></tr>
+  <tr><td>primary cells (from a tissue)</td><td>contact inhibition (stop when touching); telomeres shorten → senescence (BIO01 ch 4)</td><td>cell lines: tumour cells with telomerase, or cells immortalised by a cancer virus</td></tr>
+  <tr><td>cell lines</td><td>differ from tissue, collect mutations, mix-ups</td><td>be vigilant: check identity</td></tr>
+</table>
+<p class="mnemo">Model organism: easy to grow, short generation, small, storable, mutants + transgenes possible, genome sequenced. Bacteria for replication/transcription/translation, yeast for the nucleus, fly/worm for development, mouse for mammals. "What is true for E. coli is true for the elephant."</p>
+<p class="trap">Non-culturable microbes are known only from their genome sequences. In vitro = in the test tube with purified parts; in vivo = in the living cell/organism.</p>
+</div>
+
+<div class="card" id="c-stem">
+<p class="crumb">Grow › <b>Stem cells and virus culture</b></p>
+<h2>Stem cells: self-renewal + differentiation; ES, iPS; plaque assay</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 160" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <circle cx="60" cy="60" r="24" fill="#9b59b6"/><text x="60" y="64" text-anchor="middle" fill="#fff" font-weight="700">stem</text>
+  <path d="M84 50 l40 -20 M84 70 l40 20" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a1)"/>
+  <circle cx="150" cy="24" r="18" fill="#9b59b6"/><text x="150" y="28" text-anchor="middle" fill="#fff" font-size="9">stem</text>
+  <circle cx="150" cy="96" r="18" fill="#2a9d8f"/><text x="150" y="100" text-anchor="middle" fill="#fff" font-size="9">differ-</text>
+  <text x="185" y="28" fill="currentColor">self-renewal: stays a stem cell</text>
+  <text x="185" y="100" fill="currentColor">differentiates: becomes e.g. a blood cell</text>
+  <text x="60" y="104" text-anchor="middle" fill="currentColor">divides without limit</text>
+  <text x="60" y="116" text-anchor="middle" fill="currentColor">one daughter of each kind</text>
+  <!-- plaque plate -->
+  <ellipse cx="440" cy="70" rx="55" ry="42" fill="#9b59b6" fill-opacity=".7" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#fff"><circle cx="420" cy="60" r="7"/><circle cx="455" cy="52" r="6"/><circle cx="462" cy="85" r="7"/><circle cx="430" cy="92" r="5"/></g>
+  <text x="440" y="130" text-anchor="middle" fill="currentColor" font-weight="700">plaque assay</text>
+  <text x="440" y="142" text-anchor="middle" fill="currentColor">white hole = cells killed by one virus</text>
+  <text x="440" y="154" text-anchor="middle" fill="currentColor">count plaques = count live viruses</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>totipotent (syllabus)</td><td>ES cells from early embryos: every cell type (exam Q10)</td></tr>
+  <tr><td>pluripotent (syllabus)</td><td>a restricted set of cell types; adult stem cells (skin, hair, gut, blood = hematopoietic)</td></tr>
+  <tr><td>ES cells → neurons</td><td>&gt; 99 % with growth factors; hope for Parkinson's; danger: teratoma (tumour of mixed cell types) if not 100 % differentiated</td></tr>
+  <tr><td>iPS cells</td><td>4 transcription factors reprogram skin cells → stem cells; autologous (own cells, no rejection), no embryo</td></tr>
+  <tr><td>bone marrow transplant</td><td>hematopoietic stem cells renew all blood cells daily (hematopoiesis)</td></tr>
+</table>
+<p class="trap">Viruses must be grown in living cells (poliovirus in cultured human cells → vaccine). Viral vectors carry the iPS factors in. Isolation: detergents break the cells, or lytic viruses burst them.</p>
+</div>
+
+</div>
+
+<h2 class="sec">B · Copying and changing DNA<small>PCR makes copies in a tube; cloning makes copies in bacteria; CRISPR and knockouts change the genome itself.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-pcr">
+<p class="crumb">Copy › <b>PCR and cDNA</b></p>
+<h2>PCR: three temperatures, 20–40 cycles, doubling every cycle</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <!-- template -->
+  <path d="M20 30 h120 M20 42 h120" stroke="#3a86ff" stroke-width="4"/>
+  <rect x="60" y="26" width="40" height="20" fill="#f4a261" fill-opacity=".4"/>
+  <text x="80" y="62" text-anchor="middle" fill="currentColor">target between the primers</text>
+  <text x="80" y="16" text-anchor="middle" fill="currentColor" font-weight="700">double-stranded DNA</text>
+  <path d="M150 36 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a2)"/>
+  <!-- denature -->
+  <path d="M190 22 h120" stroke="#3a86ff" stroke-width="4"/><path d="M190 50 h120" stroke="#3a86ff" stroke-width="4"/>
+  <text x="250" y="14" text-anchor="middle" fill="currentColor" font-weight="700">1 denature 94–98 °C</text>
+  <text x="250" y="66" text-anchor="middle" fill="currentColor">strands come apart</text>
+  <path d="M320 36 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a2)"/>
+  <!-- anneal -->
+  <path d="M360 22 h120" stroke="#3a86ff" stroke-width="4"/><path d="M360 50 h120" stroke="#3a86ff" stroke-width="4"/>
+  <path d="M440 28 h30" stroke="#2a9d8f" stroke-width="4"/><path d="M370 44 h30" stroke="#d1495b" stroke-width="4"/>
+  <text x="420" y="14" text-anchor="middle" fill="currentColor" font-weight="700">2 anneal 50–65 °C</text>
+  <text x="420" y="66" text-anchor="middle" fill="currentColor">primers bind the 3′ ends</text>
+  <!-- extend -->
+  <path d="M60 110 h120" stroke="#3a86ff" stroke-width="4"/><path d="M140 116 h30" stroke="#2a9d8f" stroke-width="4"/><path d="M60 116 h80" stroke="#2a9d8f" stroke-width="4" stroke-dasharray="4 3"/>
+  <path d="M60 140 h120" stroke="#3a86ff" stroke-width="4"/><path d="M70 134 h30" stroke="#d1495b" stroke-width="4"/><path d="M100 134 h80" stroke="#d1495b" stroke-width="4" stroke-dasharray="4 3"/>
+  <ellipse cx="110" cy="118" rx="14" ry="7" fill="#9b59b6"/><ellipse cx="130" cy="132" rx="14" ry="7" fill="#9b59b6"/>
+  <text x="120" y="96" text-anchor="middle" fill="currentColor" font-weight="700">3 extend 72 °C: Taq builds 5′ → 3′</text>
+  <text x="120" y="160" text-anchor="middle" fill="currentColor">→ 2 copies; next cycle 4, 8, 16 …</text>
+  <g fill="currentColor" font-weight="700"><text x="300" y="110">cycles → copies</text></g>
+  <g fill="currentColor"><text x="300" y="126">10 → ≈ 1 000</text><text x="300" y="140">20 → &gt; 1 000 000</text><text x="300" y="154">30 → ≈ 10⁹</text></g>
+  <text x="400" y="110" fill="currentColor" font-weight="700">needs</text>
+  <g fill="currentColor"><text x="400" y="126">template DNA</text><text x="400" y="140">2 primers (≈ 20 nt)</text><text x="400" y="154">dNTPs (A, C, G, T)</text><text x="400" y="168">heat-stable polymerase</text><text x="400" y="182">= Taq (Thermus aquaticus)</text></g>
+</svg>
+</figure>
+<div class="legend"><ul><li><i style="background:#2a9d8f"></i><i style="background:#d1495b"></i>primers = short synthetic single strands, each complementary to the 3′ end of one strand</li><li><i style="background:#9b59b6"></i>Taq DNA polymerase (survives 98 °C)</li></ul></div>
+<ol class="steps">
+  <li>Reverse transcription (cDNA): mRNA + reverse transcriptase → DNA copy</li>
+  <li>RNA degraded; DNA polymerase makes strand 2</li>
+  <li>Double-stranded cDNA: no introns</li>
+  <li>Then PCR as usual</li>
+</ol>
+<p class="trap">Exam Q13: add nucleotides, primers and polymerase. Q12: more copies of old dodo DNA → PCR. Traps: primers bind elsewhere; an early copying error is amplified; &gt; 4–5 kb needs special polymerases.</p>
+</div>
+
+<div class="card" id="c-vector">
+<p class="crumb">Copy › Cloning › <b>Vectors and restriction enzymes</b></p>
+<h2>A plasmid vector, and restriction enzymes that cut at palindromes</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <circle cx="110" cy="95" r="70" fill="none" stroke="#8a8f98" stroke-width="6"/>
+  <path d="M110 25 a70 70 0 0 1 60 35" fill="none" stroke="#2a9d8f" stroke-width="8"/>
+  <path d="M170 130 a70 70 0 0 1 -60 35" fill="none" stroke="#e9c46a" stroke-width="8"/>
+  <path d="M50 130 a70 70 0 0 1 -10 -35" fill="none" stroke="#d1495b" stroke-width="8"/>
+  <g fill="#9b59b6"><rect x="104" y="18" width="12" height="14"/><rect x="160" y="140" width="12" height="14" transform="rotate(45 166 147)"/></g>
+  <g fill="currentColor"><text x="150" y="20">ampR (ampicillin</text><text x="150" y="32">resistance)</text><text x="150" y="176">tetR</text><text x="10" y="176">origin of replication (red)</text><text x="60" y="14">EcoRI site</text></g>
+  <text x="110" y="100" text-anchor="middle" fill="currentColor" font-weight="700">pBR322</text>
+  <!-- EcoRI -->
+  <text x="300" y="20" fill="currentColor" font-weight="700">EcoRI site GAATTC = a palindrome</text>
+  <g font-family="monospace" font-size="14" fill="currentColor"><text x="270" y="60">5′ G A A T T C 3′</text><text x="270" y="82">3′ C T T A A G 5′</text></g>
+  <path d="M290 46 v44" stroke="#d1495b" stroke-width="2"/><path d="M392 46 v44" stroke="#d1495b" stroke-width="2"/>
+  <g font-family="monospace" font-size="14" fill="currentColor"><text x="270" y="130">5′ G</text><text x="270" y="152">3′ C T T A A</text><text x="380" y="130">A A T T C 3′</text><text x="440" y="152">G 5′</text></g>
+  <text x="280" y="176" fill="currentColor">cut after G on both strands → sticky ends (5′ overhangs)</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>origin of replication</td><td>lets the plasmid copy itself in E. coli, independent of the chromosome</td></tr>
+  <tr><td>selectable marker</td><td>antibiotic-resistance gene (or a metabolic gene): only cells with the plasmid grow</td></tr>
+  <tr><td>unique restriction sites</td><td>where the insert goes; plasmid ≤ 15 kb insert, BAC (bacterial artificial chromosome) hundreds of kb</td></tr>
+  <tr><td>restriction enzyme</td><td>bacterial defence protein; hundreds exist; site 4–8 bp palindrome; blunt or 5′/3′ overhang</td></tr>
+</table>
+<p class="mnemo">Palindrome: reads the same 5′→3′ on both strands (GAATTC / CTTAAG). Recombinant DNA = insert + vector in one molecule.</p>
+</div>
+
+<div class="card" id="c-cloning">
+<p class="crumb">Copy › Cloning › <b>Cloning by ligation</b></p>
+<h2>Cloning by ligation: cut, anneal, ligate, transform, select</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 150" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <!-- 1 cut -->
+  <circle cx="50" cy="50" r="28" fill="none" stroke="#8a8f98" stroke-width="4" stroke-dasharray="150 20"/>
+  <path d="M20 100 h60" stroke="#f4a261" stroke-width="5"/>
+  <text x="50" y="130" text-anchor="middle" fill="currentColor" font-weight="700">1 cut both</text>
+  <text x="50" y="142" text-anchor="middle" fill="currentColor">same enzyme</text>
+  <path d="M90 70 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a3)"/>
+  <!-- 2 anneal + ligate -->
+  <circle cx="170" cy="60" r="30" fill="none" stroke="#8a8f98" stroke-width="4"/>
+  <path d="M158 32 a30 30 0 0 1 24 0" fill="none" stroke="#f4a261" stroke-width="6"/>
+  <g fill="#9b59b6"><circle cx="156" cy="34" r="4"/><circle cx="184" cy="34" r="4"/></g>
+  <text x="170" y="130" text-anchor="middle" fill="currentColor" font-weight="700">2 sticky ends pair</text>
+  <text x="170" y="142" text-anchor="middle" fill="currentColor">3 ligase seals</text>
+  <path d="M210 70 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a3)"/>
+  <!-- 3 transform -->
+  <rect x="250" y="35" width="70" height="50" rx="22" fill="#e9c46a" fill-opacity=".5" stroke="#8a8f98" stroke-width="2"/>
+  <circle cx="285" cy="60" r="12" fill="none" stroke="#8a8f98" stroke-width="3"/><path d="M280 49 a12 12 0 0 1 10 0" fill="none" stroke="#f4a261" stroke-width="4"/>
+  <text x="285" y="130" text-anchor="middle" fill="currentColor" font-weight="700">4 transform</text>
+  <text x="285" y="142" text-anchor="middle" fill="currentColor">competent E. coli</text>
+  <path d="M330 70 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a3)"/>
+  <!-- 4 select -->
+  <ellipse cx="430" cy="60" rx="55" ry="38" fill="#e9c46a" fill-opacity=".5" stroke="#8a8f98" stroke-width="2"/>
+  <g fill="#2a9d8f"><circle cx="415" cy="50" r="5"/><circle cx="445" cy="45" r="5"/><circle cx="455" cy="72" r="5"/><circle cx="420" cy="78" r="5"/></g>
+  <text x="430" y="130" text-anchor="middle" fill="currentColor" font-weight="700">5 select on antibiotic</text>
+  <text x="430" y="142" text-anchor="middle" fill="currentColor">only plasmid cells grow</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Insert: PCR with primers carrying the sites</li>
+  <li>Cut insert and vector with the same enzyme</li>
+  <li>Compatible overhangs base-pair (anneal)</li>
+  <li>DNA ligase joins the backbone</li>
+  <li>Transformation: salts or electric field → competent cells</li>
+  <li>Plate on antibiotic: marker selects</li>
+  <li>Each colony = a clone of the plasmid</li>
+</ol>
+<p class="trap">Exam Q11: <b>DNA ligase joins</b> (never cuts); restriction enzymes cut. Alternative to ligation: recombination by sequence homology.</p>
+</div>
+
+<div class="card" id="c-library">
+<p class="crumb">Copy › Cloning › <b>Libraries, forward and reverse genetics</b></p>
+<h2>Libraries; forward vs reverse genetics; transgenic</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <path d="M20 30 h200" stroke="#3a86ff" stroke-width="6"/>
+  <text x="120" y="20" text-anchor="middle" fill="currentColor" font-weight="700">genomic library: whole genome chopped</text>
+  <g stroke="#d1495b" stroke-width="2"><path d="M60 22 v16 M110 22 v16 M160 22 v16"/></g>
+  <g fill="none" stroke="#8a8f98" stroke-width="3"><circle cx="40" cy="80" r="16"/><circle cx="90" cy="80" r="16"/><circle cx="140" cy="80" r="16"/><circle cx="190" cy="80" r="16"/></g>
+  <g stroke="#3a86ff" stroke-width="5" fill="none"><path d="M30 68 a16 16 0 0 1 20 0"/><path d="M80 68 a16 16 0 0 1 20 0"/><path d="M130 68 a16 16 0 0 1 20 0"/><path d="M180 68 a16 16 0 0 1 20 0"/></g>
+  <text x="120" y="118" text-anchor="middle" fill="currentColor">each plasmid a different piece</text>
+  <path d="M290 30 h60" stroke="#d1495b" stroke-width="4"/><path d="M370 30 h40" stroke="#d1495b" stroke-width="4"/><path d="M430 30 h70" stroke="#d1495b" stroke-width="4"/>
+  <text x="395" y="20" text-anchor="middle" fill="currentColor" font-weight="700">cDNA library: the mRNAs of one tissue</text>
+  <path d="M395 40 v16" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a4)"/>
+  <text x="395" y="72" text-anchor="middle" fill="currentColor">reverse transcriptase → cDNAs</text>
+  <g fill="none" stroke="#8a8f98" stroke-width="3"><circle cx="345" cy="100" r="14"/><circle cx="395" cy="100" r="14"/><circle cx="445" cy="100" r="14"/></g>
+  <g stroke="#d1495b" stroke-width="5" fill="none"><path d="M336 90 a14 14 0 0 1 18 0"/><path d="M386 90 a14 14 0 0 1 18 0"/><path d="M436 90 a14 14 0 0 1 18 0"/></g>
+  <text x="395" y="124" text-anchor="middle" fill="currentColor">expressed genes only, no introns</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>library</td><td>a collection of clones, each with a different fragment: genomic, cDNA, or synthetic</td></tr>
+  <tr><td>use</td><td>complement a mutant: the clone that repairs the phenotype holds the gene</td></tr>
+  <tr><td>forward genetics</td><td>phenotype first (random mutants, e.g. radiation-sensitive) → find the gene</td></tr>
+  <tr><td>reverse genetics</td><td>gene first → change it → look at the phenotype</td></tr>
+  <tr><td>transgenic organism</td><td>a specific foreign gene put into its genome (exam Q14: a rat with rabbit insulin genes)</td></tr>
+  <tr><td>site-directed mutagenesis</td><td>change chosen bases of a cloned gene (syllabus gives no detail)</td></tr>
+</table>
+<p class="trap">A plasmid copy is expressed at the wrong level → to study a gene, change the chromosomal copy. No method is 100 % accurate.</p>
+</div>
+
+<div class="card" id="c-rnai">
+<p class="crumb">Change a genome › <b>RNAi and CRISPR-Cas9</b></p>
+<h2>RNA interference (knock-down) and CRISPR-Cas9 (edit)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 200" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <text x="120" y="16" text-anchor="middle" fill="currentColor" font-weight="700">RNAi: silence an mRNA</text>
+  <path d="M30 34 h100 M30 42 h100" stroke="#d1495b" stroke-width="4"/><text x="80" y="58" text-anchor="middle" fill="currentColor">dsRNA</text>
+  <ellipse cx="170" cy="38" rx="22" ry="10" fill="#9b59b6"/><text x="170" y="42" text-anchor="middle" fill="#fff" font-size="9">Dicer</text>
+  <path d="M30 80 h22 M30 88 h22 M60 80 h22 M60 88 h22 M90 80 h22 M90 88 h22" stroke="#d1495b" stroke-width="4"/>
+  <text x="80" y="104" text-anchor="middle" fill="currentColor">siRNAs ≈ 21 nt</text>
+  <ellipse cx="170" cy="84" rx="30" ry="12" fill="#2a9d8f"/><text x="170" y="88" text-anchor="middle" fill="#fff" font-size="9">Argonaute</text>
+  <path d="M40 130 h160" stroke="#f4a261" stroke-width="4"/><path d="M100 124 h22" stroke="#d1495b" stroke-width="4"/>
+  <text x="120" y="150" text-anchor="middle" fill="currentColor">one strand pairs with the matching mRNA</text>
+  <text x="120" y="164" text-anchor="middle" fill="currentColor" font-weight="700">→ mRNA destroyed or translation blocked</text>
+  <path d="M255 10 v180" stroke="#8a8f98" stroke-dasharray="3 4"/>
+  <text x="390" y="16" text-anchor="middle" fill="currentColor" font-weight="700">CRISPR-Cas9: cut the DNA</text>
+  <path d="M280 50 h220 M280 62 h220" stroke="#3a86ff" stroke-width="4"/>
+  <ellipse cx="390" cy="56" rx="40" ry="20" fill="#9b59b6" fill-opacity=".8"/><text x="390" y="60" text-anchor="middle" fill="#fff" font-weight="700">Cas9</text>
+  <path d="M365 40 q25 -16 50 0" fill="none" stroke="#d1495b" stroke-width="3"/><text x="390" y="30" text-anchor="middle" fill="currentColor">guide RNA = GPS</text>
+  <path d="M390 72 v12" stroke="#d1495b" stroke-width="3"/><text x="510" y="86" text-anchor="end" fill="currentColor">double-strand break</text>
+  <path d="M350 100 l-30 30 M430 100 l30 30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a5)"/>
+  <text x="325" y="150" text-anchor="middle" fill="currentColor" font-weight="700">NHEJ</text>
+  <text x="325" y="164" text-anchor="middle" fill="currentColor">ends glued, errors</text>
+  <text x="325" y="178" text-anchor="middle" fill="currentColor">→ gene broken (knockout)</text>
+  <text x="470" y="150" text-anchor="middle" fill="currentColor" font-weight="700">HR + template</text>
+  <text x="470" y="164" text-anchor="middle" fill="currentColor">repair copies a template</text>
+  <text x="470" y="178" text-anchor="middle" fill="currentColor">→ precise change</text>
+</svg>
+</figure>
+<div class="legend"><ul><li>NHEJ = non-homologous end joining (sloppy gluing)</li><li>HR = homologous recombination (repair using a matching template)</li><li>siRNA = small interfering RNA; dsRNA = double-stranded RNA</li></ul></div>
+<ol class="steps">
+  <li>Bacteria store virus DNA pieces in the CRISPR array</li>
+  <li>Array transcribed → crRNAs guide Cas to the virus</li>
+  <li>Lab: guide RNA + Cas9 cut any chosen site</li>
+  <li>Two guides → large deletion or rearrangement</li>
+</ol>
+<p class="trap">RNAi knocks DOWN (less mRNA, gene intact); CRISPR knocks OUT or edits the DNA. Uses: cystic fibrosis, sickle cell, CAR-T cells, crops, malaria mosquitoes; ethics: embryos.</p>
+</div>
+
+<div class="card" id="c-knockout">
+<p class="crumb">Change a genome › <b>Knockout mouse</b></p>
+<h2>Knockout mouse: homologous recombination in ES cells (8 steps)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <circle cx="48" cy="40" r="18" fill="#fff" stroke="#8a8f98" stroke-width="2"/><text x="48" y="76" text-anchor="middle" fill="currentColor">white ES cell</text>
+  <path d="M64 40 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a6)"/>
+  <circle cx="130" cy="40" r="18" fill="#f4a261" stroke="#8a8f98" stroke-width="2"/><text x="130" y="76" text-anchor="middle" fill="currentColor">gene replaced by</text><text x="130" y="88" text-anchor="middle" fill="currentColor">marker; G418 selects</text>
+  <path d="M154 40 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a6)"/>
+  <circle cx="230" cy="40" r="26" fill="#1f2328" stroke="#8a8f98" stroke-width="2"/><g fill="#fff"><circle cx="222" cy="34" r="4"/><circle cx="238" cy="46" r="4"/></g>
+  <text x="230" y="84" text-anchor="middle" fill="currentColor">into a black blastocyst</text>
+  <path d="M262 40 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a6)"/>
+  <ellipse cx="340" cy="40" rx="34" ry="20" fill="#1f2328"/><g fill="#fff"><ellipse cx="330" cy="36" rx="8" ry="6"/><ellipse cx="352" cy="46" rx="7" ry="5"/></g>
+  <text x="340" y="84" text-anchor="middle" fill="currentColor">chimeric pup (patches)</text>
+  <path d="M380 40 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a6)"/>
+  <ellipse cx="460" cy="40" rx="34" ry="20" fill="#fff" stroke="#8a8f98" stroke-width="2"/>
+  <text x="460" y="84" text-anchor="middle" fill="currentColor">backcross → germline</text><text x="460" y="96" text-anchor="middle" fill="currentColor">→ homozygous knockout</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>ES cells (white mouse) in culture</li>
+  <li>Targeting vector: gene → G418-resistance marker</li>
+  <li>Select correct cells in G418 medium</li>
+  <li>Inject ES cells into a black blastocyst</li>
+  <li>Implant in a black surrogate mother</li>
+  <li>Chimeric pups: black + white patches</li>
+  <li>Backcross: did ES cells reach the germ line?</li>
+  <li>Cross heterozygotes → homozygous knockout</li>
+</ol>
+<p class="mnemo">Blastocyst = early embryo, a hollow ball of a few hundred cells. Coat colour shows which cells came from the ES cells. (Transgenic mice overexpressing an oncogene: see chapter 2.)</p>
+</div>
+
+</div>
+
+<h2 class="sec">C · Seeing, separating and identifying molecules<small>Light tells you how much is there; a gel sorts by size; a mass spectrometer tells you what it is.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-detect">
+<p class="crumb">See › <b>Absorbance, dyes, activity assays</b></p>
+<h2>Absorbance: DNA 260 nm, protein 280 nm; Beer–Lambert; dyes</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <path d="M40 20 V130 H300" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <text x="170" y="150" text-anchor="middle" fill="currentColor">wavelength (nm)</text>
+  <text x="20" y="80" text-anchor="middle" fill="currentColor" transform="rotate(-90 20 80)">absorbance</text>
+  <g fill="currentColor" font-size="9" text-anchor="middle"><text x="100" y="142">240</text><text x="160" y="142">260</text><text x="220" y="142">280</text><text x="280" y="142">300</text></g>
+  <path d="M50 120 C90 110 120 30 160 30 S230 110 290 125" fill="none" stroke="#3a86ff" stroke-width="3"/>
+  <path d="M50 124 C120 120 190 60 220 60 S270 118 290 126" fill="none" stroke="#d1495b" stroke-width="3"/>
+  <text x="160" y="24" text-anchor="middle" fill="#3a86ff" font-weight="700">DNA / RNA: peak 260</text>
+  <text x="250" y="52" text-anchor="middle" fill="#d1495b" font-weight="700">protein: peak 280</text>
+  <!-- spectrophotometer -->
+  <rect x="330" y="30" width="30" height="40" fill="#e9c46a"/><text x="345" y="84" text-anchor="middle" fill="currentColor">lamp</text>
+  <path d="M362 50 h30" stroke="#f4a261" stroke-width="3"/>
+  <rect x="394" y="30" width="30" height="40" fill="#3a86ff" fill-opacity=".3" stroke="#8a8f98"/><text x="409" y="84" text-anchor="middle" fill="currentColor">cuvette</text>
+  <path d="M426 50 h30" stroke="#f4a261" stroke-width="1.5"/>
+  <rect x="458" y="30" width="30" height="40" fill="#8a8f98"/><text x="473" y="84" text-anchor="middle" fill="currentColor">detector</text>
+  <text x="409" y="110" text-anchor="middle" fill="currentColor" font-weight="700">A = ε · l · c</text>
+  <text x="409" y="124" text-anchor="middle" fill="currentColor">A absorbance, ε constant per</text>
+  <text x="409" y="136" text-anchor="middle" fill="currentColor">molecule, l path (cm), c conc. (M)</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>A260 = 1.0</td><td>≈ 50 µg/ml double-stranded DNA, ≈ 40 µg/ml RNA (bases absorb)</td></tr>
+  <tr><td>A280 = 1.0</td><td>≈ 1 mg/ml protein (tryptophan, tyrosine, phenylalanine)</td></tr>
+  <tr><td>A260 / A280</td><td>≈ 2 for pure DNA, ≈ 0.6 for protein; DNA with ratio &lt; 2 is contaminated with protein</td></tr>
+  <tr><td>FAD / FADH₂</td><td>peaks 380 and 450 nm; chromophores (heme) make proteins coloured</td></tr>
+  <tr><td>ethidium bromide</td><td>slips between the bases (intercalates), glows under UV; mutagen → SYBR Safe, GelRed</td></tr>
+  <tr><td>activity assay</td><td>measure the product, not the enzyme; coupled reaction: topoisomerase II ATP → ADP followed via NADH (absorbs 340 nm) → NAD⁺ (does not): absorbance falls</td></tr>
+</table>
+<p class="trap">Read the symbols: ε "epsilon" = extinction coefficient; µg/ml = microgram per millilitre; M = mol per litre. Molecules are measured as populations, not one by one.</p>
+</div>
+
+<div class="card" id="c-gels">
+<p class="crumb">Separate › <b>Gels and mass spectrometry</b></p>
+<h2>Gel electrophoresis (DNA; SDS-PAGE for proteins) and mass spectrometry</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 180" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <rect x="30" y="30" width="150" height="120" fill="#3a86ff" fill-opacity=".15" stroke="#8a8f98" stroke-width="2"/>
+  <text x="105" y="22" text-anchor="middle" fill="currentColor" font-weight="700">− (wells on top)</text>
+  <text x="105" y="166" text-anchor="middle" fill="currentColor" font-weight="700">+ (DNA runs down)</text>
+  <g fill="#8a8f98"><rect x="50" y="32" width="24" height="6"/><rect x="92" y="32" width="24" height="6"/><rect x="134" y="32" width="24" height="6"/></g>
+  <g fill="#fff" stroke="#8a8f98"><rect x="50" y="60" width="24" height="5"/><rect x="50" y="80" width="24" height="5"/><rect x="50" y="100" width="24" height="5"/><rect x="50" y="125" width="24" height="5"/></g>
+  <g fill="#e9c46a"><rect x="92" y="70" width="24" height="5"/><rect x="92" y="115" width="24" height="5"/><rect x="134" y="90" width="24" height="5"/></g>
+  <text x="62" y="56" text-anchor="middle" fill="currentColor" font-size="8">marker</text>
+  <text x="200" y="66" fill="currentColor">big = slow (top)</text><text x="200" y="128" fill="currentColor">small = fast (bottom)</text>
+  <!-- mass spec -->
+  <text x="400" y="22" text-anchor="middle" fill="currentColor" font-weight="700">mass spectrometry</text>
+  <rect x="300" y="36" width="50" height="30" rx="4" fill="#e9c46a"/><text x="325" y="55" text-anchor="middle" fill="#1f2328" font-size="9">sample</text>
+  <path d="M352 51 h20" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a7)"/>
+  <rect x="374" y="36" width="50" height="30" rx="4" fill="#f4a261"/><text x="399" y="51" text-anchor="middle" fill="#1f2328" font-size="8">make ions</text><text x="399" y="61" text-anchor="middle" fill="#1f2328" font-size="8">MALDI / ESI</text>
+  <path d="M426 51 h20" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a7)"/>
+  <rect x="448" y="36" width="60" height="30" rx="4" fill="#9b59b6"/><text x="478" y="51" text-anchor="middle" fill="#fff" font-size="8">sort by m/z</text><text x="478" y="61" text-anchor="middle" fill="#fff" font-size="8">→ detector</text>
+  <path d="M300 150 H510" stroke="currentColor" stroke-width="1.5"/>
+  <g stroke="#9b59b6" stroke-width="3"><path d="M330 150 v-30 M360 150 v-60 M400 150 v-20 M440 150 v-50 M480 150 v-35"/></g>
+  <text x="405" y="166" text-anchor="middle" fill="currentColor">spectrum: peaks = masses of peptides (m/z)</text>
+  <text x="405" y="86" text-anchor="middle" fill="currentColor">trypsin cuts the protein → peptide masses</text>
+  <text x="405" y="100" text-anchor="middle" fill="currentColor">match to the genome; MS/MS → sequence</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>DNA/RNA gel</td><td>negative (phosphates) → migrate to +; agarose or polyacrylamide pores; stain ethidium bromide + UV; exam Q11: electrophoresis separates DNA fragments</td></tr>
+  <tr><td>SDS-PAGE</td><td>proteins differ in charge and shape → SDS (detergent) + heat unfold and coat them negatively, reducing agent breaks S–S; then separated by mass; stacking + resolving gel; Coomassie blue; marker in kDa</td></tr>
+  <tr><td>mass spec</td><td>MALDI (laser + matrix) or ESI (electrospray) make ions; mass-to-charge m/z; accuracy 1 dalton for small molecules</td></tr>
+</table>
+<p class="mnemo">kDa = kilodalton (1 dalton ≈ the mass of one hydrogen atom). m/z = mass divided by charge.</p>
+</div>
+
+</div>
+
+<h2 class="sec">D · Reading sequences<small>Sanger reads one fragment; shotgun + NGS read whole genomes; BLAST tells you what the sequence resembles.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-sanger">
+<p class="crumb">Read › <b>Sanger sequencing and BLAST</b></p>
+<h2>Sanger (chain termination): ddNTPs stop the chain</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <text x="120" y="16" text-anchor="middle" fill="currentColor" font-weight="700">ddNTP = nucleotide without 3′ OH → no next link</text>
+  <path d="M20 40 h200" stroke="#3a86ff" stroke-width="4"/><text x="20" y="56" text-anchor="start" fill="currentColor">template + primer + polymerase + dNTPs + few ddNTPs</text>
+  <g stroke-width="4"><path d="M20 76 h40" stroke="#2a9d8f"/><path d="M20 90 h70" stroke="#2a9d8f"/><path d="M20 104 h100" stroke="#2a9d8f"/><path d="M20 118 h130" stroke="#2a9d8f"/><path d="M20 132 h160" stroke="#2a9d8f"/></g>
+  <g fill="#d1495b"><circle cx="62" cy="76" r="4"/><circle cx="92" cy="90" r="4"/><circle cx="122" cy="104" r="4"/><circle cx="152" cy="118" r="4"/><circle cx="182" cy="132" r="4"/></g>
+  <g fill="#1f2328" font-size="9" font-weight="700"><text x="70" y="80">A</text><text x="100" y="94">C</text><text x="130" y="108">G</text><text x="160" y="122">T</text><text x="190" y="136">A</text></g>
+  <text x="120" y="156" text-anchor="middle" fill="currentColor">ladder: one fragment per stop, colour = last base</text>
+  <text x="120" y="172" text-anchor="middle" fill="currentColor" font-weight="700">sort by length, read shortest first: A C G T A</text>
+  <!-- chromatogram -->
+  <path d="M300 150 H510" stroke="currentColor" stroke-width="1.5"/>
+  <path d="M310 150 q15 -60 30 0" fill="none" stroke="#2a9d8f" stroke-width="2"/>
+  <path d="M345 150 q15 -70 30 0" fill="none" stroke="#3a86ff" stroke-width="2"/>
+  <path d="M380 150 q15 -55 30 0" fill="none" stroke="#1f2328" stroke-width="2"/>
+  <path d="M415 150 q15 -65 30 0" fill="none" stroke="#d1495b" stroke-width="2"/>
+  <path d="M450 150 q15 -60 30 0" fill="none" stroke="#2a9d8f" stroke-width="2"/>
+  <g font-weight="700" text-anchor="middle"><text x="325" y="170" fill="#2a9d8f">A</text><text x="360" y="170" fill="#3a86ff">C</text><text x="395" y="170" fill="currentColor">G</text><text x="430" y="170" fill="#d1495b">T</text><text x="465" y="170" fill="#2a9d8f">A</text></g>
+  <text x="405" y="30" text-anchor="middle" fill="currentColor" font-weight="700">chromatogram (4 colours, 1 tube)</text>
+  <text x="405" y="46" text-anchor="middle" fill="currentColor">laser reads the colour as each</text>
+  <text x="405" y="58" text-anchor="middle" fill="currentColor">fragment passes; ≤ 900 bases</text>
+  <text x="405" y="78" text-anchor="middle" fill="currentColor">old way: radioactive dNTPs,</text>
+  <text x="405" y="90" text-anchor="middle" fill="currentColor">4 tubes (ddA, ddC, ddG, ddT),</text>
+  <text x="405" y="102" text-anchor="middle" fill="currentColor">4 lanes, read bottom → top</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>BLAST</td><td>Basic Local Alignment Search Tool (NCBI): compares your sequence with a database; BLASTN for DNA (seed 11 nt), BLASTP for protein (seed 3 aa)</td></tr>
+  <tr><td>alignment</td><td>identical letters, + for similar, gaps (penalty); score</td></tr>
+  <tr><td>E value</td><td>chance the match is random: <b>lower = better</b></td></tr>
+  <tr><td>why</td><td>homology = common ancestor → similar function; domains (kinase, zinc finger) hint the job; Hermes vs Hobo transposase example</td></tr>
+</table>
+<p class="trap">Be critical: homologous ≠ same activity if active-site residues differ. BIO01 reminder: DNA polymerase can only add to a 3′ OH.</p>
+</div>
+
+<div class="card" id="c-shotgun">
+<p class="crumb">Read › Genomes › <b>Shotgun, over-sequencing, coverage</b></p>
+<h2>Whole genome: shotgun fragments, assemble by overlap, coverage</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <path d="M20 24 h480" stroke="#3a86ff" stroke-width="6"/><text x="260" y="14" text-anchor="middle" fill="currentColor" font-weight="700">genome (reference), fragmented at random, copies from many cells</text>
+  <g stroke="#2a9d8f" stroke-width="5">
+    <path d="M20 50 h110 M150 50 h120 M290 50 h130 M440 50 h60"/>
+    <path d="M70 64 h120 M210 64 h110 M350 64 h120"/>
+    <path d="M40 78 h90 M180 78 h100 M300 78 h140"/>
+    <path d="M110 92 h110 M250 92 h120 M400 92 h90"/>
+    <path d="M60 106 h70 M160 106 h90 M330 106 h80"/>
+  </g>
+  <text x="260" y="126" text-anchor="middle" fill="currentColor">reads overlap → the computer joins them (assembly)</text>
+  <rect x="150" y="44" width="30" height="66" fill="#f4a261" fill-opacity=".3"/>
+  <text x="165" y="150" text-anchor="middle" fill="currentColor">this base is in 4 reads = 4X coverage</text>
+  <rect x="440" y="44" width="30" height="66" fill="#d1495b" fill-opacity=".2"/>
+  <text x="455" y="164" text-anchor="middle" fill="currentColor">here only 1X: unreliable</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Fragment the genome (shear or restriction)</li>
+  <li>Ligate linkers (adapters) to the ends</li>
+  <li>PCR all fragments with linker primers</li>
+  <li>Sequence every fragment</li>
+  <li>Computer finds overlaps → assembles</li>
+</ol>
+<table class="mini">
+  <tr><td>over-sequencing, why</td><td>errors (catch by repeats), random fragments must cover everything, overlaps needed for order</td></tr>
+  <tr><td>8 genome equivalents</td><td>→ 99.9 % covered; E. coli 4.6 Mbp needs ≈ 37 Mbp of reads</td></tr>
+  <tr><td>depth of coverage</td><td>5X = base present in 5 reads; more depth → confident variant (SNP) calls</td></tr>
+  <tr><td>hard part</td><td>repeats longer than the reads cannot be placed → gaps (first human genome)</td></tr>
+</table>
+<p class="mnemo">History: Walter Fiers (Ghent) sequenced the first gene and the first genome (phage MS2) in the 1970s; Human Genome Project &gt; 10 years, billions of dollars: 100 Sanger machines × 1000 reads/day × 2 years.</p>
+</div>
+
+<div class="card" id="c-ngs">
+<p class="crumb">Read › Genomes › <b>Illumina and Nanopore</b></p>
+<h2>Second generation (Illumina) and third generation (Nanopore)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <text x="130" y="16" text-anchor="middle" fill="currentColor" font-weight="700">Illumina: bridge amplification + reversible terminators</text>
+  <path d="M20 90 h230" stroke="#8a8f98" stroke-width="3"/>
+  <g stroke="#2a9d8f" stroke-width="3"><path d="M40 90 v-20 M70 90 v-20 M100 90 v-20 M130 90 v-20 M160 90 v-20 M190 90 v-20 M220 90 v-20"/></g>
+  <path d="M70 70 q30 -50 60 0" fill="none" stroke="#3a86ff" stroke-width="3"/>
+  <text x="100" y="30" text-anchor="middle" fill="currentColor">fragment bridges two primers</text>
+  <text x="100" y="42" text-anchor="middle" fill="currentColor">→ PCR → cluster of copies</text>
+  <g fill="#3a86ff"><circle cx="180" cy="50" r="3"/><circle cx="188" cy="44" r="3"/><circle cx="196" cy="52" r="3"/><circle cx="204" cy="46" r="3"/><circle cx="186" cy="58" r="3"/><circle cx="198" cy="60" r="3"/></g>
+  <text x="192" y="76" text-anchor="middle" fill="currentColor" font-size="9">cluster</text>
+  <text x="130" y="112" text-anchor="middle" fill="currentColor">each cycle: add 1 fluorescent nucleotide with a 3′ block,</text>
+  <text x="130" y="124" text-anchor="middle" fill="currentColor">photograph clusters, remove block + dye, repeat</text>
+  <text x="130" y="140" text-anchor="middle" fill="currentColor" font-weight="700">short reads 75–150 bp → needs more coverage</text>
+  <path d="M275 10 v170" stroke="#8a8f98" stroke-dasharray="3 4"/>
+  <text x="400" y="16" text-anchor="middle" fill="currentColor" font-weight="700">Nanopore: DNA through a pore</text>
+  <path d="M300 70 h80 M420 70 h80" stroke="#f4a261" stroke-width="8"/>
+  <path d="M380 56 q20 -10 40 0 v28 q-20 10 -40 0 z" fill="#9b59b6" fill-opacity=".8"/>
+  <path d="M330 40 q35 10 70 30 t40 40" fill="none" stroke="#3a86ff" stroke-width="3"/>
+  <circle cx="365" cy="48" r="6" fill="#2a9d8f"/><text x="340" y="36" text-anchor="middle" fill="currentColor" font-size="9">motor protein</text>
+  <path d="M300 130 h200" stroke="currentColor" stroke-width="1"/>
+  <path d="M300 120 h20 v-12 h20 v16 h20 v-8 h20 v12 h20 v-16 h20 v10 h20 v-6 h20 v12 h20" fill="none" stroke="#d1495b" stroke-width="2"/>
+  <text x="400" y="150" text-anchor="middle" fill="currentColor">ionic current; each base blocks it differently</text>
+  <text x="400" y="164" text-anchor="middle" fill="currentColor" font-weight="700">long reads, real time, no PCR, portable (MinION)</text>
+  <text x="400" y="178" text-anchor="middle" fill="currentColor">direct RNA, detects methylation</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><th></th><th>Sanger</th><th>Illumina (2nd gen)</th><th>Nanopore (3rd gen)</th></tr>
+  <tr><td>read length</td><td>≤ 900 b</td><td>75–150 bp</td><td>very long (whole chromosomes)</td></tr>
+  <tr><td>parallel</td><td>1 reaction</td><td>millions of clusters</td><td>many pores</td></tr>
+  <tr><td>PCR needed</td><td>yes (clones)</td><td>yes (clusters)</td><td>no: single molecule</td></tr>
+  <tr><td>special</td><td>gold standard, slow</td><td>massively parallel, cheap</td><td>real time, portable, modifications</td></tr>
+</table>
+<p class="mnemo">NGS workflow: (a) DNA extraction, (b) library preparation = fragment + adapters, (c) sequencing, (d) data analysis = align to a reference, call variants.</p>
+<p class="trap">Reversible terminator (Illumina) is removed after each cycle; a ddNTP (Sanger) stops the chain forever.</p>
+</div>
+
+<div class="card" id="c-wgs">
+<p class="crumb">Read › Applications › <b>WGS, exome, targeted, metagenome</b></p>
+<h2>Whole genome vs exome vs targeted; exome capture</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 160" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <g fill="currentColor" font-weight="700"><text x="20" y="30">WGS</text><text x="20" y="70">WES</text><text x="20" y="110">targeted</text></g>
+  <path d="M80 26 h300" stroke="#3a86ff" stroke-width="10"/>
+  <path d="M80 66 h300" stroke="#8a8f98" stroke-width="2"/><g stroke="#3a86ff" stroke-width="10"><path d="M100 66 h14 M150 66 h18 M210 66 h12 M260 66 h16 M330 66 h14"/></g>
+  <path d="M80 106 h300" stroke="#8a8f98" stroke-width="2"/><g stroke="#3a86ff" stroke-width="10"><path d="M150 106 h18 M260 106 h16"/></g>
+  <g fill="currentColor"><text x="400" y="30">all DNA · &gt; 30X · costly</text><text x="400" y="70">1.5 % coding · &gt; 50–100X</text><text x="400" y="110">chosen regions · &gt; 500X</text></g>
+  <text x="260" y="148" text-anchor="middle" fill="currentColor">less region → more depth per euro; WES misses promoters and splice sites</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Exome capture: fragment, linkers, PCR</li>
+  <li>Denature; add biotin-labelled RNA probes for all exons</li>
+  <li>Probes pair with exon fragments</li>
+  <li>Streptavidin beads (magnet) catch the biotin</li>
+  <li>Wash away the other 98.5 %; release; sequence</li>
+</ol>
+<table class="mini">
+  <tr><td>WGS uses</td><td>disease variants, re-sequencing against a reference, catalogue variation</td></tr>
+  <tr><td>WGS drawbacks</td><td>data volume + bioinformatics, coverage gaps miss rare variants, biased reference, privacy/ethics</td></tr>
+  <tr><td>metagenome</td><td>sequence a whole microbial community (gut, soil): who is there, what can they do</td></tr>
+</table>
+<p class="mnemo">Biotin (a vitamin) and streptavidin (a protein) stick to each other extremely tightly: molecular Velcro. Exome = all exons ≈ 21 000 genes.</p>
+</div>
+
+<div class="card" id="c-epirna">
+<p class="crumb">Read › Applications › <b>Epigenomics and RNA-seq</b></p>
+<h2>Epigenome methods and the transcriptome (RNA-seq)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <g fill="#e9c46a" stroke="#b08a2e"><rect x="20" y="30" width="70" height="40" rx="6"/><rect x="120" y="30" width="70" height="40" rx="6"/><rect x="220" y="30" width="70" height="40" rx="6"/><rect x="320" y="30" width="70" height="40" rx="6"/><rect x="420" y="30" width="80" height="40" rx="6"/></g>
+  <g fill="#1f2328" font-size="9" text-anchor="middle">
+    <text x="55" y="47">1 isolate</text><text x="55" y="59">total RNA</text>
+    <text x="155" y="47">2 fragment,</text><text x="155" y="59">3 cDNA (RT)</text>
+    <text x="255" y="47">4 adapters</text><text x="255" y="59">+ PCR</text>
+    <text x="355" y="47">5 NGS</text><text x="355" y="59">sequence</text>
+    <text x="460" y="47">6 map reads to</text><text x="460" y="59">genome: count</text>
+  </g>
+  <g stroke="#8a8f98" stroke-width="2"><path d="M92 50 h24" marker-end="url(#c4a9)"/><path d="M192 50 h24" marker-end="url(#c4a9)"/><path d="M292 50 h24" marker-end="url(#c4a9)"/><path d="M392 50 h24" marker-end="url(#c4a9)"/></g>
+  <text x="260" y="100" text-anchor="middle" fill="currentColor" font-weight="700">RNA-seq: expression level, splicing, non-coding RNAs, modifications</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>bisulfite sequencing</td><td>methylated vs unmethylated C → genome-wide methylation map</td></tr>
+  <tr><td>ChIP-seq</td><td>histone modifications (chemical labels on histone proteins)</td></tr>
+  <tr><td>ATAC-seq</td><td>open chromatin = active regulatory regions</td></tr>
+  <tr><td>DRIP-seq</td><td>R-loops: places where RNA is bound to the DNA</td></tr>
+</table>
+<p class="trap">Caveat of RNA-seq and microarrays: the cDNA step; reverse transcriptase falls off at structures or modified bases (used on purpose to map them).</p>
+</div>
+
+</div>
+
+<h2 class="sec">E · Detecting a specific DNA, RNA, protein or cell<small>Hybridisation finds nucleic acids, antibodies find proteins, lasers count cells.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-cyto">
+<p class="crumb">Detect DNA › <b>Karyotype, FISH, aCGH</b></p>
+<h2>Karyotype (Giemsa), FISH (probes glow), array CGH (copy number)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 200" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <!-- karyotype -->
+  <g fill="#8a8f98"><rect x="20" y="30" width="10" height="60" rx="4"/><rect x="34" y="30" width="10" height="60" rx="4"/><rect x="60" y="40" width="10" height="50" rx="4"/><rect x="74" y="40" width="10" height="50" rx="4"/><rect x="88" y="40" width="10" height="50" rx="4"/></g>
+  <g fill="#1f2328"><rect x="20" y="40" width="10" height="4"/><rect x="34" y="40" width="10" height="4"/><rect x="20" y="60" width="10" height="6"/><rect x="34" y="60" width="10" height="6"/><rect x="60" y="56" width="10" height="4"/><rect x="74" y="56" width="10" height="4"/><rect x="88" y="56" width="10" height="4"/></g>
+  <text x="32" y="106" text-anchor="middle" fill="currentColor">pair 1</text><text x="79" y="106" text-anchor="middle" fill="#d1495b" font-weight="700">trisomy!</text>
+  <text x="60" y="126" text-anchor="middle" fill="currentColor" font-weight="700">karyotype</text>
+  <text x="60" y="138" text-anchor="middle" fill="currentColor">metaphase, Giemsa</text>
+  <text x="60" y="150" text-anchor="middle" fill="currentColor">bands = A/T-rich</text>
+  <text x="60" y="162" text-anchor="middle" fill="currentColor">sort by size, bands</text>
+  <!-- FISH -->
+  <circle cx="200" cy="60" r="40" fill="#3a86ff" fill-opacity=".25" stroke="#3a86ff"/>
+  <g><circle cx="185" cy="45" r="5" fill="#2a9d8f"/><circle cx="215" cy="50" r="5" fill="#2a9d8f"/><circle cx="190" cy="75" r="5" fill="#d1495b"/><circle cx="215" cy="72" r="5" fill="#d1495b"/></g>
+  <circle cx="320" cy="60" r="40" fill="#3a86ff" fill-opacity=".25" stroke="#3a86ff"/>
+  <g><circle cx="305" cy="45" r="5" fill="#2a9d8f"/><circle cx="310" cy="78" r="5" fill="#d1495b"/><circle cx="338" cy="62" r="7" fill="#e9c46a"/></g>
+  <text x="200" y="118" text-anchor="middle" fill="currentColor">healthy: 2 green, 2 red</text>
+  <text x="320" y="118" text-anchor="middle" fill="currentColor">translocation: red + green</text>
+  <text x="320" y="130" text-anchor="middle" fill="currentColor">together = yellow</text>
+  <text x="260" y="152" text-anchor="middle" fill="currentColor" font-weight="700">FISH: a fluorescent probe pairs with its sequence</text>
+  <text x="260" y="166" text-anchor="middle" fill="currentColor">DAPI colours all DNA blue; 2 probes, 2 colours</text>
+  <!-- aCGH -->
+  <g><circle cx="420" cy="40" r="8" fill="#e9c46a"/><circle cx="445" cy="40" r="8" fill="#e9c46a"/><circle cx="470" cy="40" r="8" fill="#d1495b"/><circle cx="495" cy="40" r="8" fill="#e9c46a"/><circle cx="420" cy="65" r="8" fill="#2a9d8f"/><circle cx="445" cy="65" r="8" fill="#e9c46a"/><circle cx="470" cy="65" r="8" fill="#e9c46a"/><circle cx="495" cy="65" r="8" fill="#e9c46a"/></g>
+  <text x="458" y="92" text-anchor="middle" fill="currentColor" font-weight="700">aCGH</text>
+  <text x="458" y="106" text-anchor="middle" fill="currentColor">patient green + normal red</text>
+  <text x="458" y="118" text-anchor="middle" fill="currentColor">on a genome microarray</text>
+  <text x="458" y="134" text-anchor="middle" fill="currentColor">yellow = equal</text>
+  <text x="458" y="146" text-anchor="middle" fill="#2a9d8f">green = duplication</text>
+  <text x="458" y="158" text-anchor="middle" fill="#d1495b">red = deletion</text>
+  <text x="458" y="172" text-anchor="middle" fill="currentColor">genome-wide,</text><text x="458" y="184" text-anchor="middle" fill="currentColor">no prior knowledge</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>karyotype</td><td>whole chromosome set; aneuploidy, big deletions/translocations; prenatal (amniocentesis = fetal cells from the amniotic fluid), cancer (Philadelphia)</td></tr>
+  <tr><td>FISH</td><td>fluorescence in situ hybridisation: locate a known sequence on a chromosome; translocation 4;11 in leukaemia → merged signal; not sensitive to small changes, needs prior knowledge</td></tr>
+  <tr><td>aCGH</td><td>array comparative genomic hybridisation: copy-number changes genome-wide; canine example: extra chr 10, one copy of 15 and 22</td></tr>
+  <tr><td>restriction pattern, Southern blot</td><td>empty headings in the syllabus: cut DNA → band pattern on a gel; blot = DNA transferred to a membrane, detected with a labelled probe</td></tr>
+</table>
+</div>
+
+<div class="card" id="c-rna">
+<p class="crumb">Detect RNA › <b>qRT-PCR, reporter genes, microarray</b></p>
+<h2>How much of an RNA? qRT-PCR (one gene), microarray or RNA-seq (all genes), reporters (where and when)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <!-- qPCR curves -->
+  <path d="M30 20 V130 H250" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <text x="140" y="150" text-anchor="middle" fill="currentColor">PCR cycle: 100 ng → 18 · 1 ng → 25 · 1 pg → 35</text>
+  <text x="18" y="75" text-anchor="middle" fill="currentColor" transform="rotate(-90 18 75)">fluorescence</text>
+  <path d="M30 100 H250" stroke="#8a8f98" stroke-dasharray="4 3"/><text x="252" y="104" fill="currentColor" font-size="9">threshold</text>
+  <path d="M30 128 C90 128 100 125 110 100 S140 30 180 28 H250" fill="none" stroke="#2a9d8f" stroke-width="2.5"/>
+  <path d="M30 128 C130 128 140 125 150 100 S180 30 220 28 H250" fill="none" stroke="#f4a261" stroke-width="2.5"/>
+  <path d="M30 128 C180 128 190 125 200 100 S230 40 250 32" fill="none" stroke="#d1495b" stroke-width="2.5"/>
+  <g font-size="9" text-anchor="middle"><text x="60" y="50" fill="#2a9d8f">100 ng</text><text x="60" y="62" fill="#f4a261">1 ng</text><text x="60" y="74" fill="#d1495b">1 pg</text></g>
+  <text x="140" y="14" text-anchor="middle" fill="currentColor" font-weight="700">qRT-PCR: more RNA → threshold reached in fewer cycles</text>
+  <!-- microarray -->
+  <g>
+    <circle cx="320" cy="40" r="9" fill="#e9c46a"/><circle cx="345" cy="40" r="9" fill="#d1495b"/><circle cx="370" cy="40" r="9" fill="#e9c46a"/><circle cx="395" cy="40" r="9" fill="#2a9d8f"/>
+    <circle cx="320" cy="65" r="9" fill="#2a9d8f"/><circle cx="345" cy="65" r="9" fill="#e9c46a"/><circle cx="370" cy="65" r="9" fill="#e9c46a"/><circle cx="395" cy="65" r="9" fill="#d1495b"/>
+    <circle cx="320" cy="90" r="9" fill="#e9c46a"/><circle cx="345" cy="90" r="9" fill="#e9c46a"/><circle cx="370" cy="90" r="9" fill="#d1495b"/><circle cx="395" cy="90" r="9" fill="#e9c46a"/>
+  </g>
+  <text x="358" y="14" text-anchor="middle" fill="currentColor" font-weight="700">DNA microarray</text>
+  <g fill="currentColor" font-size="9"><text x="412" y="36">spot = one gene's DNA</text><text x="412" y="50">sample 1: Cy3 green</text><text x="412" y="64">sample 2: Cy5 red</text><text x="412" y="82">yellow = equal</text><text x="412" y="96">green/red = more in 1 / 2</text></g>
+  <text x="358" y="120" text-anchor="middle" fill="currentColor">exam Q15: which genes do nerve vs</text>
+  <text x="358" y="132" text-anchor="middle" fill="currentColor">muscle cells express? → microarray</text>
+  <text x="358" y="150" text-anchor="middle" fill="currentColor">(today: RNA-seq, see card above)</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>qRT-PCR</td><td>RT → cDNA → PCR; dye measures product each cycle in real time; valid only in the exponential phase; very sensitive; sees only the stretch between the primers</td></tr>
+  <tr><td>reporter gene</td><td>easy-to-see protein fused to a promoter (transcription) or to the ORF (transcription + translation): lacZ β-galactosidase (colour), luciferase (light), GFP (fluorescence), Spinach RNA; e.g. cyclin E:GFP in C. elegans</td></tr>
+  <tr><td>microarray</td><td>genome-wide expression of two samples in two colours; clustering (yeast cell cycle)</td></tr>
+</table>
+<p class="mnemo">ng = nanogram, pg = picogram (1000× less). Threshold cycle: the cycle where the curve crosses the line.</p>
+</div>
+
+<div class="card" id="c-protein">
+<p class="crumb">Detect protein and cells › <b>Western blot, flow cytometry</b></p>
+<h2>Western blot (antibodies find one protein) and flow cytometry (cells one by one)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c4a10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <rect x="20" y="30" width="50" height="80" fill="#3a86ff" fill-opacity=".15" stroke="#8a8f98"/>
+  <g fill="#8a8f98"><rect x="30" y="45" width="30" height="4"/><rect x="30" y="60" width="30" height="4"/><rect x="30" y="80" width="30" height="4"/><rect x="30" y="95" width="30" height="4"/></g>
+  <text x="45" y="126" text-anchor="middle" fill="currentColor">1 SDS-PAGE</text>
+  <path d="M74 70 h20" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a10)"/>
+  <rect x="100" y="30" width="50" height="80" fill="#e9c46a" fill-opacity=".4" stroke="#8a8f98"/>
+  <g fill="#8a8f98"><rect x="110" y="45" width="30" height="4"/><rect x="110" y="60" width="30" height="4"/><rect x="110" y="80" width="30" height="4"/><rect x="110" y="95" width="30" height="4"/></g>
+  <text x="125" y="126" text-anchor="middle" fill="currentColor">2 transfer to</text><text x="125" y="138" text-anchor="middle" fill="currentColor">membrane</text>
+  <path d="M154 70 h20" stroke="#8a8f98" stroke-width="2" marker-end="url(#c4a10)"/>
+  <rect x="180" y="30" width="50" height="80" fill="#e9c46a" fill-opacity=".4" stroke="#8a8f98"/>
+  <rect x="190" y="60" width="30" height="4" fill="#8a8f98"/>
+  <path d="M200 58 l-6 -10 M200 58 l6 -10" stroke="#2a9d8f" stroke-width="3"/><path d="M206 48 l-6 -10 M206 48 l6 -10" stroke="#d1495b" stroke-width="3"/>
+  <circle cx="206" cy="34" r="4" fill="#f4a261"/>
+  <text x="205" y="126" text-anchor="middle" fill="currentColor">3 primary Ab</text><text x="205" y="138" text-anchor="middle" fill="currentColor">4 secondary Ab</text><text x="205" y="150" text-anchor="middle" fill="currentColor">5 one band</text>
+  <!-- flow -->
+  <path d="M330 20 v130" stroke="#3a86ff" stroke-width="2"/>
+  <g fill="#9b59b6"><circle cx="330" cy="40" r="6"/><circle cx="330" cy="70" r="6"/><circle cx="330" cy="130" r="6"/></g>
+  <circle cx="330" cy="100" r="6" fill="#2a9d8f"/>
+  <path d="M290 100 h34" stroke="#d1495b" stroke-width="2"/><text x="290" y="94" fill="currentColor" font-size="9">laser</text>
+  <rect x="340" y="92" width="40" height="16" fill="#8a8f98"/><text x="360" y="104" text-anchor="middle" fill="#fff" font-size="8">detector</text>
+  <text x="455" y="40" text-anchor="middle" fill="currentColor" font-weight="700">flow cytometry</text>
+  <g fill="currentColor" font-size="9" text-anchor="middle"><text x="455" y="56">cells in single file</text><text x="455" y="70">through a laser beam</text><text x="455" y="84">size, shape, fluorescent</text><text x="455" y="98">tags (antibodies, dyes)</text><text x="455" y="116">thousands of cells / minute</text><text x="455" y="134">leukemia diagnosis,</text><text x="455" y="148">immune cells in HIV</text></g>
+</svg>
+</figure>
+<ol class="steps">
+  <li>SDS-PAGE separates by size</li>
+  <li>Transfer to a membrane (blot)</li>
+  <li>Ponceau S shows all proteins + markers</li>
+  <li>Block with BSA (fills empty spots)</li>
+  <li>Primary antibody binds the protein (or its tag)</li>
+  <li>Wash; secondary antibody binds the primary</li>
+  <li>Label: radioactive, fluorescent, or enzyme (HRP) → band</li>
+</ol>
+<p class="trap">Antibody = immune protein that binds one target very specifically (made in mouse, rabbit, goat, chicken). Polyclonal antibodies can cross-react → include a control lysate without the protein.</p>
+</div>
+
+<div class="card" id="c-which">
+<p class="crumb">Whole chapter › <b>Which technique for which question?</b></p>
+<h2>Which technique for which question?</h2>
+<table class="mini">
+  <tr><th>question</th><th>technique</th></tr>
+  <tr><td>more copies of a DNA stretch (old, tiny sample)</td><td>PCR</td></tr>
+  <tr><td>copies of an mRNA as DNA / cDNA library</td><td>reverse transcriptase (+ PCR)</td></tr>
+  <tr><td>keep and multiply a gene in bacteria</td><td>cloning: restriction enzyme + ligase + plasmid</td></tr>
+  <tr><td>switch a gene off quickly (knock-down)</td><td>RNAi (siRNA)</td></tr>
+  <tr><td>cut, delete or edit a gene (knockout)</td><td>CRISPR-Cas9; mouse: homologous recombination in ES cells</td></tr>
+  <tr><td>how much DNA/protein is in my tube, is it pure?</td><td>absorbance 260/280</td></tr>
+  <tr><td>separate DNA fragments / proteins by size</td><td>gel electrophoresis / SDS-PAGE</td></tr>
+  <tr><td>what is this protein (identity, modifications)?</td><td>mass spectrometry (trypsin, MS/MS)</td></tr>
+  <tr><td>read one fragment / a whole genome</td><td>Sanger / shotgun + Illumina or Nanopore</td></tr>
+  <tr><td>what does this unknown sequence resemble?</td><td>BLAST</td></tr>
+  <tr><td>only the coding part cheaply / one region deeply</td><td>exome (WES) / targeted sequencing</td></tr>
+  <tr><td>which microbes live here?</td><td>metagenome sequencing</td></tr>
+  <tr><td>extra or missing chromosome, big rearrangement</td><td>karyotype</td></tr>
+  <tr><td>where does a known sequence sit; translocation</td><td>FISH</td></tr>
+  <tr><td>copy-number changes genome-wide</td><td>array CGH</td></tr>
+  <tr><td>how much of one mRNA?</td><td>qRT-PCR</td></tr>
+  <tr><td>which genes does a cell type express?</td><td>microarray or RNA-seq (exam Q15)</td></tr>
+  <tr><td>when and where is a gene switched on, live?</td><td>reporter gene (GFP, luciferase, lacZ)</td></tr>
+  <tr><td>is one protein present, how big?</td><td>Western blot</td></tr>
+  <tr><td>count and sort cells by markers</td><td>flow cytometry</td></tr>
+  <tr><td>methylation / histone marks / open chromatin</td><td>bisulfite-seq / ChIP-seq / ATAC-seq</td></tr>
+</table>
+</div>
+
+</div>
+
+<h2 class="sec">F · Quick check<small>Short traps from the whole chapter.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-traps">
+<p class="crumb">Whole chapter › <b>Quick traps</b></p>
+<h2>Quick traps of the whole chapter</h2>
+<table class="mini">
+  <tr><td>ligase vs restriction enzyme</td><td>ligase joins, restriction enzyme cuts (exam Q11)</td></tr>
+  <tr><td>PCR ingredients</td><td>template, 2 primers, dNTPs, heat-stable polymerase: no ligase, no ribosomes (Q13)</td></tr>
+  <tr><td>transgenic</td><td>a foreign gene in the genome (rat with rabbit insulin gene); not a treated or cloned-from-one-cell organism (Q14)</td></tr>
+  <tr><td>totipotent vs pluripotent (syllabus)</td><td>any cell type vs a subset (Q10)</td></tr>
+  <tr><td>ddNTP vs reversible terminator</td><td>stops forever (Sanger) vs block removed each cycle (Illumina)</td></tr>
+  <tr><td>coverage</td><td>5X = base read 5 times; 8 genome equivalents → 99.9 %</td></tr>
+  <tr><td>A260/A280</td><td>≈ 2 pure DNA; lower → protein contamination</td></tr>
+  <tr><td>DNA runs to</td><td>the + pole (negative phosphates); small fragments run fastest</td></tr>
+  <tr><td>FISH vs aCGH</td><td>known place, big changes vs genome-wide copy number, small changes</td></tr>
+  <tr><td>qRT-PCR cycles</td><td>more starting RNA → fewer cycles to the threshold</td></tr>
+  <tr><td>microarray colours</td><td>yellow equal, green/red = more in one sample</td></tr>
+  <tr><td>Western = protein</td><td>antibodies; Southern = DNA (probe); RNA-seq / microarray = RNA</td></tr>
+</table>
+</div>
+
+</div>
+
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="cs3_viruses.html">← 3 Viruses</a></nav>
+</main>
+</body>
+</html>

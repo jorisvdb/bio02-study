@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.2 How viruses replicate</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .cellb { fill: var(--panel); stroke: var(--muted); stroke-width: 2; }
+  .nuc { fill: none; stroke: var(--c-Na); stroke-width: 1.6; stroke-dasharray: 5 4; }
+  .cap { fill: var(--key-bg); stroke: var(--c-N); stroke-width: 1.4; }
+  .gen { stroke: var(--c-O); stroke-width: 2.2; fill: none; stroke-linecap: round; }
+  .prot { fill: var(--c-N); }
+  .rib { fill: var(--c-Na); }
+  .env { fill: none; stroke: var(--c-P); stroke-width: 2.4; }
+  .spike { stroke: var(--c-P); stroke-width: 1.8; fill: none; }
+  .mem { fill: none; stroke: var(--muted); stroke-width: 3; }
+  .num { font-size: 12px; font-weight: 700; fill: var(--bg); text-anchor: middle; }
+  .numbg { fill: var(--accent); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="3.01_what_is_a_virus.html">← 3.1 What is a virus</a><a href="index.html">Chapter 3 index</a><a href="3.03_rna_viruses_and_hiv.html">3.3 RNA viruses and HIV →</a></nav>
+
+<h1>3.2 How viruses replicate: the general cycle and enveloped viruses</h1>
+<p class="lede">In one sentence: a virus gets its genome into a cell it can recognise, forces the cell to copy that genome and build viral proteins from the cell's own
+materials and machines, lets the parts assemble themselves, and sends hundreds of new viruses out, by bursting the cell or by budding off wrapped in its membrane.</p>
+
+<p>Page 3.1 described the particle. This page is about what the particle does, which is the second learning objective of the chapter: "the student explains how viruses
+replicate". It covers the rules that hold for all viruses (host range, the general cycle) and then the first variation: viruses with an envelope, including the herpesviruses
+that hide in nerve cells. Page 3.3 adds the RNA viruses and HIV. Every step here is a "begin state → steps" story, so follow the numbers in the figures.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Meaning</th></tr>
+  <tr><td>parasite</td><td>an organism that lives in or on another organism (the host, gastheer) and benefits at its expense (parasiet)</td></tr>
+  <tr><td>receptor</td><td>a protein on the surface of a cell that binds a specific molecule, like a lock fits a key (BIO01 chapter 6)</td></tr>
+  <tr><td>plasma membrane</td><td>the outer membrane of a cell (celmembraan)</td></tr>
+  <tr><td>endocytosis / exocytosis</td><td>a cell takes something in by folding its membrane around it into a bubble (vesicle); or pushes something out by fusing a vesicle with the plasma membrane (BIO01 chapter 1)</td></tr>
+  <tr><td>fusion</td><td>two membranes melt into one (fusie); the contents behind them mix</td></tr>
+  <tr><td>ER, Golgi apparatus</td><td>the endoplasmic reticulum (a membrane network where membrane and export proteins are made) and the Golgi (where they are modified and sorted); BIO01 chapter 1</td></tr>
+  <tr><td>DNA polymerase, RNA polymerase</td><td>enzymes that build DNA from a template, or RNA from a template (BIO01 chapters 4 and 5)</td></tr>
+  <tr><td>template</td><td>a strand that is read to make a new strand (mal)</td></tr>
+  <tr><td>nucleotides, tRNAs, amino acids, ATP</td><td>the building blocks of nucleic acids; the adaptor RNAs of translation; the building blocks of proteins; the cell's energy molecule</td></tr>
+  <tr><td>nuclear envelope</td><td>the double membrane around the nucleus (BIO01 chapter 7)</td></tr>
+  <tr><td>chromosome</td><td>a DNA molecule with proteins; a "mini-chromosome" is a small extra DNA molecule kept in the nucleus</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: een <strong>parasiet</strong> leeft ten koste van een <strong>gastheer</strong>; een <strong>receptor</strong> is een eiwit aan het celoppervlak dat een specifieke molecule bindt;
+<strong>endocytose</strong> = opnemen in een blaasje, <strong>exocytose</strong> = naar buiten duwen; <strong>fusie</strong> = twee membranen smelten samen; <strong>ER en Golgi</strong> maken en
+bewerken membraan- en exporteiwitten.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Obligate intracellular parasites and the host range (3.2.2)</h2>
+<p>Viruses lack metabolic enzymes and the equipment for making proteins, such as ribosomes. So they are <strong>obligate intracellular parasites</strong>: <em>obligate</em> = they have no
+choice (verplicht), <em>intracellular</em> = inside a cell. They can replicate <strong>only within a host cell</strong>. The syllabus's phrase: viruses in isolation are "merely packaged sets of
+genes in transit from one host cell to another".</p>
+
+<h3>Which cells can a virus infect? The host range</h3>
+<p>Each virus can infect the cells of only a limited number of host species; this is its <strong>host range</strong> (gastheerbereik). The reason is a recognition system:
+a virus identifies a host cell by a <strong>"handshake" fit between viral surface proteins and specific receptor molecules on the outside of the cell</strong>. Those receptors are
+normally proteins that do a useful job for the cell; the virus has simply adopted them as doors (portals of entry). No fitting receptor, no infection.</p>
+<ul>
+  <li><strong>Broad host range:</strong> <strong>West Nile virus</strong> and equine encephalitis virus (two different viruses) can each infect mosquitoes, birds, horses and humans.</li>
+  <li><strong>Narrow host range:</strong> <strong>measles virus</strong> (mazelen) infects only humans.</li>
+  <li><strong>Limited to a tissue:</strong> even inside one host, a virus usually infects only particular cell types. Human cold viruses infect only the cells lining the upper respiratory tract; <strong>HIV</strong> binds to receptors present only on certain immune cells.</li>
+</ul>
+
+<div class="callout key"><span class="tag">Must remember</span>
+<p>Host range = which species and which cells a virus can enter, decided by the <strong>fit between viral surface proteins and host receptors</strong>. In an enveloped virus the viral
+surface proteins are the <strong>glycoprotein spikes</strong> of the envelope (page 3.1).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Virussen zijn <strong>obligate intracellulaire parasieten</strong>: ze kunnen zich alleen in een gastheercel vermenigvuldigen (geen enzymen, geen ribosomen). Het
+<strong>gastheerbereik</strong> wordt bepaald door de <strong>"handdruk"</strong> tussen virale oppervlakte-eiwitten en <strong>receptoren</strong> op de cel. Breed: West-Nijlvirus
+(muggen, vogels, paarden, mensen); smal: mazelen (alleen mensen); vaak maar één weefsel: verkoudheidsvirussen (bovenste luchtwegen), HIV (bepaalde immuuncellen).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. The general replicative cycle (3.2.2.1, Figure 3-2)</h2>
+<p><strong>Begin state:</strong> a virus particle (genome in a capsid) bumps into a host cell that has the right receptor. <strong>Goal of the virus:</strong> hundreds or thousands of new particles.
+The syllabus describes the simplest case: a DNA virus with a capsid of a single kind of protein.</p>
+<ol>
+  <li><strong>Binding and entry.</strong> The virus binds to the cell and <strong>the viral genome makes its way inside</strong>. How depends on the virus and the cell: some phages use their tail to <strong>inject</strong> DNA into a bacterium; other viruses are taken up by <strong>endocytosis</strong>; enveloped viruses enter by <strong>fusion</strong> of the envelope with the host's plasma membrane.</li>
+  <li><strong>Taking over.</strong> Once inside, the proteins the viral genome encodes <strong>commandeer the host</strong> (take command): the cell is reprogrammed to copy the viral genome and to make viral proteins.</li>
+  <li><strong>Copying the genome.</strong> The host provides the <strong>nucleotides</strong>. Many DNA viruses use the <strong>host's DNA polymerases</strong> to make new genomes along the viral DNA as template. RNA viruses cannot: a cell has no enzyme that copies RNA into RNA, so they use a <strong>virally encoded RNA polymerase that uses RNA as a template</strong> (page 3.3).</li>
+  <li><strong>Making viral proteins.</strong> The viral genes are transcribed and translated with the host's <strong>enzymes, ribosomes, tRNAs, amino acids and ATP</strong>. The capsid proteins (capsomeres) pile up.</li>
+  <li><strong>Self-assembly.</strong> New genomes and capsomeres <strong>spontaneously assemble</strong> into new virus particles; no extra machinery is needed.</li>
+  <li><strong>Exit.</strong> Hundreds or thousands of viruses leave the cell, which often <strong>damages or destroys</strong> it. This damage, and the body's reaction to it, causes many of the symptoms of a viral infection. The new viruses can infect further cells.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 345" width="880" height="345" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- host cell -->
+    <rect x="150" y="30" width="600" height="270" rx="60" class="cellb"/>
+    <text x="450" y="52" class="txt muted">host cell</text>
+    <!-- 1 virus outside, binding -->
+    <polygon points="60,110 82,122 82,146 60,158 38,146 38,122" class="cap"/>
+    <path d="M50,130 C56,124 62,140 68,132 S76,126 74,142" class="gen"/>
+    <path d="M60,100 L60,88" class="spike"/>
+    <rect x="148" y="118" width="6" height="26" rx="2" class="prot"/>
+    <text x="60" y="178" class="txt small">1 virus binds</text>
+    <text x="60" y="192" class="txt small">the receptor</text>
+    <path d="M88,134 L140,134" class="path accent" marker-end="url(#ar5)"/>
+    <!-- 2 genome inside -->
+    <path d="M200,120 C212,108 224,140 236,126 S256,108 262,132" class="gen"/>
+    <text x="232" y="158" class="txt small">2 genome enters,</text>
+    <text x="232" y="172" class="txt small">takes command</text>
+    <path d="M276,124 L318,124" class="path accent" marker-end="url(#ar5)"/>
+    <!-- 3 copying genomes -->
+    <path d="M340,92 C352,80 364,112 376,98 S396,80 402,104" class="gen"/>
+    <path d="M340,118 C352,106 364,138 376,124 S396,106 402,130" class="gen"/>
+    <path d="M340,144 C352,132 364,164 376,150 S396,132 402,156" class="gen"/>
+    <text x="372" y="184" class="txt small">3 host polymerase</text>
+    <text x="372" y="198" class="txt small">+ nucleotides: copies</text>
+    <!-- 4 proteins -->
+    <circle cx="470" cy="90" r="9" class="rib"/><text x="470" y="78" class="txt small muted">ribosome</text>
+    <polygon points="520,96 532,103 532,117 520,124 508,117 508,103" class="cap"/>
+    <polygon points="548,96 560,103 560,117 548,124 536,117 536,103" class="cap"/>
+    <polygon points="520,126 532,133 532,147 520,154 508,147 508,133" class="cap"/>
+    <text x="520" y="184" class="txt small">4 host ribosomes, tRNAs,</text>
+    <text x="520" y="198" class="txt small">amino acids, ATP: capsomeres</text>
+    <path d="M410,124 L448,124" class="path accent" marker-end="url(#ar5)"/>
+    <!-- 5 assembly -->
+    <path d="M580,124 L620,124" class="path accent" marker-end="url(#ar5)"/>
+    <polygon points="660,96 682,108 682,132 660,144 638,132 638,108" class="cap"/>
+    <path d="M650,120 C656,114 662,130 668,122 S676,116 674,132" class="gen"/>
+    <polygon points="700,136 722,148 722,172 700,184 678,172 678,148" class="cap"/>
+    <path d="M690,160 C696,154 702,170 708,162 S716,156 714,172" class="gen"/>
+    <text x="668" y="210" class="txt small">5 self-assembly</text>
+    <!-- 6 exit -->
+    <path d="M700,226 L700,296" class="path accent" marker-end="url(#ar5)"/>
+    <text x="700" y="318" class="txt small">6 exit: hundreds of</text>
+    <text x="700" y="332" class="txt small">viruses; cell damaged</text>
+    <polygon points="790,250 806,259 806,277 790,286 774,277 774,259" class="cap"/>
+    <polygon points="826,228 842,237 842,255 826,264 810,255 810,237" class="cap"/>
+    <polygon points="826,276 842,285 842,303 826,312 810,303 810,285" class="cap"/>
+    <path d="M756,268 L770,268" class="path accent" marker-end="url(#ar5)"/>
+    <text x="450" y="250" class="txt small muted">the host gives: nucleotides, enzymes, ribosomes, tRNAs, amino acids, ATP</text>
+    <text x="450" y="266" class="txt small muted">the virus gives: its genes (and sometimes an enzyme)</text>
+  </svg>
+  <figcaption>Syllabus Figure 3-2, the simplified replicative cycle of a DNA virus with a one-protein capsid. Red = viral genome, blue = capsid proteins, purple = a host ribosome. The dark blue bar on the cell edge is the receptor the virus needs.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Who provides what</span>
+<p><strong>The host provides everything except the plan</strong>: nucleotides, enzymes (for DNA viruses even the DNA polymerase), ribosomes, tRNAs, amino acids and ATP. The virus provides
+the <strong>genome</strong> and, in some cases, one enzyme the host does not have (an RNA-copying polymerase, or reverse transcriptase; page 3.3).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Begin: een virus en een cel met de juiste receptor. (1) Het virus bindt en het <strong>genoom gaat naar binnen</strong> (injectie bij fagen, endocytose, of fusie van de envelop met het
+celmembraan). (2) Virale eiwitten <strong>nemen de cel over</strong>. (3) Het genoom wordt gekopieerd met nucleotiden van de gastheer; DNA-virussen gebruiken het <strong>DNA-polymerase van de
+gastheer</strong>, RNA-virussen hun eigen RNA-polymerase. (4) Virale eiwitten worden gemaakt met <strong>ribosomen, tRNA's, aminozuren en ATP</strong> van de gastheer. (5) Genomen en
+capsomeren <strong>assembleren vanzelf</strong>. (6) Honderden virussen verlaten de cel, die vaak <strong>beschadigd of gedood</strong> wordt: dat geeft de ziektesymptomen.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Animal viruses: two things to look at (3.2.2.2)</h2>
+<p>Everyone has had viral infections: cold sores, influenza, the common cold. All these viruses replicate only inside host cells, but animal viruses differ in <em>how</em>. The syllabus sorts the
+variations by two features:</p>
+<ol>
+  <li>the <strong>type of genome</strong>: double- or single-stranded DNA or RNA (page 3.3), and</li>
+  <li>the <strong>presence or absence of an envelope</strong> (this page, section 4).</li>
+</ol>
+<p>Bacterial and plant viruses are not discussed in this chapter. The syllabus also points to a recording, "HIV reproductive cycle", which belongs with page 3.3.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Dierlijke virussen worden ingedeeld naar (1) het <strong>type genoom</strong> (ds/ss DNA of RNA, pagina 3.3) en (2) het <strong>al dan niet hebben van een envelop</strong> (hieronder).</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Enveloped viruses: entering and leaving through the membrane (3.2.2.2.1, Figure 3-3)</h2>
+<p>An animal virus with an envelope (a membranous outer layer, page 3.1) <strong>uses that envelope to enter the host cell</strong>. The viral <strong>glycoproteins</strong> sticking out of the envelope
+bind to specific receptors on the cell surface; then the envelope fuses with the cell membrane and the capsid is inside. The interesting part is how the virus gets a <em>new</em> envelope on the way out.
+<strong>Begin state:</strong> the viral genome is inside the cell and is being expressed. <strong>Goal:</strong> new enveloped particles outside the cell.</p>
+<ol>
+  <li><strong>Making the spikes.</strong> Ribosomes <strong>bound to the ER</strong> of the host cell make the protein parts of the viral envelope glycoproteins (the same route a cell uses for its own membrane proteins, BIO01 chapter 5).</li>
+  <li><strong>Adding the sugars.</strong> Cellular enzymes in the <strong>ER and the Golgi apparatus</strong> add the sugar chains, turning them into glycoproteins.</li>
+  <li><strong>To the surface.</strong> The viral glycoproteins, embedded in membrane <strong>derived from the host cell</strong>, are transported to the cell surface and sit in the plasma membrane.</li>
+  <li><strong>Budding.</strong> In a process much like <strong>exocytosis</strong>, new viral capsids are <strong>wrapped in membrane as they bud</strong> from the cell: the capsid pushes out through a patch of membrane that carries the viral glycoproteins, and pinches off.</li>
+</ol>
+<p>So the viral envelope is usually derived from the host's <strong>plasma membrane</strong>, although all or most of the molecules in it are specified by viral genes. Important difference with the
+general cycle above: this replicative cycle <strong>does not necessarily kill the host cell</strong>, in contrast to the <strong>lytic cycles of phages</strong> (lytic = the cell bursts, lysis = splitting open).
+The enveloped viruses are now free to infect other cells.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 700 200" width="700" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- membrane line with budding -->
+    <path d="M20,120 L180,120 C200,120 200,60 240,60 C280,60 280,120 300,120 L400,120 C420,120 420,70 460,56 C470,52 490,52 500,56 C540,70 540,120 560,120 L680,120" class="mem"/>
+    <!-- spikes on membrane patch -->
+    <path d="M210,96 L204,84 M240,60 L240,46 M270,96 L276,84 M430,86 L418,76 M480,52 L480,38 M530,86 L542,76" class="spike"/>
+    <!-- capsid inside bud 1 -->
+    <polygon points="240,80 256,89 256,107 240,116 224,107 224,89" class="cap"/>
+    <path d="M232,98 C236,92 240,104 244,98 S250,94 248,104" class="gen"/>
+    <!-- capsid inside bud 2 -->
+    <polygon points="480,76 496,85 496,103 480,112 464,103 464,85" class="cap"/>
+    <path d="M472,94 C476,88 480,100 484,94 S490,90 488,100" class="gen"/>
+    <!-- released virus -->
+    <circle cx="620" cy="56" r="28" class="env"/>
+    <polygon points="620,40 634,48 634,64 620,72 606,64 606,48" class="cap"/>
+    <path d="M612,56 C616,50 620,62 624,56 S630,52 628,62" class="gen"/>
+    <path d="M620,28 L620,18 M644,42 L652,34 M648,70 L656,78 M592,70 L584,78 M596,42 L588,34" class="spike"/>
+    <path d="M560,100 L590,80" class="path accent" marker-end="url(#ar6)"/>
+    <!-- capsids inside cell -->
+    <polygon points="100,150 116,159 116,177 100,186 84,177 84,159" class="cap"/>
+    <path d="M92,168 C96,162 100,174 104,168 S110,164 108,174" class="gen"/>
+    <path d="M124,160 L200,124" class="path accent" marker-end="url(#ar6)"/>
+    <text x="60" y="110" class="txt small muted">outside</text>
+    <text x="60" y="138" class="txt small muted">inside the cell</text>
+    <text x="240" y="150" class="txt small">1 capsid pushes into a patch</text>
+    <text x="240" y="164" class="txt small">of membrane with viral spikes</text>
+    <text x="480" y="150" class="txt small">2 the bud pinches off</text>
+    <text x="620" y="110" class="txt small">3 free enveloped virus</text>
+    <text x="400" y="190" class="txt small muted">orange = host membrane with viral glycoproteins · blue = capsid · red = genome</text>
+  </svg>
+  <figcaption>Budding (syllabus Figure 3-3, last steps). The envelope is a piece of the host's plasma membrane; the spikes in it were made by the host's ER and Golgi from viral genes. The cell is not necessarily killed.</figcaption>
+</figure>
+
+<h3>A variation: herpesviruses</h3>
+<p>Some viruses get their envelope <strong>not</strong> from the plasma membrane. <strong>Herpesviruses</strong> (the viruses of cold sores, koortsblaasjes, and genital sores) are temporarily cloaked in
+membrane from the <strong>nuclear envelope</strong> of the host; they shed that membrane in the cytoplasm and acquire a new envelope from the membrane of the <strong>Golgi apparatus</strong>. Herpesviruses have a
+<strong>double-stranded DNA genome</strong> and replicate <strong>within the host cell nucleus</strong>, using a mix of viral and cellular enzymes to copy and transcribe their DNA.</p>
+<p>Their special trick is <strong>latency</strong> (latent = present but inactive, sluimerend). Copies of the viral DNA can remain behind as <strong>mini-chromosomes in the nuclei of certain nerve cells</strong>.
+There they stay silent until some physical or emotional <strong>stress</strong> triggers a new round of active virus production. The new viruses infect other cells and cause the typical blisters.
+Once someone has a herpesvirus infection, <strong>flare-ups can recur throughout life</strong>: the virus never leaves.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een virus met <strong>envelop</strong> gebruikt die om binnen te komen (glycoproteïnen binden receptoren, envelop fuseert met het celmembraan). Nieuwe envelop maken: (1) ribosomen op het
+<strong>ER</strong> maken de eiwitdelen van de virale glycoproteïnen, (2) enzymen in <strong>ER en Golgi</strong> hangen er suikers aan, (3) ze gaan in gastheermembraan naar het celoppervlak, (4) nieuwe
+capsiden worden in dat membraan gewikkeld als ze <strong>afknoppen</strong> (zoals exocytose). De envelop komt dus van het <strong>celmembraan van de gastheer</strong>, met eiwitten van virale genen.
+Dit <strong>doodt de cel niet noodzakelijk</strong>, anders dan de lytische cyclus van fagen. <strong>Herpesvirussen</strong>: envelop eerst van de <strong>kernmembraan</strong>, dan van het <strong>Golgi</strong>;
+dsDNA, vermenigvuldigen in de <strong>kern</strong>; blijven <strong>latent</strong> als mini-chromosomen in <strong>zenuwcellen</strong>; stress wekt ze weer op → blaasjes, levenslang terugkerend.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>obligate intracellular parasite</td><td>an organism that can only multiply inside a host cell; every virus</td></tr>
+  <tr><td>host cell, host species</td><td>the cell / the species a virus infects</td></tr>
+  <tr><td>host range</td><td>the set of species (and cell types) a virus can infect; broad (West Nile) or narrow (measles)</td></tr>
+  <tr><td>receptor (portal of entry)</td><td>a host cell surface protein the virus binds to get in; normally has a job for the cell</td></tr>
+  <tr><td>"handshake" fit</td><td>the specific match between viral surface proteins and host receptors</td></tr>
+  <tr><td>replicative cycle</td><td>the steps from one virus entering a cell to many viruses leaving it</td></tr>
+  <tr><td>injection, endocytosis, fusion</td><td>the three ways a genome gets in: phage tail; uptake in a vesicle; envelope melting with the plasma membrane</td></tr>
+  <tr><td>commandeer</td><td>take command of the host cell: reprogram it to make viral genomes and proteins</td></tr>
+  <tr><td>self-assembly</td><td>genomes and capsomeres fit together spontaneously into new particles</td></tr>
+  <tr><td>lytic cycle, lysis</td><td>a cycle (phages) that ends with the cell bursting open (lysis) to release the viruses</td></tr>
+  <tr><td>budding</td><td>a capsid pushes out through the plasma membrane and pinches off wrapped in it; like exocytosis</td></tr>
+  <tr><td>viral glycoprotein</td><td>sugar-carrying viral protein in the envelope; made on ER ribosomes, sugars added in ER and Golgi; binds the receptor</td></tr>
+  <tr><td>herpesvirus</td><td>dsDNA virus replicating in the nucleus; envelope from the nuclear envelope, then from the Golgi; causes cold sores and genital sores</td></tr>
+  <tr><td>latent / latency</td><td>the viral DNA stays silent in the cell (as mini-chromosomes in nerve cells) until stress reactivates it</td></tr>
+  <tr><td>mini-chromosome</td><td>a small extra DNA molecule kept in the nucleus; how herpesvirus DNA persists</td></tr>
+  <tr><td>flare-up</td><td>a new outbreak of symptoms (blisters) from a latent infection</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student explains how viruses replicate."</p>
+<ol>
+  <li>Explain "obligate intracellular parasite" and why viruses are one (no metabolism, no ribosomes).</li>
+  <li>Explain host range through the receptor "handshake", with broad (West Nile) and narrow (measles) examples and tissue specificity (cold viruses, HIV).</li>
+  <li>Tell the general replicative cycle in order: entry (injection, endocytosis or fusion), takeover, genome copying, protein synthesis, self-assembly, exit with damage.</li>
+  <li>List what the host provides (nucleotides, enzymes, ribosomes, tRNAs, amino acids, ATP) and say that DNA viruses use host DNA polymerase while RNA viruses bring their own RNA polymerase.</li>
+  <li>Describe how an enveloped virus enters (glycoprotein–receptor binding, fusion) and leaves (glycoproteins made via ER and Golgi, budding like exocytosis), and that this need not kill the cell.</li>
+  <li>Describe the herpesvirus variation: envelope from nuclear envelope then Golgi, dsDNA, replication in the nucleus, latency in nerve cells, lifelong flare-ups.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What does "obligate intracellular parasite" mean, and why does it apply to viruses?</dt>
+  <dd>An organism that can only multiply inside a host cell. Viruses have no metabolic enzymes and no ribosomes, so they can replicate only within a host cell; outside they are packaged genes in transit.</dd>
+
+  <dt>What decides which cells a virus can infect?</dt>
+  <dd>The "handshake" fit between viral surface proteins and specific receptor molecules on the outside of the cell. The receptors are host proteins with their own jobs that the virus uses as doors. This gives each virus its host range.</dd>
+
+  <dt>Give an example of a virus with a broad host range and one with a narrow host range.</dt>
+  <dd>Broad: West Nile virus (and equine encephalitis virus) infects mosquitoes, birds, horses and humans. Narrow: measles virus infects only humans.</dd>
+
+  <dt>Why does a cold virus not infect your liver?</dt>
+  <dd>Viral infection is usually limited to particular tissues: the cold virus binds receptors found only on the cells lining the upper respiratory tract. Likewise HIV binds receptors present only on certain immune cells.</dd>
+
+  <dt>Name three ways a viral genome can get into a cell.</dt>
+  <dd>Injection through a phage's tail into a bacterium; uptake by endocytosis; fusion of a viral envelope with the host's plasma membrane.</dd>
+
+  <dt>What does the host cell provide for virus replication?</dt>
+  <dd>Nucleotides for new genomes, and enzymes, ribosomes, tRNAs, amino acids, ATP and other components for making viral proteins. Many DNA viruses even use the host's DNA polymerase.</dd>
+
+  <dt>Why do RNA viruses need their own polymerase?</dt>
+  <dd>To copy their genome they need an enzyme that uses RNA as a template to make RNA; host cells have no such enzyme, so the virus encodes it itself.</dd>
+
+  <dt>How are new virus particles put together?</dt>
+  <dd>By self-assembly: once genomes and capsomeres are made, they spontaneously assemble into new viruses.</dd>
+
+  <dt>Why does a viral infection make you ill?</dt>
+  <dd>The exit of hundreds or thousands of viruses often damages or destroys the cell; that cellular damage and death, plus the body's responses to it, cause many of the symptoms.</dd>
+
+  <dt>Describe how an enveloped virus gets its envelope.</dt>
+  <dd>ER-bound host ribosomes make the protein parts of the viral glycoproteins; ER and Golgi enzymes add sugars; the glycoproteins travel in host membrane to the cell surface; new capsids bud through that membrane, wrapped in it, like exocytosis. The envelope is host plasma membrane with viral proteins.</dd>
+
+  <dt>Does an enveloped virus kill its host cell?</dt>
+  <dd>Not necessarily. Budding lets viruses leave without bursting the cell, unlike the lytic cycle of phages.</dd>
+
+  <dt>How is a herpesvirus different, and why do cold sores come back?</dt>
+  <dd>Its envelope comes first from the nuclear envelope and then from the Golgi; it is a dsDNA virus that replicates in the nucleus. Copies of its DNA stay latent as mini-chromosomes in nerve cells; physical or emotional stress reactivates them, and the new viruses cause blisters again, throughout life.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Viruses = <strong>obligate intracellular parasites</strong>: no metabolism, no ribosomes → replicate only in a host cell.</li>
+  <li><strong>Host range</strong> = "handshake" fit of viral surface proteins with <strong>host receptors</strong>; broad (West Nile) or narrow (measles); often one tissue (cold virus: upper airways; HIV: certain immune cells).</li>
+  <li>Entry: <strong>injection</strong> (phage tail), <strong>endocytosis</strong>, or <strong>fusion</strong> (envelope with plasma membrane).</li>
+  <li>Inside: viral proteins <strong>commandeer</strong> the cell → copy genome + make viral proteins.</li>
+  <li>Host gives <strong>nucleotides, enzymes, ribosomes, tRNAs, amino acids, ATP</strong>; DNA viruses use <strong>host DNA polymerase</strong>; RNA viruses use their <strong>own RNA polymerase</strong>.</li>
+  <li><strong>Self-assembly</strong> → hundreds of viruses exit → cell damaged → symptoms.</li>
+  <li>Enveloped virus: spikes made on <strong>ER ribosomes</strong>, sugars in <strong>ER + Golgi</strong>, to the surface, then <strong>budding</strong> (like exocytosis).</li>
+  <li>Envelope = <strong>host plasma membrane</strong> with viral glycoproteins; budding <strong>need not kill</strong> the cell (unlike the lytic phage cycle).</li>
+  <li><strong>Herpesvirus</strong>: envelope from <strong>nuclear envelope</strong>, then <strong>Golgi</strong>; <strong>dsDNA</strong>, replicates in the <strong>nucleus</strong>.</li>
+  <li>Herpes <strong>latency</strong>: mini-chromosomes in <strong>nerve cells</strong>; stress → flare-up (cold sores), lifelong.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Why can a virus not multiply in a test tube full of nucleotides and amino acids?
+    <details><summary>Answer</summary><div class="ans"><p>Because it has <strong>no enzymes, no ribosomes and no energy system</strong> of its own. It needs a living host cell to supply those: it is an obligate intracellular parasite.</p></div></details></li>
+  <li>Measles virus infects only humans; West Nile virus infects mosquitoes, birds, horses and humans. What is this property called and what causes the difference?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Host range.</strong> It depends on which cells carry a receptor that fits the virus's surface proteins (the "handshake"). Measles proteins fit a receptor found only on human cells.</p></div></details></li>
+  <li>Which of these is NOT a way a viral genome enters a cell?
+    <ul class="opts"><li data-l="a">injection by a phage tail</li><li data-l="b">endocytosis</li><li data-l="c">fusion of the envelope with the plasma membrane</li><li data-l="d">the virus drills a hole with its own ribosomes</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> Viruses have no ribosomes. The three real routes are injection, endocytosis and fusion.</p></div></details></li>
+  <li>Put the steps of the general replicative cycle in order: self-assembly, genome entry, exit, genome copying and protein synthesis, binding to a receptor.
+    <details><summary>Answer</summary><div class="ans"><p>Binding to a receptor → genome entry → (takeover) genome copying and protein synthesis → self-assembly → exit. Exit often destroys the cell.</p></div></details></li>
+  <li>True or false: "A DNA virus always brings its own DNA polymerase."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Many DNA viruses use the <strong>host's</strong> DNA polymerases to copy their genome. It is the RNA viruses that must bring (encode) their own RNA polymerase, because cells have no enzyme that copies RNA from an RNA template.</p></div></details></li>
+  <li>List five things the host cell supplies to a replicating virus.
+    <details><summary>Answer</summary><div class="ans"><p>Nucleotides, enzymes, ribosomes, tRNAs, amino acids, ATP (any five). The virus supplies only its genes, and sometimes one special enzyme.</p></div></details></li>
+  <li>Who assembles the new virus particles?
+    <details><summary>Answer</summary><div class="ans"><p>Nobody: the viral nucleic acids and capsomeres <strong>self-assemble</strong> spontaneously once they have been made.</p></div></details></li>
+  <li>Where are the glycoprotein spikes of an enveloped virus made, and where do they get their sugars?
+    <details><summary>Answer</summary><div class="ans"><p>The protein parts are made by host ribosomes <strong>bound to the ER</strong>; cellular enzymes in the <strong>ER and the Golgi apparatus</strong> add the sugars. Then they travel in host membrane to the cell surface.</p></div></details></li>
+  <li>The envelope of an influenza virus is "host membrane". Then which part of it is viral?
+    <details><summary>Answer</summary><div class="ans"><p>The phospholipids come from the host, but the <strong>glycoproteins</strong> (the spikes) and most other proteins in it are specified by <strong>viral genes</strong>. The membrane is borrowed; the proteins are the virus's own.</p></div></details></li>
+  <li>How does budding differ from the lytic cycle of a phage for the host cell?
+    <ul class="opts"><li data-l="a">budding always kills the cell, lysis never does</li><li data-l="b">budding does not necessarily kill the cell; lysis bursts it</li><li data-l="c">they are the same thing</li><li data-l="d">budding happens only in bacteria</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> In budding the capsid leaves wrapped in a piece of membrane, like exocytosis, so the cell can survive. Lysis means the cell bursts open.</p></div></details></li>
+  <li>Which process in the cell's own life does budding resemble?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Exocytosis</strong>: a vesicle fusing with the plasma membrane to push something out. Here the capsid is wrapped in membrane as it leaves.</p></div></details></li>
+  <li>A herpesvirus is enveloped, but its first envelope is not from the plasma membrane. Where does it come from, and what replaces it?
+    <details><summary>Answer</summary><div class="ans"><p>From the <strong>nuclear envelope</strong>; the virus sheds it in the cytoplasm and gets a new envelope from the <strong>Golgi apparatus</strong> membrane. Herpesviruses are dsDNA viruses that replicate in the nucleus.</p></div></details></li>
+  <li>Why can cold sores come back years after the first infection?
+    <details><summary>Answer</summary><div class="ans"><p>Herpesvirus DNA stays behind as <strong>latent mini-chromosomes in the nuclei of nerve cells</strong>. Physical or emotional stress triggers a new round of virus production, the viruses infect other cells, and blisters appear again. Flare-ups can recur for life.</p></div></details></li>
+  <li>HIV infects only certain immune cells. Which idea from this page explains that?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Tissue specificity of the host range</strong>: HIV's surface proteins bind receptors that are present only on those immune cells. No receptor, no entry.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="3.01_what_is_a_virus.html">← 3.1 What is a virus</a><a href="index.html">Chapter 3 index</a><a href="3.03_rna_viruses_and_hiv.html">3.3 RNA viruses and HIV →</a></nav>
+</main>
+</body>
+</html>

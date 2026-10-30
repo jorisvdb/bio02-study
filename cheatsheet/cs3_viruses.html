@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheatsheet 3 – Human pathogens: viruses</title>
+<link rel="stylesheet" href="cs.css">
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="../chapter_3/index.html">Chapter 3 pages</a><a href="cs2_cancer.html">← 2 Cancer</a><a href="cs4_techniques.html">4 Techniques →</a></nav>
+<h1>3 · Human pathogens: viruses</h1>
+<div class="anims"><b>Watch first: animations for this chapter</b>
+<ul>
+  <li><a href="../animations/viruses.html#cy=1">▶ 1 · A virus takes over a cell</a> <span class="note">handshake, entry, host makes copies, self-assembly, exit · card <a href="#c-cycle">The replicative cycle</a></span></li>
+  <li><a href="../animations/viruses.html#hiv=1">▶ 2 · HIV, a retrovirus</a> <span class="note">reverse transcriptase RNA → DNA, provirus · card <a href="#c-hiv">HIV</a></span></li>
+</ul></div>
+
+<div class="kapstok"><b>Kapstok – map of this chapter</b>
+<p>A virus is a packet of genes (nucleic acid) in a protein coat; it can only copy itself inside a host cell, using the host's machinery. Click a name to jump to its card.</p>
+<ul class="tree">
+  <li><a href="#c-anatomy">What a virus is: genome + capsid (+ envelope)</a>
+    <ul>
+      <li><a href="#c-genome">The genome: DNA or RNA, single or double strand</a></li>
+      <li><a href="#c-capsid">The capsid: helical, icosahedral, phage</a> · <a href="#c-alive">alive or not?</a></li>
+    </ul></li>
+  <li><a href="#c-cycle">Replication only inside a host cell</a>
+    <ul>
+      <li><a href="#c-hostrange">Host range: the receptor handshake</a></li>
+      <li><a href="#c-polymerase">Who copies the genome: host or viral polymerase</a></li>
+      <li><a href="#c-envelope">Enveloped viruses: budding</a> · <a href="#c-herpes">herpes latency</a></li>
+    </ul></li>
+  <li><a href="#c-classes">The six classes of animal viruses</a>
+    <ul>
+      <li><a href="#c-hiv">Class VI: retroviruses, HIV and reverse transcriptase</a></li>
+    </ul></li>
+  <li><a href="#c-traps">Quick traps</a></li>
+</ul></div>
+
+<h2 class="sec">A · What a virus is<small>Not a cell: no metabolism, no ribosomes. A genome in a protein coat, sometimes wrapped in a membrane.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-anatomy">
+<p class="crumb">Chapter 3 › <b>Virus anatomy</b></p>
+<h2>A virus = nucleic acid + protein coat (+ envelope)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <!-- naked virus -->
+  <polygon points="110,22 160,50 160,110 110,138 60,110 60,50" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <path d="M85 80 q12 -18 25 0 t25 0" fill="none" stroke="#3a86ff" stroke-width="4" stroke-linecap="round"/>
+  <text x="110" y="162" text-anchor="middle" fill="currentColor" font-weight="700">naked virus</text>
+  <text x="110" y="176" text-anchor="middle" fill="currentColor" font-size="10">genome + capsid</text>
+  <!-- enveloped virus -->
+  <circle cx="340" cy="80" r="62" fill="#f4a261" fill-opacity=".35" stroke="#f4a261" stroke-width="3"/>
+  <g fill="#9b59b6"><circle cx="340" cy="14" r="6"/><circle cx="398" cy="46" r="6"/><circle cx="398" cy="114" r="6"/><circle cx="340" cy="146" r="6"/><circle cx="282" cy="114" r="6"/><circle cx="282" cy="46" r="6"/></g>
+  <polygon points="340,42 372,60 372,100 340,118 308,100 308,60" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <path d="M322 80 q9 -14 18 0 t18 0" fill="none" stroke="#d1495b" stroke-width="4" stroke-linecap="round"/>
+  <text x="340" y="162" text-anchor="middle" fill="currentColor" font-weight="700">enveloped virus</text>
+  <text x="340" y="176" text-anchor="middle" fill="currentColor" font-size="10">+ membrane from the host, with spikes</text>
+  <g fill="currentColor" font-size="10">
+    <text x="420" y="24">glycoprotein spike</text><text x="420" y="36">(binds the receptor)</text>
+    <text x="440" y="80">envelope =</text><text x="440" y="92">host membrane</text>
+  </g>
+</svg>
+</figure>
+<div class="legend"><ul>
+  <li><i style="background:#e9c46a"></i>capsid = protein shell (made of many copies of a few proteins)</li>
+  <li><i style="background:#3a86ff"></i>DNA genome</li><li><i style="background:#d1495b"></i>RNA genome</li>
+  <li><i style="background:#f4a261"></i>envelope = membrane stolen from the host cell</li>
+  <li><i style="background:#9b59b6"></i>glycoprotein = protein with sugars, sticks out of the envelope</li>
+</ul></div>
+<p class="mnemo">Size 20 nm (smaller than a ribosome) to 1500 nm (barely visible in a light microscope). Some capsids carry a viral enzyme (e.g. a polymerase).</p>
+<p class="trap">No metabolism, no ribosomes: a virus cannot make proteins or energy itself. "Packaged genes in transit".</p>
+</div>
+
+<div class="card" id="c-genome">
+<p class="crumb">Virus anatomy › <b>The genome</b></p>
+<h2>The viral genome: four kinds</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 130" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <g stroke-width="4" stroke-linecap="round" fill="none">
+    <path d="M30 40 h90 M30 54 h90" stroke="#3a86ff"/>
+    <path d="M160 47 h90" stroke="#3a86ff"/>
+    <path d="M290 40 h90 M290 54 h90" stroke="#d1495b"/>
+    <path d="M420 47 h90" stroke="#d1495b"/>
+  </g>
+  <g stroke="#8a8f98" stroke-width="1"><path d="M45 40 v14 M60 40 v14 M75 40 v14 M90 40 v14 M105 40 v14 M305 40 v14 M320 40 v14 M335 40 v14 M350 40 v14 M365 40 v14"/></g>
+  <g fill="currentColor" text-anchor="middle" font-weight="700">
+    <text x="75" y="80">dsDNA</text><text x="205" y="80">ssDNA</text><text x="335" y="80">dsRNA</text><text x="465" y="80">ssRNA</text>
+  </g>
+  <g fill="currentColor" text-anchor="middle" font-size="10">
+    <text x="75" y="94">double-stranded</text><text x="205" y="94">single-stranded</text><text x="335" y="94">double-stranded</text><text x="465" y="94">single-stranded</text>
+    <text x="140" y="118">"DNA virus"</text><text x="400" y="118">"RNA virus" (most plant viruses, many animal viruses)</text>
+  </g>
+  <text x="260" y="18" text-anchor="middle" fill="currentColor" font-size="10">ds = double-stranded (two strands paired), ss = single-stranded (one strand)</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>shape</td><td>usually one linear or circular molecule; sometimes several molecules</td></tr>
+  <tr><td>size</td><td>3 genes (smallest) to several hundred – 2000 genes (largest)</td></tr>
+  <tr><td>compare</td><td>a bacterium: about 200 to a few thousand genes</td></tr>
+</table>
+<p class="trap">Named after the genome: DNA virus or RNA virus. Cells always use dsDNA; viruses "defy this convention".</p>
+</div>
+
+<div class="card" id="c-capsid">
+<p class="crumb">Virus anatomy › <b>The capsid</b></p>
+<h2>Capsid shapes: helical, icosahedral, complex (phage)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 170" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <!-- helical rod -->
+  <rect x="30" y="30" width="110" height="34" rx="17" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <g stroke="#b08a2e" stroke-width="1"><path d="M45 32 v30 M60 32 v30 M75 32 v30 M90 32 v30 M105 32 v30 M120 32 v30"/></g>
+  <path d="M38 47 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="#d1495b" stroke-width="3"/>
+  <text x="85" y="86" text-anchor="middle" fill="currentColor" font-weight="700">helical (rod)</text>
+  <text x="85" y="100" text-anchor="middle" fill="currentColor">tobacco mosaic virus:</text>
+  <text x="85" y="112" text-anchor="middle" fill="currentColor">&gt; 1000 copies of 1 protein</text>
+  <text x="85" y="124" text-anchor="middle" fill="currentColor">in a spiral around the RNA</text>
+  <!-- icosahedron -->
+  <polygon points="260,14 304,38 304,86 260,110 216,86 216,38" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <g stroke="#b08a2e" stroke-width="1" fill="none"><path d="M260 14 L260 110 M216 38 L304 86 M304 38 L216 86 M260 14 L216 86 M260 14 L304 86 M216 38 L260 110 M304 38 L260 110"/></g>
+  <text x="260" y="130" text-anchor="middle" fill="currentColor" font-weight="700">icosahedral (20 faces)</text>
+  <text x="260" y="143" text-anchor="middle" fill="currentColor">adenovirus: 252 identical</text>
+  <text x="260" y="155" text-anchor="middle" fill="currentColor">proteins, 20 triangles</text>
+  <!-- phage -->
+  <polygon points="430,12 456,27 456,57 430,72 404,57 404,27" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <rect x="424" y="72" width="12" height="34" fill="#457b9d"/>
+  <g stroke="#457b9d" stroke-width="2" fill="none"><path d="M424 106 l-18 20 M436 106 l18 20 M428 106 l-8 24 M432 106 l8 24"/></g>
+  <text x="430" y="143" text-anchor="middle" fill="currentColor" font-weight="700">complex: bacteriophage</text>
+  <text x="430" y="155" text-anchor="middle" fill="currentColor">head + tail; injects its DNA</text>
+  <text x="430" y="167" text-anchor="middle" fill="currentColor">into a bacterium</text>
+</svg>
+</figure>
+<p class="mnemo">Capsid = many copies of only a few different proteins → self-assembly, no builder needed. Phage = virus of bacteria (the most complex capsids).</p>
+</div>
+
+<div class="card" id="c-alive">
+<p class="crumb">Chapter 3 › <b>Pathogens and "are viruses alive?"</b></p>
+<h2>Pathogens, and why a virus is not really alive</h2>
+<table class="mini">
+  <tr><th>fact</th><th>number / example</th></tr>
+  <tr><td>infectious diseases</td><td>≈ 1/4 of all human deaths, more than all cancers together; second after heart and vessel diseases</td></tr>
+  <tr><td>old diseases, drug resistance</td><td>tuberculosis, malaria</td></tr>
+  <tr><td>new pandemic</td><td>COVID-19 (SARS-CoV-2), first seen 2019; infects airway cells, spreads by breath</td></tr>
+  <tr><td>"stress ulcers"</td><td>are mostly an infection: bacterium <i>Helicobacter pylori</i></td></tr>
+  <tr><td>Legionnaires' disease</td><td>bacterial lung infection via air-conditioning (industrialised countries)</td></tr>
+  <tr><td>most microbes</td><td>are NOT pathogens; many are useful (oxygen, soil, our own body)</td></tr>
+</table>
+<ol class="steps">
+  <li>"virus" = Latin for poison</li>
+  <li>cannot reproduce without a host cell</li>
+  <li>no metabolism of its own</li>
+  <li>→ grey zone between chemical and life</li>
+</ol>
+<p class="trap">Pathogen (ziekteverwekker) = a microbe that can cause disease. This chapter treats only viruses.</p>
+</div>
+
+</div>
+
+<h2 class="sec">B · Replication only inside a host cell<small>Obligate intracellular parasite: the virus brings the genes, the host provides everything else.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-hostrange">
+<p class="crumb">Replication › <b>Host range</b></p>
+<h2>Host range: the receptor "handshake"</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 140" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <path d="M10 110 H510" stroke="#8a8f98" stroke-width="4"/>
+  <text x="260" y="132" text-anchor="middle" fill="currentColor" font-size="10">host cell membrane</text>
+  <!-- receptor that fits -->
+  <path d="M120 110 v-30 h-14 v-14 h28 v14 h-14" fill="#2a9d8f" stroke="#2a9d8f" stroke-width="3"/>
+  <circle cx="120" cy="46" r="22" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <path d="M110 68 h20 v6 h-20z" fill="#9b59b6"/>
+  <text x="120" y="16" text-anchor="middle" fill="currentColor" font-weight="700">fits → infection</text>
+  <!-- receptor that does not fit -->
+  <path d="M400 110 v-30 l-14 -14 h28 l-14 14" fill="#d1495b" stroke="#d1495b" stroke-width="3"/>
+  <circle cx="400" cy="46" r="22" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <path d="M390 68 h20 v6 h-20z" fill="#9b59b6"/>
+  <text x="400" y="16" text-anchor="middle" fill="currentColor" font-weight="700">no fit → no infection</text>
+  <text x="260" y="60" text-anchor="middle" fill="currentColor" font-size="10">viral surface protein</text>
+  <text x="260" y="74" text-anchor="middle" fill="currentColor" font-size="10">must match a host receptor</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><td>receptor</td><td>a host protein with its own normal job, "adopted" by the virus as a door</td></tr>
+  <tr><td>broad host range</td><td>West Nile virus, equine encephalitis virus: mosquitoes, birds, horses, humans</td></tr>
+  <tr><td>narrow</td><td>measles: only humans</td></tr>
+  <tr><td>tissue-specific</td><td>cold viruses: upper airway cells; HIV: certain immune cells only</td></tr>
+</table>
+<p class="mnemo">Host range = the set of species (and tissues) a virus can infect; it depends on the receptor fit.</p>
+</div>
+
+<div class="card" id="c-cycle">
+<p class="crumb">Replication › <b>The replicative cycle</b></p>
+<h2>The simplified replicative cycle (DNA virus, one capsid protein)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 210" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c3ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <rect x="150" y="20" width="300" height="170" rx="40" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <text x="170" y="182" text-anchor="middle" fill="currentColor" font-size="9">host cell</text>
+  <!-- 1 virus outside -->
+  <polygon points="60,50 80,62 80,86 60,98 40,86 40,62" fill="#e9c46a" stroke="#b08a2e" stroke-width="2"/>
+  <path d="M52 74 h16" stroke="#3a86ff" stroke-width="3"/>
+  <text x="60" y="118" text-anchor="middle" fill="currentColor" font-weight="700">1 attach</text>
+  <path d="M86 74 h58" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar)"/>
+  <!-- 2 genome inside -->
+  <path d="M170 68 q10 -10 20 0 t20 0" fill="none" stroke="#3a86ff" stroke-width="3"/>
+  <text x="190" y="90" text-anchor="middle" fill="currentColor" font-weight="700">2 enter</text>
+  <!-- 3 copies -->
+  <g stroke="#3a86ff" stroke-width="3" fill="none"><path d="M240 40 h40 M240 50 h40 M240 60 h40 M240 70 h40"/></g>
+  <text x="262" y="88" text-anchor="middle" fill="currentColor" font-weight="700">3 copy</text>
+  <text x="262" y="100" text-anchor="middle" fill="currentColor">host enzymes</text>
+  <!-- 4 proteins -->
+  <g fill="#e9c46a" stroke="#b08a2e"><polygon points="340,38 352,45 352,59 340,66 328,59 328,45"/><polygon points="370,38 382,45 382,59 370,66 358,59 358,45"/><polygon points="400,38 412,45 412,59 400,66 388,59 388,45"/></g>
+  <text x="372" y="84" text-anchor="middle" fill="currentColor" font-weight="700">4 capsid proteins</text>
+  <text x="372" y="96" text-anchor="middle" fill="currentColor">host ribosomes, ATP</text>
+  <!-- 5 assembly -->
+  <g fill="#e9c46a" stroke="#b08a2e"><polygon points="300,125 316,134 316,152 300,161 284,152 284,134"/><polygon points="340,125 356,134 356,152 340,161 324,152 324,134"/></g>
+  <path d="M294 143 h12 M334 143 h12" stroke="#3a86ff" stroke-width="3"/>
+  <text x="320" y="176" text-anchor="middle" fill="currentColor" font-weight="700">5 self-assembly</text>
+  <!-- 6 exit -->
+  <path d="M456 143 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar)"/>
+  <text x="478" y="130" text-anchor="middle" fill="currentColor" font-weight="700">6 exit</text>
+  <text x="470" y="162" text-anchor="middle" fill="currentColor">100s–1000s</text>
+  <text x="470" y="174" text-anchor="middle" fill="currentColor">of viruses</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Attach: viral protein binds host receptor</li>
+  <li>Genome enters (injection, endocytosis, or fusion)</li>
+  <li>Viral genes reprogram the cell</li>
+  <li>Host copies the genome, makes viral proteins</li>
+  <li>Genome + capsomeres self-assemble</li>
+  <li>Exit: cell often damaged or destroyed</li>
+</ol>
+<p class="trap">Host provides nucleotides, enzymes, ribosomes, tRNAs, amino acids, ATP. The damage + the body's response = the symptoms.</p>
+</div>
+
+<div class="card" id="c-polymerase">
+<p class="crumb">Replication › <b>Who copies the genome</b></p>
+<h2>DNA virus: host polymerase. RNA virus: its own polymerase</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <rect x="20" y="20" width="230" height="84" rx="10" fill="none" stroke="#3a86ff" stroke-width="2"/>
+  <text x="135" y="40" text-anchor="middle" fill="currentColor" font-weight="700">DNA virus</text>
+  <path d="M40 62 h60" stroke="#3a86ff" stroke-width="4"/><text x="70" y="80" text-anchor="middle" fill="currentColor" font-size="10">viral DNA</text>
+  <ellipse cx="150" cy="62" rx="30" ry="14" fill="#2a9d8f"/><text x="150" y="66" text-anchor="middle" fill="#fff" font-size="9">host DNA pol</text>
+  <path d="M190 56 h40 M190 68 h40" stroke="#3a86ff" stroke-width="4"/><text x="210" y="90" text-anchor="middle" fill="currentColor" font-size="10">copies</text>
+  <rect x="270" y="20" width="230" height="84" rx="10" fill="none" stroke="#d1495b" stroke-width="2"/>
+  <text x="385" y="40" text-anchor="middle" fill="currentColor" font-weight="700">RNA virus</text>
+  <path d="M290 62 h60" stroke="#d1495b" stroke-width="4"/><text x="320" y="80" text-anchor="middle" fill="currentColor" font-size="10">viral RNA</text>
+  <ellipse cx="400" cy="62" rx="32" ry="14" fill="#9b59b6"/><text x="400" y="66" text-anchor="middle" fill="#fff" font-size="9">viral RNA pol</text>
+  <path d="M442 56 h40 M442 68 h40" stroke="#d1495b" stroke-width="4"/><text x="462" y="90" text-anchor="middle" fill="currentColor" font-size="10">copies</text>
+</svg>
+</figure>
+<div class="legend"><ul>
+  <li><i style="background:#2a9d8f"></i>enzyme of the host cell</li>
+  <li><i style="background:#9b59b6"></i>enzyme encoded by the virus (RNA → RNA polymerase: cells do not have it)</li>
+</ul></div>
+<p class="trap">Cells can copy DNA and read DNA → RNA, but they cannot copy RNA from RNA. An RNA virus must encode that enzyme itself.</p>
+</div>
+
+<div class="card" id="c-envelope">
+<p class="crumb">Replication › Animal viruses › <b>Enveloped viruses</b></p>
+<h2>Enveloped RNA virus: entry by fusion, exit by budding</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c3ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <path d="M20 40 H500" stroke="#f4a261" stroke-width="5"/>
+  <text x="230" y="30" text-anchor="middle" fill="currentColor">plasma membrane (outside above, inside below)</text>
+  <!-- entering virus -->
+  <circle cx="70" cy="60" r="22" fill="#f4a261" fill-opacity=".4" stroke="#f4a261" stroke-width="2"/>
+  <polygon points="70,48 80,54 80,66 70,72 60,66 60,54" fill="#e9c46a" stroke="#b08a2e"/>
+  <text x="70" y="100" text-anchor="middle" fill="currentColor" font-weight="700">1 fusion</text>
+  <text x="70" y="112" text-anchor="middle" fill="currentColor">envelope melts into</text>
+  <text x="70" y="124" text-anchor="middle" fill="currentColor">the membrane</text>
+  <!-- ER -->
+  <rect x="150" y="70" width="110" height="50" rx="8" fill="#457b9d" fill-opacity=".25" stroke="#457b9d"/>
+  <text x="205" y="90" text-anchor="middle" fill="currentColor" font-weight="700">ER + Golgi</text>
+  <text x="205" y="104" text-anchor="middle" fill="currentColor">make glycoproteins</text>
+  <text x="205" y="116" text-anchor="middle" fill="currentColor">(+ sugars)</text>
+  <path d="M265 95 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar2)"/>
+  <!-- glycoproteins in membrane -->
+  <g fill="#9b59b6"><circle cx="330" cy="32" r="5"/><circle cx="350" cy="32" r="5"/><circle cx="370" cy="32" r="5"/></g>
+  <text x="350" y="150" text-anchor="middle" fill="currentColor">2 viral glycoproteins placed</text>
+  <text x="350" y="162" text-anchor="middle" fill="currentColor">in the host membrane</text>
+  <!-- budding -->
+  <path d="M400 40 q30 -40 60 0" fill="#f4a261" fill-opacity=".4" stroke="#f4a261" stroke-width="3"/>
+  <polygon points="430,10 440,16 440,28 430,34 420,28 420,16" fill="#e9c46a" stroke="#b08a2e"/>
+  <g fill="#9b59b6"><circle cx="412" cy="22" r="4"/><circle cx="448" cy="22" r="4"/><circle cx="430" cy="2" r="4"/></g>
+  <text x="440" y="60" text-anchor="middle" fill="currentColor" font-weight="700">3 budding</text>
+  <text x="440" y="72" text-anchor="middle" fill="currentColor">new capsid wrapped in</text>
+  <text x="440" y="84" text-anchor="middle" fill="currentColor">membrane = envelope</text>
+  <text x="440" y="96" text-anchor="middle" fill="currentColor">(like exocytosis)</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Spike glycoprotein binds a receptor</li>
+  <li>Envelope fuses with the plasma membrane</li>
+  <li>Genome + capsid inside; RNA copied, proteins made</li>
+  <li>ER ribosomes make envelope glycoproteins</li>
+  <li>ER + Golgi add the sugars → to the surface</li>
+  <li>New capsids bud out, wrapped in host membrane</li>
+</ol>
+<p class="trap">Envelope = host lipids + host proteins + viral glycoproteins. Budding does not necessarily kill the cell (unlike a lytic phage).</p>
+</div>
+
+<div class="card" id="c-herpes">
+<p class="crumb">Replication › Animal viruses › <b>Herpesviruses</b></p>
+<h2>Herpesviruses: envelope from the nucleus, latency in nerve cells</h2>
+<table class="mini">
+  <tr><td>genome</td><td>double-stranded DNA; replicates in the host <b>nucleus</b> with viral + host enzymes</td></tr>
+  <tr><td>envelope</td><td>first from the <b>nuclear envelope</b>, shed in the cytoplasm, new one from the <b>Golgi</b></td></tr>
+  <tr><td>latency</td><td>viral DNA stays as mini-chromosomes in nerve cells; stress reactivates it</td></tr>
+  <tr><td>disease</td><td>cold sores, genital sores; flare-ups for life</td></tr>
+</table>
+<p class="mnemo">Latent (latent, slapend) = present but inactive; a trigger (physical or emotional stress) starts a new round of virus production.</p>
+</div>
+
+</div>
+
+<h2 class="sec">C · RNA viruses and retroviruses<small>Animal viruses are classified by their genetic material; the strangest ones copy RNA back into DNA.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-classes">
+<p class="crumb">RNA viruses › <b>The six classes</b></p>
+<h2>Classes of animal viruses (Table 1)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 200" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="11">
+  <defs><marker id="c3ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <g fill="currentColor" font-weight="700"><text x="20" y="30">IV</text><text x="20" y="90">V</text><text x="20" y="150">VI</text></g>
+  <!-- class IV: +RNA is mRNA -->
+  <path d="M50 26 h90" stroke="#d1495b" stroke-width="4"/><text x="95" y="44" text-anchor="middle" fill="currentColor" font-size="10">ssRNA genome</text>
+  <path d="M150 26 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar3)"/>
+  <ellipse cx="240" cy="26" rx="38" ry="12" fill="#2a9d8f"/><text x="240" y="30" text-anchor="middle" fill="#fff" font-size="9">host ribosome</text>
+  <path d="M290 26 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar3)"/>
+  <text x="340" y="30" fill="currentColor">protein: genome IS the mRNA</text>
+  <!-- class V: -RNA template -->
+  <path d="M50 86 h90" stroke="#d1495b" stroke-width="4"/><text x="95" y="104" text-anchor="middle" fill="currentColor" font-size="10">ssRNA genome</text>
+  <path d="M150 86 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar3)"/>
+  <ellipse cx="240" cy="86" rx="38" ry="12" fill="#9b59b6"/><text x="240" y="90" text-anchor="middle" fill="#fff" font-size="9">viral RNA pol</text>
+  <path d="M290 86 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar3)"/>
+  <path d="M340 82 h60" stroke="#d1495b" stroke-width="4" stroke-dasharray="6 3"/>
+  <text x="410" y="90" fill="currentColor">= mRNA + template</text>
+  <!-- class VI: retro -->
+  <path d="M50 146 h90" stroke="#d1495b" stroke-width="4"/><text x="95" y="164" text-anchor="middle" fill="currentColor" font-size="10">ssRNA genome</text>
+  <path d="M150 146 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar3)"/>
+  <ellipse cx="240" cy="146" rx="38" ry="12" fill="#f4a261"/><text x="240" y="150" text-anchor="middle" fill="#1f2328" font-size="9">reverse transcriptase</text>
+  <path d="M290 146 h40" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar3)"/>
+  <path d="M340 142 h60 M340 152 h60" stroke="#3a86ff" stroke-width="4"/>
+  <text x="410" y="150" fill="currentColor">DNA → genome</text>
+  <text x="260" y="190" text-anchor="middle" fill="currentColor" font-size="10">classes I–III (DNA and dsRNA viruses) are not drawn</text>
+</svg>
+</figure>
+<table class="mini">
+  <tr><th>class</th><th>genome</th><th>how it makes mRNA</th></tr>
+  <tr><td>I</td><td>dsDNA</td><td>like a cell: transcription</td></tr>
+  <tr><td>II</td><td>ssDNA</td><td>first made double-stranded</td></tr>
+  <tr><td>III</td><td>dsRNA</td><td>viral RNA polymerase</td></tr>
+  <tr><td>IV</td><td>ssRNA (+)</td><td>genome itself is the mRNA</td></tr>
+  <tr><td>V</td><td>ssRNA (−)</td><td>genome is the template; viral RNA → RNA polymerase</td></tr>
+  <tr><td>VI</td><td>ssRNA retrovirus</td><td>reverse transcriptase RNA → DNA → provirus → host RNA polymerase</td></tr>
+</table>
+<p class="trap">Broadest variety of RNA genomes = animal viruses. Every virus that copies RNA from RNA brings its own polymerase (not in cells).</p>
+</div>
+
+<div class="card" id="c-hiv">
+<p class="crumb">RNA viruses › Class VI › <b>HIV</b></p>
+<h2>HIV: the retrovirus cycle (reverse transcriptase, provirus)</h2>
+<figure class="svg">
+<svg viewBox="0 0 520 230" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">
+  <defs><marker id="c3ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#8a8f98"/></marker></defs>
+  <rect x="120" y="36" width="390" height="184" rx="30" fill="none" stroke="#8a8f98" stroke-width="2"/>
+  <rect x="300" y="110" width="190" height="90" rx="20" fill="#457b9d" fill-opacity=".15" stroke="#457b9d"/>
+  <text x="312" y="124" fill="currentColor" font-size="9">nucleus</text>
+  <text x="200" y="212" text-anchor="middle" fill="currentColor" font-size="9">white blood cell (immune cell)</text>
+  <!-- virus -->
+  <circle cx="50" cy="70" r="30" fill="#f4a261" fill-opacity=".4" stroke="#f4a261" stroke-width="2"/>
+  <g fill="#9b59b6"><circle cx="50" cy="38" r="4"/><circle cx="80" cy="60" r="4"/><circle cx="22" cy="60" r="4"/><circle cx="50" cy="102" r="4"/></g>
+  <path d="M38 62 h24 M38 70 h24" stroke="#d1495b" stroke-width="3"/>
+  <g fill="#f4a261"><circle cx="40" cy="82" r="4"/><circle cx="60" cy="82" r="4"/></g>
+  <text x="50" y="124" text-anchor="middle" fill="currentColor" font-weight="700">1 HIV</text>
+  <text x="50" y="136" text-anchor="middle" fill="currentColor">2 RNA + 2 RT</text>
+  <path d="M84 70 h30" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar4)"/>
+  <text x="100" y="60" text-anchor="middle" fill="currentColor">fuse</text>
+  <!-- RT in cytoplasm -->
+  <path d="M140 62 h40" stroke="#d1495b" stroke-width="3"/>
+  <ellipse cx="160" cy="84" rx="26" ry="11" fill="#f4a261"/><text x="160" y="88" text-anchor="middle" fill="#1f2328" font-size="9">RT</text>
+  <path d="M140 106 h40 M140 114 h40" stroke="#3a86ff" stroke-width="3"/>
+  <text x="160" y="136" text-anchor="middle" fill="currentColor" font-weight="700">2 RNA → DNA</text>
+  <text x="160" y="146" text-anchor="middle" fill="currentColor">in the cytoplasm</text>
+  <path d="M190 112 h110" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar4)"/>
+  <!-- provirus -->
+  <path d="M320 150 h150" stroke="#8a8f98" stroke-width="4"/>
+  <path d="M370 150 h50" stroke="#3a86ff" stroke-width="6"/>
+  <text x="395" y="140" text-anchor="middle" fill="currentColor" font-weight="700">3 provirus: integrated forever</text>
+  <path d="M395 158 v18" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar4)"/>
+  <text x="395" y="186" text-anchor="middle" fill="currentColor">4 host RNA pol → RNA</text>
+  <!-- RNA out -->
+  <path d="M300 170 q-40 -20 -60 -60" fill="none" stroke="#8a8f98" stroke-width="2" marker-end="url(#c3ar4)"/>
+  <path d="M250 40 h40" stroke="#d1495b" stroke-width="3"/>
+  <text x="270" y="22" text-anchor="middle" fill="currentColor" font-weight="700">5 RNA = mRNA + new genomes</text>
+  <text x="340" y="56" fill="currentColor">6 proteins (ribosomes)</text>
+  <text x="340" y="70" fill="currentColor">7 assembly → budding</text>
+</svg>
+</figure>
+<ol class="steps">
+  <li>Envelope fuses; capsid in; RT released</li>
+  <li>RT copies RNA → DNA (reverse!)</li>
+  <li>Viral DNA enters the nucleus</li>
+  <li>Integrates into a chromosome = provirus</li>
+  <li>Host RNA polymerase transcribes it</li>
+  <li>RNA = mRNA (proteins) and new genomes</li>
+  <li>Assembly, budding, infects other cells</li>
+</ol>
+<div class="legend"><ul><li><i style="background:#f4a261"></i>RT = reverse transcriptase (viral enzyme: RNA → DNA)</li><li><i style="background:#3a86ff"></i>viral DNA / provirus</li><li><i style="background:#d1495b"></i>viral RNA</li></ul></div>
+<p class="trap">Exam Q8/Q9: RT uses <b>viral RNA as template for DNA</b>; retroviruses "transcribe a DNA copy from an RNA template". Retro = backward. HIV causes AIDS.</p>
+</div>
+
+</div>
+
+<h2 class="sec">D · Quick check<small>Short traps from the whole chapter.</small></h2>
+<div class="grid">
+
+<div class="card" id="c-traps">
+<p class="crumb">Whole chapter › <b>Quick traps</b></p>
+<h2>Quick traps of the whole chapter</h2>
+<table class="mini">
+  <tr><td>virus alive?</td><td>no metabolism, no ribosomes → not truly alive; obligate intracellular parasite</td></tr>
+  <tr><td>what is in a capsid?</td><td>nucleic acid (any of 4 kinds), sometimes an enzyme; never ribosomes</td></tr>
+  <tr><td>envelope comes from</td><td>the host membrane (plasma membrane; herpes: nuclear envelope then Golgi), with viral glycoproteins</td></tr>
+  <tr><td>who provides nucleotides, ribosomes, ATP?</td><td>the host cell</td></tr>
+  <tr><td>RNA → RNA copying</td><td>only with a viral enzyme (classes III, V)</td></tr>
+  <tr><td>RNA → DNA</td><td>reverse transcriptase, retroviruses (class VI, HIV)</td></tr>
+  <tr><td>provirus</td><td>viral DNA integrated in a host chromosome; never leaves</td></tr>
+  <tr><td>host range decided by</td><td>receptor fit (handshake); measles = humans only</td></tr>
+  <tr><td>lytic vs budding</td><td>phage lysis kills; budding of enveloped viruses may not</td></tr>
+</table>
+</div>
+
+</div>
+
+<nav class="nav"><a href="../index.html">All chapters</a><a href="index.html">Cheatsheets</a><a href="cs2_cancer.html">← 2 Cancer</a><a href="cs4_techniques.html">4 Techniques →</a></nav>
+</main>
+</body>
+</html>

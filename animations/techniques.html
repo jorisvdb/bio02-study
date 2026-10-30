@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Techniques: PCR, cloning, sequencing</title>
+<link rel="stylesheet" href="anim.css">
+<style>
+:root { --tgt: #e3a33b; --newd: #2fa37a; --prim: #d64541; --merc: #d64541; --plas: #3f6fd8; --ori: #2fa37a; --ampr: #e3a33b; --ins: #e07a3f; --ovh: #9b59b6; --enz: #6f6f7a; --cell: #e9e0c8;
+  --bA: #2fa37a; --bC: #3f6fd8; --bG: #e3a33b; --bT: #d64541; --adap: #3f6fd8; --memb: #c9b27a; --glass: #8fb3c9; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --tgt: #f0b752; --newd: #45c495; --prim: #ff6b5e; --merc: #ff6b5e; --plas: #8cb4ff; --ori: #45c495; --ampr: #f0b752; --ins: #f0a050; --ovh: #b57ad0; --enz: #9aa0ad; --cell: #4a4330;
+    --bA: #45c495; --bC: #8cb4ff; --bG: #f0b752; --bT: #ff6b5e; --adap: #8cb4ff; --memb: #a8925a; --glass: #6f94ad; }
+}
+:root[data-theme="dark"] { --tgt: #f0b752; --newd: #45c495; --prim: #ff6b5e; --merc: #ff6b5e; --plas: #8cb4ff; --ori: #45c495; --ampr: #f0b752; --ins: #f0a050; --ovh: #b57ad0; --enz: #9aa0ad; --cell: #4a4330;
+  --bA: #45c495; --bC: #8cb4ff; --bG: #f0b752; --bT: #ff6b5e; --adap: #8cb4ff; --memb: #a8925a; --glass: #6f94ad; }
+.tgt { fill: var(--tgt); }
+.newd { fill: var(--newd); }
+.prim { fill: var(--prim); }
+.pol { fill: var(--pol); }
+.rtb { fill: var(--sig); }
+.bp { stroke: var(--muted); stroke-width: 1.5; opacity: .55; }
+.end { fill: var(--muted); font: 700 13px system-ui, sans-serif; }
+.tiny { fill: var(--fg); font: 700 11px ui-monospace, Consolas, monospace; text-anchor: middle; }
+.seq { fill: var(--fg); font: 700 20px ui-monospace, Consolas, monospace; text-anchor: middle; }
+.thermb { fill: var(--card); stroke: var(--muted); stroke-width: 2; }
+.merc { fill: var(--merc); }
+.tick { stroke: var(--muted); stroke-width: 1.5; }
+.tbox { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.machb { fill: var(--line); } .machd { fill: var(--card); } .well { fill: var(--stage); stroke: var(--muted); stroke-width: 1.5; }
+.rnaw { fill: none; stroke: var(--rna); stroke-width: 5; stroke-linecap: round; }
+.capc { fill: var(--cap); }
+.xmark { stroke: var(--stop); stroke-width: 4; stroke-linecap: round; }
+.lbl.red { fill: var(--stop); }
+.arrh { fill: var(--muted); } .arr { fill: none; stroke: var(--muted); stroke-width: 2; }
+/* cloning */
+.plas { fill: none; stroke: var(--plas); stroke-width: 9; stroke-linecap: round; }
+.ori { fill: none; stroke: var(--ori); stroke-width: 9; stroke-linecap: round; }
+.ampr { fill: none; stroke: var(--ampr); stroke-width: 9; stroke-linecap: round; }
+.insarc { fill: none; stroke: var(--ins); stroke-width: 9; stroke-linecap: round; }
+.ins { fill: var(--ins); }
+.ovh { fill: var(--ovh); }
+.site { fill: var(--stop); }
+.enz { fill: var(--enz); }
+.cutl { stroke: var(--stop); stroke-width: 3; }
+.cell { fill: var(--cell); stroke: var(--muted); stroke-width: 2; }
+.plasS { fill: none; stroke: var(--plas); stroke-width: 3; }
+.plate { fill: var(--card); stroke: var(--muted); stroke-width: 3; }
+.xs { stroke: var(--muted); stroke-width: 2; }
+.colony { fill: var(--cell); stroke: var(--muted); stroke-width: 1.5; }
+.chromw { fill: none; stroke: var(--muted); stroke-width: 3; }
+/* sequencing */
+.bA { fill: var(--bA); } .bC { fill: var(--bC); } .bG { fill: var(--bG); } .bT { fill: var(--bT); }
+.capt { fill: var(--card); stroke: var(--muted); stroke-width: 2; }
+.peak { fill: none; stroke-width: 3; }
+.peak.bA { stroke: var(--bA); } .peak.bC { stroke: var(--bC); } .peak.bG { stroke: var(--bG); } .peak.bT { stroke: var(--bT); }
+.adap { fill: var(--adap); }
+.ref { fill: var(--muted); }
+.read { fill: var(--dna); opacity: .8; }
+.glass { stroke: var(--glass); stroke-width: 6; }
+.lawn { stroke: var(--prim); stroke-width: 2; }
+.bridgew { fill: none; stroke: var(--dna); stroke-width: 8; stroke-linecap: round; }
+.blk { fill: var(--muted); }
+.cam { fill: var(--card); stroke: var(--muted); stroke-width: 2; } .lens { fill: var(--muted); }
+.memb { fill: var(--memb); }
+.pore { fill: var(--stage); stroke: var(--sig); stroke-width: 5; }
+.dnaw { fill: none; stroke: var(--dna); stroke-width: 5; }
+.motor { fill: var(--pol); }
+.tracew { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+</style>
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">← All chapters</a><a href="index.html">Animations</a><a href="../chapter_4/4.03_pcr_and_cdna.html">Page 4.3 PCR</a><a href="../chapter_4/4.04_cloning_and_restriction_enzymes.html">4.4 Cloning</a><a href="../chapter_4/4.09_sanger_sequencing_and_blast.html">4.9 Sanger</a><a href="../chapter_4/4.10_genome_sequencing.html">4.10 Genome sequencing</a><a href="../cheatsheet/cs4_techniques.html">Cheatsheet 4</a></nav>
+<h1>Techniques: PCR, cloning a gene, and reading DNA</h1>
+<p class="lede">Three animations of chapter 4. Press <b>▶ Play</b> to watch, or go step by step with <b>◀</b> and <b>▶|</b>. Click <b>🔇 Turn voice on</b> to hear every step. Keys: <span class="keys"><kbd>Space</kbd> play/pause, <kbd>←</kbd> <kbd>→</kbd> step, <kbd>Home</kbd> restart, <kbd>V</kbd> voice</span>.
+<span class="note">Simplified and not to scale: a primer is about 20 bases, a plasmid a few thousand base pairs, a read 75 to 900 bases.</span></p>
+<div class="tabs" role="tablist">
+  <button data-tab="pcr" role="tab" class="on"><b>1 · PCR</b><small>denature, anneal, extend; 20 cycles → a million copies; cDNA from mRNA</small></button>
+  <button data-tab="clo" role="tab"><b>2 · Cloning a gene</b><small>restriction enzyme, sticky ends, ligase, transformation, selection</small></button>
+  <button data-tab="seq" role="tab"><b>3 · Sequencing</b><small>Sanger ddNTPs, shotgun and coverage, Illumina clusters, Nanopore</small></button>
+</div>
+<section class="player" id="pl-pcr" aria-label="Part 1: PCR and cDNA"></section>
+<section class="player" id="pl-clo" aria-label="Part 2: cloning a gene into a plasmid" hidden></section>
+<section class="player" id="pl-seq" aria-label="Part 3: sequencing" hidden></section>
+<p class="note">Exam hooks: for PCR you add nucleotides, primers and polymerase; restriction enzymes cut, DNA ligase joins; reverse transcriptase makes cDNA from mRNA; a ddNTP stops a chain for ever, an Illumina terminator is reversible.</p>
+</main>
+<script src="audio/manifest.js"></script>
+<script src="player.js"></script>
+<script src="scenes_tech.js"></script>
+</body>
+</html>

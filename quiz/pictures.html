@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All quiz pictures</title>
+<link rel="stylesheet" href="app.css">
+<style>
+main { max-width: 1100px; }
+.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; }
+@media (max-width: 520px) { .gal { grid-template-columns: 1fr; } }
+.gal .qpic { max-width: none; margin: 0; break-inside: avoid; page-break-inside: avoid; }
+.gal .qpic.qproc { grid-column: 1 / -1; }
+.gal .src { font-weight: 400; color: var(--muted); font-size: .78rem; margin-left: 6px; }
+h2.ch { border-bottom: 2px solid var(--line); padding-bottom: 4px; margin-top: 30px; }
+@media print {
+  body { background: #fff; }
+  .toc, .nav { display: none; }
+  .gal { grid-template-columns: 1fr 1fr; gap: 8px; }
+  h2.ch { break-before: page; }
+  h2.ch:first-of-type { break-before: auto; }
+}
+</style>
+</head>
+<body>
+<main id="app">
+<p class="small nav"><a href="index.html">← Quiz</a> · <a href="words.html">📖 Difficult words</a> · <a href="../cheatsheet/process_maps.html">Process maps (printable)</a></p>
+<h1>All quiz pictures</h1>
+<p class="muted">Every drawing the quiz and the word cards show after an answer, by chapter. Big process maps first, then the concept drawings, then the drawings from the cheatsheets. Print with Ctrl+P (each chapter starts on a new page).</p>
+<div class="toc" id="toc"></div>
+<div id="list"></div>
+</main>
+<script src="pics/cs_pics.js"></script>
+<script src="pics/pics_ch12.js"></script>
+<script src="pics/pics_ch34.js"></script>
+<script src="pics/proc_chrom.js"></script>
+<script src="pics/proc_cancer.js"></script>
+<script src="pics/proc_virus.js"></script>
+<script src="pics/proc_tech.js"></script>
+<script>
+(function () {
+  var P = window.QPICS || {}, PR = window.QPROC || {};
+  var CH1 = 'nondis ploidy struct syndromes philadelphia'.split(' ');
+  var CH3 = 'virus capsids cycle budding classes hiv'.split(' ');
+  var PROC = { nondis: 1, struct: 1, evolve: 2, genes: 2, cycle: 3, hiv: 3, pcr: 4, clone: 4, seq: 4, detect: 4 };
+  var NAMES = { 1: 'Alterations of chromosomes', 2: 'The genetic basis of cancer', 3: 'Human pathogens: viruses', 4: 'Tools and techniques' };
+  function chapter(k) {
+    if (k.indexOf('p12:') === 0) return CH1.indexOf(k.slice(4)) >= 0 ? 1 : 2;
+    if (k.indexOf('p34:') === 0) return CH3.indexOf(k.slice(4)) >= 0 ? 3 : 4;
+    var m = /^cs(\d)/.exec(k);
+    return m ? +m[1] : 0;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var by = {}, n = 0;
+  function add(ch, kind, key, p) { (by[ch] = by[ch] || []).push({ kind: kind, key: key, p: p }); n++; }
+  for (var k in PR) add(PROC[k] || 0, 0, k, PR[k]);
+  for (k in P) add(chapter(k), k.indexOf('cs') === 0 ? 2 : 1, k, P[k]);
+  var SRC = ['process map', 'quiz drawing', 'cheatsheet'];
+  var html = '', toc = '';
+  Object.keys(by).sort().forEach(function (ch) {
+    var l = by[ch].sort(function (a, b) { return a.kind - b.kind; });
+    toc += '<a class="btn small" href="#ch' + ch + '">Ch ' + ch + ' (' + l.length + ')</a>';
+    html += '<h2 class="ch" id="ch' + ch + '">Chapter ' + ch + (NAMES[ch] ? ' · ' + NAMES[ch] : '') + '</h2><div class="gal">';
+    l.forEach(function (x) {
+      html += '<figure class="qpic' + (x.kind === 0 ? ' qproc' : '') + '"><figcaption class="qpic-t">' + (x.kind === 0 ? '🗺 ' : '🖼 ') + esc(x.p.title) +
+        '<span class="src">' + SRC[x.kind] + '</span></figcaption>' + x.p.svg + (x.p.cap ? '<p class="qpic-c">' + x.p.cap + '</p>' : '') +
+        (x.p.href ? '<p class="qpic-l"><a href="' + esc(x.p.href) + '">Open on the cheatsheet ↗</a></p>' : '') + '</figure>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('toc').innerHTML = toc;
+  document.getElementById('list').innerHTML = html;
+  document.querySelector('h1').textContent = 'All quiz pictures (' + n + ')';
+})();
+</script>
+</body>
+</html>

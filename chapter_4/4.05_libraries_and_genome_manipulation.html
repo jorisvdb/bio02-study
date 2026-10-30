@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.5 DNA libraries and genome manipulation</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .dna { stroke: var(--c-N); stroke-width: 5; stroke-linecap: round; fill: none; }
+  .dna.frag { stroke: var(--c-O); }
+  .dna.thin { stroke-width: 3; }
+  .rna { stroke: var(--c-R); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .plas { fill: none; stroke: var(--c-Cl); stroke-width: 3; }
+  .ins { stroke: var(--c-O); stroke-width: 5; fill: none; stroke-linecap: round; }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .panel { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.04_cloning_and_restriction_enzymes.html">← 4.4 Cloning and restriction enzymes</a><a href="index.html">Chapter 4 index</a><a href="4.06_rnai_crispr_knockout_mice.html">4.6 RNAi, CRISPR and knockout mice →</a></nav>
+
+<h1>4.5 DNA libraries, forward and reverse genetics, and changing a genome</h1>
+<p class="lede">In one sentence: a library is a collection of thousands of clones that together hold a whole genome or all the mRNAs of a tissue;
+with such a library you can find which gene is broken in a mutant, and once you have a gene in hand you can change it on purpose, in a plasmid or in the genome itself.</p>
+
+<p>Page 4.4 showed how to cut one DNA fragment out and glue it into a plasmid (cloning). This page scales that up: instead of one fragment you clone
+<em>all</em> fragments of a genome at once (a <strong>library</strong>), and it introduces the two directions in which biologists work: from a strange-looking mutant
+to its gene (<strong>forward genetics</strong>), or from a gene to the effect of breaking it (<strong>reverse genetics</strong>). It ends with why you often want to change the
+gene in the chromosome rather than on a plasmid, which prepares page 4.6 (RNAi, CRISPR and knockout mice). The example exam asks what a <strong>transgenic</strong> organism is;
+that word is defined here.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from page 4.4 and the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>clone (of DNA)</td><td>many identical copies of one DNA fragment, made by putting it in a vector and letting cells multiply it (page 4.4)</td></tr>
+  <tr><td>vector, plasmid</td><td>a carrier DNA; a plasmid is a small circular DNA that copies itself in a bacterium, with an origin of replication and a selectable marker (page 4.4)</td></tr>
+  <tr><td>insert</td><td>the DNA fragment glued into the vector</td></tr>
+  <tr><td>restriction enzyme, ligase</td><td>enzyme that cuts DNA at a specific short sequence; enzyme that glues DNA ends together (page 4.4)</td></tr>
+  <tr><td>transformation</td><td>getting a plasmid into a bacterium (page 4.4)</td></tr>
+  <tr><td>mRNA, exon, intron</td><td>the RNA copy of a gene that is translated into protein; the parts of a gene that stay in the mRNA (exons) and the parts that are cut out (introns) (BIO01 chapter 5)</td></tr>
+  <tr><td>reverse transcriptase, cDNA</td><td>an enzyme from retroviruses that copies RNA into DNA; cDNA = the DNA copy of an mRNA, without introns (page 4.3)</td></tr>
+  <tr><td>mutation, mutant, phenotype</td><td>a change in the DNA; an organism carrying it; what the organism looks like and how it works</td></tr>
+  <tr><td>homologous recombination</td><td>exchange of DNA between two molecules with the same sequence; the cell's own mechanism, used in meiosis (BIO01 chapter 7) and in repairing broken DNA</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: een <strong>kloon</strong> = veel kopieën van één DNA-fragment, gemaakt via een <strong>plasmide</strong> (drager). <strong>cDNA</strong> = DNA-kopie van een
+mRNA, zonder introns, gemaakt door <strong>reverse transcriptase</strong>. <strong>Homologe recombinatie</strong> = uitwisseling tussen twee DNA-moleculen met dezelfde
+sequentie, het eigen mechanisme van de cel.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Site-directed mutagenesis: changing a gene on purpose (syllabus 4.4.4)</h2>
+<p>Pages 4.3 and 4.4 cloned DNA to make <em>exact</em> copies. But often you want the opposite: to <strong>change</strong> a gene, or to <strong>inactivate</strong> it (switch it off),
+to learn what it does. Introducing mutations at chosen places is called <strong>site-directed mutagenesis</strong> (site = place, directed = aimed, mutagenesis = making mutations).
+That is all the syllabus says about it: two sentences, no method.</p>
+<p><em>Not in the syllabus text, only so you can picture it:</em> the usual way is to make a primer (page 4.3) that carries the wanted wrong letter in the middle, and use it in
+PCR; the copies then all carry the change. Compare with page 4.3, where PCR under "bad" conditions makes <em>random</em> mutations; here the mutation is chosen.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Gerichte mutagenese</strong> (site-directed mutagenesis) = op een gekozen plaats een mutatie aanbrengen, om een gen te veranderen of uit te schakelen. De syllabus
+geeft geen methode.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. A library of clones (4.4.5)</h2>
+<p>In molecular biology a <strong>library</strong> (bibliotheek) is a collection of DNA fragments, each cloned into its own plasmid (or virus), where <strong>every clone carries a
+different fragment</strong>. Like a real library: thousands of books, each with a different text, and together they cover a whole subject. Three kinds:</p>
+<table class="cmp">
+  <tr><th>Library</th><th>Begin state</th><th>How it is made</th><th>What it contains</th></tr>
+  <tr><td>genomic library</td><td>the total genomic DNA of an organism</td><td>the genome is broken into fragments (by mechanical <strong>shearing</strong>: tearing the long DNA by force, or by a restriction enzyme); every fragment is ligated into its own plasmid</td><td>everything: genes, introns, the DNA between genes; together the whole genome</td></tr>
+  <tr><td>cDNA library</td><td>the mRNAs of one cell type or tissue, at one moment</td><td>reverse transcriptase copies every mRNA into cDNA (page 4.3); each cDNA goes into a plasmid</td><td>only the <strong>expressed genes</strong> (the genes that were switched on), without introns; a library per tissue or per condition</td></tr>
+  <tr><td>synthetic library</td><td>sequences designed on a computer</td><td>chemically made DNA, cloned</td><td>whatever you designed</td></tr>
+</table>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 250" width="880" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- genomic -->
+    <text x="220" y="16" class="txt bold">A · genomic library</text>
+    <path d="M20,48 L420,48" class="dna"/>
+    <text x="220" y="36" class="txt small muted">the whole genome (one long DNA)</text>
+    <path d="M220,60 L220,84" class="path accent" marker-end="url(#ar5)"/>
+    <text x="236" y="76" class="txt small left muted">shear or cut with a restriction enzyme</text>
+    <path d="M30,100 L110,100 M125,100 L190,100 M205,100 L300,100 M315,100 L360,100 M375,100 L415,100" class="dna frag"/>
+    <text x="220" y="124" class="txt small muted">random overlapping fragments</text>
+    <path d="M220,132 L220,154" class="path accent" marker-end="url(#ar5)"/>
+    <text x="236" y="148" class="txt small left muted">ligate each into its own plasmid</text>
+    <g>
+      <circle cx="60" cy="200" r="24" class="plas"/><path d="M42,184 A24,24 0 0 1 78,184" class="ins"/>
+      <circle cx="140" cy="200" r="24" class="plas"/><path d="M122,184 A24,24 0 0 1 158,184" class="ins"/>
+      <circle cx="220" cy="200" r="24" class="plas"/><path d="M202,184 A24,24 0 0 1 238,184" class="ins"/>
+      <circle cx="300" cy="200" r="24" class="plas"/><path d="M282,184 A24,24 0 0 1 318,184" class="ins"/>
+      <circle cx="380" cy="200" r="24" class="plas"/><path d="M362,184 A24,24 0 0 1 398,184" class="ins"/>
+    </g>
+    <text x="220" y="242" class="txt small">thousands of clones, one fragment each: together the whole genome</text>
+    <!-- cDNA -->
+    <line x1="450" y1="8" x2="450" y2="246" class="path" style="stroke-dasharray:3 5"/>
+    <text x="665" y="16" class="txt bold">B · cDNA library</text>
+    <path d="M490,48 L570,48 M600,48 L660,48 M690,48 L770,48 M800,48 L840,48" class="rna"/>
+    <text x="665" y="36" class="txt small muted">the mRNAs of one tissue (only the genes that are ON)</text>
+    <path d="M665,60 L665,84" class="path accent" marker-end="url(#ar5)"/>
+    <text x="680" y="76" class="txt small left muted">reverse transcriptase: RNA → cDNA</text>
+    <path d="M490,100 L570,100 M600,100 L660,100 M690,100 L770,100 M800,100 L840,100" class="dna frag"/>
+    <text x="665" y="124" class="txt small muted">cDNAs: no introns, one per mRNA</text>
+    <path d="M665,132 L665,154" class="path accent" marker-end="url(#ar5)"/>
+    <text x="680" y="148" class="txt small left muted">ligate each into its own plasmid</text>
+    <g>
+      <circle cx="530" cy="200" r="24" class="plas"/><path d="M512,184 A24,24 0 0 1 548,184" class="ins"/>
+      <circle cx="620" cy="200" r="24" class="plas"/><path d="M602,184 A24,24 0 0 1 638,184" class="ins"/>
+      <circle cx="710" cy="200" r="24" class="plas"/><path d="M692,184 A24,24 0 0 1 728,184" class="ins"/>
+      <circle cx="800" cy="200" r="24" class="plas"/><path d="M782,184 A24,24 0 0 1 818,184" class="ins"/>
+    </g>
+    <text x="665" y="242" class="txt small">clones of the expressed genes of that tissue</text>
+  </svg>
+  <figcaption>Two libraries. Blue = genomic DNA, purple = mRNA, red = the fragment or cDNA that becomes the insert, green circle = plasmid. A genomic library is the same for every cell of the organism; a cDNA library differs per tissue and per condition.</figcaption>
+</figure>
+
+<h3>What a library is used for: finding an unknown gene</h3>
+<p>Begin state: you have a mutant yeast strain with an interesting phenotype, but you do not know <em>which</em> gene is mutated. Goal: identify that gene.</p>
+<ol>
+  <li>Take a genomic library of normal yeast: thousands of plasmids, together carrying every yeast gene.</li>
+  <li>Transform the mutant strain with the library, so that each cell receives one plasmid with one random piece of normal DNA.</li>
+  <li>Look for cells in which the phenotype has gone back to normal. In those cells the plasmid must carry a good copy of the broken gene.</li>
+  <li>Isolate that plasmid and sequence its insert: that is the gene.</li>
+</ol>
+<p>Restoring a lost function by bringing in a good copy is called <strong>complementation</strong> (the good copy "complements", completes, the broken one).
+A cDNA library made from one tissue or one condition (for example, cells under heat stress) lets you find and study the genes that are expressed in exactly that situation.</p>
+
+<div class="callout key"><span class="tag">Genomic versus cDNA</span>
+<p>Genomic library: <strong>all DNA</strong>, with introns and the DNA between genes; one library per organism. cDNA library: <strong>only expressed genes</strong>, no introns;
+one library per tissue or condition. If a question mentions "expressed", "mRNA", "a certain tissue" or "no introns", it is about a cDNA library.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>bibliotheek</strong> (library) = een verzameling klonen, elk met een <strong>ander</strong> DNA-fragment. <strong>Genomische bibliotheek</strong>: het hele genoom in
+stukken (scheren of knippen), elk stuk in een eigen plasmide; bevat alles, ook introns. <strong>cDNA-bibliotheek</strong>: alle mRNA's van één weefsel, gekopieerd tot cDNA
+(reverse transcriptase), zonder introns; alleen de genen die aan staan. Gebruik: een mutante giststam transformeren met de bibliotheek; de kloon die het normale fenotype
+herstelt (<strong>complementatie</strong>) bevat het gezochte gen.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Why change the genome itself, not a plasmid (4.5 intro)</h2>
+<p>Section 1 put mutations in a cloned gene. But a gene expressed from a plasmid or a virus often is <strong>not expressed at its normal level</strong>: more copies, a different
+promoter, no normal regulation. And to truly eliminate a gene's function you must inactivate the <strong>chromosomal copy</strong> (or copies: a diploid organism has two).
+So scientists often want to put mutations <strong>into the genome</strong> itself. Three approaches, each with its own page or section:</p>
+<ul>
+  <li><strong>RNA interference (RNAi)</strong>: not changing the DNA at all, but destroying the mRNA, so the gene is "knocked down" (knock down = turned down, not off). Page 4.6.</li>
+  <li><strong>Homologous recombination</strong>: replace or delete a specific region of the genome using a DNA piece with matching ends; this is how knockout mice are made. Page 4.6.</li>
+  <li><strong>CRISPR</strong>: bring a cutting protein to a chosen sequence and let the cell's repair do the rest. Page 4.6.</li>
+</ul>
+<div class="callout warn"><span class="tag">The syllabus warns</span>
+<p>"None of these approaches are 100 % accurate." Every method sometimes cuts or changes the wrong place.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een gen op een plasmide wordt vaak <strong>niet op het normale niveau</strong> gemaakt, en om een gen echt uit te schakelen moet je de <strong>chromosomale kopie</strong>
+(bij diploïden: beide) aanpakken. Daarom verandert men het genoom zelf: via <strong>RNAi</strong> (mRNA afbreken, "knock-down"), <strong>homologe recombinatie</strong> (een
+stuk vervangen of verwijderen) of <strong>CRISPR</strong>. Geen van de methoden is 100 % nauwkeurig.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Forward and reverse genetics</h2>
+<p>Two directions of working, named after where you start:</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 200" width="880" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="220" y="18" class="txt bold">forward genetics: phenotype → gene</text>
+    <rect x="20" y="40" width="170" height="60" rx="8" class="panel"/>
+    <text x="105" y="62" class="txt small">1. make random mutants</text>
+    <text x="105" y="78" class="txt small muted">(radiation, chemicals)</text>
+    <text x="105" y="92" class="txt small muted">screen for a phenotype</text>
+    <path d="M196,70 L244,70" class="path accent" marker-end="url(#ar6)"/>
+    <rect x="250" y="40" width="170" height="60" rx="8" class="panel"/>
+    <text x="335" y="62" class="txt small">2. find the gene</text>
+    <text x="335" y="78" class="txt small muted">e.g. complement with a</text>
+    <text x="335" y="92" class="txt small muted">genomic library</text>
+    <text x="220" y="130" class="txt small">example: cells sensitive to radiation → genes for DNA repair</text>
+    <line x1="450" y1="8" x2="450" y2="192" class="path" style="stroke-dasharray:3 5"/>
+    <text x="665" y="18" class="txt bold">reverse genetics: gene → phenotype</text>
+    <rect x="470" y="40" width="170" height="60" rx="8" class="panel"/>
+    <text x="555" y="62" class="txt small">1. gene already in hand</text>
+    <text x="555" y="78" class="txt small muted">(e.g. found because its protein</text>
+    <text x="555" y="92" class="txt small muted">binds a known protein)</text>
+    <path d="M646,70 L694,70" class="path accent" marker-end="url(#ar6)"/>
+    <rect x="700" y="40" width="170" height="60" rx="8" class="panel"/>
+    <text x="785" y="62" class="txt small">2. alter or delete it,</text>
+    <text x="785" y="78" class="txt small muted">express it in vivo,</text>
+    <text x="785" y="92" class="txt small muted">look at the phenotype</text>
+    <text x="665" y="130" class="txt small">example: delete the new gene → what goes wrong in the cell?</text>
+    <text x="440" y="170" class="txt muted">forward = from what you see to the cause; reverse = from the cause to what you see</text>
+  </svg>
+  <figcaption>The two directions. "In vivo" (Latin, "in the living") means in a living cell or organism, as opposed to "in vitro" (in glass: in a test tube).</figcaption>
+</figure>
+
+<table class="cmp">
+  <tr><th></th><th>Forward genetics</th><th>Reverse genetics</th></tr>
+  <tr><td>start with</td><td>a phenotype (an existing or newly made mutant that is defective in some process)</td><td>a gene (already cloned, sequence known)</td></tr>
+  <tr><td>question</td><td>which gene is responsible?</td><td>what does this gene do?</td></tr>
+  <tr><td>method</td><td>treat cells to make random mutations; screen for the phenotype; identify the mutated gene, for example by complementation with a genomic library</td><td>alter the sequence (mutate, delete) and express the altered gene in vivo; analyse the changes in phenotype</td></tr>
+  <tr><td>syllabus example</td><td>DNA repair: repair mutants should be sensitive to radiation, so screen for radiation-sensitive cells</td><td>a new protein found because it binds a known protein: delete its gene and see what happens</td></tr>
+</table>
+
+<h3>Transgenesis</h3>
+<p>Sometimes you want to add a specific gene to a genome in a non-random way, for example a gene from another species. Putting a specific gene into the genome of an
+organism is called <strong>transgenesis</strong> (trans = across, genesis = making), and the result is a <strong>transgenic organism</strong>: it carries a gene it did not have before,
+often from another species. (In page 4.6 the same word "transgenic mouse" is used for the engineered mice.)</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 14: "Which of the following would be considered a transgenic organism?" The answer is <strong>a rat with rabbit insulin genes</strong>: a foreign gene was
+put into its genome. The other options are not: a bacterium treated with a compound that changes gene <em>expression</em> (no new gene), a fern grown from a single root cell
+(same genome, just cloning a plant), and a human treated with insulin made by E. coli (the human receives the <em>protein</em>, not the gene; the bacterium is the transgenic one).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Forward genetics</strong>: begin bij het fenotype (maak willekeurige mutanten, zoek er met een bepaald kenmerk) en zoek dan het gen (bv. door complementatie met een
+genomische bibliotheek). <strong>Reverse genetics</strong>: begin bij het gen (al gekloneerd), verander of verwijder het, en kijk naar het fenotype. <strong>Transgenese</strong>
+= een specifiek gen in het genoom van een organisme brengen; het resultaat is een <strong>transgeen organisme</strong> (bv. een rat met konijnen-insulinegenen).</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>site-directed mutagenesis</td><td>putting a mutation at a chosen place in a cloned gene, to change or inactivate it</td></tr>
+  <tr><td>library</td><td>a collection of clones (plasmids or viruses), each with a different DNA fragment</td></tr>
+  <tr><td>genomic library</td><td>library of fragments of the whole genome; contains everything, including introns</td></tr>
+  <tr><td>cDNA library</td><td>library of cDNA copies of the mRNAs of one tissue or condition; only expressed genes, no introns</td></tr>
+  <tr><td>shearing</td><td>breaking long DNA into pieces by mechanical force</td></tr>
+  <tr><td>complementation</td><td>restoring a lost function by bringing in a good copy of the gene; used to identify the broken gene</td></tr>
+  <tr><td>expressed gene</td><td>a gene that is switched on: transcribed into mRNA (and usually translated)</td></tr>
+  <tr><td>forward genetics</td><td>from a mutant phenotype to the responsible gene</td></tr>
+  <tr><td>reverse genetics</td><td>from a known gene to its function, by altering it and looking at the phenotype</td></tr>
+  <tr><td>screen</td><td>looking through many mutants (or clones) for the ones with a wanted property</td></tr>
+  <tr><td>in vivo / in vitro</td><td>in a living cell or organism / in a test tube with purified components</td></tr>
+  <tr><td>transgenesis, transgenic</td><td>putting a specific gene into a genome; an organism that carries such an added (often foreign) gene</td></tr>
+  <tr><td>knock-down</td><td>reducing the expression of a gene (for example with RNAi) without changing its DNA</td></tr>
+  <tr><td>knockout</td><td>a gene inactivated in the genome itself (page 4.6)</td></tr>
+  <tr><td>homologous recombination</td><td>exchange between DNA molecules with the same sequence; used to replace or delete a chosen region</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective of the chapter: "The student describes the principle, methodology and applications of different forms of nucleic acid based technologies" and "utilizes fundamental concepts of nucleic acid-based technologies ... to solve problems".</p>
+<ol>
+  <li>Define a library and tell a genomic library from a cDNA library (what goes in, how it is made, what it contains, introns or not).</li>
+  <li>Explain how a genomic library is used to find the mutated gene of a mutant strain (complementation).</li>
+  <li>Explain forward versus reverse genetics with the syllabus examples (radiation-sensitive repair mutants; deleting a newly found gene).</li>
+  <li>Define transgenesis and recognise a transgenic organism (exam Q14: the rat with rabbit insulin genes).</li>
+  <li>Say why one changes the chromosomal copy of a gene instead of expressing it from a plasmid, and name the three approaches (RNAi, homologous recombination, CRISPR).</li>
+  <li>Know that site-directed mutagenesis means mutations at chosen sites, and that no method is 100 % accurate.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is a DNA library?</dt>
+  <dd>A collection of cloned DNA fragments, usually in plasmids, where each clone carries a different fragment. Together the clones cover a genome or all the expressed genes of a tissue.</dd>
+
+  <dt>How is a genomic library made?</dt>
+  <dd>The total genomic DNA is broken into fragments by shearing or by restriction-enzyme digestion; each fragment is ligated into its own plasmid, so every plasmid carries a different piece of the genome.</dd>
+
+  <dt>How is a cDNA library made, and what is special about it?</dt>
+  <dd>The mRNAs of one cell type are copied into cDNA by reverse transcriptase and the cDNAs are cloned. It contains only the genes that were expressed in that tissue at that time, and the cDNAs have no introns.</dd>
+
+  <dt>You have a yeast mutant with an interesting phenotype but no idea which gene is mutated. What do you do?</dt>
+  <dd>Transform the mutant with a genomic library of normal yeast. The transformed cells whose phenotype returns to normal carry a plasmid with a good copy of the broken gene (complementation). Isolate that plasmid and sequence the insert.</dd>
+
+  <dt>What is the difference between forward and reverse genetics?</dt>
+  <dd>Forward: start from a phenotype (a mutant) and find the gene. Reverse: start from a gene you already have, alter or delete it, and look at the phenotype.</dd>
+
+  <dt>Give the syllabus example of forward genetics.</dt>
+  <dd>Studying DNA repair: researchers expected repair mutants to be sensitive to radiation, made random mutants, screened for radiation-sensitive cells, and then identified the mutated genes, for example by complementing with a genomic library.</dd>
+
+  <dt>Why not simply express a mutated gene from a plasmid to study it?</dt>
+  <dd>Because expression from a plasmid or virus is often not at the normal level, and because the normal chromosomal copy (or copies, in a diploid) is still there and still working. To eliminate a function you must inactivate the chromosomal copy.</dd>
+
+  <dt>What is a transgenic organism?</dt>
+  <dd>An organism into whose genome a specific gene has been introduced on purpose (transgenesis), often a gene from another species; for example a rat carrying rabbit insulin genes.</dd>
+
+  <dt>Is a person who injects insulin made by E. coli transgenic?</dt>
+  <dd>No. The person receives the insulin protein; their genome is unchanged. The bacterium that carries the human insulin gene is the transgenic organism.</dd>
+
+  <dt>Name three ways to change the use of a gene in the genome.</dt>
+  <dd>RNA interference (knock-down of the mRNA, DNA unchanged), homologous recombination (delete or replace a region), and CRISPR systems (targeted cutting followed by repair). None is 100 % accurate.</dd>
+
+  <dt>What is site-directed mutagenesis?</dt>
+  <dd>Introducing mutations at chosen sites in a gene, to change its function or inactivate it. The syllabus gives no method.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Library</strong> = many clones, <strong>each with a different fragment</strong>.</li>
+  <li><strong>Genomic library</strong>: whole genome, shear or restriction digest, every fragment in its own plasmid; <strong>has introns</strong>.</li>
+  <li><strong>cDNA library</strong>: mRNAs of one tissue → reverse transcriptase → cDNAs; <strong>only expressed genes, no introns</strong>.</li>
+  <li>Finding a mutant's gene: transform the mutant with a genomic library → the clone that <strong>complements</strong> (restores the phenotype) holds the gene.</li>
+  <li><strong>Forward genetics</strong>: phenotype → gene (random mutants, screen, identify). Example: radiation-sensitive repair mutants.</li>
+  <li><strong>Reverse genetics</strong>: gene → phenotype (alter or delete the gene, look in vivo).</li>
+  <li><strong>Transgenesis</strong> = a specific gene put into a genome → <strong>transgenic organism</strong> (rat with rabbit insulin genes).</li>
+  <li>Plasmid expression ≠ normal level; to eliminate a function, hit the <strong>chromosomal copy</strong>.</li>
+  <li>Three ways: <strong>RNAi</strong> (knock-down), <strong>homologous recombination</strong> (delete/replace), <strong>CRISPR</strong>.</li>
+  <li><strong>Site-directed mutagenesis</strong> = mutation at a chosen site; <strong>none of the methods is 100 % accurate</strong>.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>What do all the clones of one library have in common, and what is different between them?
+    <details><summary>Answer</summary><div class="ans"><p>They all use the <strong>same vector</strong> (plasmid); each carries a <strong>different insert</strong>. Together the inserts cover the genome (genomic library) or the expressed genes (cDNA library).</p></div></details></li>
+  <li>Which library contains introns?
+    <ul class="opts"><li data-l="a">genomic library</li><li data-l="b">cDNA library</li><li data-l="c">both</li><li data-l="d">neither</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>a.</strong> A genomic library holds raw genomic DNA, introns included. cDNA is copied from mature mRNA, from which the introns were already spliced out.</p></div></details></li>
+  <li>A liver cDNA library and a muscle cDNA library of the same person differ. Why? Would two genomic libraries differ?
+    <details><summary>Answer</summary><div class="ans"><p>cDNA libraries reflect the <strong>mRNAs</strong>, and liver and muscle express different genes. Genomic libraries would be the <strong>same</strong>: every cell carries the same genome.</p></div></details></li>
+  <li>Which enzyme is essential for making a cDNA library but not for a genomic library?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Reverse transcriptase</strong>, which copies RNA into DNA. A genomic library starts from DNA, so it only needs a restriction enzyme (or shearing) and ligase.</p></div></details></li>
+  <li>Put the steps of finding a mutant yeast gene in order: (1) sequence the insert, (2) transform the mutant with a genomic library, (3) pick the cells with a normal phenotype, (4) isolate their plasmid.
+    <details><summary>Answer</summary><div class="ans"><p><strong>2 → 3 → 4 → 1.</strong> The library goes in, the complementing clone shows itself by restoring the normal phenotype, its plasmid is isolated and its insert sequenced.</p></div></details></li>
+  <li>What is complementation?
+    <details><summary>Answer</summary><div class="ans"><p>A <strong>good copy</strong> of a gene, brought in on a plasmid, <strong>restores</strong> the function that a mutation had destroyed. The clone that does this must contain the mutated gene's normal version.</p></div></details></li>
+  <li>"Researchers made thousands of random mutants and kept the ones that died after a small dose of radiation." Forward or reverse genetics?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Forward.</strong> They start from a phenotype (radiation sensitivity) and go looking for the genes (DNA repair genes). Reverse would start from a known gene.</p></div></details></li>
+  <li>"A protein was found because it sticks to a known protein. The researchers delete its gene and watch what happens to the cell." Forward or reverse?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Reverse.</strong> The gene is in hand first; its function is studied by altering it and looking at the phenotype in vivo.</p></div></details></li>
+  <li>Which is a transgenic organism?
+    <ul class="opts"><li data-l="a">a fern grown in culture from one root cell</li><li data-l="b">a rat with rabbit insulin genes</li><li data-l="c">a human treated with insulin made in E. coli</li><li data-l="d">a bacterium treated with a chemical that changes the expression of many genes</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Only the rat has a foreign gene in its genome. The fern is a clone, the human got a protein, the bacterium got a chemical; none has a new gene.</p></div></details></li>
+  <li>Why is a gene on a plasmid a poor way to study its normal role?
+    <details><summary>Answer</summary><div class="ans"><p>Its <strong>expression level is often different</strong> from normal (copy number, promoter, regulation), and the <strong>chromosomal copy</strong> is still there, so you cannot see what losing the gene does. That is why the genome itself is changed.</p></div></details></li>
+  <li>True or false: "RNA interference changes the DNA sequence of the gene it silences."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> RNAi destroys or blocks the <strong>mRNA</strong>; the DNA is untouched. That is why it is a knock-down, not a knockout.</p></div></details></li>
+  <li>Why does the syllabus insist that a diploid organism has "copies" (plural) to inactivate?
+    <details><summary>Answer</summary><div class="ans"><p>A diploid cell has <strong>two</strong> copies of every gene, one on each homolog. Inactivating one leaves a working copy; to eliminate the function, <strong>both</strong> must be inactivated (page 4.6: crossing heterozygotes to get homozygous knockouts).</p></div></details></li>
+  <li>What does "site-directed" mean in site-directed mutagenesis?
+    <details><summary>Answer</summary><div class="ans"><p>That the mutation is made at a <strong>chosen place</strong> (site) in the gene, unlike random mutagenesis (radiation, chemicals, or sloppy PCR) where the mutations land anywhere.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.04_cloning_and_restriction_enzymes.html">← 4.4 Cloning and restriction enzymes</a><a href="index.html">Chapter 4 index</a><a href="4.06_rnai_crispr_knockout_mice.html">4.6 RNAi, CRISPR and knockout mice →</a></nav>
+</main>
+</body>
+</html>

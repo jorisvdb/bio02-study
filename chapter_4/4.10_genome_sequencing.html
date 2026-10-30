@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.10 Genome sequencing</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .gen { stroke: var(--c-C); stroke-width: 8; stroke-linecap: round; }
+  .frag { stroke-width: 6; stroke-linecap: round; }
+  .frag.a { stroke: var(--c-N); } .frag.b { stroke: var(--c-O); } .frag.c { stroke: var(--c-Cl); } .frag.d { stroke: var(--c-P); }
+  .ref { stroke: var(--muted); stroke-width: 3; }
+  .read { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+  .lawn { stroke: var(--muted); stroke-width: 2; }
+  .surf { fill: var(--panel); stroke: var(--line); }
+  .strand { fill: none; stroke: var(--c-N); stroke-width: 3; stroke-linecap: round; }
+  .strand.new { stroke: var(--c-O); }
+  .adap { stroke: var(--c-P); stroke-width: 3; }
+  .dye { stroke-width: 2; }
+  .mem { fill: var(--hl-hydrophobic); stroke: var(--c-P); stroke-width: 1; }
+  .pore { fill: var(--panel); stroke: var(--c-R); stroke-width: 2.5; }
+  .motor { fill: var(--c-Cl); }
+  .dna { fill: none; stroke: var(--c-N); stroke-width: 3; }
+  .trace { fill: none; stroke: var(--accent); stroke-width: 2; }
+  .ion { fill: var(--c-S); }
+  table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.09_sanger_sequencing_and_blast.html">← 4.9 Sanger sequencing and BLAST</a><a href="index.html">Chapter 4 index</a><a href="4.11_sequencing_applications.html">4.11 Sequencing applications →</a></nav>
+
+<h1>4.10 Reading a whole genome: shotgun assembly, coverage, Illumina and Nanopore</h1>
+<p class="lede">In one sentence: no machine can read a chromosome from end to end, so a genome is cut into millions of random pieces, every piece is read many times over,
+and a computer puts the pieces back together by finding where their sequences overlap.</p>
+
+<p>Page 4.9 showed how one Sanger reaction reads about 900 bases. A human genome has three thousand million bases. This page is about the strategy that makes
+whole genomes possible (<strong>shotgun sequencing</strong>), the arithmetic behind it (<strong>over-sequencing</strong> and <strong>depth of coverage</strong>), and the two
+newer technologies that the syllabus describes in detail: <strong>Illumina</strong> (second generation) and <strong>Nanopore</strong> (third generation). The exam objective is
+to describe the principle, methodology and applications of sequencing technologies, and the example exam has several questions on choosing the right tool.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words and units used on this page</h2>
+<table class="tech">
+  <tr><th>Word or unit</th><th>Meaning</th></tr>
+  <tr><td>bp, kb, Mbp</td><td>base pair (one rung of the double helix); kilobase = 1000 bp; megabase pair = 1 000 000 bp. E. coli's chromosome is 4.6 Mbp; a human genome is 3 × 10⁹ bp = 3000 Mbp</td></tr>
+  <tr><td>read</td><td>one sequencing reaction, giving one stretch of letters (for Sanger about 500 to 900 bases; for Illumina 75 to 150)</td></tr>
+  <tr><td>genome equivalent</td><td>an amount of sequence equal to the whole genome once: "8 genome equivalents" = 8 times the genome length in total reads</td></tr>
+  <tr><td>X (as in 5X)</td><td>read "five times": how many reads cover a given base; see section 3</td></tr>
+  <tr><td>assembly (assembleren)</td><td>putting reads together into the genome sequence, by computer</td></tr>
+  <tr><td>reference genome</td><td>a finished genome sequence of the species, used as a map to place new reads on</td></tr>
+  <tr><td>variant, SNP</td><td>a position where an individual differs from the reference; SNP ("snip") = single nucleotide polymorphism, one different letter</td></tr>
+  <tr><td>linker / adapter</td><td>a short synthetic DNA piece glued to both ends of every fragment; it gives all fragments the same ends so that one primer fits them all (PCR, page 4.3)</td></tr>
+  <tr><td>repetitive DNA</td><td>sequences that occur many times in the genome (BIO01 chapter 3); they make assembly hard</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Eenheden: <strong>bp</strong> = basenpaar, <strong>Mbp</strong> = een miljoen basenparen (E. coli 4,6 Mbp, mens 3000 Mbp). Een <strong>read</strong> is één gelezen stuk.
+<strong>5X</strong> = een base zit in vijf reads. <strong>Assembleren</strong> = de reads met de computer aaneenpassen. Een <strong>referentiegenoom</strong> is een afgewerkt genoom
+van de soort, waarop nieuwe reads gelegd worden om <strong>varianten</strong> (zoals SNP's, één andere letter) te vinden. <strong>Adapters</strong> zijn korte stukjes synthetisch DNA
+aan beide uiteinden van elk fragment.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. A short history (4.9, Figure 4-30)</h2>
+<ul>
+  <li><strong>1970s, Ghent:</strong> Professor <strong>Walter Fiers</strong> (1931–2019) and his team at Ghent University sequenced the <strong>first gene</strong> and later the <strong>first complete genome</strong>, that of <strong>bacteriophage MS2</strong> (a tiny virus that infects bacteria). They did it with Sanger sequencing, fragment by fragment, by hand.</li>
+  <li><strong>Milestones after that:</strong> the first prokaryote (a bacterium), the first eukaryote (<em>Saccharomyces cerevisiae</em>, baker's yeast), the first multicellular organism (<em>Caenorhabditis elegans</em>, a roundworm) and the first plant (<em>Arabidopsis thaliana</em>, a small weed used as a model plant).</li>
+  <li><strong>1990s to 2003, the Human Genome Project:</strong> the whole human genome with Sanger methods: <strong>more than ten years</strong> and <strong>billions of dollars</strong>. It showed that much faster, high-throughput methods were needed ("high-throughput" = handling very many samples at once).</li>
+  <li><strong>Early 2000s onward:</strong> new technologies read vast numbers of DNA molecules in parallel. What took years now takes days, and genomes are sequenced across the whole tree of life.</li>
+</ul>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Walter Fiers</strong> (Gent, jaren 1970): het eerste gen en het eerste volledige genoom (bacteriofaag <strong>MS2</strong>), met Sanger. Daarna de eerste bacterie, gist,
+de worm <em>C. elegans</em> en de plant <em>Arabidopsis</em>. Het <strong>Human Genome Project</strong> met Sanger duurde meer dan tien jaar en kostte miljarden; daarom kwamen vanaf
+2000 de snelle, massaal parallelle methoden.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Shotgun sequencing: cut, read, reassemble (4.9.1, Figure 4-31)</h2>
+<p><strong>Begin state:</strong> the DNA of a whole genome, far too long to read in one go. <strong>Goal:</strong> its complete sequence in the right order.</p>
+<ol>
+  <li><strong>Fragment</strong> the genomic DNA at random: by mechanical shearing (breaking it by force) or by cutting with a restriction enzyme (page 4.4). This gives thousands to millions of <strong>random, overlapping</strong> fragments. At this point nobody knows where each fragment came from, and that is fine.</li>
+  <li><strong>Attach linkers</strong> (adapters) to all the ends.</li>
+  <li><strong>Amplify</strong> every fragment by PCR, using primers that match the linkers. (For the first human genome the fragments were cloned in <em>E. coli</em> as a library instead, page 4.4; today PCR is used.)</li>
+  <li><strong>Sequence</strong> all the fragments.</li>
+  <li><strong>Assemble:</strong> the computer removes the linker sequences and looks for reads whose ends <strong>overlap</strong> (share the same letters). Overlapping reads are chained into longer and longer pieces until the whole genome is reconstructed in order.</li>
+</ol>
+<p>The name "shotgun" comes from the random fragmentation at the start, like the scattered pellets of a shotgun (hagelgeweer).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 330" width="860" height="330" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- 1 genome -->
+    <text x="20" y="22" class="txt small left bold">1 · genome (one long molecule)</text>
+    <line x1="30" y1="40" x2="430" y2="40" class="gen"/>
+    <path d="M440,40 L470,40" class="path accent" marker-end="url(#ar10)"/>
+    <text x="490" y="30" class="txt small left">2 · random fragments, many copies of the genome,</text>
+    <text x="490" y="44" class="txt small left">so the fragments overlap; linkers (orange) on the ends</text>
+    <!-- 2 fragments -->
+    <line x1="30" y1="70" x2="150" y2="70" class="frag a"/><line x1="22" y1="70" x2="30" y2="70" class="adap"/><line x1="150" y1="70" x2="158" y2="70" class="adap"/>
+    <line x1="120" y1="88" x2="260" y2="88" class="frag b"/><line x1="112" y1="88" x2="120" y2="88" class="adap"/><line x1="260" y1="88" x2="268" y2="88" class="adap"/>
+    <line x1="230" y1="70" x2="350" y2="70" class="frag c"/><line x1="222" y1="70" x2="230" y2="70" class="adap"/><line x1="350" y1="70" x2="358" y2="70" class="adap"/>
+    <line x1="320" y1="88" x2="430" y2="88" class="frag d"/><line x1="312" y1="88" x2="320" y2="88" class="adap"/><line x1="430" y1="88" x2="438" y2="88" class="adap"/>
+    <line x1="60" y1="106" x2="200" y2="106" class="frag c"/><line x1="52" y1="106" x2="60" y2="106" class="adap"/><line x1="200" y1="106" x2="208" y2="106" class="adap"/>
+    <line x1="270" y1="106" x2="400" y2="106" class="frag a"/><line x1="262" y1="106" x2="270" y2="106" class="adap"/><line x1="400" y1="106" x2="408" y2="106" class="adap"/>
+    <!-- 3 reads with letters -->
+    <text x="20" y="150" class="txt small left bold">3 · read every fragment (the order is unknown)</text>
+    <text x="30" y="170" class="txt small left" style="font-family:monospace">…ACGGTTCA…   …TTCAGGAC…   …GGACCTTG…   …CTTGAAT…</text>
+    <path d="M230,180 L230,200" class="path accent" marker-end="url(#ar10)"/>
+    <!-- 4 assembly -->
+    <text x="20" y="220" class="txt small left bold">4 · find the overlaps and chain the reads</text>
+    <text x="30" y="242" class="txt small left" style="font-family:monospace">ACGGTTCA</text>
+    <text x="78" y="258" class="txt small left" style="font-family:monospace">TTCAGGAC</text>
+    <text x="126" y="274" class="txt small left" style="font-family:monospace">GGACCTTG</text>
+    <text x="174" y="290" class="txt small left" style="font-family:monospace">CTTGAAT</text>
+    <text x="30" y="316" class="txt small left bold" style="font-family:monospace">ACGGTTCAGGACCTTGAAT</text>
+    <text x="300" y="316" class="txt small left">= assembled sequence (a contig: a contiguous piece)</text>
+    <!-- coverage panel -->
+    <text x="640" y="150" class="txt bold">depth of coverage</text>
+    <line x1="520" y1="300" x2="840" y2="300" class="ref"/>
+    <text x="680" y="318" class="txt small muted">reference (the genome)</text>
+    <line x1="520" y1="280" x2="640" y2="280" class="read"/><line x1="660" y1="280" x2="800" y2="280" class="read"/>
+    <line x1="560" y1="264" x2="700" y2="264" class="read"/><line x1="720" y1="264" x2="840" y2="264" class="read"/>
+    <line x1="600" y1="248" x2="740" y2="248" class="read"/>
+    <line x1="530" y1="232" x2="660" y2="232" class="read"/><line x1="760" y1="232" x2="840" y2="232" class="read"/>
+    <line x1="620" y1="216" x2="690" y2="216" class="read"/>
+    <line x1="580" y1="200" x2="720" y2="200" class="read"/>
+    <text x="640" y="176" class="txt small">reads stacked over the reference</text>
+    <text x="545" y="194" class="txt small muted">1X here</text>
+    <text x="650" y="194" class="txt small muted">5X here</text>
+    <path d="M545,198 L545,226" class="path" style="stroke-dasharray:2 3"/>
+    <path d="M650,198 L650,226" class="path" style="stroke-dasharray:2 3"/>
+    <text x="710" y="186" class="txt small muted">(count the reads above a base)</text>
+  </svg>
+  <figcaption>Left: syllabus Figure 4-31, shotgun sequencing. Right: Figure 4-32, depth of coverage: a base that lies under five reads has 5X coverage, a base under one read has 1X.
+  The overlapping reads in step 4 are what makes assembly possible.</figcaption>
+</figure>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Shotgun</strong>: knip het genoom in <strong>willekeurige, overlappende fragmenten</strong> (schudden of restrictie-enzym), plak <strong>linkers</strong> aan de uiteinden,
+vermenigvuldig met PCR, lees alle fragmenten, en laat de computer de <strong>overlappende</strong> reads aaneenketenen tot het hele genoom. Bij de start hoef je niet te weten
+waar een fragment vandaan komt.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Why you must read much more than the genome: over-sequencing and coverage (4.9.2, 4.9.3)</h2>
+<p>To get a complete genome you need to sequence <strong>far more bases than the genome contains</strong>. The syllabus gives three reasons:</p>
+<ol>
+  <li><strong>Errors.</strong> Sequencing is not error-free. If the same region is read several times independently, an error in one read stands out against the others and can be corrected.</li>
+  <li><strong>Random fragments must cover everything.</strong> Because the fragments are random, some regions are read many times by chance and others not at all. In theory you need <strong>eight genome equivalents</strong> to be sure that <strong>99.9 %</strong> of the genome is read at least once. For the 4.6 Mbp <em>E. coli</em> chromosome that is about <strong>37 Mbp</strong> of sequence. In practice even more is read, because that also improves accuracy (reason 1).</li>
+  <li><strong>Enough overlaps for assembly.</strong> The computer needs many overlapping reads to work out the correct order.</li>
+</ol>
+
+<h3>The hard part: repeats</h3>
+<p><strong>Repetitive DNA</strong> occurs in many places of the genome. A read that lies entirely inside a repeat matches many places at once, so the computer cannot tell where it belongs.
+If a repeated region is <strong>longer than the reads</strong>, the task becomes nearly impossible: no read reaches the unique sequence on either side. That is why the first genome
+sequences, including the human one, <strong>had gaps</strong>. Three things help: smarter assembly programs, genetic linkage data (knowing from inheritance which markers lie near each other),
+and <strong>longer reads</strong> that span the repeat and connect the unique sequences on both sides (Nanopore, section 6).</p>
+
+<h3>Depth of coverage</h3>
+<p>The <strong>depth of coverage</strong> (or sequencing depth) of a base is the number of independent reads that contain it. It is written as a multiple: a base present in five reads has
+<strong>5X coverage</strong> ("five-fold", "five times"). Higher depth means more confidence when a difference from the reference is found (<strong>variant calling</strong>, deciding that a
+difference is real), especially for <strong>rare variants</strong>, where a single sequencing error could otherwise be mistaken for a mutation. The depth needed depends on the experiment:
+the quality and amount of the sample, how many variants are expected and how frequent they are, and what similar studies used. Page 4.11 gives typical numbers (more than 30X for a whole genome, more than 500X for a small target).</p>
+
+<div class="callout key"><span class="tag">Two kinds of "how much"</span>
+<p><strong>Genome equivalents</strong> describe the <em>total</em>: 8 genome equivalents = 8 × the genome length in reads. <strong>Coverage depth</strong> describes <em>one base</em>: 5X = that base is in 5 reads.
+Reading 8 genome equivalents gives an <em>average</em> depth of about 8X, but random fragments make some bases 1X and others 15X.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Je moet <strong>veel meer</strong> lezen dan het genoom lang is, om drie redenen: <strong>fouten</strong> corrigeren, <strong>willekeurige</strong> fragmenten moeten alles raken
+(8 genoomequivalenten voor 99,9 %; E. coli 4,6 Mbp → 37 Mbp), en genoeg <strong>overlap</strong> voor de assemblage. <strong>Repeats</strong> zijn het probleem: een read binnen een
+repeat past op veel plaatsen; langer dan de reads = bijna onoplosbaar → gaten in de eerste genomen; lange reads helpen. <strong>Dekkingsdiepte</strong>: 5X = een base zit in vijf
+reads; meer diepte = betrouwbaarder varianten vinden, vooral zeldzame.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Three generations of sequencing (4.9.4, Figures 4-33, 4-34, 4-35)</h2>
+<table class="tech">
+  <tr><th>Generation</th><th>How</th><th>Numbers from the syllabus</th></tr>
+  <tr><td>first: Sanger</td><td>chain termination (page 4.9); first by hand, later automated with capillary electrophoresis; one read per reaction</td><td>one machine: ~1000 reactions a day, ~0.5 Mbp a day. E. coli (37 Mbp needed): about 75 machine-days. Human genome: ~70 million reads of 500 bp for ten genome equivalents (35 × 10⁹ bp), 100 machines, 1000 reactions a day each, about two years</td></tr>
+  <tr><td>second: next-generation sequencing (NGS), also "massively parallel"</td><td>vast numbers of DNA molecules sequenced at the same time; fragments first amplified by PCR; example: Illumina</td><td>speed up and cost down by orders of magnitude; short reads (Illumina 75–150 bp)</td></tr>
+  <tr><td>third: single-molecule sequencing</td><td>one DNA molecule read directly, <strong>no PCR</strong> (so no PCR errors), <strong>long reads</strong>; example: Nanopore</td><td>reads can be extremely long (even whole chromosomes); useful for repeats and structural variants</td></tr>
+</table>
+
+<h3>The NGS workflow in four steps (Figure 4-35)</h3>
+<ol>
+  <li><strong>DNA extraction:</strong> isolate high-quality DNA from the sample and check it.</li>
+  <li><strong>Library preparation:</strong> fragment the DNA and attach <strong>adapters</strong>; the collection of adapter-tagged fragments is the "library". The adapters are needed for amplification and for the sequencing steps.</li>
+  <li><strong>Sequencing:</strong> load the library on the machine; millions of fragments are read at the same time, giving raw sequence data.</li>
+  <li><strong>Data analysis:</strong> a bioinformatician checks the quality, <strong>aligns</strong> the reads to a reference genome and <strong>calls variants</strong> (finds the differences).</li>
+</ol>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Drie generaties: <strong>Sanger</strong> (één read per reactie; 1000 reacties/dag; het menselijk genoom: 70 miljoen reads, 100 machines, 2 jaar), <strong>NGS</strong> (tweede generatie,
+massaal parallel, na PCR, korte reads; Illumina) en <strong>derde generatie</strong> (één molecuul rechtstreeks, geen PCR, lange reads; Nanopore). NGS-workflow: DNA <strong>isoleren</strong>,
+<strong>bibliotheek maken</strong> (fragmenteren + adapters), <strong>sequencen</strong>, <strong>analyseren</strong> (aligneren op een referentie, varianten bepalen).</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Illumina: one coloured base per cycle (4.9.4.1, Figures 4-36, 4-37)</h2>
+<p><strong>The key molecule:</strong> a <strong>reversible terminator</strong>. Like the ddNTP of Sanger it has a block on its 3′ end, so the polymerase can add only <em>one</em> base and then must stop.
+Unlike the ddNTP, the block is a chemical group that can be <strong>removed</strong> afterwards, so the chain can go on. Each of the four bases also carries its own <strong>fluorescent colour</strong>.</p>
+
+<h3>Steps</h3>
+<ol>
+  <li><strong>Prepare the fragments:</strong> break the genomic DNA, ligate adapters to the ends, denature to single strands (page 4.3: denature = separate the two strands with heat).</li>
+  <li><strong>Capture on a surface:</strong> the single strands hybridise to a glass surface densely coated with short DNA pieces complementary to the adapters (a "lawn" of primers). Each fragment sticks by one end.</li>
+  <li><strong>Bridge amplification:</strong> the free end of the fragment bends over and pairs with a neighbouring surface primer, forming a <strong>bridge</strong>. The polymerase copies it; the strands are separated; each copy bends over again. After many rounds every spot holds a <strong>cluster</strong> of thousands of identical copies. This is needed because one molecule gives too little light to see; a cluster gives a strong signal.</li>
+  <li><strong>Sequence by synthesis, one cycle:</strong> add a primer, DNA polymerase and the four reversible terminators, each with a different colour. Because of the 3′ block, exactly <strong>one base</strong> is added to every strand in every cluster. Wash away the unused nucleotides.</li>
+  <li><strong>Image:</strong> a laser excites the dyes; a camera photographs the whole surface and records the colour of every cluster, that is, which base was added.</li>
+  <li><strong>Reset:</strong> chemically remove the dye and the 3′ block, so the 3′ OH is free again.</li>
+  <li><strong>Repeat</strong> steps 4 to 6 for 75 to 150 cycles. Each cycle gives one base for millions of clusters at the same time.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 250" width="860" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar10b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- surface -->
+    <rect x="20" y="150" width="520" height="16" class="surf"/>
+    <text x="280" y="186" class="txt small muted">glass surface with a lawn of short primers (grey)</text>
+    <g class="lawn">
+      <line x1="40" y1="150" x2="40" y2="128"/><line x1="60" y1="150" x2="60" y2="128"/><line x1="100" y1="150" x2="100" y2="128"/><line x1="140" y1="150" x2="140" y2="128"/>
+      <line x1="200" y1="150" x2="200" y2="128"/><line x1="240" y1="150" x2="240" y2="128"/><line x1="300" y1="150" x2="300" y2="128"/><line x1="360" y1="150" x2="360" y2="128"/><line x1="420" y1="150" x2="420" y2="128"/><line x1="480" y1="150" x2="480" y2="128"/><line x1="520" y1="150" x2="520" y2="128"/>
+    </g>
+    <!-- A: single fragment attached -->
+    <text x="80" y="22" class="txt bold">A · attach</text>
+    <line x1="80" y1="128" x2="80" y2="150" class="adap"/>
+    <path d="M80,128 C80,90 84,60 86,44" class="strand"/>
+    <line x1="86" y1="44" x2="88" y2="30" class="adap"/>
+    <text x="96" y="100" class="txt small left">fragment on a primer</text>
+    <!-- B: bridge -->
+    <text x="220" y="22" class="txt bold">B · bridge</text>
+    <line x1="200" y1="128" x2="200" y2="150" class="adap"/>
+    <line x1="240" y1="128" x2="240" y2="150" class="adap"/>
+    <path d="M200,128 C200,60 240,60 240,128" class="strand"/>
+    <path d="M206,128 C206,68 234,68 234,128" class="strand new" style="stroke-dasharray:5 4"/>
+    <text x="262" y="100" class="txt small left">copied</text>
+    <!-- C: cluster -->
+    <text x="400" y="22" class="txt bold">C · cluster</text>
+    <g class="strand"><path d="M300,128 C300,60 360,60 360,128"/><path d="M360,128 C360,70 420,70 420,128"/><path d="M420,128 C420,60 480,60 480,128"/><path d="M480,128 C480,72 520,72 520,128"/></g>
+    <text x="410" y="46" class="txt small">thousands of identical copies at one spot</text>
+    <path d="M90,196 L90,214" class="path accent" marker-end="url(#ar10b)"/><text x="110" y="208" class="txt small left">many rounds →</text>
+    <!-- D: one cycle -->
+    <text x="700" y="22" class="txt bold">D · one sequencing cycle</text>
+    <rect x="580" y="38" width="260" height="190" rx="8" class="box"/>
+    <text x="710" y="62" class="txt small">1 · add 4 coloured, 3′-blocked bases</text>
+    <text x="710" y="80" class="txt small">+ polymerase: only ONE fits in</text>
+    <circle cx="640" cy="104" r="7" style="fill:var(--c-Cl)"/><circle cx="668" cy="104" r="7" style="fill:var(--c-N)"/><circle cx="696" cy="104" r="7" style="fill:var(--c-C)"/><circle cx="724" cy="104" r="7" style="fill:var(--c-O)"/>
+    <text x="770" y="108" class="txt small left">A C G T</text>
+    <text x="710" y="134" class="txt small">2 · wash, laser, photograph the colour</text>
+    <text x="710" y="152" class="txt small">of every cluster = the base added</text>
+    <text x="710" y="180" class="txt small">3 · remove dye and 3′ block</text>
+    <text x="710" y="198" class="txt small">(3′ OH free again)</text>
+    <text x="710" y="220" class="txt small bold">4 · repeat 75–150 times</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-37. Blue = the fragment, orange = adapters, dashed red = the new copy. One sequencing cycle reads one base in every cluster at once; the read length is the number of cycles.</figcaption>
+</figure>
+
+<p><strong>Limitation:</strong> Illumina reads are short, <strong>75 to 150 bp</strong>. Short reads overlap less and cannot span repeats, so assembly needs <strong>more depth of coverage</strong>.
+That is why Illumina is mostly used with a reference genome (page 4.11), where reads only need to be placed, not assembled from scratch.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Illumina</strong>: <strong>omkeerbare terminatoren</strong> (3′ geblokkeerd zoals een ddNTP, maar de blokkering kan weer verwijderd worden; elke base een eigen kleur). Fragmenten met
+adapters hechten aan een glasplaat vol primers; <strong>brugamplificatie</strong> maakt per plek een <strong>cluster</strong> van identieke kopieën (genoeg licht). Per cyclus: één gekleurde base
+inbouwen, wassen, foto nemen (kleur = base), kleur en blokkering verwijderen, herhalen (75 tot 150 cycli). Nadeel: <strong>korte reads</strong>, dus meer dekking nodig.</p></div>
+
+<!-- ============================================================ -->
+<h2>6. Nanopore: reading the current (4.9.4.2, Figure 4-38)</h2>
+<p><strong>The idea:</strong> pull a single DNA strand through a tiny hole and measure how the electrical current through the hole changes; each base blocks the hole a bit differently.
+No copying, no colours, no amplification.</p>
+<ol>
+  <li><strong>The sensor:</strong> a <strong>nanopore</strong> is a hole of a few nanometres (a nanometre is a millionth of a millimetre), formed by a protein sitting in a membrane. The membrane separates two chambers filled with a salt solution that conducts electricity. A voltage across the membrane makes ions (charged salt particles) flow through the pore: a steady <strong>ionic current</strong>.</li>
+  <li><strong>Translocation:</strong> a <strong>motor protein</strong> attached to the pore unwinds the double helix and feeds one single strand through the pore at a controlled speed. While a base is inside the pore it <strong>partly blocks</strong> the current.</li>
+  <li><strong>Signal:</strong> each base (A, T, C, G, and also chemically modified bases such as methylated C) has its own size and chemistry, so each disturbs the current in its own way. The electrical trace is decoded into the sequence.</li>
+  <li><strong>Real time:</strong> the data come out while the DNA is passing, so analysis can start immediately, which matters when speed is critical (for example identifying a pathogen during an outbreak).</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 860 230" width="860" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar10c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- membrane with pore -->
+    <rect x="30" y="100" width="200" height="22" class="mem"/>
+    <rect x="270" y="100" width="150" height="22" class="mem"/>
+    <text x="130" y="140" class="txt small muted">membrane</text>
+    <path d="M230,86 L240,100 L240,122 L230,136 L270,136 L260,122 L260,100 L270,86 Z" class="pore"/>
+    <text x="250" y="156" class="txt small">protein nanopore</text>
+    <!-- motor -->
+    <circle cx="250" cy="66" r="16" class="motor"/>
+    <text x="250" y="70" class="txt small" style="fill:#fff">motor</text>
+    <text x="290" y="62" class="txt small left">motor protein unwinds the DNA,</text>
+    <text x="290" y="76" class="txt small left">feeds one strand through</text>
+    <!-- DNA double -->
+    <path d="M250,12 C240,24 260,36 250,50" class="dna"/>
+    <path d="M250,12 C260,24 240,36 250,50" class="dna" style="stroke:var(--c-O)"/>
+    <!-- single strand through pore -->
+    <path d="M250,82 L250,170" class="dna"/>
+    <g class="txt small" style="fill:var(--c-N)"><text x="266" y="96">A</text><text x="266" y="112">C</text><text x="266" y="128">G</text></g>
+    <text x="250" y="190" class="txt small muted">strand comes out below</text>
+    <!-- ions -->
+    <circle cx="120" cy="60" r="4" class="ion"/><circle cx="160" cy="40" r="4" class="ion"/><circle cx="340" cy="50" r="4" class="ion"/><circle cx="380" cy="30" r="4" class="ion"/>
+    <circle cx="110" cy="180" r="4" class="ion"/><circle cx="360" cy="190" r="4" class="ion"/>
+    <text x="20" y="30" class="txt small left">+ chamber: ions flow through the pore</text>
+    <text x="90" y="208" class="txt small left">− chamber</text>
+    <!-- current trace -->
+    <rect x="470" y="30" width="370" height="170" rx="6" class="box"/>
+    <text x="655" y="50" class="txt small bold">ionic current through the pore, over time</text>
+    <line x1="490" y1="170" x2="820" y2="170" class="path"/>
+    <line x1="490" y1="170" x2="490" y2="60" class="path"/>
+    <path d="M490,80 L530,80 L530,110 L570,110 L570,95 L610,95 L610,130 L650,130 L650,110 L690,110 L690,80 L730,80 L730,125 L770,125 L770,100 L810,100" class="trace"/>
+    <g class="txt small"><text x="510" y="190">A</text><text x="550" y="190">C</text><text x="590" y="190">T</text><text x="630" y="190">G</text><text x="670" y="190">C</text><text x="710" y="190">A</text><text x="750" y="190">G</text><text x="790" y="190">T</text></g>
+    <text x="500" y="68" class="txt small left muted">each base blocks the current by its own amount</text>
+    <text x="482" y="150" class="txt small muted" transform="rotate(-90 482 150)">current</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-38, the MinION principle. The pore sits in a membrane; a voltage drives ions through it; a strand passing through changes the current step by step. The levels in the trace are illustrative.</figcaption>
+</figure>
+
+<h3>Advantages and uses</h3>
+<ul>
+  <li><strong>Very long reads</strong>, even entire chromosomes: ideal for repeats and for <strong>structural variants</strong> (large rearrangements such as the ones in chapter 1 and in cancer genomes).</li>
+  <li><strong>Portable:</strong> the <strong>MinION</strong> device fits in the palm of a hand, so sequencing can be done in the field.</li>
+  <li><strong>Direct RNA sequencing:</strong> RNA can be read without first converting it to DNA.</li>
+  <li><strong>Epigenetics:</strong> modified bases such as methylated C give their own signal, so DNA methylation is detected directly.</li>
+  <li>Applications: genome organisation, pathogen detection in outbreaks, epigenetics, cancer research (mutations and rearrangements in tumours).</li>
+</ul>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Nanopore</strong>: een eiwit-porie in een membraan tussen twee kamers met zoutoplossing; een spanning laat ionen door de porie stromen. Een <strong>motoreiwit</strong> ontwindt het DNA
+en voert één streng door de porie; elke base blokkeert de stroom op haar eigen manier; het stroomsignaal wordt vertaald in de sequentie, in <strong>realtime</strong>. Voordelen:
+<strong>zeer lange reads</strong> (repeats, structurele varianten), <strong>draagbaar</strong> (MinION), <strong>RNA rechtstreeks</strong>, <strong>methylering</strong> zichtbaar. Geen PCR, geen kleurstoffen.</p></div>
+
+<!-- ============================================================ -->
+<h2>7. Sanger, Illumina and Nanopore side by side</h2>
+<table class="tech">
+  <tr><th></th><th>Sanger (1st generation)</th><th>Illumina (2nd, NGS)</th><th>Nanopore (3rd)</th></tr>
+  <tr><td>principle</td><td>chain termination by ddNTP; fragments sorted by length</td><td>reversible terminators, one coloured base per cycle, photographed over millions of clusters</td><td>single strand through a protein pore; current changes per base</td></tr>
+  <tr><td>what is read</td><td>copies of one template, one reaction at a time</td><td>PCR-amplified clusters, massively parallel</td><td>one original molecule, no PCR</td></tr>
+  <tr><td>read length</td><td>up to ~900 bases</td><td>75–150 bp (short)</td><td>very long, up to whole chromosomes</td></tr>
+  <tr><td>throughput</td><td>low (1000 reactions a day per machine)</td><td>very high</td><td>high, and real time</td></tr>
+  <tr><td>errors</td><td>low</td><td>low per base, but short reads complicate assembly</td><td>higher per base, compensated by length and depth; no PCR errors</td></tr>
+  <tr><td>special</td><td>simple, accurate; the gold standard for one gene</td><td>cheap per base; needs a reference for easy use</td><td>portable (MinION), direct RNA, detects methylation</td></tr>
+  <tr><td>trap</td><td>too slow for a genome</td><td>short reads need more coverage; cannot span long repeats</td><td>needs the motor protein to control speed; reads the current, not colours</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Sanger: nauwkeurig, ~900 basen, traag. Illumina: massaal parallel, goedkoop, <strong>korte</strong> reads (75–150 bp), na PCR. Nanopore: één molecuul, <strong>lange</strong> reads,
+realtime, draagbaar, geen PCR. Kies naar de vraag: één gen → Sanger; veel genomen tegen een referentie → Illumina; repeats, structurele varianten, veldwerk, methylering → Nanopore.</p></div>
+
+<!-- ============================================================ -->
+<h2>8. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>shotgun sequencing</td><td>random fragmentation, read everything, reassemble by overlaps</td></tr>
+  <tr><td>linker, adapter</td><td>short synthetic DNA on both ends of every fragment; one primer then fits all</td></tr>
+  <tr><td>assembly, contig</td><td>chaining overlapping reads by computer; a contiguous assembled piece</td></tr>
+  <tr><td>over-sequencing</td><td>reading many times the genome length: for errors, random coverage and overlaps</td></tr>
+  <tr><td>genome equivalent</td><td>the genome length once; 8 equivalents → 99.9 % of bases read at least once</td></tr>
+  <tr><td>depth of coverage (5X)</td><td>number of reads containing a given base</td></tr>
+  <tr><td>variant calling, SNP</td><td>deciding that a difference from the reference is real; one-letter difference</td></tr>
+  <tr><td>repetitive DNA</td><td>sequences present many times; reads inside them cannot be placed</td></tr>
+  <tr><td>reference genome</td><td>finished genome used as a map to align new reads</td></tr>
+  <tr><td>high-throughput</td><td>handling very many samples or reads at once</td></tr>
+  <tr><td>NGS, massively parallel</td><td>second-generation methods reading millions of molecules together</td></tr>
+  <tr><td>library (NGS)</td><td>the collection of adapter-tagged fragments ready to sequence</td></tr>
+  <tr><td>reversible terminator</td><td>Illumina nucleotide with a removable 3′ block and a colour</td></tr>
+  <tr><td>bridge amplification, cluster</td><td>copying a fragment on the surface via bridges until a spot holds thousands of copies</td></tr>
+  <tr><td>sequencing by synthesis</td><td>reading the base at the moment it is built in</td></tr>
+  <tr><td>nanopore</td><td>a protein hole of a few nanometres in a membrane</td></tr>
+  <tr><td>ionic current</td><td>flow of charged salt particles through the pore under a voltage</td></tr>
+  <tr><td>motor protein</td><td>enzyme on the pore that unwinds DNA and feeds one strand through</td></tr>
+  <tr><td>MinION</td><td>the hand-held Nanopore sequencer</td></tr>
+  <tr><td>structural variant</td><td>a large change (deletion, duplication, inversion, translocation) rather than one letter</td></tr>
+  <tr><td>Walter Fiers, MS2</td><td>Ghent scientist; the bacteriophage whose genome was the first ever sequenced</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>9. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes the principle, methodology and applications of different forms of nucleic acid based technologies, including ... sequencing technologies, metagenomics and transcriptomics."</p>
+<ol>
+  <li>Explain shotgun sequencing in five steps and why the origin of a fragment need not be known at the start.</li>
+  <li>Give the three reasons for over-sequencing and the numbers: 8 genome equivalents for 99.9 %, E. coli 4.6 Mbp → 37 Mbp.</li>
+  <li>Define depth of coverage (5X) and say why more depth gives more reliable variant calls.</li>
+  <li>Explain why repeats are the hard part of assembly and how long reads help.</li>
+  <li>Name the three generations with their key feature: Sanger (one read per reaction), NGS (massively parallel, after PCR, short reads), third generation (single molecule, long reads, no PCR).</li>
+  <li>Describe the Illumina method: adapters, lawn, bridge amplification, clusters, reversible terminators, one coloured base per cycle, image, unblock, repeat; reads of 75–150 bp.</li>
+  <li>Describe Nanopore: pore, voltage, ionic current, motor protein, current change per base, real time; long reads, portable, direct RNA, methylation.</li>
+  <li>Know the history: Walter Fiers (Ghent, first gene, first genome: phage MS2), the Human Genome Project (>10 years, billions).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>10. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why can a genome not simply be read from one end to the other?</dt>
+  <dd>No technology reads an entire chromosome in one reaction (Sanger ~900 bases, Illumina 75–150). So the genome is broken into many short pieces that are read separately and then put back together.</dd>
+
+  <dt>What are the steps of shotgun sequencing?</dt>
+  <dd>Fragment the genome at random (shearing or restriction enzyme); attach linkers; amplify by PCR (or clone in a library); sequence every fragment; let a computer find overlaps and assemble the sequence in order.</dd>
+
+  <dt>Why does assembly work even though the fragments are random?</dt>
+  <dd>Because the genome is fragmented in many copies, so the fragments overlap. Two reads that share the same letters at their ends must come from neighbouring places, and chaining such overlaps reconstructs the order.</dd>
+
+  <dt>Give the three reasons for over-sequencing.</dt>
+  <dd>(1) Errors in single reads can be recognised and corrected when the region is read several times; (2) random fragments: to be sure every region is read at least once you need about 8 genome equivalents for 99.9 %; (3) enough overlapping reads are needed to determine the correct order.</dd>
+
+  <dt>How much sequence is needed for the E. coli chromosome, and why?</dt>
+  <dd>About 37 Mbp for a 4.6 Mbp chromosome: eight genome equivalents, to cover 99.9 % of it. In practice even more, for accuracy.</dd>
+
+  <dt>What does "a base has 5X coverage" mean, and why does depth matter?</dt>
+  <dd>The base is contained in five independent reads. More depth makes variant calling more confident, especially for rare variants, where a sequencing error in one read could otherwise look like a real mutation.</dd>
+
+  <dt>Why are repeats a problem, and what helps?</dt>
+  <dd>A read lying inside a repeat matches many places in the genome, so it cannot be placed; if the repeat is longer than the reads, nothing connects it to unique sequence. Better algorithms, genetic linkage data and long reads that span the repeat help.</dd>
+
+  <dt>What distinguishes the three generations of sequencing?</dt>
+  <dd>First: Sanger, one read per reaction. Second (NGS): massively parallel sequencing of PCR-amplified fragments, short reads. Third: single molecules read directly, no PCR, very long reads.</dd>
+
+  <dt>What is a reversible terminator, and why is it needed in Illumina?</dt>
+  <dd>A fluorescent nucleotide with a removable block on its 3′ end. The block ensures that only one base is added per cycle, so the camera can read one base at a time; removing the block lets the next cycle proceed.</dd>
+
+  <dt>Why does Illumina make clusters?</dt>
+  <dd>A single molecule gives too little fluorescence to detect. Bridge amplification copies each fragment at its spot thousands of times, so every cluster gives a strong, readable signal.</dd>
+
+  <dt>How does a nanopore "read" a base?</dt>
+  <dd>Ions flow through the pore under a voltage. When a strand is pushed through by the motor protein, each base inside the pore blocks the current by a characteristic amount. The sequence of current levels is decoded into bases.</dd>
+
+  <dt>Name four advantages of Nanopore sequencing.</dt>
+  <dd>Very long reads (repeats, structural variants); portable device (MinION); direct RNA sequencing; detection of modified bases such as methylation. Also real-time output and no PCR.</dd>
+
+  <dt>Who sequenced the first genome, and which one was it?</dt>
+  <dd>Walter Fiers and his team at Ghent University, in the 1970s, with Sanger sequencing: the genome of bacteriophage MS2 (after sequencing the first gene).</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>11. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Shotgun</strong>: random fragments → linkers → PCR → read all → <strong>assemble by overlaps</strong>.</li>
+  <li><strong>Over-sequencing</strong>, 3 reasons: errors, random coverage, overlaps. <strong>8 genome equivalents → 99.9 %</strong>; E. coli 4.6 Mbp → <strong>37 Mbp</strong>.</li>
+  <li><strong>Depth 5X</strong> = base in 5 reads; more depth = reliable (rare) variants.</li>
+  <li><strong>Repeats</strong> longer than the reads = unplaceable → gaps; <strong>long reads</strong> fix it.</li>
+  <li>Sanger: ~1000 reactions/day, 0.5 Mbp/day; human genome: 70 million reads, 100 machines, 2 years.</li>
+  <li><strong>NGS</strong> = 2nd generation = massively parallel, after PCR, <strong>short reads</strong>; <strong>3rd</strong> = single molecule, <strong>long reads, no PCR</strong>.</li>
+  <li>NGS workflow: <strong>extract → library (fragment + adapters) → sequence → analyse (align, call variants)</strong>.</li>
+  <li><strong>Illumina</strong>: lawn of primers → <strong>bridge amplification → clusters</strong> → per cycle one <strong>coloured 3′-blocked base</strong>, photo, unblock; <strong>75–150 bp</strong>.</li>
+  <li><strong>Nanopore</strong>: pore in a membrane, voltage, <strong>ionic current</strong>, <strong>motor protein</strong>, each base blocks differently, <strong>real time</strong>.</li>
+  <li>Nanopore pluses: whole-chromosome reads, <strong>MinION</strong> portable, direct RNA, sees methylation.</li>
+  <li><strong>Walter Fiers (Ghent)</strong>: first gene and first genome (<strong>phage MS2</strong>); Human Genome Project &gt; 10 years, billions.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>12. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Why is the method called "shotgun" sequencing?
+    <details><summary>Answer</summary><div class="ans"><p>Because it starts with <strong>random fragmentation</strong> of the genome, like the scattered pellets of a shotgun. The pieces are read without knowing where they came from and reassembled afterwards by their overlaps.</p></div></details></li>
+  <li>Two reads end and begin with the same 60 letters. What does the computer conclude?
+    <details><summary>Answer</summary><div class="ans"><p>That they <strong>overlap</strong>: they come from neighbouring places in the genome and can be chained into one longer piece (a contig). Finding such overlaps for millions of reads is the assembly.</p></div></details></li>
+  <li>How many genome equivalents are needed in theory to cover 99.9 % of a genome at least once?
+    <ul class="opts"><li data-l="a">1</li><li data-l="b">2</li><li data-l="c">8</li><li data-l="d">100</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Because the fragments are random, one genome length of reads leaves many regions unread. About eight times the genome length is needed for 99.9 %; for E. coli (4.6 Mbp) that is 37 Mbp.</p></div></details></li>
+  <li>A base is found in 12 reads. What is its depth of coverage, and what does that buy you?
+    <details><summary>Answer</summary><div class="ans"><p><strong>12X.</strong> If one read shows a different letter and the other eleven agree, the odd one is probably a sequencing error; if six show it, it is probably a real variant (for example from one of the two chromosomes). Depth gives confidence in variant calling.</p></div></details></li>
+  <li>True or false: "Reading 8 genome equivalents gives every base exactly 8X coverage."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> It gives an <em>average</em> of about 8X. Because fragments are random, some bases are covered once and others many times; that randomness is exactly why over-sequencing is needed.</p></div></details></li>
+  <li>Why did the first human genome sequence have gaps?
+    <details><summary>Answer</summary><div class="ans"><p>Because of <strong>repetitive DNA</strong>. Reads inside a repeat fit many places; where a repeat was longer than the reads, no read connected it to the unique sequence on either side, so those regions could not be assembled.</p></div></details></li>
+  <li>Which generation of sequencing reads single molecules without PCR, and what is its main advantage?
+    <details><summary>Answer</summary><div class="ans"><p>The <strong>third generation</strong> (for example Nanopore). Its main advantage is <strong>long reads</strong>, which span repeats and reveal structural variants; a second advantage is that there are no PCR errors.</p></div></details></li>
+  <li>Put the four steps of an NGS workflow in order: data analysis, sequencing, DNA extraction, library preparation.
+    <details><summary>Answer</summary><div class="ans"><p><strong>DNA extraction → library preparation (fragment + adapters) → sequencing → data analysis</strong> (align to a reference, call variants).</p></div></details></li>
+  <li>What is the difference between a ddNTP (Sanger) and an Illumina reversible terminator?
+    <details><summary>Answer</summary><div class="ans"><p>Both block the 3′ end so that synthesis stops after one addition. The ddNTP lacks the 3′ OH <em>permanently</em>; the reversible terminator carries a chemical block that is <strong>removed</strong> after imaging, so the strand can grow on in the next cycle. Each reversible terminator also has its own colour.</p></div></details></li>
+  <li>In Illumina, what is a cluster and why is it needed?
+    <details><summary>Answer</summary><div class="ans"><p>A spot on the surface holding thousands of identical copies of one fragment, made by <strong>bridge amplification</strong>. One molecule would give too little light; a cluster gives a signal the camera can see.</p></div></details></li>
+  <li>An Illumina run uses 100 cycles. How long are the reads?
+    <details><summary>Answer</summary><div class="ans"><p><strong>About 100 bases</strong>: each cycle adds and reads exactly one base in every cluster. Typical Illumina reads are 75 to 150 bp, short compared with Sanger and very short compared with Nanopore.</p></div></details></li>
+  <li>What does the motor protein do in Nanopore sequencing?
+    <details><summary>Answer</summary><div class="ans"><p>It sits on the pore, <strong>unwinds</strong> the double-stranded DNA and <strong>feeds one single strand</strong> through the pore at a controlled speed, so that the current changes can be assigned to one base after another.</p></div></details></li>
+  <li>You must identify an unknown pathogen in a remote village within hours and later look at its large rearrangements. Which technology, and why?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Nanopore (MinION)</strong>: portable, works in the field, gives results in real time, and its long reads reveal structural variants. Illumina would need a lab and gives short reads; Sanger is far too slow.</p></div></details></li>
+  <li>Correct this statement: "The Human Genome Project used Illumina sequencing."
+    <details><summary>Answer</summary><div class="ans"><p>It used <strong>Sanger</strong> sequencing (about 70 million reads, 100 machines, two years, more than ten years in total and billions of dollars). Illumina and other NGS methods came in the early 2000s, after the project showed how badly faster methods were needed.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.09_sanger_sequencing_and_blast.html">← 4.9 Sanger sequencing and BLAST</a><a href="index.html">Chapter 4 index</a><a href="4.11_sequencing_applications.html">4.11 Sequencing applications →</a></nav>
+</main>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 One cell and tumor progression</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .c0 { fill: var(--hl-polar); stroke: var(--c-Cl); stroke-width: 1.2; }
+  .c1 { fill: var(--hl-base); stroke: var(--c-N); stroke-width: 1.2; }
+  .c2 { fill: var(--hl-acid); stroke: var(--c-R); stroke-width: 1.2; }
+  .c3 { fill: var(--c-O); stroke: var(--c-O); stroke-width: 1.2; opacity: .85; }
+  .lam { stroke: var(--c-S); stroke-width: 4; fill: none; stroke-linecap: round; }
+  .ct { fill: var(--panel); stroke: none; }
+  .curve { fill: none; stroke: var(--accent); stroke-width: 3; }
+  .ax { stroke: var(--fg); stroke-width: 1.4; fill: none; }
+  .mark { stroke: var(--c-O); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+  .chr { stroke: var(--c-N); stroke-width: 10; stroke-linecap: round; fill: none; }
+  .chr.b { stroke: var(--c-O); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.01_what_cancer_is.html">← 2.1 What cancer is</a><a href="index.html">Chapter 2 index</a><a href="2.03_genetic_instability_and_hallmarks.html">2.3 Genetic instability and hallmarks →</a></nav>
+
+<h1>2.2 From one cell to a tumor: clonal origin and tumor progression</h1>
+<p class="lede">In one sentence: almost every cancer starts from one single cell, and it takes many years and several extra mutations, each one selected because
+it helps the cell outgrow its neighbours, before that cell's descendants are a full-blown cancer.</p>
+
+<p>This page gives two of the concepts in the learning objectives: the <strong>multiple hit theory of Knudson</strong> (several mutations are needed, one at a time) and
+<strong>intratumor heterogeneity</strong> (a tumor is not one kind of cell but a mix of competing subclones). It also explains two words of the exam's matching question:
+<strong>primary tumor</strong> and <strong>tumor progression</strong>. Keep page 2.1 at hand for benign, malignant and clone.</p>
+
+<!-- ============================================================ -->
+<h2>1. Most cancers come from a single abnormal cell (2.1.2)</h2>
+<p>Even after a cancer has spread, we can usually trace it back to one <strong>primary tumor</strong>: the original tumor, in the specific organ where the disease started
+(primair = eerste). The primary tumor is thought to arise by cell division from <strong>a single cell</strong> that experienced some heritable change. Later, more changes
+accumulated in some of its descendants, which let them outgrow, out-divide and often outlive their neighbours.</p>
+
+<h3>How big is a tumor when it is found? (Figure 2-5)</h3>
+<p>By the time a cancer is first detected, it has usually been developing for <strong>many years</strong> and already contains <strong>a billion (10<sup>9</sup>) cancer cells or more</strong>.
+The syllabus figure plots the diameter of a typical breast tumor against the number of times the cell population has doubled, on a logarithmic scale (each step on the axis is
+10 times more). The <strong>doubling time</strong> (the time the tumor needs to double its number of cells) of a typical breast tumor is about <strong>100 days</strong>; aggressive tumors grow much faster.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 700 260" width="700" height="260" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <path d="M70,20 L70,200 L640,200" class="ax"/>
+    <text x="60" y="205" class="txt small" style="text-anchor:end">0.1 mm</text>
+    <text x="60" y="150" class="txt small" style="text-anchor:end">1 mm</text>
+    <text x="60" y="95" class="txt small" style="text-anchor:end">10 mm</text>
+    <text x="60" y="40" class="txt small" style="text-anchor:end">100 mm</text>
+    <text x="14" y="120" class="txt small muted" transform="rotate(-90 14 120)">diameter (log scale)</text>
+    <text x="210" y="222" class="txt small">10</text><text x="350" y="222" class="txt small">20</text><text x="490" y="222" class="txt small">30</text><text x="630" y="222" class="txt small">40</text>
+    <text x="355" y="246" class="txt small muted">number of doublings of the cell population (about 100 days each)</text>
+    <!-- straight line on log scale: diameter grows exponentially with doublings -->
+    <path d="M70,200 L630,35" class="curve"/>
+    <!-- marks -->
+    <path d="M435,92 L435,200" class="mark"/><circle cx="435" cy="92" r="5" class="c3"/>
+    <text x="92" y="52" class="txt small bold left">10⁸ cells: visible on x-ray (after about 26 doublings)</text>
+    <path d="M490,76 L490,200" class="mark"/><circle cx="490" cy="76" r="5" class="c3"/>
+    <text x="92" y="70" class="txt small bold left">10⁹ cells: first palpable, about 1 cm (30 doublings)</text>
+    <path d="M630,35 L630,200" class="mark"/><circle cx="630" cy="35" r="5" class="c3"/>
+    <text x="92" y="88" class="txt small bold left">10¹² cells: death of the patient (40 doublings)</text>
+    <text x="200" y="150" class="txt small muted">years of silent growth</text>
+  </svg>
+  <figcaption>The growth of a typical tumor (syllabus Figure 2-5). Read 10⁸ as "ten to the power eight", a hundred million. Most of the tumor's life is invisible: about 30 doublings
+  (several years at 100 days each) before anything can be seen on an x-ray, and only about 10 more doublings until it is lethal.</figcaption>
+</figure>
+
+<h3>The tumor is not only cancer cells: the stroma</h3>
+<p>A tumor usually also contains other cell types and extracellular matrix, together called the <strong>tumor stroma</strong> (stroma = the supporting framework of a tissue;
+extracellular matrix = the network of protein fibres and other molecules between cells, extracellulaire matrix). In a carcinoma the stroma contains <strong>fibroblasts</strong>
+(the cells of connective tissue that make matrix fibres), <strong>immune cells</strong> (white blood cells that defend the body) and <strong>vascular endothelial cells</strong>
+(the cells that form the inner wall of blood vessels; vascular = of the blood vessels). Page 2.4 returns to the stroma.</p>
+
+<h3>The proof that cancer is clonal: the Philadelphia chromosome</h3>
+<p>How do we know the cancer cells are all descendants of <em>one</em> cell? By looking at their chromosomes. In almost all patients with <strong>chronic myelogenous leukemia</strong>
+(CML; a cancer of white blood cells, chapter 1 page 1.3) the leukemic cells carry the <strong>Philadelphia chromosome</strong>: a shortened chromosome 22, made by a
+<strong>translocation</strong> (exchange of pieces) between the long arms of chromosomes 9 and 22 (Figure 2-6). When the DNA at the site of the translocation is cloned and
+sequenced:</p>
+<ul>
+  <li>the site of breakage and rejoining is <strong>identical in all the leukemic cells of one patient</strong>;</li>
+  <li>but it <strong>differs slightly between patients</strong> (by a few hundred or thousand base pairs).</li>
+</ul>
+<p>That is exactly what you expect if, and only if, the cancer in each patient arose from a <strong>unique accident in a single cell</strong>: all its descendants inherited the
+same break point. Many other lines of evidence point the same way: most cancers originate from a single aberrant cell.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 700 170" width="700" height="170" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="150" y="16" class="txt bold">normal</text>
+    <path d="M90,40 L90,150" class="chr"/><path d="M90,112 L90,150" class="chr b"/>
+    <text x="90" y="164" class="txt small">chromosome 9</text>
+    <path d="M210,70 L210,150" class="chr b"/><path d="M210,112 L210,150" class="chr"/>
+    <text x="210" y="164" class="txt small">chromosome 22</text>
+    <path d="M300,95 L380,95" class="path accent" marker-end="url(#arC)"/>
+    <text x="340" y="84" class="txt small muted">reciprocal</text><text x="340" y="112" class="txt small muted">translocation</text>
+    <text x="550" y="16" class="txt bold">in the leukemic cells</text>
+    <path d="M470,40 L470,112" class="chr"/><path d="M470,112 L470,150" class="chr b"/>
+    <text x="470" y="164" class="txt small">9 (longer)</text>
+    <path d="M600,70 L600,112" class="chr b"/><path d="M600,112 L600,150" class="chr"/>
+    <text x="600" y="164" class="txt small">22 = Philadelphia</text>
+    <text x="640" y="100" class="txt small left muted">break point identical</text>
+    <text x="640" y="114" class="txt small left muted">in every cell of</text>
+    <text x="640" y="128" class="txt small left muted">one patient</text>
+  </svg>
+  <figcaption>Simplified Figure 2-6: the ends below the break point (red on 9, blue on 22) are swapped. The small chromosome 22 with a piece of 9 on it is the Philadelphia chromosome. (The real swap is a large piece of 22 for a small tip of 9; the sizes here are only to show the exchange.)</figcaption>
+</figure>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Elke kanker gaat terug op één <strong>primaire tumor</strong>, ontstaan uit <strong>één cel</strong>. Bij ontdekking bestaat hij al jaren en telt hij ≥ 10<sup>9</sup> cellen
+(verdubbelingstijd borsttumor ≈ 100 dagen). Naast kankercellen bevat de tumor <strong>stroma</strong>: fibroblasten, immuuncellen, endotheelcellen en matrix. Bewijs van
+klonale oorsprong: bij CML draagt elke leukemiecel het <strong>Philadelphia-chromosoom</strong> (translocatie 9;22) met een breekpunt dat in één patiënt overal identiek is
+maar tussen patiënten verschilt: dus één uniek ongeluk in één cel.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. A long lag, and why: tumor progression (2.1.3)</h2>
+<p>For cancers with a known external cause, the disease shows up <strong>long after</strong> the exposure:</p>
+<ul>
+  <li>lung cancer rises steeply only after <strong>decades</strong> of heavy smoking;</li>
+  <li>leukemias after the atomic bombs on Hiroshima and Nagasaki rose markedly only about <strong>5 years</strong> after the explosions;</li>
+  <li>industrial workers exposed to chemical carcinogens (cancer-causing substances) develop their typical cancers <strong>10, 20 or more years</strong> later.</li>
+</ul>
+<p>During this long incubation period the prospective cancer cells go through a <strong>succession of changes</strong>. The same presumably holds for cancers without an obvious
+external cause. A cancer needs the <strong>gradual accumulation of mutations in a number of different genes</strong> in one cell. That explains <strong>tumor progression</strong>:
+an initial mild disorder of cell behaviour evolves gradually into a full-blown cancer.</p>
+
+<h3>Selection inside the tumor</h3>
+<p>At each stage some individual cell acquires one more mutation or <strong>epigenetic change</strong> (a heritable change in which genes are switched on, without a change in the
+DNA letters; BIO01 ch 6) that gives it a <strong>selective advantage</strong> over its neighbours. The environment inside a tumor is harsh: <strong>low oxygen, scarce nutrients</strong>,
+and the surrounding normal tissue acts as a barrier to growth. A cell that copes better with this thrives. And the more tumor cells there are, the higher the chance that one of
+them picks up a useful change: <strong>as the tumor grows, progression accelerates</strong>. The offspring of the best-adapted cells become the dominant clones.</p>
+
+<h3>What a pathologist sees: the cervix example (Figure 2-7)</h3>
+<p>A <strong>pathologist</strong> (a doctor who diagnoses disease from tissue samples) uses standard names for the stages seen in a slice of the uterine cervix (baarmoederhals), an
+epithelium made of several layers (stratified squamous epithelium: flat cells in layers):</p>
+<table class="cmp">
+  <tr><th>Stage</th><th>What is seen</th></tr>
+  <tr><td>A normal epithelium</td><td>dividing cells are confined to the <strong>basal layer</strong> (the bottom layer on the basal lamina); the cells above are flattened and differentiated</td></tr>
+  <tr><td>B low-grade intraepithelial neoplasia</td><td>dividing cells throughout the lower third of the epithelium; the surface cells still show differentiation. (Intraepithelial = inside the epithelium; neoplasia = abnormal new growth; low-grade = mild)</td></tr>
+  <tr><td>C high-grade intraepithelial neoplasia</td><td>cells in all layers are proliferating and show defective differentiation</td></tr>
+  <tr><td>D invasive carcinoma</td><td>true malignancy: cells move through or destroy the basal lamina and invade the connective tissue beneath</td></tr>
+</table>
+
+<h3>Knudson's multiple hit theory (Figure 2-9) and clonal evolution (Figure 2-10)</h3>
+<p>Knudson's <strong>multiple hit hypothesis</strong> says that <strong>several</strong> genetic mutations ("hits") are necessary to turn a normal cell into a cancer cell; each hit
+contributes one step of the gradual transformation (the syllabus illustrates it with colon cancer: healthy colon cells → ... → malignant cells; page 2.8 names the genes in order).
+Figure 2-10 shows the same idea as clonal evolution:</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 250" width="880" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arD" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- stage 1 -->
+    <rect x="10" y="40" width="190" height="130" rx="10" class="ct"/>
+    <path d="M24,150 L186,150" class="lam"/>
+    <g>
+      <rect x="28" y="124" width="22" height="22" rx="5" class="c0"/><rect x="56" y="124" width="22" height="22" rx="5" class="c0"/><rect x="84" y="124" width="22" height="22" rx="5" class="c1"/><rect x="112" y="124" width="22" height="22" rx="5" class="c0"/><rect x="140" y="124" width="22" height="22" rx="5" class="c0"/><rect x="168" y="124" width="22" height="22" rx="5" class="c0"/>
+    </g>
+    <text x="105" y="28" class="txt bold">1 · one cell mutates</text>
+    <text x="105" y="190" class="txt small">accidental mutation in one cell</text>
+    <text x="105" y="206" class="txt small muted">(blue) on the basal lamina</text>
+    <path d="M205,100 L225,100" class="path accent" marker-end="url(#arD)"/>
+    <!-- stage 2 -->
+    <rect x="230" y="40" width="190" height="130" rx="10" class="ct"/>
+    <path d="M244,150 L406,150" class="lam"/>
+    <g>
+      <rect x="248" y="124" width="22" height="22" rx="5" class="c0"/><rect x="276" y="124" width="22" height="22" rx="5" class="c1"/><rect x="304" y="124" width="22" height="22" rx="5" class="c1"/><rect x="332" y="124" width="22" height="22" rx="5" class="c2"/><rect x="360" y="124" width="22" height="22" rx="5" class="c1"/><rect x="388" y="124" width="22" height="22" rx="5" class="c0"/>
+      <rect x="290" y="98" width="22" height="22" rx="5" class="c1"/><rect x="318" y="98" width="22" height="22" rx="5" class="c1"/><rect x="346" y="98" width="22" height="22" rx="5" class="c1"/>
+    </g>
+    <text x="325" y="28" class="txt bold">2 · clone grows, 2nd hit</text>
+    <text x="325" y="190" class="txt small">the clone proliferates; one of its</text>
+    <text x="325" y="206" class="txt small muted">cells gets a 2nd mutation (pink)</text>
+    <path d="M425,100 L445,100" class="path accent" marker-end="url(#arD)"/>
+    <!-- stage 3 -->
+    <rect x="450" y="40" width="190" height="130" rx="10" class="ct"/>
+    <path d="M464,150 L626,150" class="lam"/>
+    <g>
+      <rect x="468" y="124" width="22" height="22" rx="5" class="c1"/><rect x="496" y="124" width="22" height="22" rx="5" class="c2"/><rect x="524" y="124" width="22" height="22" rx="5" class="c2"/><rect x="552" y="124" width="22" height="22" rx="5" class="c3"/><rect x="580" y="124" width="22" height="22" rx="5" class="c2"/><rect x="608" y="124" width="22" height="22" rx="5" class="c1"/>
+      <rect x="496" y="98" width="22" height="22" rx="5" class="c2"/><rect x="524" y="98" width="22" height="22" rx="5" class="c2"/><rect x="552" y="98" width="22" height="22" rx="5" class="c2"/><rect x="580" y="98" width="22" height="22" rx="5" class="c2"/>
+      <rect x="524" y="72" width="22" height="22" rx="5" class="c2"/><rect x="552" y="72" width="22" height="22" rx="5" class="c2"/>
+    </g>
+    <text x="545" y="28" class="txt bold">3 · subclone takes over, 3rd hit</text>
+    <text x="545" y="190" class="txt small">the 2-mutation subclone dominates;</text>
+    <text x="545" y="206" class="txt small muted">one cell gets a 3rd mutation (red)</text>
+    <path d="M645,100 L665,100" class="path accent" marker-end="url(#arD)"/>
+    <!-- stage 4 -->
+    <rect x="670" y="40" width="200" height="130" rx="10" class="ct"/>
+    <path d="M684,150 L740,150 M790,150 L856,150" class="lam"/>
+    <g>
+      <rect x="688" y="124" width="22" height="22" rx="5" class="c2"/><rect x="716" y="124" width="22" height="22" rx="5" class="c3"/><rect x="744" y="124" width="22" height="22" rx="5" class="c3"/><rect x="772" y="124" width="22" height="22" rx="5" class="c3"/><rect x="800" y="124" width="22" height="22" rx="5" class="c3"/><rect x="828" y="124" width="22" height="22" rx="5" class="c2"/>
+      <rect x="730" y="98" width="22" height="22" rx="5" class="c3"/><rect x="758" y="98" width="22" height="22" rx="5" class="c3"/><rect x="786" y="98" width="22" height="22" rx="5" class="c3"/>
+      <rect x="748" y="152" width="22" height="22" rx="5" class="c3"/><rect x="776" y="158" width="22" height="22" rx="5" class="c3" transform="rotate(20 787 169)"/>
+    </g>
+    <text x="770" y="28" class="txt bold">4 · invasion</text>
+    <text x="770" y="196" class="txt small">3-mutation cells break through the</text>
+    <text x="770" y="212" class="txt small muted">basal lamina: first step of metastasis</text>
+    <text x="440" y="240" class="txt small muted">each step: one cell gains a mutation that increases proliferation or decreases death → its progeny become the dominant clone</text>
+  </svg>
+  <figcaption>Clonal evolution during tumor progression (syllabus Figure 2-10). Green = normal cells, blue = 1 mutation, pink = 2, red = 3. In reality there are often more than three steps, and genetic and epigenetic changes both play a part.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Why bigger is worse</span>
+<p>Each clone's proliferation <strong>hastens the next step</strong>: a larger population of cells at risk means more chances of one more useful mutation. Tumor progression therefore involves a large
+element of chance and usually takes many years, which may be why most of us die of something else.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Kanker verschijnt pas <strong>lang na de oorzaak</strong> (roken: decennia; Hiroshima: 5 jaar; chemische stoffen: 10 tot 20 jaar): de cel moet eerst <strong>meerdere mutaties</strong>
+opstapelen (Knudson: multiple hits). <strong>Tumorprogressie</strong> = een milde stoornis evolueert stap voor stap naar echte kanker. Bij elke stap krijgt één cel een mutatie of epigenetische
+verandering met <strong>selectief voordeel</strong> in de harde tumoromgeving (weinig zuurstof, weinig voedsel); hoe groter de tumor, hoe sneller de volgende stap. Baarmoederhals: normaal →
+laaggradige → hooggradige intra-epitheliale neoplasie → invasief carcinoom (door de basale lamina).</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Subclones: a tumor becomes a mixed population</h2>
+<p>Just as in the evolution of plants and animals, a kind of <strong>speciation</strong> (the splitting of one lineage into several) happens inside a tumor: the original cancer cell
+lineage diversifies into many genetically different <strong>subclones</strong> (a subclone = the descendants of one cell within the clone, carrying an extra change). These subclones may:</p>
+<ul>
+  <li>coexist in the same tumor mass;</li>
+  <li>or migrate and colonize separate places that suit their individual quirks, where they settle, thrive and progress as independently evolving <strong>metastases</strong>.</li>
+</ul>
+<p>As new mutations arise, one subclone may gain an advantage and predominate, only to be overtaken by others or outgrown by its own sub-subclones. This genetic diversity within one tumor is
+called <strong>intratumor heterogeneity</strong> (intra = within, heterogeneous = of mixed kinds). It is one of the chief reasons why cancers are hard to cure: a treatment that kills most
+subclones can leave a resistant one behind. It also makes <strong>early detection</strong> more important: a young tumor is less diverse.</p>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>Alberts adds that the incidence of most cancers rises steeply with age, which fits a process that needs several independent accidents in one cell line; if a single mutation were enough,
+the risk per year would be the same at every age. He also describes "cancer stem cells": in some tumors only a small fraction of cells can found a new tumor, while the rest divide a few times and die,
+which helps explain why a treatment that shrinks a tumor to almost nothing can still be followed by a relapse.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>In de tumor treedt een soort <strong>soortvorming</strong> op: de oorspronkelijke kloon splitst in genetisch verschillende <strong>subklonen</strong>, die naast elkaar leven of als aparte
+metastasen verder evolueren; de ene subkloon verdringt de andere. Deze <strong>intratumorale heterogeniteit</strong> maakt genezing moeilijk (een resistente subkloon overleeft de behandeling)
+en maakt vroege opsporing belangrijk.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>primary tumor</td><td>the original tumor, in the organ where the cancer started</td></tr>
+  <tr><td>doubling time</td><td>time for a tumor to double its cell number; about 100 days for a typical breast tumor</td></tr>
+  <tr><td>logarithmic scale</td><td>an axis where each step means 10 times more</td></tr>
+  <tr><td>tumor stroma</td><td>the non-cancer cells (fibroblasts, immune cells, endothelial cells) and extracellular matrix inside a tumor</td></tr>
+  <tr><td>fibroblast</td><td>connective-tissue cell that makes matrix fibres</td></tr>
+  <tr><td>endothelial cell</td><td>cell of the inner wall of a blood vessel</td></tr>
+  <tr><td>extracellular matrix</td><td>the network of protein fibres and other molecules between cells</td></tr>
+  <tr><td>clonal origin</td><td>all cells of the tumor descend from one cell</td></tr>
+  <tr><td>Philadelphia chromosome</td><td>shortened chromosome 22 from a 9;22 translocation in CML; identical break point in all cells of one patient</td></tr>
+  <tr><td>translocation</td><td>exchange of pieces between two chromosomes (chapter 1)</td></tr>
+  <tr><td>carcinogen</td><td>a cancer-causing agent (chemical, radiation)</td></tr>
+  <tr><td>incubation period</td><td>the silent years between cause and disease</td></tr>
+  <tr><td>tumor progression</td><td>gradual evolution of a mild disorder of cell behaviour into a full-blown cancer</td></tr>
+  <tr><td>epigenetic change</td><td>heritable change in gene use without a change in DNA sequence</td></tr>
+  <tr><td>multiple hit theory (Knudson)</td><td>several mutations ("hits"), one after the other, are needed to make a cancer cell</td></tr>
+  <tr><td>intraepithelial neoplasia</td><td>abnormal growth still inside the epithelium (low-grade: lower third; high-grade: all layers)</td></tr>
+  <tr><td>invasive carcinoma</td><td>cells have gone through the basal lamina into the connective tissue</td></tr>
+  <tr><td>pathologist</td><td>doctor who diagnoses disease from tissue samples</td></tr>
+  <tr><td>subclone</td><td>descendants of one cell of the clone with an additional change</td></tr>
+  <tr><td>intratumor heterogeneity</td><td>genetic diversity among the cells of one tumor</td></tr>
+  <tr><td>speciation (in a tumor)</td><td>one lineage splitting into several different subclones</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "explain the concepts ... multiple hit theory of Knudson ... and intratumor heterogeneity".</p>
+<ol>
+  <li>Define primary tumor and tumor progression (exam matching question).</li>
+  <li>Explain that most cancers come from a single cell, and how the Philadelphia chromosome proves it (identical break point within a patient, different between patients).</li>
+  <li>Give the sizes: a billion cells when detected; doubling time about 100 days; 10⁸ visible on x-ray, 10⁹ palpable, 10¹² lethal.</li>
+  <li>Explain the long lag (decades of smoking, 5 years after Hiroshima, 10–20 years for chemical exposure) by the need to accumulate several mutations.</li>
+  <li>State Knudson's multiple hit theory and describe clonal evolution: each step one cell gains a mutation that increases proliferation or decreases death and its progeny dominate.</li>
+  <li>Explain selection inside the tumor (low oxygen, scarce nutrients, barriers) and why progression accelerates as the tumor grows.</li>
+  <li>Explain intratumor heterogeneity: subclones, and why it makes cures difficult and early detection important.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is a primary tumor?</dt>
+  <dd>The original tumor in the specific organ where the cancer started; metastases can be traced back to it. It arises by cell division from a single cell with a heritable change.</dd>
+
+  <dt>How many cells does a typical cancer contain when it is first detected, and how long has it been growing?</dt>
+  <dd>A billion (10⁹) cells or more, after many years of growth; a typical breast tumor doubles about every 100 days.</dd>
+
+  <dt>Why does the Philadelphia chromosome prove that CML is clonal?</dt>
+  <dd>The exact site of breakage and rejoining of the 9;22 translocation is identical in all leukemic cells of one patient but differs slightly from patient to patient. That only fits if each patient's cancer came from one unique accident in a single cell whose descendants all inherited the same break.</dd>
+
+  <dt>What is the tumor stroma?</dt>
+  <dd>The non-cancer part of a tumor: supporting connective tissue with fibroblasts, immune cells and vascular endothelial cells, plus extracellular matrix.</dd>
+
+  <dt>Why does lung cancer appear only decades after someone starts smoking?</dt>
+  <dd>Because a cancer needs the gradual accumulation of mutations in several different genes in one cell line; during this long incubation period the prospective cancer cells go through a succession of changes.</dd>
+
+  <dt>What is tumor progression?</dt>
+  <dd>The gradual evolution of an initial mild disorder of cell behaviour into a full-blown cancer, through successive mutations or epigenetic changes, each selected because it gives a cell an advantage over its neighbours.</dd>
+
+  <dt>What is Knudson's multiple hit theory?</dt>
+  <dd>Several independent mutations ("hits") are necessary to transform a normal cell into a cancer cell; each hit is one step in the gradual transformation.</dd>
+
+  <dt>Describe the environment inside a tumor and what it selects for.</dt>
+  <dd>Harsh: low oxygen, scarce nutrients, and surrounding normal tissue as a barrier to growth. It selects cells that thrive anyway; the best-adapted cells' offspring become the dominant clones.</dd>
+
+  <dt>Why does tumor progression accelerate as the tumor grows?</dt>
+  <dd>The larger the number of tumor cells, the higher the chance that at least one of them undergoes the next useful change.</dd>
+
+  <dt>What are the four stages seen in the cervix epithelium?</dt>
+  <dd>Normal epithelium (dividing cells only in the basal layer), low-grade intraepithelial neoplasia (dividing cells in the lower third), high-grade intraepithelial neoplasia (all layers proliferating, defective differentiation), invasive carcinoma (cells through the basal lamina).</dd>
+
+  <dt>What is intratumor heterogeneity and why does it matter?</dt>
+  <dd>The genetic diversity of subclones within one tumor, arising by a kind of speciation. It makes cancer cures difficult (some subclones resist a treatment) and makes early detection more important.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Primary tumor</strong> = the original tumor; almost every cancer comes from <strong>one single cell</strong>.</li>
+  <li>Detected at <strong>≥ 10⁹ cells</strong> after <strong>years</strong>; breast tumor doubling time <strong>≈ 100 days</strong>; 10⁸ x-ray, 10⁹ palpable, 10¹² lethal.</li>
+  <li><strong>Stroma</strong> = fibroblasts + immune cells + endothelial cells + matrix.</li>
+  <li><strong>Philadelphia chromosome</strong> (CML, 9;22 translocation): break point identical in a patient, different between patients → <strong>clonal origin</strong>.</li>
+  <li>Long lag: smoking <strong>decades</strong>, Hiroshima <strong>5 years</strong>, chemicals <strong>10–20 years</strong>: time to accumulate mutations.</li>
+  <li><strong>Tumor progression</strong> = mild disorder → full-blown cancer, step by step.</li>
+  <li><strong>Knudson multiple hit</strong>: several mutations needed, one at a time.</li>
+  <li>Each step: one cell gains a change that <strong>increases proliferation or decreases death</strong> → its progeny dominate.</li>
+  <li>Inside the tumor: <strong>low oxygen, scarce nutrients</strong>; bigger tumor → faster progression.</li>
+  <li>Cervix: normal → <strong>low-grade</strong> → <strong>high-grade intraepithelial neoplasia</strong> → <strong>invasive carcinoma</strong> (through the basal lamina).</li>
+  <li><strong>Subclones</strong> → <strong>intratumor heterogeneity</strong> → cures hard, early detection important.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>A tumor is just big enough to feel with the fingers. About how many cells does it contain?
+    <ul class="opts"><li data-l="a">10⁶</li><li data-l="b">10⁸</li><li data-l="c">10⁹</li><li data-l="d">10¹²</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> About a billion cells, roughly 1 cm. 10⁸ is first visible on an x-ray; 10¹² is lethal.</p></div></details></li>
+  <li>In two CML patients the Philadelphia break points differ by a few hundred base pairs, but within each patient every leukemic cell has the same break point. What does this tell you?
+    <details><summary>Answer</summary><div class="ans"><p>That each patient's leukemia came from <strong>one unique accident in a single cell</strong>: all the cancer cells are that cell's clonal descendants. Different patients had different accidents.</p></div></details></li>
+  <li>True or false: "The leukemia rate in Hiroshima survivors rose immediately after the bomb."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> It rose markedly only about <strong>5 years</strong> later: the damaged cells first had to accumulate further changes (tumor progression).</p></div></details></li>
+  <li>What is tumor progression?
+    <details><summary>Answer</summary><div class="ans"><p>The gradual evolution of a mild disorder of cell behaviour into a full-blown cancer, by successive mutations or epigenetic changes that each give one cell a selective advantage.</p></div></details></li>
+  <li>Which statement matches Knudson's multiple hit theory?
+    <ul class="opts"><li data-l="a">one mutation is enough to make a cancer cell</li><li data-l="b">several mutations, accumulated one after the other, are needed</li><li data-l="c">cancer is caused by viruses only</li><li data-l="d">mutations occur only in germ cells</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Each "hit" is one step of the transformation from healthy to malignant cells.</p></div></details></li>
+  <li>Name three things that make the inside of a tumor a harsh environment.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Low oxygen, scarce nutrients</strong>, and the natural barriers to growth presented by the surrounding normal tissue. A cell that copes better with these is selected.</p></div></details></li>
+  <li>Why does a bigger tumor progress faster?
+    <details><summary>Answer</summary><div class="ans"><p>More cells means more chances that one of them undergoes the next advantageous mutation. Each clone's growth hastens the next step.</p></div></details></li>
+  <li>In the cervix, at which stage are dividing cells found only in the lower third of the epithelium?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Low-grade intraepithelial neoplasia.</strong> Normal: only the basal layer. High-grade: all layers. Invasive carcinoma: through the basal lamina.</p></div></details></li>
+  <li>What is the first step of metastasis in Figure 2-10?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Invasion through the basal lamina</strong> by the cells of the most advanced subclone.</p></div></details></li>
+  <li>Which cell types are found in the tumor stroma?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Fibroblasts</strong> (connective tissue), <strong>immune cells</strong> (white blood cells) and <strong>vascular endothelial cells</strong> (vessel walls), in extracellular matrix.</p></div></details></li>
+  <li>Explain the word "subclone" and the word "intratumor heterogeneity".
+    <details><summary>Answer</summary><div class="ans"><p>A subclone is the set of descendants of one cell within the tumor that picked up an extra change. Intratumor heterogeneity is the resulting genetic diversity among the cells of one tumor.</p></div></details></li>
+  <li>Why does heterogeneity make cancer harder to cure?
+    <details><summary>Answer</summary><div class="ans"><p>A treatment that kills most subclones may leave a subclone with a different set of changes alive; it then regrows. Early detection helps because a young tumor is less diverse.</p></div></details></li>
+  <li>A doubling time of 100 days: roughly how long do 30 doublings take?
+    <details><summary>Answer</summary><div class="ans"><p>About 3000 days, roughly <strong>8 years</strong>. That is the silent phase before a breast tumor becomes visible: "many years".</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.01_what_cancer_is.html">← 2.1 What cancer is</a><a href="index.html">Chapter 2 index</a><a href="2.03_genetic_instability_and_hallmarks.html">2.3 Genetic instability and hallmarks →</a></nav>
+</main>
+</body>
+</html>

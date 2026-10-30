@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.3 RNA viruses and HIV</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .cellb { fill: var(--panel); stroke: var(--muted); stroke-width: 2; }
+  .nuc { fill: var(--bg); stroke: var(--c-Na); stroke-width: 1.8; }
+  .cap { fill: var(--key-bg); stroke: var(--c-N); stroke-width: 1.4; }
+  .rna { stroke: var(--c-O); stroke-width: 2.4; fill: none; stroke-linecap: round; }
+  .dna { stroke: var(--c-N); stroke-width: 2.4; fill: none; stroke-linecap: round; }
+  .hostdna { stroke: var(--muted); stroke-width: 3; fill: none; }
+  .rt { fill: var(--c-Cl); }
+  .env { fill: none; stroke: var(--c-P); stroke-width: 2.4; }
+  .spike { stroke: var(--c-P); stroke-width: 1.8; fill: none; }
+  .numbg { fill: var(--accent); }
+  .num { font-size: 12px; font-weight: 700; fill: #fff; text-anchor: middle; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="3.02_how_viruses_replicate.html">← 3.2 How viruses replicate</a><a href="index.html">Chapter 3 index</a><a href="../chapter_4/index.html">Chapter 4 index →</a></nav>
+
+<h1>3.3 RNA viruses, retroviruses and the HIV cycle</h1>
+<p class="lede">In one sentence: animal viruses are sorted into six classes by their genome, RNA viruses need enzymes that cells do not have, and the retroviruses (HIV) go one step further:
+they copy their RNA back into DNA with reverse transcriptase and build that DNA into the host's chromosome for good.</p>
+
+<p>This is the page the example exam is about: "What is the function of reverse transcriptase in retroviruses?" and "How do retroviruses, such as HIV, differ from other viruses?".
+Both questions test one idea: the normal direction of information is DNA → RNA (BIO01 chapter 5, the central dogma); a retrovirus runs it backwards, RNA → DNA. The syllabus also refers
+to the recording "HIV reproductive cycle". Everything here builds on the general cycle of page 3.2.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Meaning</th></tr>
+  <tr><td>central dogma</td><td>information flows DNA → RNA → protein (BIO01 chapter 1); transcription = DNA to RNA, translation = RNA to protein</td></tr>
+  <tr><td>mRNA</td><td>messenger RNA: the RNA copy of a gene that a ribosome reads to make a protein</td></tr>
+  <tr><td>template</td><td>the strand that is read to make a new strand (mal); a new strand is <strong>complementary</strong> to its template (A pairs with U or T, G with C)</td></tr>
+  <tr><td>RNA polymerase</td><td>the enzyme that makes RNA on a DNA template (BIO01 chapter 5); in cells it never uses RNA as a template</td></tr>
+  <tr><td>DNA polymerase</td><td>the enzyme that makes DNA on a DNA template (BIO01 chapter 4)</td></tr>
+  <tr><td>transcription, transcribe</td><td>copying a template into RNA; the syllabus also uses "transcribe" for RNA → DNA in a retrovirus ("reverse" transcription)</td></tr>
+  <tr><td>integrate</td><td>to build something into a larger whole; here: viral DNA is cut into a host chromosome and becomes part of it</td></tr>
+  <tr><td>immune cells, white blood cells</td><td>the cells of the body's defence system; HIV infects some of them</td></tr>
+  <tr><td>TEM</td><td>transmission electron microscope: the microscope used for the photos in the syllabus figure</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: het <strong>centrale dogma</strong> is DNA → RNA → eiwit. Een <strong>template</strong> (mal) wordt afgelezen om een complementaire streng te maken. <strong>RNA-polymerase</strong> maakt
+RNA op een DNA-mal; <strong>DNA-polymerase</strong> maakt DNA op een DNA-mal; cellen hebben geen enzym dat RNA op een RNA-mal maakt, en ook geen enzym dat DNA op een RNA-mal maakt.
+<strong>Integreren</strong> = inbouwen in het chromosoom van de gastheer.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. The six classes of animal viruses (3.2.2.2.2, Table 1)</h2>
+<p>Animal viruses are commonly classified by their <strong>genetic material</strong>: double- or single-stranded DNA, or double- or single-stranded RNA, with the RNA viruses split further.
+Although some phages and most plant viruses are RNA viruses, the <strong>broadest variety of RNA genomes is found among animal viruses</strong>. Here is the syllabus's Table 1, with the question
+each class has to solve: "how do I get mRNA, so that the host's ribosomes will make my proteins?"</p>
+<table>
+  <tr><th>Class</th><th>Genome</th><th>How it gets its mRNA</th><th>Examples (from the syllabus)</th></tr>
+  <tr><td>I</td><td>double-stranded DNA (dsDNA)</td><td>like a cell: host RNA polymerase transcribes the DNA</td><td>adenovirus, herpesviruses, (papillomavirus)</td></tr>
+  <tr><td>II</td><td>single-stranded DNA (ssDNA)</td><td>first made double-stranded by the host, then transcribed</td><td>(parvovirus)</td></tr>
+  <tr><td>III</td><td>double-stranded RNA (dsRNA)</td><td>a viral RNA polymerase copies RNA into mRNA</td><td>(reovirus)</td></tr>
+  <tr><td>IV</td><td>single-stranded RNA that <strong>is itself mRNA</strong> ("+ strand")</td><td>none needed: the genome is translated immediately after infection</td><td>poliovirus, SARS-CoV-2 and other coronaviruses, (common cold rhinoviruses)</td></tr>
+  <tr><td>V</td><td>single-stranded RNA that is a <strong>template for mRNA</strong> ("− strand")</td><td>a viral RNA polymerase transcribes the genome into complementary RNA, which serves as mRNA and as template for new genomes</td><td>influenza, measles, (rabies, Ebola)</td></tr>
+  <tr><td>VI</td><td>single-stranded RNA, <strong>retrovirus</strong></td><td>reverse transcriptase makes a DNA copy, which is integrated and then transcribed by the host</td><td>HIV</td></tr>
+</table>
+<p class="small">The examples in brackets are not in the syllabus text; the syllabus's own table (Table 1) was an image and is not in the extracted text, so learn the classes and their logic, not the full example list.</p>
+
+<h3>Three kinds of single-stranded RNA genome (classes IV, V, VI)</h3>
+<ul>
+  <li><strong>Class IV:</strong> the genome <strong>can directly serve as mRNA</strong>. The host's ribosomes translate it into viral protein immediately after infection. (Think of it as the virus delivering a ready-to-read message.)</li>
+  <li><strong>Class V:</strong> the genome is the <strong>opposite strand</strong>: it serves as a <strong>template for mRNA synthesis</strong>. It is transcribed into complementary RNA strands, which work both as mRNA and as templates for making more genomic RNA. Figure 3-3 of the syllabus (page 3.2) shows an enveloped class V virus.</li>
+  <li><strong>Class VI:</strong> the <strong>retroviruses</strong>, section 2 below.</li>
+</ul>
+
+<div class="callout key"><span class="tag">Must remember: the enzyme cells do not have</span>
+<p>All viruses that use an RNA genome as a template for mRNA (classes III and V, and class IV when it copies its genome) need <strong>RNA → RNA synthesis</strong>. <strong>There are no such enzymes in
+most cells</strong>. So these viruses use a <strong>viral enzyme</strong>, an RNA-dependent RNA polymerase, <strong>encoded by the viral genome</strong>. After the viral proteins are made, the enzyme is packaged
+together with the genome inside the capsid during self-assembly, so the next infected cell gets it straight away.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Zes klassen naar genoom: <strong>I dsDNA, II ssDNA, III dsRNA, IV ssRNA dat zelf mRNA is, V ssRNA dat de mal voor mRNA is, VI ssRNA retrovirus</strong>. Klasse IV wordt meteen
+vertaald. Klasse V moet eerst worden overgeschreven in complementair RNA (dat mRNA is én mal voor nieuwe genomen). Elk virus dat RNA → RNA moet maken, gebruikt een <strong>eigen viraal
+enzym</strong>, want <strong>cellen hebben dat niet</strong>; het enzym wordt mee in de capside verpakt.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Retroviruses: running the central dogma backwards</h2>
+<p>The RNA animal viruses with the most complicated replicative cycles are the <strong>retroviruses</strong> (class VI). They carry an enzyme called <strong>reverse transcriptase</strong> (RT) that
+<strong>transcribes an RNA template into a DNA copy</strong>: an <strong>RNA → DNA</strong> flow of information, the <strong>opposite of the usual direction</strong> (DNA → RNA). This backwards step is the
+source of the name: <em>retro</em> means backward (achteruit).</p>
+<p>The medically most important retrovirus is <strong>HIV</strong> (human immunodeficiency virus), which causes <strong>AIDS</strong> (acquired immunodeficiency syndrome: the immune system fails,
+so other infections take over). An HIV particle is an <strong>enveloped</strong> virus containing <strong>two identical molecules of single-stranded RNA</strong> and <strong>two molecules of reverse transcriptase</strong>.
+Why bring the enzyme? Because, again, the host cell has no enzyme that makes DNA from an RNA template.</p>
+
+<div class="callout quiz"><span class="tag">Exam link: the two example-exam questions</span>
+<p><strong>Q8. "What is the function of reverse transcriptase in retroviruses?"</strong> → <strong>Reverse transcriptase uses viral RNA as a template for DNA synthesis.</strong> Wrong options: it does
+<em>not</em> convert host RNA into viral DNA (the template is the viral RNA); it does not cut (hydrolyse) host DNA; it does not make RNA from RNA (that is the class V enzyme); it does not translate
+RNA into protein (that is the ribosome).<br>
+<strong>Q9. "How do retroviruses, such as HIV, differ from other viruses?"</strong> → <strong>They can transcribe a DNA copy from an RNA template.</strong> The other options are true of <em>all</em> viruses
+(nucleic acids that code for proteins; reproduce only inside living cells) or simply wrong for HIV (its genome is RNA, not DNA).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Retrovirussen</strong> (klasse VI) hebben <strong>reverse transcriptase</strong>: een enzym dat <strong>RNA overschrijft naar DNA</strong>, de omgekeerde richting van het centrale dogma (retro = achteruit).
+<strong>HIV</strong> veroorzaakt <strong>AIDS</strong>; het is een virus met envelop, <strong>twee identieke ssRNA-moleculen</strong> en <strong>twee moleculen reverse transcriptase</strong>. Examen: RT gebruikt
+<strong>viraal RNA als mal voor DNA-synthese</strong>; het verschil met andere virussen is dat ze <strong>van een RNA-mal een DNA-kopie kunnen maken</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. The HIV replicative cycle (Figure 3-4)</h2>
+<p><strong>Begin state:</strong> an HIV particle (envelope with glycoprotein spikes, capsid, 2 RNA genomes, 2 reverse transcriptase molecules) meets a human white blood cell carrying the right receptor.
+<strong>Goal:</strong> new HIV particles, and a permanent base inside the cell.</p>
+<ol>
+  <li><strong>Entry.</strong> The envelope glycoproteins bind the receptor; the envelope fuses with the cell membrane; the capsid enters and releases its contents into the cytoplasm.</li>
+  <li><strong>Reverse transcription.</strong> In the cytoplasm the <strong>reverse transcriptase molecules</strong> catalyse the synthesis of <strong>viral DNA</strong>, using the viral RNA as template. (The enzyme also makes the second DNA strand, so the result is double-stranded viral DNA.)</li>
+  <li><strong>Into the nucleus.</strong> The newly made viral DNA <strong>enters the cell's nucleus</strong>.</li>
+  <li><strong>Integration.</strong> The viral DNA is <strong>integrated into the DNA of a chromosome</strong>. The integrated viral DNA is called a <strong>provirus</strong>. It <strong>never leaves the host's genome</strong>: it remains a permanent resident of the cell, copied along with the chromosome every time the cell divides. This step is <strong>unique to retroviruses</strong>.</li>
+  <li><strong>Transcription by the host.</strong> The <strong>host's RNA polymerase</strong> transcribes the proviral DNA into RNA molecules, exactly as it transcribes the cell's own genes.</li>
+  <li><strong>Two uses for that RNA.</strong> The RNA molecules function <strong>both as mRNA</strong> for the synthesis of viral proteins (by host ribosomes) <strong>and as genomes</strong> for the new viruses.</li>
+  <li><strong>Assembly and release.</strong> New capsids with two RNA genomes and reverse transcriptase assemble and leave the cell by <strong>budding</strong>, wrapped in host membrane with viral glycoproteins (page 3.2).</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 400" width="880" height="400" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- cell and nucleus -->
+    <rect x="130" y="40" width="620" height="340" rx="70" class="cellb"/>
+    <text x="440" y="62" class="txt muted">white blood cell (immune cell) with the HIV receptor</text>
+    <ellipse cx="470" cy="250" rx="200" ry="95" class="nuc"/>
+    <text x="470" y="178" class="txt small muted">nucleus</text>
+    <!-- 1 HIV outside -->
+    <circle cx="60" cy="130" r="34" class="env"/>
+    <polygon points="60,110 78,120 78,140 60,150 42,140 42,120" class="cap"/>
+    <path d="M50,128 C54,122 58,134 62,128 S68,124 66,134 M50,138 C54,132 58,144 62,138 S68,134 66,144" class="rna"/>
+    <circle cx="70" cy="118" r="3.5" class="rt"/><circle cx="50" cy="142" r="3.5" class="rt"/>
+    <path d="M60,96 L60,86 M88,114 L96,106 M90,148 L98,156 M30,148 L22,156 M32,114 L24,106" class="spike"/>
+    <text x="60" y="186" class="txt small">HIV: envelope, 2 RNA,</text>
+    <text x="60" y="200" class="txt small">2 reverse transcriptase</text>
+    <path d="M98,130 L124,130" class="path accent" marker-end="url(#ar7)"/>
+    <circle cx="112" cy="112" r="9" class="numbg"/><text x="112" y="116" class="num">1</text>
+    <!-- 2 RT in cytoplasm -->
+    <path d="M170,110 C180,100 190,122 200,112 S216,100 220,116" class="rna"/>
+    <circle cx="238" cy="112" r="6" class="rt"/>
+    <path d="M170,136 C180,126 190,148 200,138 S216,126 220,142" class="dna"/>
+    <path d="M170,146 C180,136 190,158 200,148 S216,136 220,152" class="dna"/>
+    <circle cx="150" cy="96" r="9" class="numbg"/><text x="150" y="100" class="num">2</text>
+    <text x="200" y="172" class="txt small">reverse transcriptase:</text>
+    <text x="200" y="186" class="txt small">RNA → DNA (cytoplasm)</text>
+    <!-- 3 into nucleus -->
+    <path d="M250,150 L300,196" class="path accent" marker-end="url(#ar7)"/>
+    <circle cx="294" cy="160" r="9" class="numbg"/><text x="294" y="164" class="num">3</text>
+    <!-- 4 integration -->
+    <path d="M300,250 L420,250 M520,250 L640,250" class="hostdna"/>
+    <path d="M420,250 L520,250" class="dna" style="stroke-width:4"/>
+    <text x="470" y="238" class="txt small bold">provirus</text>
+    <text x="470" y="274" class="txt small">viral DNA built into a host chromosome: permanent</text>
+    <circle cx="340" cy="228" r="9" class="numbg"/><text x="340" y="232" class="num">4</text>
+    <!-- 5 transcription -->
+    <path d="M470,290 L470,316" class="path accent" marker-end="url(#ar7)"/>
+    <circle cx="490" cy="300" r="9" class="numbg"/><text x="490" y="304" class="num">5</text>
+    <text x="505" y="304" class="txt small left">host RNA polymerase transcribes</text>
+    <path d="M440,330 C450,320 460,342 470,332 S486,320 490,336" class="rna"/>
+    <text x="470" y="356" class="txt small">viral RNA</text>
+    <!-- 6 two uses -->
+    <path d="M500,334 L545,334" class="path accent" marker-end="url(#ar7)"/>
+    <circle cx="520" cy="356" r="9" class="numbg"/><text x="520" y="360" class="num">6</text>
+    <text x="552" y="326" class="txt small left">= mRNA → viral proteins</text>
+    <text x="552" y="342" class="txt small left">= genome for new viruses</text>
+    <!-- 7 budding -->
+    <path d="M706,334 L766,286" class="path accent" marker-end="url(#ar7)"/>
+    <circle cx="752" cy="338" r="9" class="numbg"/><text x="752" y="342" class="num">7</text>
+    <circle cx="800" cy="250" r="30" class="env"/>
+    <polygon points="800,232 816,241 816,259 800,268 784,259 784,241" class="cap"/>
+    <path d="M792,248 C796,242 800,254 804,248 S810,244 808,254" class="rna"/>
+    <circle cx="808" cy="240" r="3" class="rt"/>
+    <path d="M800,220 L800,212 M824,236 L831,229 M826,266 L833,273 M774,266 L767,273 M776,236 L769,229" class="spike"/>
+    <text x="800" y="196" class="txt small">new HIV buds off</text>
+    <text x="800" y="210" class="txt small">(cell not killed at once)</text>
+    <text x="440" y="392" class="txt small muted">red = RNA · blue = viral DNA · grey = host chromosome · green dot = reverse transcriptase · orange = envelope with spikes</text>
+  </svg>
+  <figcaption>Syllabus Figure 3-4, the HIV cycle. Step 4 (integration as a provirus) is the step that is unique to retroviruses; steps 5 to 7 use the host's normal machinery.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Why HIV cannot be removed from the body</span>
+<p>The provirus is part of a human chromosome and is copied with it; it is invisible to drugs that attack free virus. That is why HIV infection is treated but not cured: the drugs stop new rounds
+of the cycle (for instance by blocking reverse transcriptase), but the integrated copies stay.</p></div>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>Retroviruses taught us about cancer. The first tumour virus, the Rous sarcoma virus of chickens (1911), is a retrovirus that had accidentally picked up a chicken gene, <em>Src</em>, on its travels
+and carried a mutated, overactive version of it. That was the first <strong>oncogene</strong> (chapter 2). Reverse transcriptase itself became one of the most used tools in the laboratory: it is how
+scientists make a DNA copy (cDNA) of any mRNA (chapter 4).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>HIV-cyclus: (1) <strong>binnenkomst</strong> via receptor en fusie van de envelop; (2) in het cytoplasma maakt <strong>reverse transcriptase</strong> viraal <strong>DNA</strong> op de RNA-mal; (3) het DNA gaat
+naar de <strong>kern</strong>; (4) het wordt <strong>geïntegreerd</strong> in een chromosoom = <strong>provirus</strong>, dat <strong>nooit meer weggaat</strong> (uniek voor retrovirussen); (5) het
+<strong>RNA-polymerase van de gastheer</strong> schrijft het provirus over naar RNA; (6) dat RNA is <strong>mRNA</strong> voor virale eiwitten <strong>én genoom</strong> voor nieuwe virussen; (7) nieuwe
+virussen <strong>knoppen af</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Chapter summary (3.2.3)</h2>
+<p>The syllabus closes with four sentences; they are the minimum to take into the exam.</p>
+<ol>
+  <li><strong>A virus consists of a nucleic acid surrounded by a protein coat.</strong> A virus is a small nucleic acid genome enclosed in a protein capsid and sometimes a membranous envelope. The genome may be single- or double-stranded DNA or RNA.</li>
+  <li><strong>Viruses replicate only in host cells.</strong> They use the enzymes, ribosomes and small molecules of host cells to synthesise progeny (offspring) viruses.</li>
+  <li><strong>Each type of virus has a characteristic host range</strong>, decided by whether the cell has surface proteins that the viral surface proteins can bind to.</li>
+  <li><strong>Many animal viruses have an envelope. Retroviruses (such as HIV) use reverse transcriptase to copy their RNA genome into DNA</strong>, which can be integrated into the host genome as a provirus.</li>
+</ol>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Vier zinnen: een virus = nucleïnezuur in een eiwitjas (soms met envelop), genoom ss of ds, DNA of RNA; virussen vermenigvuldigen alleen in gastheercellen met de machines van de gastheer; elk virus
+heeft een gastheerbereik bepaald door oppervlakte-eiwitten en receptoren; retrovirussen (HIV) kopiëren met reverse transcriptase hun RNA naar DNA, dat als provirus wordt ingebouwd.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>class I to VI</td><td>the six groups of animal viruses by genome: dsDNA, ssDNA, dsRNA, ssRNA that is mRNA, ssRNA template for mRNA, retrovirus</td></tr>
+  <tr><td>ssRNA that is mRNA (class IV)</td><td>a genome the ribosome can read straight away</td></tr>
+  <tr><td>ssRNA template for mRNA (class V)</td><td>a genome that must first be copied into complementary RNA, which is the mRNA (and the template for new genomes)</td></tr>
+  <tr><td>complementary RNA</td><td>the RNA strand that pairs with a given RNA (A with U, G with C)</td></tr>
+  <tr><td>RNA → RNA synthesis</td><td>making RNA on an RNA template; cells have no enzyme for it, RNA viruses encode their own</td></tr>
+  <tr><td>retrovirus</td><td>class VI: an enveloped ssRNA virus with reverse transcriptase; retro = backward</td></tr>
+  <tr><td>reverse transcriptase (RT)</td><td>a viral enzyme that makes a DNA copy using RNA as template: RNA → DNA</td></tr>
+  <tr><td>reverse transcription</td><td>the RNA → DNA step, the opposite of transcription</td></tr>
+  <tr><td>HIV</td><td>human immunodeficiency virus: the retrovirus that causes AIDS; infects certain immune cells; 2 ssRNA + 2 RT per particle</td></tr>
+  <tr><td>AIDS</td><td>acquired immunodeficiency syndrome: the disease in which the immune system fails after HIV infection</td></tr>
+  <tr><td>provirus</td><td>viral DNA integrated into a host chromosome; a permanent resident of the cell</td></tr>
+  <tr><td>integration</td><td>building the viral DNA into the host's chromosomal DNA</td></tr>
+  <tr><td>progeny viruses</td><td>the new, offspring viruses made in a cell</td></tr>
+  <tr><td>budding</td><td>leaving the cell wrapped in a piece of host membrane (page 3.2)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student explains how viruses replicate."</p>
+<ol>
+  <li>Name the six classes of animal viruses by genome type and say what classes IV, V and VI do with their single-stranded RNA.</li>
+  <li>Explain why RNA viruses need a virally encoded RNA polymerase (RNA → RNA; no such enzyme in most cells) and that it is packaged into the capsid.</li>
+  <li>Define reverse transcriptase: it uses viral RNA as a template for DNA synthesis (exam Q8) and makes retroviruses different from all other viruses (exam Q9).</li>
+  <li>Describe HIV: enveloped, 2 identical ssRNA genomes, 2 RT molecules, causes AIDS, infects certain immune cells.</li>
+  <li>Tell the HIV cycle in order: entry, reverse transcription in the cytoplasm, DNA into the nucleus, integration as a provirus (permanent, unique to retroviruses), transcription by host RNA polymerase, RNA as mRNA and as genome, assembly and budding.</li>
+  <li>Reproduce the four sentences of the chapter summary.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>On what basis are animal viruses classified, and what are the six classes?</dt>
+  <dd>On their genetic material: I dsDNA, II ssDNA, III dsRNA, IV ssRNA that serves directly as mRNA, V ssRNA that is a template for mRNA, VI ssRNA retroviruses.</dd>
+
+  <dt>What is the difference between a class IV and a class V virus?</dt>
+  <dd>A class IV genome is itself mRNA and is translated immediately after infection. A class V genome is the complementary strand: it must first be transcribed into RNA that works as mRNA and as template for new genomes.</dd>
+
+  <dt>Why must RNA viruses encode their own polymerase?</dt>
+  <dd>Copying an RNA genome, or making mRNA from an RNA template, needs RNA → RNA synthesis, and most cells have no enzyme that can do that. The viral genome encodes the enzyme, which is then packaged with the genome in the capsid.</dd>
+
+  <dt>What is a retrovirus, and where does the name come from?</dt>
+  <dd>An RNA virus (class VI) that uses reverse transcriptase to transcribe its RNA into a DNA copy: RNA → DNA, the reverse of the normal direction. Retro means backward.</dd>
+
+  <dt>What is the function of reverse transcriptase?</dt>
+  <dd>It uses viral RNA as a template to synthesise DNA (reverse transcription). It does not copy host RNA, does not cut DNA, does not make RNA from RNA and does not make protein.</dd>
+
+  <dt>What is inside an HIV particle?</dt>
+  <dd>An envelope with glycoproteins, a capsid, two identical molecules of single-stranded RNA and two molecules of reverse transcriptase.</dd>
+
+  <dt>Where does reverse transcription take place in the HIV cycle?</dt>
+  <dd>In the cytoplasm, right after entry: the reverse transcriptase molecules are released there and make viral DNA, which then enters the nucleus.</dd>
+
+  <dt>What is a provirus?</dt>
+  <dd>The viral DNA after it has been integrated into the DNA of a host chromosome. It never leaves the host genome and is copied with the chromosome; a permanent resident of the cell.</dd>
+
+  <dt>Which enzyme transcribes the provirus, and what is the RNA used for?</dt>
+  <dd>The host's own RNA polymerase. The RNA serves both as mRNA for viral proteins and as the genome packed into new viruses.</dd>
+
+  <dt>How do retroviruses differ from other viruses?</dt>
+  <dd>They can transcribe a DNA copy from an RNA template and integrate it into the host genome as a provirus. All viruses have nucleic acids that code for proteins and reproduce only in living cells, so those are not differences.</dd>
+
+  <dt>How does HIV leave the cell?</dt>
+  <dd>By budding through the plasma membrane, taking a piece of host membrane with viral glycoproteins as its envelope (page 3.2).</dd>
+
+  <dt>What disease does HIV cause, and what does the name mean?</dt>
+  <dd>AIDS, acquired immunodeficiency syndrome: the immune system fails because HIV infects and damages certain immune cells. HIV = human immunodeficiency virus.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Six classes by genome: <strong>I dsDNA · II ssDNA · III dsRNA · IV ssRNA = mRNA · V ssRNA = template for mRNA · VI retrovirus</strong>.</li>
+  <li>Class IV: genome translated <strong>immediately</strong>. Class V: first transcribed into complementary RNA (= mRNA and template for new genomes).</li>
+  <li><strong>RNA → RNA</strong> needs a <strong>viral enzyme</strong>: no such enzyme in most cells; it is <strong>encoded by the viral genome</strong> and packed into the capsid.</li>
+  <li><strong>Retrovirus</strong> = <strong>reverse transcriptase</strong>: <strong>RNA → DNA</strong>, the reverse of the central dogma; retro = backward.</li>
+  <li><strong>HIV</strong> causes <strong>AIDS</strong>; enveloped; <strong>2 identical ssRNA + 2 RT</strong> per particle; infects certain immune cells.</li>
+  <li>Cycle: entry → <strong>RT makes DNA in the cytoplasm</strong> → DNA into the <strong>nucleus</strong> → <strong>integration = provirus</strong> → host RNA polymerase transcribes → RNA = <strong>mRNA and genome</strong> → assembly, <strong>budding</strong>.</li>
+  <li>The <strong>provirus never leaves</strong> the host genome; integration is <strong>unique to retroviruses</strong>.</li>
+  <li>Exam Q8: RT uses <strong>viral RNA as template for DNA synthesis</strong>.</li>
+  <li>Exam Q9: retroviruses differ because they <strong>transcribe a DNA copy from an RNA template</strong>.</li>
+  <li>Summary: virus = genome + capsid (± envelope); replicates only in host cells; host range by surface proteins; retroviruses RNA → DNA → provirus.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>What is the function of reverse transcriptase in retroviruses?
+    <ul class="opts"><li data-l="a">it converts host cell RNA into viral DNA</li><li data-l="b">it hydrolyses the host cell's DNA</li><li data-l="c">it uses viral RNA as a template for making complementary RNA strands</li><li data-l="d">it translates viral RNA into viral proteins</li><li data-l="e">it uses viral RNA as a template for DNA synthesis</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>e.</strong> RT makes DNA on the <em>viral</em> RNA template. (a) wrong template; (b) RT cuts nothing; (c) RNA → RNA is the class V enzyme; (d) translation is done by ribosomes.</p></div></details></li>
+  <li>How do retroviruses such as HIV differ from other viruses?
+    <ul class="opts"><li data-l="a">they contain nucleic acids that code for proteins</li><li data-l="b">they can reproduce only inside living cells</li><li data-l="c">they contain DNA that is used as a template to make RNA</li><li data-l="d">they can transcribe a DNA copy from an RNA template</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> (a) and (b) are true of every virus, so they are not differences. (c) is false: HIV's genome is RNA. Only retroviruses make DNA from RNA.</p></div></details></li>
+  <li>A virus has a single-stranded RNA genome that ribosomes can translate directly. Which class is it?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Class IV.</strong> Its genome is itself mRNA, so viral proteins are made immediately after infection. (Class V genomes are the complementary strand and must be transcribed first.)</p></div></details></li>
+  <li>Why does a class V virus (for example influenza) have to carry a polymerase inside its capsid?
+    <details><summary>Answer</summary><div class="ans"><p>Its genome is a template for mRNA, so the first thing it needs in the cell is <strong>RNA → RNA synthesis</strong>, and <strong>the cell has no enzyme for that</strong>. If the enzyme were not packaged with the genome, nothing could happen before any viral protein is made.</p></div></details></li>
+  <li>True or false: "The host cell's RNA polymerase can copy the HIV RNA genome directly into mRNA."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Host RNA polymerase only reads DNA. HIV must first make a DNA copy with reverse transcriptase and integrate it; only the proviral DNA is transcribed by the host enzyme.</p></div></details></li>
+  <li>Put the HIV cycle in order: integration as provirus, budding, reverse transcription, transcription by host RNA polymerase, entry, viral DNA enters the nucleus, RNA used as mRNA and genome.
+    <details><summary>Answer</summary><div class="ans"><p>Entry → reverse transcription (cytoplasm) → viral DNA enters the nucleus → integration as provirus → transcription by host RNA polymerase → RNA used as mRNA and as genome → assembly and budding.</p></div></details></li>
+  <li>What does an HIV particle carry besides its envelope and capsid?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Two identical single-stranded RNA molecules and two molecules of reverse transcriptase.</strong> The enzyme travels with the genome because the host cannot provide it.</p></div></details></li>
+  <li>What is a provirus, and why does it matter for treatment?
+    <details><summary>Answer</summary><div class="ans"><p>Viral DNA <strong>integrated into a host chromosome</strong>; it never leaves and is copied with the cell's DNA. Drugs can block new cycles, but the integrated copies stay, so the infection is controlled rather than cured.</p></div></details></li>
+  <li>Which step of the HIV cycle happens in the cytoplasm, and which in the nucleus?
+    <details><summary>Answer</summary><div class="ans"><p>Cytoplasm: <strong>reverse transcription</strong> (RNA → DNA) and later translation of viral mRNA. Nucleus: <strong>integration</strong> of the viral DNA as a provirus and its <strong>transcription</strong> by host RNA polymerase.</p></div></details></li>
+  <li>In which direction does information flow in reverse transcription, and what is the normal direction?
+    <details><summary>Answer</summary><div class="ans"><p>Reverse transcription: <strong>RNA → DNA</strong>. Normal (central dogma): <strong>DNA → RNA → protein</strong>. "Retro" = backward refers to this reversed step.</p></div></details></li>
+  <li>The RNA transcribed from the provirus has two jobs. Which?
+    <details><summary>Answer</summary><div class="ans"><p>It is the <strong>mRNA</strong> from which host ribosomes make viral proteins, and it is the <strong>genome</strong> packed into new virus particles.</p></div></details></li>
+  <li>Why is it wrong to say "HIV contains DNA that is used as a template to make RNA"?
+    <details><summary>Answer</summary><div class="ans"><p>The HIV <em>particle</em> contains <strong>RNA</strong>, not DNA. DNA appears only inside the infected cell, after reverse transcription. (The provirus is then indeed transcribed, but that DNA is not part of the virus particle.)</p></div></details></li>
+  <li>Which classes of animal virus have a DNA genome, and which have RNA?
+    <details><summary>Answer</summary><div class="ans"><p>DNA: <strong>I (dsDNA) and II (ssDNA)</strong>. RNA: <strong>III (dsRNA), IV, V and VI (ssRNA)</strong>; IV, V and VI differ in what the single strand is (mRNA, template for mRNA, or retrovirus).</p></div></details></li>
+  <li>Name the step of the HIV cycle that no other kind of virus performs.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Integration of a DNA copy of its RNA genome into a host chromosome as a provirus</strong> (after reverse transcription). The syllabus calls this "a characteristic unique to retroviruses".</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="3.02_how_viruses_replicate.html">← 3.2 How viruses replicate</a><a href="index.html">Chapter 3 index</a><a href="../chapter_4/index.html">Chapter 4 index →</a></nav>
+</main>
+</body>
+</html>

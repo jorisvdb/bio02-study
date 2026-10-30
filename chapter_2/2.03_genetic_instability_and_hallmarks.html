@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 Genetic instability and the hallmarks of cancer</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .seg { stroke: var(--fg); stroke-width: 1; }
+  .s1 { fill: #e76f51; } .s2 { fill: #f4a261; } .s3 { fill: #e9c46a; } .s4 { fill: #8ab17d; }
+  .s5 { fill: #2a9d8f; } .s6 { fill: #3a86ff; } .s7 { fill: #9b59b6; } .s8 { fill: #bfc6cf; }
+  .segt { font-size: 12px; font-weight: 700; fill: #1f2328; text-anchor: middle; }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .nuc { fill: none; stroke: var(--accent); stroke-width: 1.6; }
+  .mt { stroke: var(--c-Cl); stroke-width: 1.2; fill: none; }
+  .chr { stroke: var(--c-O); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .wedge { fill: var(--key-bg); stroke: var(--key-border); stroke-width: 1.2; }
+  .wedge.en { fill: var(--quiz-bg); stroke: var(--quiz-border); }
+  .wedge.em { fill: var(--hl-polar); stroke: var(--c-Cl); }
+  .hub { fill: var(--panel); stroke: var(--fg); stroke-width: 1.5; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.02_one_cell_and_tumor_progression.html">← 2.2 One cell and tumor progression</a><a href="index.html">Chapter 2 index</a><a href="2.04_microenvironment_and_metastasis.html">2.4 Microenvironment and metastasis →</a></nav>
+
+<h1>2.3 Genetic instability and the hallmarks of cancer</h1>
+<p class="lede">In one sentence: cancer cells mutate much faster than normal cells, sometimes in sudden catastrophes that shatter a whole chromosome, and the
+skills they collect this way can be summed up in a short list of "hallmarks" that almost every cancer shares.</p>
+
+<p>Page 2.2 described tumor progression as slow, step-by-step evolution. This page adds two things: first, the steps are not always small, because cancer cells are
+<strong>genetically unstable</strong>; second, whatever route a cancer takes, it ends up with the same handful of abilities, the <strong>hallmarks of cancer</strong>
+(a hallmark = a distinguishing mark, kenmerk). The hallmarks are a named learning objective, and the example exam asks what angiogenesis does for a tumor.</p>
+
+<!-- ============================================================ -->
+<h2>1. Cancer can evolve abruptly: the Big Bang theory (2.1.4)</h2>
+<p>If cancer cells evolved only by the gradual accumulation of single mutations, the time from a premalignant lesion (a lesion = a damaged or abnormal patch of tissue,
+letsel; premalignant = not yet malignant) to metastatic cancer should be predictable for each cancer type. It is not. As in the evolution of species, cancer evolution
+can go through <strong>long periods with no visible change</strong>, <strong>punctuated</strong> (interrupted) by the sudden appearance of new phenotypes. The <strong>"Big Bang" theory</strong>
+of cancer evolution says that, besides gradual mutation and selection, <strong>periodic, cataclysmic genome disruption</strong> (a catastrophe that rearranges a large part of the genome at once)
+can produce rapid steps toward malignancy.</p>
+
+<h3>Genetic instability: two flavours</h3>
+<p>Unlike normal dividing cells, most human cancer cells accumulate genetic changes at an abnormally high rate: they are <strong>genetically unstable</strong>. This instability is itself a
+<strong>selective advantage</strong>: it speeds up tumor progression by supplying the many extra mutations a cancer needs. Its extent and its molecular cause differ from cancer to cancer:</p>
+<table class="cmp">
+  <tr><th>Flavour</th><th>What is seen</th><th>Likely cause</th></tr>
+  <tr><td>karyotype normal</td><td>the <strong>karyotype</strong> (the set of chromosomes of a cell as seen at mitosis, sorted by size; karyotype) looks normal or nearly so, but there are <strong>many point mutations</strong> in individual genes</td><td>failure of the <strong>repair mechanisms</strong> that normally correct errors in DNA replication or maintenance (BIO01 ch 4)</td></tr>
+  <tr><td>karyotype disordered</td><td>many chromosome <strong>breaks and rearrangements</strong>: deletions, duplications and amplifications (extra copies) of parts of the genome; extra copies of chromosomes; chromosomes made of pieces of different chromosomes (Figure 2-11)</td><td>catastrophic events, likely <strong>defects in chromosome duplication or segregation</strong> during mitosis</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Kanker evolueert niet alleen geleidelijk: lange stille periodes worden onderbroken door plotse sprongen (<strong>Big Bang</strong>-theorie: een genoomcatastrofe). Kankercellen zijn
+<strong>genetisch instabiel</strong>: ze muteren abnormaal snel, en dat is zelf een <strong>selectief voordeel</strong>. Twee vormen: normaal <strong>karyotype</strong> maar veel puntmutaties
+(falende DNA-reparatie), of een sterk verstoord karyotype met breuken, deleties, duplicaties en amplificaties (fouten bij de verdeling van chromosomen in de mitose).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Lagging chromosomes, micronuclei and chromothripsis (Figures 2-12 and 2-13)</h2>
+<p>Begin state: a cell in mitosis. Each copied chromosome consists of two sister chromatids, and correct segregation (verdeling) needs each sister to be attached to the
+<em>opposite</em> spindle pole (BIO01 ch 7: the spindle fibres grab the kinetochores). A common error in cancer cells is a failure to attach all chromosomes correctly.
+Figure 2-12 shows one mistake: <strong>one sister chromatid is attached to both poles</strong>, so in anaphase it is pulled in two directions, lags behind in the middle of the cell and becomes a
+<strong>lagging chromosome</strong>. Two outcomes:</p>
+<ol>
+  <li><strong>(A) Aneuploidy.</strong> The lagging chromosome ends up in the same daughter cell as its sister: one daughter has n + 1, the other n − 1 chromosomes (chapter 1).</li>
+  <li><strong>(B) A micronucleus.</strong> The lagging chromosome stays separated from the rest and, in the next interphase, gets its own small nuclear envelope: a <strong>micronucleus</strong>
+  (a tiny extra nucleus with one chromosome in it). DNA replication in a micronucleus is often incomplete and DNA damage accumulates, but this does <em>not</em> delay the cell cycle. In the next mitosis,
+  the isolated chromosome is prone to <strong>fragmentation</strong> while it condenses: <strong>chromothripsis</strong> (from Greek thripsis = shattering into pieces).</li>
+</ol>
+<p>(C) Micronuclei can persist for several cell generations, going through rounds of fragmentation and reassembly, or be taken back into a daughter nucleus.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 300" width="880" height="300" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arE" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- top: intact chromosome -->
+    <text x="440" y="18" class="txt bold">1 · intact chromosome: segments in order</text>
+    <g transform="translate(160,30)">
+      <rect x="0" y="0" width="70" height="26" class="seg s1"/><rect x="70" y="0" width="70" height="26" class="seg s2"/><rect x="140" y="0" width="70" height="26" class="seg s3"/><rect x="210" y="0" width="70" height="26" class="seg s4"/><rect x="280" y="0" width="70" height="26" class="seg s5"/><rect x="350" y="0" width="70" height="26" class="seg s6"/><rect x="420" y="0" width="70" height="26" class="seg s7"/><rect x="490" y="0" width="70" height="26" class="seg s8"/>
+      <text x="35" y="18" class="segt">1</text><text x="105" y="18" class="segt">2</text><text x="175" y="18" class="segt">3</text><text x="245" y="18" class="segt">4</text><text x="315" y="18" class="segt">5</text><text x="385" y="18" class="segt">6</text><text x="455" y="18" class="segt">7</text><text x="525" y="18" class="segt">8</text>
+    </g>
+    <path d="M440,62 L440,84" class="path accent" marker-end="url(#arE)"/>
+    <text x="455" y="78" class="txt small left muted">catastrophe in a micronucleus: the chromosome shatters</text>
+    <!-- middle: shattered -->
+    <text x="440" y="104" class="txt bold">2 · shattered into fragments</text>
+    <g transform="translate(140,112)">
+      <rect x="0" y="6" width="70" height="26" class="seg s1" transform="rotate(-12 35 19)"/><text x="35" y="24" class="segt" transform="rotate(-12 35 19)">1</text>
+      <rect x="95" y="0" width="70" height="26" class="seg s2" transform="rotate(20 130 13)"/><text x="130" y="18" class="segt" transform="rotate(20 130 13)">2</text>
+      <rect x="190" y="10" width="70" height="26" class="seg s3" transform="rotate(-25 225 23)"/><text x="225" y="28" class="segt" transform="rotate(-25 225 23)">3</text>
+      <rect x="275" y="2" width="70" height="26" class="seg s4" transform="rotate(8 310 15)"/><text x="310" y="20" class="segt" transform="rotate(8 310 15)">4</text>
+      <rect x="360" y="12" width="70" height="26" class="seg s5" transform="rotate(-18 395 25)"/><text x="395" y="30" class="segt" transform="rotate(-18 395 25)">5</text>
+      <rect x="445" y="0" width="70" height="26" class="seg s6" transform="rotate(30 480 13)"/><text x="480" y="18" class="segt" transform="rotate(30 480 13)">6</text>
+      <rect x="530" y="8" width="70" height="26" class="seg s7" transform="rotate(-8 565 21)"/><text x="565" y="26" class="segt" transform="rotate(-8 565 21)">7</text>
+      <rect x="615" y="14" width="70" height="26" class="seg s8" transform="rotate(15 650 27)"/><text x="650" y="32" class="segt" transform="rotate(15 650 27)">8</text>
+    </g>
+    <path d="M440,164 L440,186" class="path accent" marker-end="url(#arE)"/>
+    <text x="455" y="180" class="txt small left muted">the cell's repair machinery glues the pieces back in random order</text>
+    <!-- bottom: reassembled -->
+    <text x="440" y="206" class="txt bold">3 · reassembled: wrong order, some flipped, one doubled, some lost</text>
+    <g transform="translate(160,218)">
+      <rect x="0" y="0" width="70" height="26" class="seg s1"/><text x="35" y="18" class="segt">1</text>
+      <rect x="70" y="0" width="70" height="26" class="seg s4"/><text x="105" y="18" class="segt">4</text>
+      <rect x="140" y="0" width="70" height="26" class="seg s6"/><text x="175" y="18" class="segt" transform="scale(-1,1) translate(-350,0)">6</text>
+      <rect x="210" y="0" width="70" height="26" class="seg s2"/><text x="245" y="18" class="segt">2</text>
+      <rect x="280" y="0" width="70" height="26" class="seg s2"/><text x="315" y="18" class="segt">2</text>
+      <rect x="350" y="0" width="70" height="26" class="seg s8"/><text x="385" y="18" class="segt">8</text>
+      <rect x="420" y="0" width="70" height="26" class="seg s3"/><text x="455" y="18" class="segt" transform="scale(-1,1) translate(-910,0)">3</text>
+      <text x="175" y="44" class="txt small muted">inverted</text><text x="280" y="44" class="txt small muted">duplicated</text><text x="455" y="44" class="txt small muted">inverted</text>
+      <text x="560" y="18" class="txt small left muted">5 and 7 lost</text>
+    </g>
+    <text x="440" y="290" class="txt small">result: a chromosome with severe rearrangements and missing genes, in one single event</text>
+  </svg>
+  <figcaption>Chromothripsis (syllabus Figure 2-13): a chromosome breaks into many fragments at once; they are reassembled randomly, some inverted (flipped end to end), some duplicated, and some lost.</figcaption>
+</figure>
+
+<p>From an evolutionary point of view none of this is surprising: anything that raises the chance of random, heritable, not-too-harmful changes in gene function will speed up the evolution of a
+clone toward malignancy, so genome instability is <strong>selected for</strong> during tumor progression. It also feeds the <strong>heterogeneity</strong> of page 2.2: chromosome mis-segregation,
+aneuploidy and, more rarely, chromothripsis "shuffle the genetic cards", letting cancer cells try out many phenotypes and letting different clones coexist.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een chromatide die aan <strong>beide</strong> spoelpolen hangt blijft in de anafase achter: een <strong>achterblijvend chromosoom</strong>. Komt het bij zijn zuster terecht →
+<strong>aneuploïdie</strong> (n + 1 en n − 1). Blijft het apart → eigen klein kernmembraan = <strong>micronucleus</strong>; daar is de replicatie onvolledig en stapelt schade op zonder dat
+de celcyclus stopt; in de volgende mitose versplintert het chromosoom: <strong>chromothripsis</strong>. De stukken worden in willekeurige volgorde gelijmd (omgekeerd, verdubbeld,
+verloren). Instabiliteit wordt <strong>geselecteerd</strong> en voedt de heterogeniteit.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. The hallmarks of cancer (2.1.5)</h2>
+<p>To become a cancer, a cell must collect a range of abnormal properties, "a collection of subversive new skills". Different cancers use different combinations, but all share some common
+<strong>hallmarks</strong>. The syllabus lists six key attributes of cancer cells:</p>
+<ol>
+  <li>Altered <strong>homeostasis</strong>: cells grow and divide faster than they die.</li>
+  <li>Bypass of the normal <strong>limits to cell proliferation</strong>.</li>
+  <li>Evasion of <strong>cell-death signals</strong> (apoptosis).</li>
+  <li>Altered cellular <strong>metabolism</strong> (metabolism = all the chemical reactions that make energy and building blocks; stofwisseling).</li>
+  <li>Manipulation of the <strong>tissue environment</strong> to support survival and to evade a harmful <strong>immune response</strong>.</li>
+  <li>Escape from the home tissue and proliferation in foreign sites: <strong>metastasis</strong>.</li>
+</ol>
+
+<h3>Hanahan and Weinberg 2000: six hallmarks (Figure 2-14)</h3>
+<p>Douglas Hanahan and Robert Weinberg, two cancer researchers, published "The Hallmarks of Cancer" in 2000 with six acquired capabilities:</p>
+<table class="cmp">
+  <tr><th>Hallmark</th><th>Meaning</th></tr>
+  <tr><td>self-sufficiency in growth signals</td><td>the cancer cell makes its own "divide" signals or makes neighbours produce them; it no longer waits for the body</td></tr>
+  <tr><td>insensitivity to antigrowth signals</td><td>it ignores the "stop" signals that normally inhibit growth and division</td></tr>
+  <tr><td>evasion of apoptosis</td><td>it survives in conditions that would normally trigger programmed death</td></tr>
+  <tr><td>limitless replicative potential</td><td>normal cells can divide only a limited number of times; cancer cells maintain their <strong>telomeres</strong> (the protective chromosome ends that shorten at every division, BIO01 ch 4) or use another trick, and become an essentially <strong>immortal</strong> cell lineage</td></tr>
+  <tr><td>tissue invasion and metastasis</td><td>invading surrounding tissue and migrating to distant sites to form secondary tumors</td></tr>
+  <tr><td>sustained angiogenesis</td><td><strong>angiogenesis</strong> = the formation of new blood vessels (angio = vessel, genesis = birth); the tumor induces it to secure oxygen and nutrients for its growth</td></tr>
+</table>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 330" width="880" height="330" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="440" cy="165" r="48" class="hub"/>
+    <text x="440" y="160" class="txt bold">cancer</text><text x="440" y="176" class="txt bold">cell</text>
+    <!-- 8 hallmarks around (2022 core): positions on a ring r=120 -->
+    <rect x="320" y="20" width="240" height="40" rx="8" class="wedge"/><text x="440" y="37" class="txt small bold">self-sufficiency in growth signals</text><text x="440" y="52" class="txt small muted">makes its own "divide"</text>
+    <rect x="600" y="60" width="240" height="40" rx="8" class="wedge"/><text x="720" y="77" class="txt small bold">insensitivity to antigrowth signals</text><text x="720" y="92" class="txt small muted">ignores "stop"</text>
+    <rect x="620" y="145" width="240" height="40" rx="8" class="wedge"/><text x="740" y="162" class="txt small bold">evasion of apoptosis</text><text x="740" y="177" class="txt small muted">does not kill itself</text>
+    <rect x="600" y="230" width="240" height="40" rx="8" class="wedge"/><text x="720" y="247" class="txt small bold">limitless replicative potential</text><text x="720" y="262" class="txt small muted">keeps its telomeres: immortal</text>
+    <rect x="320" y="270" width="240" height="40" rx="8" class="wedge"/><text x="440" y="287" class="txt small bold">tissue invasion and metastasis</text><text x="440" y="302" class="txt small muted">leaves home, colonises elsewhere</text>
+    <rect x="40" y="230" width="240" height="40" rx="8" class="wedge"/><text x="160" y="247" class="txt small bold">sustained angiogenesis</text><text x="160" y="262" class="txt small muted">grows new blood vessels</text>
+    <rect x="20" y="145" width="240" height="40" rx="8" class="wedge em"/><text x="140" y="162" class="txt small bold">reprogramming metabolism</text><text x="140" y="177" class="txt small muted">2011 emerging, core since 2022</text>
+    <rect x="40" y="60" width="240" height="40" rx="8" class="wedge em"/><text x="160" y="77" class="txt small bold">avoiding immune destruction</text><text x="160" y="92" class="txt small muted">2011 emerging, core since 2022</text>
+    <!-- spokes -->
+    <path d="M440,117 L440,62 M478,135 L600,90 M488,165 L618,165 M478,195 L600,240 M440,213 L440,268 M402,195 L282,240 M392,165 L262,165 M402,135 L282,90" class="path"/>
+    <!-- enabling -->
+    <rect x="40" y="12" width="200" height="30" rx="8" class="wedge en"/><text x="140" y="31" class="txt small bold">genome instability</text>
+    <rect x="630" y="12" width="230" height="30" rx="8" class="wedge en"/><text x="745" y="31" class="txt small bold">tumor-promoting inflammation</text>
+    <text x="440" y="322" class="txt small muted">blue = 6 hallmarks of 2000 · green = added to the core in 2022 · yellow = enabling characteristics (2011)</text>
+  </svg>
+  <figcaption>The hallmarks of cancer: the six of Hanahan and Weinberg (2000), the two emerging hallmarks of 2011 that became core in 2022, and the two enabling characteristics that help a cell acquire them. The 2022 paper adds four more proposals (text below).</figcaption>
+</figure>
+
+<h3>2011 and 2022: the list grows (Figure 2-15)</h3>
+<p>In 2011 the same authors added two provisional <strong>"emerging hallmarks"</strong>: <strong>reprogramming cellular metabolism</strong> (first called "cellular energetics") and
+<strong>avoiding immune destruction</strong>. By 2022 both were considered part of the core set: <strong>eight hallmark capabilities</strong>. The 2011 paper also named two
+<strong>enabling characteristics</strong> (properties that do not harm by themselves but make it possible to acquire the hallmarks): <strong>genome instability and mutation</strong> (this page) and
+<strong>tumor-promoting inflammation</strong> (page 2.4). The angiogenesis hallmark was also widened: a tumor may become vascularized (get blood vessels) either by switching on angiogenesis or by
+taking over normal vessels, mainly by invasion and metastasis. The 2022 review proposed four more: <strong>unlocking phenotypic plasticity</strong> (cells changing their type),
+<strong>nonmutational epigenetic reprogramming</strong> (changing gene use without mutations), <strong>polymorphic microbiomes</strong> (the varied community of microbes living in and on the body) and
+<strong>senescent cells</strong> (cells in senescence that influence the tumor).</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 4: "What role does angiogenesis play in supporting cancer cells?" Answer: it <strong>supplies blood to the tumor cells</strong>: new blood vessels bring oxygen and nutrients. It does not make growth factors, does not stop apoptosis and does not speed up DNA replication.</p></div>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>Why "altered metabolism"? Tumor cells take up glucose up to 100 times faster than normal cells and burn it mostly by glycolysis even when oxygen is plentiful, a wasteful way to make energy but a good way to
+make building blocks for new cells. This is the <strong>Warburg effect</strong>, noticed by Otto Warburg a century ago, and it is why a whole-body PET scan with radioactive glucose lights up tumors and metastases.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Alle kankers delen <strong>hallmarks</strong> (kenmerken). Syllabus: verstoorde homeostase, geen limiet op proliferatie, ontwijken van apoptose, ander metabolisme, manipulatie van de omgeving en
+het immuunsysteem, metastase. <strong>Hanahan &amp; Weinberg 2000</strong>: eigen groeisignalen, ongevoelig voor stopsignalen, ontwijken van apoptose, onbeperkt delen (telomeren), invasie en metastase,
+<strong>angiogenese</strong> (nieuwe bloedvaten = zuurstof en voeding). <strong>2011</strong>: metabolisme en ontsnappen aan het immuunsysteem (sinds 2022 kern: 8 hallmarks) plus twee
+<strong>faciliterende kenmerken</strong>: genoominstabiliteit en tumorbevorderende ontsteking. <strong>2022</strong>: fenotypische plasticiteit, epigenetische herprogrammering, microbioom, senescente cellen.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>lesion, premalignant</td><td>an abnormal patch of tissue; not yet malignant</td></tr>
+  <tr><td>punctuated evolution</td><td>long quiet periods interrupted by sudden change</td></tr>
+  <tr><td>Big Bang theory of cancer</td><td>besides gradual mutation, periodic genome catastrophes cause rapid steps toward malignancy</td></tr>
+  <tr><td>genetic instability</td><td>accumulating genetic changes at an abnormally high rate; selected for in cancer</td></tr>
+  <tr><td>karyotype</td><td>the full set of chromosomes of a cell as seen at mitosis, sorted</td></tr>
+  <tr><td>amplification</td><td>extra copies of a part of the genome</td></tr>
+  <tr><td>segregation</td><td>the distribution of chromosomes to the two daughter cells in mitosis</td></tr>
+  <tr><td>lagging chromosome</td><td>a chromatid attached to both spindle poles that stays behind in anaphase</td></tr>
+  <tr><td>micronucleus</td><td>a small extra nucleus containing one isolated chromosome</td></tr>
+  <tr><td>chromothripsis</td><td>shattering of a chromosome into many pieces that are reassembled randomly (inversions, duplications, losses)</td></tr>
+  <tr><td>hallmark</td><td>a distinguishing property that almost all cancers share</td></tr>
+  <tr><td>angiogenesis</td><td>formation of new blood vessels; supplies the tumor with oxygen and nutrients</td></tr>
+  <tr><td>telomere</td><td>protective chromosome end that shortens with each division; maintained by cancer cells</td></tr>
+  <tr><td>immortal cell lineage</td><td>cells that can keep dividing without limit</td></tr>
+  <tr><td>metabolism</td><td>all the chemical reactions of a cell that provide energy and building blocks</td></tr>
+  <tr><td>emerging hallmark</td><td>a provisional hallmark proposed in 2011 (metabolism, immune evasion), core since 2022</td></tr>
+  <tr><td>enabling characteristic</td><td>property that helps cells acquire the hallmarks: genome instability, tumor-promoting inflammation</td></tr>
+  <tr><td>phenotypic plasticity</td><td>the ability of cells to change their type or behaviour</td></tr>
+  <tr><td>microbiome</td><td>the community of microbes living in and on the body</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "explain the concepts ... 'hallmarks of cancer' and intratumor heterogeneity".</p>
+<ol>
+  <li>Explain genetic instability and why it is selected for during tumor progression; name the two flavours (normal karyotype with point mutations versus a disordered karyotype).</li>
+  <li>Describe the Big Bang theory (punctuated evolution with genome catastrophes).</li>
+  <li>Explain how a lagging chromosome leads to aneuploidy or to a micronucleus, and what chromothripsis is.</li>
+  <li>List the six hallmarks of Hanahan and Weinberg (2000) and explain each in one sentence.</li>
+  <li>Name the 2011 emerging hallmarks and enabling characteristics, and the 2022 additions.</li>
+  <li>State what angiogenesis does for a tumor (exam Q4: supplies blood).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What does the "Big Bang" theory of cancer evolution say?</dt>
+  <dd>That cancer does not only evolve gradually: besides mutation and selection, periodic catastrophic disruptions of the genome can cause sudden, rapid steps toward malignancy, so the course of the disease is not predictable.</dd>
+
+  <dt>What does "genetically unstable" mean, and why is it an advantage for a cancer cell?</dt>
+  <dd>The cell accumulates genetic changes at an abnormally high rate. It speeds up tumor progression by providing the many extra mutations a cancer needs, so instability is selected for.</dd>
+
+  <dt>A cancer has a normal karyotype but many point mutations. What is the likely cause?</dt>
+  <dd>A failure of the repair mechanisms that normally correct errors during DNA replication or maintenance.</dd>
+
+  <dt>A cancer has a severely disordered karyotype with breaks, deletions, duplications and composite chromosomes. What is the likely cause?</dt>
+  <dd>Catastrophic events from defects in chromosome duplication or segregation during mitosis, for example chromosomes not correctly attached to the spindle.</dd>
+
+  <dt>What is a lagging chromosome and what are its two possible fates?</dt>
+  <dd>A chromatid attached to both spindle poles, pulled both ways and left behind in anaphase. It may end up with its sister (aneuploidy: n + 1 and n − 1) or stay separate and form a micronucleus.</dd>
+
+  <dt>What is chromothripsis?</dt>
+  <dd>The shattering of a chromosome (typically one isolated in a micronucleus) into many fragments that are reassembled in random order, with inversions, duplications and lost pieces: massive rearrangement in one event.</dd>
+
+  <dt>Name the six hallmarks of cancer of Hanahan and Weinberg (2000).</dt>
+  <dd>Self-sufficiency in growth signals, insensitivity to antigrowth signals, evasion of apoptosis, limitless replicative potential, tissue invasion and metastasis, sustained angiogenesis.</dd>
+
+  <dt>What is angiogenesis and why does a tumor need it?</dt>
+  <dd>The formation of new blood vessels. A growing tumor needs oxygen and nutrients delivered by blood; angiogenesis supplies them.</dd>
+
+  <dt>How do cancer cells achieve limitless replicative potential?</dt>
+  <dd>Normal cells can divide only a limited number of times because their telomeres shorten; cancer cells maintain their telomeres or use alternative mechanisms, making the lineage essentially immortal.</dd>
+
+  <dt>Which two hallmarks were added in 2011 and became core in 2022, and which two enabling characteristics?</dt>
+  <dd>Reprogramming cellular metabolism and avoiding immune destruction. Enabling characteristics: genome instability and mutation, and tumor-promoting inflammation.</dd>
+
+  <dt>What did the 2022 review add?</dt>
+  <dd>Unlocking phenotypic plasticity, nonmutational epigenetic reprogramming, polymorphic microbiomes and senescent cells.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Big Bang theory</strong>: long quiet periods + sudden genome catastrophes (punctuated evolution).</li>
+  <li>Cancer cells are <strong>genetically unstable</strong>; instability is a <strong>selective advantage</strong>.</li>
+  <li>Two flavours: <strong>normal karyotype + point mutations</strong> (repair failure) or <strong>disordered karyotype</strong> (segregation defects).</li>
+  <li><strong>Lagging chromosome</strong> (attached to both poles) → <strong>aneuploidy</strong> or <strong>micronucleus</strong>.</li>
+  <li>Micronucleus: incomplete replication, damage, no cycle delay → next mitosis <strong>chromothripsis</strong> = shattered, randomly reassembled, pieces lost.</li>
+  <li>Instability "shuffles the cards" → <strong>heterogeneity</strong>.</li>
+  <li><strong>Hallmarks 2000</strong>: own growth signals · ignore antigrowth signals · evade apoptosis · limitless replication (telomeres) · invasion and metastasis · <strong>angiogenesis</strong>.</li>
+  <li><strong>Angiogenesis = new blood vessels = oxygen and nutrients for the tumor</strong> (exam Q4).</li>
+  <li><strong>2011 emerging</strong> (core in 2022): reprogrammed metabolism, avoiding immune destruction → 8 hallmarks.</li>
+  <li><strong>Enabling</strong>: genome instability and mutation; tumor-promoting inflammation.</li>
+  <li><strong>2022</strong>: phenotypic plasticity, nonmutational epigenetic reprogramming, polymorphic microbiomes, senescent cells.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>What role does angiogenesis play in supporting cancer cells?
+    <ul class="opts"><li data-l="a">stimulates the production of growth factors</li><li data-l="b">supplies blood to the tumor cells</li><li data-l="c">inhibits programmed cell death</li><li data-l="d">increases the rate of DNA replication</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Angiogenesis = formation of new blood vessels; they bring oxygen and nutrients. (This is example exam question 4.)</p></div></details></li>
+  <li>True or false: "Genetic instability is a harmful side effect that slows tumor growth."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> It speeds up progression by supplying mutations, so it is <em>selected for</em>: a selective advantage for the clone.</p></div></details></li>
+  <li>A chromatid is attached to both spindle poles. What is it called in anaphase, and what can happen to it?
+    <details><summary>Answer</summary><div class="ans"><p>A <strong>lagging chromosome</strong>. It may land in the same daughter as its sister (aneuploidy) or stay isolated and form a <strong>micronucleus</strong>, where it is prone to chromothripsis.</p></div></details></li>
+  <li>Why does damage in a micronucleus accumulate?
+    <details><summary>Answer</summary><div class="ans"><p>DNA replication there is often incomplete and damage builds up, but this does <strong>not delay the cell cycle</strong>, so the cell divides anyway and the isolated chromosome shatters in the next mitosis.</p></div></details></li>
+  <li>Which of these is chromothripsis?
+    <ul class="opts"><li data-l="a">a single point mutation</li><li data-l="b">one chromosome shattered and reassembled in random order</li><li data-l="c">a whole extra set of chromosomes</li><li data-l="d">a reciprocal exchange between two chromosomes</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Many fragments, random reassembly, with inversions, duplications and losses. (c is polyploidy, d is a translocation.)</p></div></details></li>
+  <li>Which flavour of instability fits a tumor whose chromosomes look normal under the microscope?
+    <details><summary>Answer</summary><div class="ans"><p>A normal karyotype with <strong>many point mutations</strong> in individual genes, from a failure of DNA repair. The disorder is invisible at chromosome level.</p></div></details></li>
+  <li>Name the hallmark: "the cancer cell keeps its telomeres and divides without limit".
+    <details><summary>Answer</summary><div class="ans"><p><strong>Limitless replicative potential.</strong> Normal cells stop after a limited number of divisions because telomeres shorten; cancer cells become an immortal lineage.</p></div></details></li>
+  <li>Name the hallmark: "the cell makes its own divide signals".
+    <details><summary>Answer</summary><div class="ans"><p><strong>Self-sufficiency in growth signals.</strong> Its partner hallmark is insensitivity to antigrowth signals (ignoring "stop").</p></div></details></li>
+  <li>Which two "emerging hallmarks" of 2011 are core hallmarks since 2022?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Reprogramming cellular metabolism</strong> (earlier "cellular energetics") and <strong>avoiding immune destruction</strong>. With the six of 2000 that makes eight.</p></div></details></li>
+  <li>What is an "enabling characteristic", and name the two.
+    <details><summary>Answer</summary><div class="ans"><p>A property that helps cells acquire the hallmarks rather than being a hallmark itself: <strong>genome instability and mutation</strong>, and <strong>tumor-promoting inflammation</strong>.</p></div></details></li>
+  <li>How was the angiogenesis hallmark widened in 2022?
+    <details><summary>Answer</summary><div class="ans"><p>A tumor can get its blood supply either by switching on angiogenesis <em>or</em> by co-opting (taking over) existing normal vessels, mainly through invasion and metastasis; the hallmark is now "induce or otherwise access vasculature".</p></div></details></li>
+  <li>List the four proposals added in 2022.
+    <details><summary>Answer</summary><div class="ans"><p>Unlocking <strong>phenotypic plasticity</strong>, <strong>nonmutational epigenetic reprogramming</strong>, <strong>polymorphic microbiomes</strong>, <strong>senescent cells</strong>.</p></div></details></li>
+  <li>Why does the syllabus say "none of this should be a surprise" about genome instability?
+    <details><summary>Answer</summary><div class="ans"><p>Because anything that raises the rate of random, heritable, not-too-harmful changes speeds up the clone's evolution toward malignancy, so natural selection inside the tumor favours it; it also feeds the heterogeneity of the tumor.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.02_one_cell_and_tumor_progression.html">← 2.2 One cell and tumor progression</a><a href="index.html">Chapter 2 index</a><a href="2.04_microenvironment_and_metastasis.html">2.4 Microenvironment and metastasis →</a></nav>
+</main>
+</body>
+</html>

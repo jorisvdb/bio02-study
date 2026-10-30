@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.6 Rb and losing the second copy</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .cell.bad { stroke: var(--c-O); stroke-width: 2.5; }
+  .chr { stroke: var(--c-N); stroke-width: 8; stroke-linecap: round; fill: none; }
+  .chr.mat { stroke: var(--c-O); }
+  .chr.faint { opacity: .25; }
+  .rb { fill: var(--c-Cl); }
+  .rb.x { fill: none; stroke: var(--c-O); stroke-width: 2; }
+  .me { fill: var(--c-R); }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.05_oncogenes_and_tumor_suppressors.html">← 2.5 Oncogenes and tumor suppressors</a><a href="index.html">Chapter 2 index</a><a href="2.07_cancer_genomes_and_pathways.html">2.7 Cancer genomes and pathways →</a></nav>
+
+<h1>2.6 The first tumor suppressor: Rb, retinoblastoma and the six ways to lose the second copy</h1>
+<p class="lede">In one sentence: the <em>Rb</em> gene was discovered through a rare childhood eye cancer, it is a brake on the cell cycle, and a cell only becomes
+cancerous when <strong>both</strong> copies are gone, the second one usually through a sloppy, large-scale accident rather than a precise mutation.</p>
+
+<p>Page 2.5 said that a tumor suppressor acts recessively: both copies must be lost. This page tells the story of how that was first understood (the retinoblastoma
+story, syllabus 2.2.3) and then lists the ways a cell can lose its remaining good copy (2.2.4, Figure 2-23). The learning objectives ask you to "describe the main
+characteristics of the Rb and TP53 gene, its significance in cancer development and its biological mechanism of action"; this page is the Rb half, page 2.8 the p53 half.</p>
+
+<!-- ============================================================ -->
+<h2>0. Reminders from BIO01</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>G1 and the restriction point</td><td>in G1 the cell decides whether to copy its DNA (S phase); past the restriction point it goes on by itself (BIO01 ch 7)</td></tr>
+  <tr><td>karyotype</td><td>a picture of all chromosomes of one cell, sorted in pairs; a band = a stripe seen on a stained chromosome</td></tr>
+  <tr><td>chromosome segregation</td><td>the sharing-out of chromosomes to the two daughter cells in mitosis; mis-segregation = a mistake (nondisjunction, chapter 1)</td></tr>
+  <tr><td>homologous recombination</td><td>two homologous chromosomes exchange matching pieces (crossing-over in meiosis, BIO01 ch 7; also used for repair, ch 4)</td></tr>
+  <tr><td>DNA methylation</td><td>adding a methyl group (–CH₃, a carbon with three hydrogens) to cytosines (C) in CG pairs of a promoter switches the gene off, and this is copied to daughter cells (BIO01 ch 6)</td></tr>
+  <tr><td>promoter</td><td>the DNA just before a gene where RNA polymerase starts (BIO01 ch 5)</td></tr>
+  <tr><td>hereditary</td><td>inherited from a parent through sperm or egg, so present in every cell of the body (erfelijk)</td></tr>
+  <tr><td>sporadic</td><td>occurring now and then, by chance, not inherited (sporadisch)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: in <strong>G1</strong> beslist de cel of ze haar DNA kopieert. Een <strong>karyotype</strong> is de foto van alle chromosomen. <strong>Segregatie</strong> = verdeling van
+chromosomen bij de deling. <strong>Homologe recombinatie</strong> = uitwisseling van stukken tussen homologe chromosomen. <strong>Methylering</strong> van C's in een promoter zet
+een gen uit, erfelijk voor dochtercellen. <strong>Erfelijk</strong> = via sperma of eicel, in alle cellen; <strong>sporadisch</strong> = toevallig, niet geërfd.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Why a lost gene needs another search strategy (2.2.3)</h2>
+<p>An oncogene can be found by its effect when it is <em>added</em>: put tumor DNA into normal cells and look for cells that start behaving like cancer cells. That
+trick does not work for a tumor suppressor, because you cannot add something that is simply <strong>not there</strong>. Finding a gene that has been inactivated needs
+a different approach: look for what is <em>missing</em> in the cancer cell. The key insight came from a rare special case, as often in biology, and it turned out to reveal
+a gene of general importance.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een oncogen vind je door het <em>toe te voegen</em> aan normale cellen en te kijken of ze zich als kankercellen gaan gedragen. Een tumorsuppressor is <em>weg</em>, dus je
+moet zoeken naar wat ontbreekt. De sleutel kwam van een zeldzaam speciaal geval.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Retinoblastoma: the special case</h2>
+<p><strong>Retinoblastoma</strong> is a rare cancer of the <strong>retina</strong> (netvlies, the light-sensing layer at the back of the eye) that occurs in <strong>childhood</strong>,
+in about <strong>1 child in 20 000</strong>. The tumors develop from <strong>neural precursor cells</strong> (cells that are still going to become nerve cells) in the immature retina.
+What makes it special: the retinal cells become cancerous with an <strong>unusually small number of mutations</strong>. There are two forms:</p>
+<table class="cmp">
+  <tr><th>Form</th><th>Tumors</th><th>What the cells carry</th></tr>
+  <tr><td>Hereditary</td><td><strong>multiple</strong> tumors, arising independently, usually in <strong>both eyes</strong></td><td>every somatic cell of the child already has <strong>one</strong> deleted or inactivated copy of <em>Rb</em>, inherited from a parent. A tumor starts wherever a retinal cell also loses its <strong>remaining good copy</strong> by a somatic event. That is one accident, so it happens in several cells.</td></tr>
+  <tr><td>Nonhereditary</td><td><strong>one</strong> tumor in <strong>one eye</strong></td><td>the noncancerous cells have two good copies. The tumor cells have lost <strong>both</strong> copies through <strong>two independent somatic events in the same cell lineage</strong>. Two rare accidents in one line of cells: very rare, so one tumor.</td></tr>
+</table>
+<p>How the gene was found: a few patients had a visibly abnormal karyotype with a <strong>deletion of a specific band on chromosome 13</strong>; inherited, that deletion predisposes
+to the disease (predispose = make more likely). The same region was also deleted in tumor cells of some patients with the nonhereditary form. So a critical gene must sit
+there, and the cancer must be caused by <em>losing</em> it. Mapping the deletion identified the <strong><em>Rb</em> gene</strong> (named after retinoblastoma).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 900 330" width="900" height="330" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- column 1: normal -->
+    <text x="150" y="16" class="txt bold">normal, healthy person</text>
+    <circle cx="150" cy="70" r="36" class="cell"/>
+    <circle cx="138" cy="70" r="7" class="rb"/><circle cx="162" cy="70" r="7" class="rb"/>
+    <text x="150" y="126" class="txt small">every cell: 2 good Rb copies</text>
+    <path d="M150,138 L150,160" class="path accent" marker-end="url(#ar1)"/>
+    <text x="162" y="153" class="txt small muted left">occasional cell loses 1 copy</text>
+    <circle cx="150" cy="200" r="36" class="cell"/>
+    <circle cx="138" cy="200" r="7" class="rb x"/><circle cx="162" cy="200" r="7" class="rb"/>
+    <text x="150" y="256" class="txt small">still 1 good copy: healthy</text>
+    <text x="150" y="290" class="txt bold">result: no tumor</text>
+    <!-- column 2: hereditary -->
+    <line x1="300" y1="6" x2="300" y2="322" class="path" style="stroke-dasharray:3 5"/>
+    <text x="450" y="16" class="txt bold">hereditary retinoblastoma</text>
+    <circle cx="450" cy="70" r="36" class="cell"/>
+    <circle cx="438" cy="70" r="7" class="rb x"/><circle cx="462" cy="70" r="7" class="rb"/>
+    <text x="450" y="126" class="txt small">every cell: 1 inherited bad copy</text>
+    <path d="M450,138 L450,160" class="path accent" marker-end="url(#ar1)"/>
+    <text x="462" y="153" class="txt small muted left">occasional cell loses its only good copy</text>
+    <circle cx="450" cy="200" r="36" class="cell bad"/>
+    <circle cx="438" cy="200" r="7" class="rb x"/><circle cx="462" cy="200" r="7" class="rb x"/>
+    <text x="450" y="256" class="txt small">no Rb left: excess proliferation</text>
+    <text x="450" y="290" class="txt bold">result: most carriers get</text><text x="450" y="306" class="txt bold">several tumors, both eyes</text>
+    <!-- column 3: nonhereditary -->
+    <line x1="600" y1="6" x2="600" y2="322" class="path" style="stroke-dasharray:3 5"/>
+    <text x="750" y="16" class="txt bold">nonhereditary retinoblastoma</text>
+    <circle cx="750" cy="60" r="30" class="cell"/>
+    <circle cx="740" cy="60" r="6" class="rb"/><circle cx="760" cy="60" r="6" class="rb"/>
+    <path d="M750,94 L750,112" class="path accent" marker-end="url(#ar1)"/>
+    <text x="762" y="107" class="txt small muted left">event 1 in one cell</text>
+    <circle cx="750" cy="146" r="30" class="cell"/>
+    <circle cx="740" cy="146" r="6" class="rb x"/><circle cx="760" cy="146" r="6" class="rb"/>
+    <path d="M750,180 L750,198" class="path accent" marker-end="url(#ar1)"/>
+    <text x="762" y="193" class="txt small muted left">event 2 in a descendant</text>
+    <circle cx="750" cy="232" r="30" class="cell bad"/>
+    <circle cx="740" cy="232" r="6" class="rb x"/><circle cx="760" cy="232" r="6" class="rb x"/>
+    <text x="750" y="290" class="txt bold">result: about 1 in 30 000 people,</text><text x="750" y="306" class="txt bold">one tumor in one eye</text>
+  </svg>
+  <figcaption>Syllabus Figure 2-22. Green dot = a working copy of <em>Rb</em>; red open circle = a lost or inactivated copy. A healthy person needs two accidents in one cell line,
+  a carrier of the hereditary form only one, so the carrier gets tumors in many places.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">The logic to remember</span>
+<p><strong>Hereditary</strong>: the first hit is already in every cell, so only <em>one</em> somatic hit is needed → several tumors, both eyes, early. <strong>Nonhereditary</strong>:
+<em>two</em> somatic hits must happen in the same cell lineage → very rare, one tumor, one eye. This is the two-hit idea behind every tumor suppressor (compare Knudson's multiple
+hits, page 2.2).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Retinoblastoom</strong>: zeldzame kanker van het <strong>netvlies</strong> bij kinderen (1 op 20 000), met opvallend weinig mutaties nodig. <strong>Erfelijke vorm</strong>:
+één slechte <em>Rb</em>-kopie in álle cellen (geërfd), een tumor ontstaat waar een netvliescel ook de goede kopie verliest → meerdere tumoren, beide ogen. <strong>Niet-erfelijke
+vorm</strong>: twee onafhankelijke somatische gebeurtenissen in één cellijn → zeldzaam, één tumor, één oog. Het gen werd gevonden via een <strong>deletie op chromosoom 13</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. What Rb does, and where else it is lost</h2>
+<p><em>Rb</em> is not only an eye-cancer gene. It is <strong>also missing in several common sporadic cancers</strong>: carcinomas of the <strong>lung, breast and bladder</strong>.
+Those cancers need a more complex series of genetic changes than retinoblastoma and appear much later in life, but in all of them loss of Rb function is frequently a major step
+toward malignancy.</p>
+<p>The <em>Rb</em> gene encodes the <strong>Rb protein</strong>, a <strong>universal regulator of the cell cycle</strong> in almost all cells of the body. It is <strong>one of the main
+brakes</strong> on progress through the cell-division cycle: it holds the cell in G1 until the proper signals arrive, and when it is lost the cell can enter the cycle when it should not.
+(That is why page 2.7 calls the "Rb pathway" the control of <strong>cell-cycle entry</strong>.)</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 7 asks which gene is called the "guardian angel of the genome". One option says "the RB1 gene, because it regulates the cell cycle by preventing cells from
+entering S phase inappropriately". That description of RB1 (another name for <em>Rb</em>) is <em>correct biology</em>, but it is the wrong answer to <em>this</em> question: Rb guards the
+cell-cycle gate, not the genome. The guardian of the genome is <strong>p53</strong>, which repairs DNA, halts the cycle and induces apoptosis when the DNA is damaged (page 2.8).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><em>Rb</em> ontbreekt ook in veel voorkomende kankers (<strong>long, borst, blaas</strong>). Het Rb-eiwit is een <strong>universele rem op de celcyclus</strong>: het houdt de cel
+in G1 tot de juiste signalen er zijn. Examenvraag 7: Rb bewaakt de celcyclus-poort, maar de "bewaker van het genoom" is <strong>p53</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Six ways to lose the remaining good copy (2.2.4, Figure 2-23)</h2>
+<p>Begin state: a cell with one bad copy of a tumor suppressor (say <em>Rb</em>) and one good copy. It behaves as a normal, healthy cell. Goal of the question: how can it lose the good copy too?
+The syllabus makes a useful distinction:</p>
+<ul>
+  <li>The <strong>first</strong> copy is typically lost by a <strong>precise, small</strong> event: a small chromosomal deletion, or a point mutation from a random replication error.</li>
+  <li>The <strong>second</strong> copy is more often lost by a <strong>less specific, large-scale</strong> mechanism, the kind that happens in cells that have already become genetically unstable (page 2.3).</li>
+</ul>
+<p>Figure 2-23 lists six ways. Two change the DNA letters locally, three move or lose whole chromosome regions, one is epigenetic:</p>
+<table>
+  <tr><th>Way</th><th>What happens in plain words</th><th>Kind</th></tr>
+  <tr><td>1 · Deletion</td><td>the piece of chromosome holding the good copy is cut out and lost</td><td>DNA sequence, small</td></tr>
+  <tr><td>2 · Point mutation</td><td>one letter changes in the good copy and breaks the protein</td><td>DNA sequence, small</td></tr>
+  <tr><td>3 · Chromosome loss</td><td>the whole chromosome carrying the good copy is lost through a segregation error in mitosis (aneuploidy, as in chapter 1); the cell keeps only the chromosome with the bad copy</td><td>large-scale</td></tr>
+  <tr><td>4 · Mitotic recombination</td><td>during mitosis the two homologous chromosomes exchange pieces, as in crossing-over; a daughter cell can receive the bad copy twice and the good copy not at all</td><td>large-scale</td></tr>
+  <tr><td>5 · Gene conversion</td><td>during that recombination the good copy is "overwritten" by the sequence of the bad copy, so both copies now read the mutant version (conversion = being changed into)</td><td>large-scale</td></tr>
+  <tr><td>6 · Epigenetic silencing</td><td>the C's of CG pairs in the promoter of the good copy become <strong>methylated</strong>; the gene is switched off permanently and the methylation is copied to all daughter cells. The DNA letters are intact, but the gene is silent</td><td>epigenetic</td></tr>
+</table>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 900 300" width="900" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- start cell -->
+    <text x="110" y="16" class="txt bold">start: 1 bad, 1 good copy</text>
+    <circle cx="110" cy="100" r="56" class="cell"/>
+    <path d="M90,60 L90,140" class="chr mat"/><path d="M130,60 L130,140" class="chr"/>
+    <circle cx="90" cy="100" r="6" class="rb x"/><circle cx="130" cy="100" r="6" class="rb"/>
+    <text x="90" y="166" class="txt small muted">bad</text><text x="130" y="166" class="txt small muted">good</text>
+    <text x="110" y="186" class="txt small">behaves as a healthy cell</text>
+    <text x="110" y="222" class="txt small muted">red / blue = the two homologous</text><text x="110" y="236" class="txt small muted">chromosomes; green dot = working Rb,</text><text x="110" y="250" class="txt small muted">open red circle = broken Rb,</text><text x="110" y="264" class="txt small muted">purple dots = methyl groups</text>
+    <!-- six outcomes, 3 x 2 grid -->
+    <!-- 1 deletion -->
+    <g transform="translate(240,0)">
+      <text x="80" y="16" class="txt bold">1 · deletion</text>
+      <circle cx="80" cy="70" r="40" class="cell bad"/>
+      <path d="M66,42 L66,98" class="chr mat"/><path d="M94,42 L94,70 M94,84 L94,98" class="chr"/>
+      <circle cx="66" cy="70" r="5" class="rb x"/>
+      <text x="80" y="128" class="txt small">piece with the good copy cut out</text>
+    </g>
+    <!-- 2 point mutation -->
+    <g transform="translate(460,0)">
+      <text x="80" y="16" class="txt bold">2 · point mutation</text>
+      <circle cx="80" cy="70" r="40" class="cell bad"/>
+      <path d="M66,42 L66,98" class="chr mat"/><path d="M94,42 L94,98" class="chr"/>
+      <circle cx="66" cy="70" r="5" class="rb x"/><circle cx="94" cy="70" r="5" class="rb x"/>
+      <text x="80" y="128" class="txt small">one letter breaks the good copy</text>
+    </g>
+    <!-- 3 chromosome loss -->
+    <g transform="translate(680,0)">
+      <text x="80" y="16" class="txt bold">3 · chromosome lost</text>
+      <circle cx="80" cy="70" r="40" class="cell bad"/>
+      <path d="M66,42 L66,98" class="chr mat"/><path d="M94,42 L94,98" class="chr faint"/>
+      <circle cx="66" cy="70" r="5" class="rb x"/>
+      <text x="80" y="128" class="txt small">segregation error: blue gone</text>
+    </g>
+    <!-- 4 mitotic recombination -->
+    <g transform="translate(240,150)">
+      <text x="80" y="16" class="txt bold">4 · mitotic recombination</text>
+      <circle cx="80" cy="70" r="40" class="cell bad"/>
+      <path d="M66,42 L66,70" class="chr mat"/><path d="M66,70 L66,98" class="chr"/>
+      <path d="M94,42 L94,70" class="chr mat"/><path d="M94,70 L94,98" class="chr"/>
+      <circle cx="66" cy="60" r="5" class="rb x"/><circle cx="94" cy="60" r="5" class="rb x"/>
+      <text x="80" y="128" class="txt small">pieces swapped: bad copy twice</text>
+    </g>
+    <!-- 5 gene conversion -->
+    <g transform="translate(460,150)">
+      <text x="80" y="16" class="txt bold">5 · gene conversion</text>
+      <circle cx="80" cy="70" r="40" class="cell bad"/>
+      <path d="M66,42 L66,98" class="chr mat"/><path d="M94,42 L94,98" class="chr"/>
+      <circle cx="66" cy="70" r="5" class="rb x"/><circle cx="94" cy="70" r="5" class="rb x"/>
+      <path d="M72,66 L86,66" class="path accent"/>
+      <text x="80" y="128" class="txt small">good copy overwritten by the bad</text>
+    </g>
+    <!-- 6 epigenetic silencing -->
+    <g transform="translate(680,150)">
+      <text x="80" y="16" class="txt bold">6 · epigenetic silencing</text>
+      <circle cx="80" cy="70" r="40" class="cell bad"/>
+      <path d="M66,42 L66,98" class="chr mat"/><path d="M94,42 L94,98" class="chr"/>
+      <circle cx="66" cy="70" r="5" class="rb x"/><circle cx="94" cy="70" r="5" class="rb"/>
+      <circle cx="102" cy="58" r="3" class="me"/><circle cx="104" cy="66" r="3" class="me"/><circle cx="102" cy="74" r="3" class="me"/>
+      <text x="80" y="128" class="txt small">promoter methylated: gene silent</text>
+    </g>
+  </svg>
+  <figcaption>Syllabus Figure 2-23, using <em>Rb</em> as the example. The start cell is healthy. Every one of the six outcomes leaves no working Rb protein (in 6 the copy is intact but switched off).</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>Viruses can take the Rb brake out without any mutation. Human papillomaviruses (HPV), the cause of cervical cancer, carry two genes, <em>E6</em> and <em>E7</em>, whose proteins bind
+and inactivate the host's Rb and p53 proteins. Both brakes are off, so the infected basal cells keep dividing. The HPV vaccine prevents the infection and therefore most cervical cancers.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>De <strong>eerste</strong> kopie gaat meestal verloren door een klein, precies ongeluk (kleine deletie, puntmutatie); de <strong>tweede</strong> door een groot, onspecifiek
+mechanisme in een al onstabiele cel. Zes manieren: (1) <strong>deletie</strong>, (2) <strong>puntmutatie</strong>, (3) <strong>verlies van het hele chromosoom</strong> door een segregatiefout,
+(4) <strong>mitotische recombinatie</strong> (stukken gewisseld: slechte kopie twee keer), (5) <strong>genconversie</strong> (goede kopie overschreven door de slechte), (6) <strong>epigenetische
+uitschakeling</strong>: methylering van de C's in CG-paren van de promoter, erfelijk voor dochtercellen, letters intact maar gen stil.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>retinoblastoma</td><td>rare childhood cancer of the retina (1 in 20 000), from neural precursor cells; few mutations needed</td></tr>
+  <tr><td>retina</td><td>the light-sensing layer at the back of the eye (netvlies)</td></tr>
+  <tr><td>hereditary form</td><td>one bad <em>Rb</em> copy inherited, in every cell; multiple tumors, both eyes</td></tr>
+  <tr><td>nonhereditary form</td><td>two somatic hits in one cell lineage; one tumor, one eye; very rare</td></tr>
+  <tr><td>predispose</td><td>make a disease more likely without causing it by itself</td></tr>
+  <tr><td><em>Rb</em> gene, Rb protein</td><td>the gene on chromosome 13 found through retinoblastoma; its protein is a universal brake on cell-cycle entry (G1)</td></tr>
+  <tr><td>RB1</td><td>another name for the human <em>Rb</em> gene (used in the exam)</td></tr>
+  <tr><td>sporadic cancer</td><td>a cancer that arises by chance, not inherited (e.g. most lung, breast, bladder carcinomas)</td></tr>
+  <tr><td>somatic event</td><td>an accident in a body cell that is passed to its daughters</td></tr>
+  <tr><td>chromosome mis-segregation</td><td>a mistake in sharing chromosomes out at mitosis; a daughter cell loses a whole chromosome</td></tr>
+  <tr><td>mitotic recombination</td><td>exchange of pieces between homologous chromosomes during mitosis</td></tr>
+  <tr><td>gene conversion</td><td>one copy of a gene is overwritten with the sequence of the other copy during recombination</td></tr>
+  <tr><td>epigenetic silencing</td><td>switching a gene off without changing its letters, mainly by methylating CG cytosines in its promoter; inherited by daughter cells</td></tr>
+  <tr><td>CG sequence</td><td>a C followed by a G in the DNA; the C can carry a methyl group</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "the student describes the main characteristics of the Rb and TP53 gene, its significance in cancer development in humans, and its biological mechanisms of action".</p>
+<ol>
+  <li>Tell the retinoblastoma story: rare childhood retina cancer, hereditary (multiple, both eyes) versus nonhereditary (one tumor, one eye), and explain the difference with one versus two somatic hits.</li>
+  <li>Explain how <em>Rb</em> was found: a deletion of a band on chromosome 13 in patients and in tumor cells.</li>
+  <li>State what Rb protein does: universal regulator, a main brake on the cell cycle (cell-cycle entry), and that it is lost in lung, breast and bladder carcinomas too.</li>
+  <li>Explain why searching for a tumor suppressor needs a different strategy than searching for an oncogene (you cannot add what is missing).</li>
+  <li>List the six ways the remaining good copy of a tumor suppressor can be lost, and sort them into DNA-sequence changes and the epigenetic one.</li>
+  <li>Know that the first copy is usually lost by a precise event and the second by a large, unspecific one in an unstable cell.</li>
+  <li>Exam Q7: Rb regulates cell-cycle entry, but the "guardian of the genome" is p53.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why can a tumor suppressor gene not be found with the same method as an oncogene?</dt>
+  <dd>An oncogene is found by adding tumor DNA to normal cells and watching them transform. A tumor suppressor is inactivated, absent; you cannot add something that is not there. You have to look for what is missing in the cancer cell.</dd>
+
+  <dt>What is retinoblastoma?</dt>
+  <dd>A rare cancer of the retina in children (about 1 in 20 000), arising from neural precursor cells, caused by an unusually small number of mutations. One form is hereditary, the other is not.</dd>
+
+  <dt>How do the hereditary and nonhereditary forms differ in what you see?</dt>
+  <dd>Hereditary: several tumors arising independently, usually in both eyes. Nonhereditary: a single tumor in one eye.</dd>
+
+  <dt>Explain that difference with the two copies of <em>Rb</em>.</dt>
+  <dd>In the hereditary form every cell already lacks one working copy, so a tumor starts wherever one retinal cell loses its only good copy: one accident, which happens in several cells. In the nonhereditary form a cell lineage must lose both copies by two independent somatic events: so rare that only one tumor forms.</dd>
+
+  <dt>How was the <em>Rb</em> gene located?</dt>
+  <dd>Some patients had a visible deletion of a band on chromosome 13, which predisposes to the disease when inherited; the same region was deleted in tumor cells of nonhereditary patients. Mapping the deletion identified the gene.</dd>
+
+  <dt>What does the Rb protein do?</dt>
+  <dd>It is a universal regulator of the cell cycle in almost all cells, one of the main brakes on progress through the division cycle (entry into the cycle from G1). Losing it lets cells enter the cycle inappropriately.</dd>
+
+  <dt>Is Rb only important in the eye?</dt>
+  <dd>No. The gene is also missing in common sporadic cancers such as carcinomas of lung, breast and bladder, where its loss is frequently a major step toward malignancy.</dd>
+
+  <dt>How is the first copy of a tumor suppressor usually lost, and how the second?</dt>
+  <dd>The first by a precise small event (small deletion or point mutation from a replication error). The second more often by a less specific, large-scale mechanism typical of genetically unstable cells: losing the whole chromosome, mitotic recombination, gene conversion.</dd>
+
+  <dt>Name the six ways of inactivating the remaining good copy.</dt>
+  <dd>Deletion, point mutation, loss of the whole chromosome by mis-segregation, mitotic recombination, gene conversion during recombination, and epigenetic silencing by promoter methylation.</dd>
+
+  <dt>What is epigenetic silencing of a tumor suppressor?</dt>
+  <dd>The C nucleotides in CG sequences of its promoter become methylated in a heritable way. The DNA letters stay intact, but the gene is irreversibly switched off in that cell and all its progeny.</dd>
+
+  <dt>What is the difference between mitotic recombination and gene conversion here?</dt>
+  <dd>Mitotic recombination exchanges pieces between the two homologous chromosomes, so a daughter cell can end up with the mutant copy on both. Gene conversion is the overwriting of the good copy by the sequence of the bad copy during that recombination.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Retinoblastoma</strong>: rare <strong>childhood retina</strong> cancer, <strong>1 in 20 000</strong>, from neural precursor cells, few mutations needed.</li>
+  <li><strong>Hereditary</strong> = 1 bad copy in every cell → <strong>multiple tumors, both eyes</strong>. <strong>Nonhereditary</strong> = 2 somatic hits in one lineage → <strong>one tumor, one eye</strong>, rare.</li>
+  <li><em>Rb</em> found through a <strong>deletion of a band on chromosome 13</strong>.</li>
+  <li><strong>Rb protein = universal cell-cycle brake</strong> (entry from G1); lost in <strong>lung, breast, bladder</strong> carcinomas too.</li>
+  <li>A tumor suppressor is found by looking for <strong>what is missing</strong>; an oncogene by <strong>adding</strong> DNA to normal cells.</li>
+  <li><strong>First copy</strong>: precise small event. <strong>Second copy</strong>: large unspecific event in an unstable cell.</li>
+  <li>Six ways: <strong>deletion, point mutation, chromosome loss, mitotic recombination, gene conversion, epigenetic silencing</strong>.</li>
+  <li>Epigenetic silencing = <strong>methylation of C in CG pairs of the promoter</strong>, heritable, letters intact.</li>
+  <li>Exam Q7: <strong>p53</strong> is the guardian of the genome; <strong>Rb (RB1)</strong> prevents inappropriate entry into S phase.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>A child has retinoblastoma in both eyes, with several separate tumors. Which form is this most likely, and why?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Hereditary.</strong> Every cell already carries one bad <em>Rb</em> copy, so only one more accident is needed per tumor; that happens in several retinal cells, in both eyes.</p></div></details></li>
+  <li>Why is the nonhereditary form so rare?
+    <details><summary>Answer</summary><div class="ans"><p>Because <strong>two independent somatic events</strong> must inactivate both <em>Rb</em> copies in the <strong>same cell lineage</strong>. Two rare accidents in one line of cells: it happens in about 1 in 30 000 people, giving one tumor in one eye.</p></div></details></li>
+  <li>Which chromosome carries <em>Rb</em>, and how did that help to find the gene?
+    <ul class="opts"><li data-l="a">chromosome 9</li><li data-l="b">chromosome 13</li><li data-l="c">chromosome 21</li><li data-l="d">the X chromosome</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Some patients had a visible deletion of a band on chromosome 13, also found in tumor cells of nonhereditary patients. Mapping that deletion located the gene.</p></div></details></li>
+  <li>True or false: "A cell with one inactivated copy of <em>Rb</em> already proliferates too much."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> With one good copy the cell makes working Rb protein and behaves as a normal, healthy cell. It is predisposed, but the brake only fails when the second copy is lost too (recessive).</p></div></details></li>
+  <li>What does the Rb protein do in a normal cell?
+    <details><summary>Answer</summary><div class="ans"><p>It is a universal regulator of the cell cycle, one of the main <strong>brakes</strong> on progress through the cycle: it holds the cell at the entry (G1) until proper signals arrive.</p></div></details></li>
+  <li>Name three common cancers in which <em>Rb</em> is also lost.
+    <details><summary>Answer</summary><div class="ans"><p>Carcinomas of the <strong>lung, breast and bladder</strong>. They arise through a longer series of changes and later in life, but Rb loss is frequently a major step.</p></div></details></li>
+  <li>Why does finding a tumor suppressor need a different strategy from finding an oncogene?
+    <details><summary>Answer</summary><div class="ans"><p>An oncogene shows its effect when <em>added</em> to normal cells. A tumor suppressor is <em>absent</em> in the cancer cell, and you cannot add what is not there; you must look for what is missing.</p></div></details></li>
+  <li>Which of these loses the second copy <em>without</em> changing any DNA letter?
+    <ul class="opts"><li data-l="a">point mutation</li><li data-l="b">gene conversion</li><li data-l="c">promoter methylation</li><li data-l="d">deletion</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Methylation of the C's in CG pairs of the promoter is epigenetic: the sequence is intact but the gene is silenced, and the silencing is inherited by daughter cells.</p></div></details></li>
+  <li>How can a segregation error in mitosis remove the good copy?
+    <details><summary>Answer</summary><div class="ans"><p>The whole chromosome carrying the good copy is not passed to the daughter cell (nondisjunction, as in chapter 1). That cell keeps only the homolog with the bad copy: no working Rb.</p></div></details></li>
+  <li>What is mitotic recombination, and why is it dangerous here?
+    <details><summary>Answer</summary><div class="ans"><p>An exchange of pieces between the two homologous chromosomes during mitosis. A daughter cell can then receive the region with the bad copy from <em>both</em> homologs, and the good copy from neither.</p></div></details></li>
+  <li>What does "gene conversion" mean?
+    <details><summary>Answer</summary><div class="ans"><p>During recombination the good copy is <strong>overwritten</strong> by the sequence of the bad copy, so both copies now read the mutant version.</p></div></details></li>
+  <li>Why is the second copy usually lost by a sloppy, large event rather than by a precise mutation?
+    <details><summary>Answer</summary><div class="ans"><p>Because by then the cell is often already <strong>genetically unstable</strong>, so large accidents (losing a chromosome, mis-recombination) are common; they hit the whole region at once and are far more likely than a second point mutation at the same gene.</p></div></details></li>
+  <li>Exam question 7 offers "RB1, because it prevents cells from entering S phase inappropriately" as the guardian of the genome. What is right and what is wrong about that option?
+    <details><summary>Answer</summary><div class="ans"><p>The description of RB1 is right: it is the cell-cycle brake. But it is the wrong answer: the "guardian of the genome" is <strong>p53</strong>, which reacts to DNA damage by repair, cell-cycle arrest or apoptosis (page 2.8).</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.05_oncogenes_and_tumor_suppressors.html">← 2.5 Oncogenes and tumor suppressors</a><a href="index.html">Chapter 2 index</a><a href="2.07_cancer_genomes_and_pathways.html">2.7 Cancer genomes and pathways →</a></nav>
+</main>
+</body>
+</html>

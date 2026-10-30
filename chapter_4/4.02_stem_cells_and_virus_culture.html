@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.2 Stem cells and virus culture</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .stem { fill: var(--c-N); fill-opacity: .25; stroke: var(--c-N); stroke-width: 2; }
+  .diff { fill: var(--c-O); fill-opacity: .25; stroke: var(--c-O); stroke-width: 2; }
+  .prog { fill: var(--c-Na); fill-opacity: .2; stroke: var(--c-Na); stroke-width: 1.5; }
+  .rbc { fill: var(--c-O); stroke: none; }
+  .wbc { fill: var(--c-Cl); fill-opacity: .5; stroke: var(--c-Cl); stroke-width: 1.5; }
+  .plt { fill: var(--c-S); stroke: none; }
+  .dish { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .lawn { fill: var(--c-Na); fill-opacity: .35; stroke: none; }
+  .plaque { fill: var(--bg); stroke: var(--muted); stroke-width: 1; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.01_model_organisms_and_cell_culture.html">← 4.1 Model organisms and cell culture</a><a href="index.html">Chapter 4 index</a><a href="4.03_pcr_and_cdna.html">4.3 PCR and cDNA →</a></nav>
+
+<h1>4.2 Stem cells, iPS cells and growing viruses</h1>
+<p class="lede">In one sentence: a stem cell can divide forever and turn into other cell types, which makes it both a medical hope (replace lost cells) and a
+risk (tumours); viruses cannot grow on their own, so they are grown inside cultured cells and counted as clear holes (plaques) in a layer of cells.</p>
+
+<p>Page 4.1 ended with the problem of ordinary cells: they stop dividing. This page is about the exception, <strong>stem cells</strong>, and about the opposite
+extreme: <strong>viruses</strong>, which cannot divide at all without a host cell. One example exam question (a fill-in-the-blank) asks you for the two words
+<em>totipotent</em> and <em>pluripotent</em>, so the definitions in section 1 matter.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>differentiation</td><td>a cell becoming specialised (a nerve cell, a muscle cell, a skin cell) by switching on its own set of genes (BIO01 chapter 6)</td></tr>
+  <tr><td>transcription factor</td><td>a protein that binds DNA near a gene and switches the gene on or off (BIO01 chapter 6)</td></tr>
+  <tr><td>lineage</td><td>a line of descent: a cell and all its descendants, or the series of cell types that lead to a final cell type (afstammingslijn)</td></tr>
+  <tr><td>embryo</td><td>the early stage of a developing organism, from the fertilized egg onwards</td></tr>
+  <tr><td>virus, host cell, viral genome</td><td>a virus is genes in a protein coat; it can only make more of itself inside a host cell, using the host's machinery (chapter 3)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: <strong>differentiatie</strong> = een cel specialiseert zich door eigen genen aan te zetten; een <strong>transcriptiefactor</strong> is een eiwit dat genen aan- of
+uitzet; een <strong>lineage</strong> is een afstammingslijn van celtypes; een <strong>virus</strong> vermenigvuldigt zich alleen in een gastheercel (hoofdstuk 3).</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Stem cells: the cells that can become anything (4.2.3)</h2>
+<p>A <strong>stem cell</strong> (stamcel) is a cell that can give rise to many different cell lineages. The syllabus uses two words for how many:</p>
+<ul>
+  <li><strong>Totipotent</strong> (toti = all): can give rise to <strong>every cell type of the body</strong>. The syllabus applies this to <strong>embryonic stem (ES) cells</strong>, which are taken from early embryos.</li>
+  <li><strong>Pluripotent</strong> (pluri = several): can give rise to a <strong>restricted set</strong> of cell lineages. Such cells exist during development and also in the adult. <strong>Adult stem cells</strong> (from a fully grown organism) are usually pluripotent; how many cell types they can make depends on the kind of stem cell.</li>
+</ul>
+<div class="callout key"><span class="tag">Note on the two words</span>
+<p>Follow the syllabus for the exam: <strong>totipotent = any cell type (ES cells), pluripotent = a subset</strong>. Be aware that many other books use the words
+slightly differently (there "pluripotent" is the usual word for ES cells, and "multipotent" for adult stem cells). The example exam question 10 uses the syllabus
+meaning: "<em>totipotent</em> [cells] can give rise to any type of cell whereas <em>pluripotent</em> [cells] can give rise to a subset of cell types."</p></div>
+
+<p>Adult stem cells have been studied in the skin, in hair follicles (the small pockets in the skin that a hair grows from) and in the intestine, but the
+best-characterised ones are those of the <strong>blood</strong> (section 2).</p>
+
+<h3>Two properties that make a stem cell</h3>
+<ol>
+  <li><strong>Unlimited division.</strong> Stem cells typically divide without limit, in sharp contrast to differentiated cells, which do not divide at all or only a limited number of times (page 4.1).</li>
+  <li><strong>Asymmetric division</strong> (Figure 4-7). When a stem cell divides, the two daughters are <em>not</em> the same: <strong>one daughter stays a stem cell</strong> (this is called self-renewal) and <strong>the other differentiates</strong> into a particular cell type. So the stem cell population keeps itself going while it produces specialised cells.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 560 200" width="560" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arS" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <circle cx="90" cy="90" r="34" class="stem"/>
+    <text x="90" y="94" class="txt bold">stem cell</text>
+    <path d="M130,78 L205,46" class="path accent" marker-end="url(#arS)"/>
+    <path d="M130,102 L205,134" class="path accent" marker-end="url(#arS)"/>
+    <text x="165" y="100" class="txt small muted">divides</text>
+    <circle cx="250" cy="40" r="30" class="stem"/>
+    <text x="250" y="44" class="txt bold">stem cell</text>
+    <circle cx="250" cy="148" r="30" class="diff"/>
+    <text x="250" y="152" class="txt bold">daughter</text>
+    <text x="300" y="36" class="txt small left">self-renewal: one daughter</text>
+    <text x="300" y="50" class="txt small left">stays a stem cell (divides again later)</text>
+    <path d="M285,148 L335,148" class="path accent" marker-end="url(#arS)"/>
+    <text x="310" y="140" class="txt small muted">differentiates</text>
+    <circle cx="380" cy="148" r="26" class="diff"/>
+    <path d="M366,134 L394,162 M394,134 L366,162" class="path"/>
+    <text x="430" y="144" class="txt small left">a specialised cell type</text>
+    <text x="430" y="158" class="txt small left">(nerve, blood, skin ...)</text>
+    <text x="280" y="190" class="txt muted">asymmetric division: the two daughters have different fates</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-7: a stem cell divides asymmetrically. One daughter is again a stem cell; the other goes on to differentiate.</figcaption>
+</figure>
+
+<h3>How do you prove a cell is a stem cell?</h3>
+<p>The best test is to <strong>isolate the cell and implant it into a recipient animal</strong>. A true stem cell will give rise to the <strong>entire set of differentiated
+cells</strong> in that new setting. This transplantation test is the same principle as a <strong>bone marrow transplant</strong> used to treat blood diseases and cancer (section 2).</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>stamcel</strong> kan vele celtypes voortbrengen. Volgens de syllabus: <strong>totipotent</strong> = elk celtype (embryonale stamcellen, ES-cellen, uit vroege embryo's);
+<strong>pluripotent</strong> = een beperkte set (ook in de volwassene; volwassen stamcellen zijn meestal pluripotent). Twee eigenschappen: <strong>onbeperkt delen</strong> en
+<strong>asymmetrisch delen</strong> (één dochter blijft stamcel = zelfvernieuwing, de andere differentieert). Bewijs: de cel inplanten in een proefdier; een echte stamcel
+maakt daar alle gedifferentieerde celtypes.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Blood stem cells: the best-understood example (4.2.3, Figure 4-8)</h2>
+<p>Blood cells have a short life: some types last only a day. So blood must be <strong>renewed continuously</strong>, all through life. The process of making new blood cells
+every day is called <strong>hematopoiesis</strong> (hemato = blood, poiesis = making; bloedaanmaak), and the stem cells that do it are <strong>hematopoietic stem cells</strong>.
+They normally live in the <strong>bone marrow</strong> (beenmerg, the soft tissue inside bones) and can be isolated from the marrow or from blood.</p>
+<p>They can <strong>self-renew</strong> (make more stem cells) and they produce <strong>progenitor cells</strong> (progenitor = forerunner): cells that are already on their way and
+differentiate into many other cell types. The whole family tree, from stem cell via progenitors to red cells, platelets and the white cells, is one of the best
+understood <strong>hierarchies</strong> of stem-cell differentiation (a hierarchy = a tree with levels).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 620 230" width="620" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arH" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <circle cx="310" cy="34" r="26" class="stem"/>
+    <text x="310" y="38" class="txt small bold">stem cell</text>
+    <path d="M296,10 C250,0 250,30 284,26" class="path accent" marker-end="url(#arH)"/>
+    <text x="220" y="20" class="txt small muted">self-renewal</text>
+    <text x="400" y="30" class="txt small left">hematopoietic stem cell</text>
+    <text x="400" y="44" class="txt small left">(in the bone marrow)</text>
+    <path d="M290,56 L190,92" class="path accent" marker-end="url(#arH)"/>
+    <path d="M330,56 L430,92" class="path accent" marker-end="url(#arH)"/>
+    <ellipse cx="170" cy="108" rx="48" ry="18" class="prog"/>
+    <text x="170" y="112" class="txt small">progenitor A</text>
+    <ellipse cx="450" cy="108" rx="48" ry="18" class="prog"/>
+    <text x="450" y="112" class="txt small">progenitor B</text>
+    <path d="M150,128 L100,166 M170,128 L170,166 M190,128 L240,166" class="path accent" marker-end="url(#arH)"/>
+    <path d="M430,128 L380,166 M470,128 L520,166" class="path accent" marker-end="url(#arH)"/>
+    <!-- red cells -->
+    <ellipse cx="90" cy="186" rx="14" ry="9" class="rbc"/><ellipse cx="108" cy="192" rx="14" ry="9" class="rbc"/>
+    <text x="100" y="218" class="txt small">red blood cells</text>
+    <!-- platelets -->
+    <rect x="160" y="182" width="8" height="8" rx="2" class="plt"/><rect x="172" y="188" width="8" height="8" rx="2" class="plt"/><rect x="166" y="194" width="8" height="8" rx="2" class="plt"/>
+    <text x="170" y="218" class="txt small">platelets</text>
+    <!-- white A -->
+    <circle cx="245" cy="188" r="13" class="wbc"/>
+    <text x="245" y="218" class="txt small">white cells (type 1)</text>
+    <!-- white B -->
+    <circle cx="380" cy="188" r="13" class="wbc"/><circle cx="520" cy="188" r="13" class="wbc"/>
+    <text x="380" y="218" class="txt small">white cells (type 2)</text>
+    <text x="520" y="218" class="txt small">white cells (type 3)</text>
+  </svg>
+  <figcaption>A simplified version of syllabus Figure 4-8. The stem cell renews itself and feeds progenitors, which branch into the red cells (carry oxygen), platelets (clotting) and the several kinds of white cells (defence). The real tree has more levels and more branches.</figcaption>
+</figure>
+
+<p><strong>Bone marrow transplant:</strong> hematopoietic stem cells are isolated from the marrow of a donor and transferred to a patient whose own blood-forming
+system is diseased (blood diseases, cancer). In the patient they do what they always do: self-renew and rebuild the whole blood system.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Bloedcellen leven kort (soms één dag), dus ze worden elke dag aangemaakt: <strong>hematopoëse</strong>, door <strong>hematopoëtische stamcellen</strong> in het
+<strong>beenmerg</strong>. Zij vernieuwen zichzelf en maken <strong>progenitorcellen</strong> (voorlopers) die uitgroeien tot rode bloedcellen, bloedplaatjes en witte bloedcellen:
+de best begrepen <strong>hiërarchie</strong> van stamceldifferentiatie. Een <strong>beenmergtransplantatie</strong> brengt zulke stamcellen van een donor over naar een patiënt.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. ES cells and iPS cells in medicine (4.2.4, 4.2.5)</h2>
+<h3>ES cells: hope and danger</h3>
+<p>Because ES cells are totipotent, they can be steered in the laboratory to become one specific cell type. Example: ES cells treated with certain
+<strong>growth factors</strong> (signal proteins that tell cells to grow or differentiate) in culture can make <strong>more than 99 %</strong> of the cells turn into
+<strong>neurons</strong> (nerve cells). The hope is to transplant such neurons into patients with <strong>Parkinson's disease</strong>, in which a specific group of neurons dies.</p>
+<p>The danger: if <strong>less than 100 %</strong> of the cells differentiate, the remaining undifferentiated cells keep growing as ES cells and may later differentiate
+at random into a <strong>tumour</strong>. Indeed, injecting mouse ES cells directly into mice gives a tumour called a <strong>teratoma</strong>: a lump that contains a
+mixture of many different differentiated cell types (hair, teeth, muscle, gut tissue all jumbled together).</p>
+
+<h3>iPS cells: a stem cell made from a skin cell</h3>
+<p><strong>Induced pluripotent stem (iPS) cells</strong> are a newer way to make stem cells for medical research. Researchers found that putting <strong>four specific transcription
+factors</strong> into fully differentiated <strong>skin cells</strong> "reprograms" them: the factors switch on the set of genes that is normally active early in embryonic development,
+and the skin cells turn back into stem cells. (Induced = made to happen; the syllabus calls the result both "totipotent" and "pluripotent".) iPS cells seem to be
+equivalent to ES cells in most ways. Two big advantages:</p>
+<ul>
+  <li>The cells can come from <strong>the patient's own tissue</strong>. A transplant of cells derived from your own body is an <strong>autologous transplant</strong> (auto = self), and it is much less likely to be <strong>rejected</strong> by the immune system (the body's defence, which attacks foreign cells).</li>
+  <li>No human <strong>embryos</strong> are needed, which bypasses the ethical objections to ES cells.</li>
+</ul>
+<p>The four transcription factors are usually brought into the skin cells with <strong>viral vectors</strong>: viruses used as delivery vehicles for genes (section 4 and page 4.4).</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 10 (fill in two blanks): "___ can give rise to any type of cell whereas ___ can give rise to a subset of cell types."
+Answer, in the syllabus wording: <strong>totipotent</strong> (first blank) and <strong>pluripotent</strong> (second blank). The syllabus gives these as the properties of
+ES cells and of most adult stem cells respectively.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>ES-cellen</strong> kunnen met groeifactoren tot één celtype worden gestuurd (>99 % neuronen, hoop voor Parkinson). Gevaar: niet-gedifferentieerde restcellen
+groeien door tot een tumor; ES-cellen in een muis geven een <strong>teratoom</strong> (mengsel van vele weefsels). <strong>iPS-cellen</strong>: vier transcriptiefactoren (via
+virale vectoren) herprogrammeren huidcellen tot stamcellen. Voordelen: <strong>autologe</strong> transplantatie (eigen cellen, weinig afstoting) en geen embryo's nodig.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Viruses must be grown in living cells (4.2.6)</h2>
+<p>Viruses are useful twice over: studying them has revealed basic cell mechanisms, and they are a valuable way to <strong>bring genes into cells</strong> (viral vectors;
+that is how the iPS factors are delivered). Some viruses have a DNA genome, others (such as retroviruses, chapter 3) an RNA genome. But none of them is
+a free-living life form: <strong>a virus can only be propagated inside cells</strong>.</p>
+<p>Most viruses infect only a few cell types (their host range, chapter 3). So to grow a virus you first need to be able to culture <strong>the right cell type</strong>.
+The syllabus gives the historical example: the most important step towards a vaccine against <strong>polio</strong> (a crippling disease) was learning to grow
+<strong>poliovirus in cultured human cells</strong>.</p>
+
+<h3>Harvesting the virus</h3>
+<p>Begin state: a culture of the right cells. Goal: pure virus particles. The virus infects the cells and uses their machinery to make many particles. Two ways to get them out:</p>
+<ol>
+  <li>Harvest the virus-producing cells and break their membranes with <strong>detergents</strong> (soap-like molecules that dissolve membranes); then separate the particles from the cell debris.</li>
+  <li>With <strong>lytic viruses</strong> (lysis = bursting: viruses that make the host cell burst open to get out), simply grow the infected cells until they burst and release the virus into the medium.</li>
+</ol>
+
+<h3>Counting viruses: the plaque assay (Figure 4-9)</h3>
+<p>An <strong>assay</strong> is a test that measures how much of something is present. To measure live virus:</p>
+<ol>
+  <li>Grow a continuous layer of suitable cells on a plate (a "lawn" of cells).</li>
+  <li>Add the sample that may contain the virus.</li>
+  <li>Each virus particle infects one cell, makes many copies, bursts the cell, and the copies infect the neighbours. A growing <strong>zone of dead cells</strong> forms around the starting point.</li>
+  <li>Stain the plate: live cells take up the dye (purple in the syllabus example); the zones of dead cells stay clear. Each clear circle is a <strong>plaque</strong>.</li>
+  <li><strong>Count the plaques</strong>: the number of plaques is proportional to the number of live viruses in the sample. The virus in one plaque can be picked up and purified: it is a pure strain, descended from one particle.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 560 190" width="560" height="190" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="130" cy="95" r="80" class="dish"/>
+    <circle cx="130" cy="95" r="72" class="lawn"/>
+    <circle cx="100" cy="70" r="10" class="plaque"/><circle cx="150" cy="60" r="8" class="plaque"/><circle cx="170" cy="110" r="11" class="plaque"/>
+    <circle cx="110" cy="125" r="9" class="plaque"/><circle cx="135" cy="92" r="7" class="plaque"/><circle cx="85" cy="105" r="7" class="plaque"/>
+    <text x="130" y="186" class="txt bold">plaque assay</text>
+    <text x="250" y="52" class="txt small left">purple: lawn of living cells (take up the dye)</text>
+    <text x="250" y="76" class="txt small left">white circle = plaque: a zone of cells killed by</text>
+    <text x="250" y="90" class="txt small left">the offspring of ONE virus particle</text>
+    <text x="250" y="114" class="txt small left">6 plaques → 6 live viruses in the sample added</text>
+    <text x="250" y="138" class="txt small left">more sample diluted 10× → about 10× fewer plaques</text>
+    <text x="250" y="162" class="txt small left">pick one plaque → a pure virus strain</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-9. One live virus particle makes one plaque, so counting plaques counts live viruses.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Technique card: plaque assay</span>
+<table>
+  <tr><td>principle</td><td>one live virus → one spreading zone of dead cells (plaque) in a lawn of cells</td></tr>
+  <tr><td>you need</td><td>cells the virus can infect, a plate, the sample, a dye that stains living cells</td></tr>
+  <tr><td>steps</td><td>grow lawn → add sample → wait for infection to spread → stain → count clear circles</td></tr>
+  <tr><td>used for</td><td>counting live viruses in a sample; isolating a pure virus strain from one plaque</td></tr>
+  <tr><td>trap</td><td>it counts only <em>live, infectious</em> virus for <em>that</em> cell type; a virus that cannot infect these cells gives no plaques</td></tr>
+</table></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Virussen zijn niet vrijlevend: je kweekt ze <strong>in cellen</strong> die ze kunnen infecteren (poliovaccin werd mogelijk toen poliovirus in menselijke cellen groeide). Oogsten:
+cellen openbreken met <strong>detergenten</strong>, of bij <strong>lytische virussen</strong> wachten tot de cellen barsten. <strong>Plaque-assay</strong>: een laag cellen + virusmonster;
+elk levend virusdeeltje doodt een kring cellen = een <strong>plaque</strong> (helder na kleuring). Aantal plaques = aantal levende virussen; één plaque = een zuivere virusstam.
+Virussen dienen ook als <strong>vectoren</strong> om genen in cellen te brengen.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>stem cell</td><td>a cell that divides without limit and can produce several cell types</td></tr>
+  <tr><td>totipotent</td><td>(syllabus) can become every cell type of the body; ES cells</td></tr>
+  <tr><td>pluripotent</td><td>(syllabus) can become a restricted set of cell types; most adult stem cells</td></tr>
+  <tr><td>embryonic stem (ES) cell</td><td>stem cell taken from an early embryo</td></tr>
+  <tr><td>adult stem cell</td><td>stem cell from a fully grown organism (skin, hair follicle, intestine, blood)</td></tr>
+  <tr><td>self-renewal</td><td>a stem cell making a new stem cell when it divides</td></tr>
+  <tr><td>asymmetric division</td><td>a division whose two daughters have different fates: one stem cell, one differentiating cell</td></tr>
+  <tr><td>lineage</td><td>a line of descent of cell types</td></tr>
+  <tr><td>hematopoiesis / hematopoietic stem cell</td><td>daily production of blood cells / the bone-marrow stem cell that does it</td></tr>
+  <tr><td>progenitor cell</td><td>a forerunner cell, between the stem cell and the final cell types</td></tr>
+  <tr><td>bone marrow</td><td>the soft tissue inside bones where blood cells are made</td></tr>
+  <tr><td>growth factor</td><td>a signal protein that tells cells to grow or differentiate</td></tr>
+  <tr><td>teratoma</td><td>a tumour made of a jumble of many differentiated cell types; arises from injected ES cells</td></tr>
+  <tr><td>iPS cell</td><td>induced pluripotent stem cell: a differentiated cell reprogrammed to a stem cell by four transcription factors</td></tr>
+  <tr><td>reprogram</td><td>switch a cell to another set of active genes (here: back to the embryonic set)</td></tr>
+  <tr><td>autologous transplant</td><td>transplant of cells derived from the patient's own body; little rejection</td></tr>
+  <tr><td>rejection</td><td>the immune system attacking transplanted foreign cells</td></tr>
+  <tr><td>viral vector</td><td>a virus used as a vehicle to deliver genes into cells</td></tr>
+  <tr><td>detergent</td><td>soap-like molecule that dissolves membranes</td></tr>
+  <tr><td>lytic virus / lysis</td><td>a virus that bursts its host cell to get out / the bursting</td></tr>
+  <tr><td>assay</td><td>a test that measures how much of something is present</td></tr>
+  <tr><td>plaque</td><td>a clear zone of dead cells in a cell lawn, caused by one virus particle</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes the principle, methodology and applications of different forms of ... technologies" and "utilizes fundamental concepts ... to solve problems related to biological processes at the molecular level".</p>
+<ol>
+  <li>Define totipotent and pluripotent in the syllabus sense and fill them into a sentence (example exam Q10).</li>
+  <li>Give the two defining properties of a stem cell (unlimited division, asymmetric division with self-renewal) and the transplantation proof.</li>
+  <li>Describe hematopoiesis: stem cell → progenitors → blood cell types; bone marrow transplant.</li>
+  <li>Explain the medical hope of ES cells (neurons for Parkinson's) and the risk (undifferentiated cells → teratoma).</li>
+  <li>Explain what iPS cells are, how they are made (four transcription factors into skin cells, via viral vectors) and their two advantages.</li>
+  <li>Explain why viruses must be grown in cells, how they are harvested, and how a plaque assay counts live viruses.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is the difference between totipotent and pluripotent, according to the syllabus?</dt>
+  <dd>Totipotent cells can give rise to any cell type of the body (ES cells from early embryos). Pluripotent cells give rise to a restricted subset of cell lineages (most adult stem cells).</dd>
+
+  <dt>What happens when a stem cell divides?</dt>
+  <dd>An asymmetric division: one daughter remains a stem cell (self-renewal), the other differentiates into a particular cell type.</dd>
+
+  <dt>How do you prove that a cell is a stem cell?</dt>
+  <dd>Isolate it and implant it into a recipient animal; a stem cell gives rise to the whole set of differentiated cells there. This is the basis of bone marrow transplants.</dd>
+
+  <dt>Why does the body need hematopoiesis every day?</dt>
+  <dd>Blood cells have a limited lifespan, some only a day, so they must be continually replaced from hematopoietic stem cells in the bone marrow.</dd>
+
+  <dt>What is a progenitor cell?</dt>
+  <dd>A forerunner cell produced by a stem cell that is already committed to differentiating into a group of cell types; it sits between the stem cell and the final cells in the hierarchy.</dd>
+
+  <dt>How could ES cells help in Parkinson's disease, and what is the risk?</dt>
+  <dd>Treated with growth factors, more than 99 % of ES cells become neurons that could replace the lost neurons. If not all cells differentiate, the leftover ES cells can keep growing and form a teratoma, a tumour of mixed cell types.</dd>
+
+  <dt>How are iPS cells made?</dt>
+  <dd>Four specific transcription factors are introduced (usually by viral vectors) into fully differentiated skin cells; they switch on the embryonic gene set and reprogram the cells into stem cells.</dd>
+
+  <dt>Why are iPS cells attractive for therapy?</dt>
+  <dd>They can be made from the patient's own cells, so the transplant is autologous and unlikely to be rejected, and no embryos are needed.</dd>
+
+  <dt>Why can a virus not be grown in a tube of nutrients?</dt>
+  <dd>A virus is not free-living: it has no machinery of its own and must be propagated inside cells it can infect.</dd>
+
+  <dt>What was the key advance for the polio vaccine?</dt>
+  <dd>Learning to grow poliovirus in cultured human cells.</dd>
+
+  <dt>Two ways to release virus particles from infected cells?</dt>
+  <dd>Break the cell membranes with detergents, or (for lytic viruses) let the cells burst by themselves and collect the medium.</dd>
+
+  <dt>What is a plaque and what does the number of plaques tell you?</dt>
+  <dd>A clear circle of dead cells in a stained lawn of living cells, started by one virus particle. The number of plaques is proportional to the number of live viruses in the sample.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Totipotent</strong> = any cell type (ES cells); <strong>pluripotent</strong> = a subset (adult stem cells). Exam Q10 wording.</li>
+  <li>Stem cell = <strong>unlimited division</strong> + <strong>asymmetric division</strong>: one daughter stem cell (self-renewal), one differentiates.</li>
+  <li>Proof of a stem cell: <strong>transplant</strong> it; it rebuilds all cell types. Basis of <strong>bone marrow transplants</strong>.</li>
+  <li><strong>Hematopoiesis</strong>: hematopoietic stem cells (bone marrow) → progenitors → red cells, platelets, white cells; blood cells live short (some 1 day).</li>
+  <li>ES cells + growth factors → <strong>>99 % neurons</strong> (Parkinson's hope); leftover ES cells → <strong>teratoma</strong>.</li>
+  <li><strong>iPS cells</strong>: <strong>4 transcription factors</strong> reprogram skin cells; delivered by <strong>viral vectors</strong>.</li>
+  <li>iPS advantages: <strong>autologous</strong> (own cells, no rejection) and <strong>no embryos</strong>.</li>
+  <li>Viruses: not free-living → grown <strong>inside cultured cells</strong> of the right type (polio vaccine).</li>
+  <li>Harvest: <strong>detergents</strong> break cells, or <strong>lytic</strong> viruses burst them.</li>
+  <li><strong>Plaque assay</strong>: lawn of cells + sample → clear circles; <strong>1 plaque = 1 live virus</strong>; pick a plaque = pure strain.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Fill in: "___ cells can give rise to any type of cell, whereas ___ cells can give rise to a subset of cell types."
+    <details><summary>Answer</summary><div class="ans"><p><strong>Totipotent</strong>; <strong>pluripotent</strong>. In the syllabus, ES cells are totipotent and most adult stem cells pluripotent.</p></div></details></li>
+  <li>Which cell is totipotent in the syllabus sense?
+    <ul class="opts"><li data-l="a">a skin cell</li><li data-l="b">an embryonic stem cell</li><li data-l="c">a red blood cell</li><li data-l="d">a progenitor cell</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> ES cells, from early embryos, can give every cell type. A progenitor is already restricted; skin and red blood cells are differentiated.</p></div></details></li>
+  <li>A stem cell divides. What are the two daughters?
+    <details><summary>Answer</summary><div class="ans"><p>One is a new <strong>stem cell</strong> (self-renewal) and the other <strong>differentiates</strong> into a particular cell type. This is asymmetric division.</p></div></details></li>
+  <li>True or false: "Differentiated cells, like stem cells, divide without limit."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Differentiated cells do not divide or divide only a limited number of times. Unlimited division is what sets stem cells apart.</p></div></details></li>
+  <li>Why is a bone marrow transplant a stem-cell transplant?
+    <details><summary>Answer</summary><div class="ans"><p>The marrow contains <strong>hematopoietic stem cells</strong>; transferred to the patient they self-renew and regenerate the whole set of blood cells, exactly the transplantation test for a stem cell.</p></div></details></li>
+  <li>Put in order: progenitor cell, red blood cell, hematopoietic stem cell.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Hematopoietic stem cell → progenitor cell → red blood cell.</strong> The stem cell self-renews and makes progenitors, which differentiate into the final blood cell types.</p></div></details></li>
+  <li>A batch of ES cells was treated with growth factors and 97 % became neurons. Why would a doctor hesitate to transplant them?
+    <details><summary>Answer</summary><div class="ans"><p>The remaining <strong>3 % undifferentiated ES cells</strong> can keep growing and later differentiate at random into a <strong>teratoma</strong>. The syllabus says less than 100 % differentiation carries this risk.</p></div></details></li>
+  <li>What is a teratoma?
+    <details><summary>Answer</summary><div class="ans"><p>A tumour that contains a mixture of many different differentiated cell types; it forms when ES cells are injected directly into a mouse.</p></div></details></li>
+  <li>How do you turn a skin cell into a stem cell?
+    <details><summary>Answer</summary><div class="ans"><p>Introduce <strong>four specific transcription factors</strong> (usually with a viral vector). They switch on the early-embryo gene set and reprogram the skin cell into an <strong>iPS cell</strong>.</p></div></details></li>
+  <li>Which is an advantage of iPS cells over ES cells?
+    <ul class="opts"><li data-l="a">they divide faster</li><li data-l="b">they can be made from the patient's own cells, so the transplant is autologous and rarely rejected</li><li data-l="c">they need no transcription factors</li><li data-l="d">they never form tumours</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Plus: no embryos are needed. (The syllabus does not claim iPS cells are tumour-free.)</p></div></details></li>
+  <li>Why must you first be able to culture a specific cell type before you can grow a virus?
+    <details><summary>Answer</summary><div class="ans"><p>Viruses only multiply inside cells, and most viruses can infect only a few cell types. No suitable host cells in culture → no virus. Example: poliovirus in cultured human cells.</p></div></details></li>
+  <li>A sample gives 40 plaques on a lawn of cells. What does that mean?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>40 live, infectious virus particles</strong> were in the amount of sample added: each one infected a cell, spread to neighbours and left a clear zone of dead cells.</p></div></details></li>
+  <li>How do you get a pure virus strain from a plaque assay?
+    <details><summary>Answer</summary><div class="ans"><p>Pick the virus from <strong>one plaque</strong>: all particles in it descend from the single particle that started it, so they are one strain.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.01_model_organisms_and_cell_culture.html">← 4.1 Model organisms and cell culture</a><a href="index.html">Chapter 4 index</a><a href="4.03_pcr_and_cdna.html">4.3 PCR and cDNA →</a></nav>
+</main>
+</body>
+</html>

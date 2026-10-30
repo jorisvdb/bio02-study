@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.4 Microenvironment and metastasis</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .tum { fill: var(--c-O); stroke: var(--c-O); opacity: .85; }
+  .epi { fill: var(--hl-polar); stroke: var(--c-Cl); stroke-width: 1.2; }
+  .fib { fill: var(--c-S); stroke: none; }
+  .imm { fill: var(--c-Na); stroke: none; }
+  .ves { fill: none; stroke: var(--c-N); stroke-width: 8; stroke-linecap: round; }
+  .vesin { fill: none; stroke: var(--key-bg); stroke-width: 4; stroke-linecap: round; }
+  .per { fill: var(--c-P); stroke: none; }
+  .mat { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; fill: none; }
+  .lam { stroke: var(--c-S); stroke-width: 4; fill: none; stroke-linecap: round; }
+  .ct { fill: var(--panel); stroke: none; }
+  .organ { fill: var(--quiz-bg); stroke: var(--quiz-border); stroke-width: 1.4; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="2.03_genetic_instability_and_hallmarks.html">← 2.3 Genetic instability and hallmarks</a><a href="index.html">Chapter 2 index</a><a href="2.05_oncogenes_and_tumor_suppressors.html">2.5 Oncogenes and tumor suppressors →</a></nav>
+
+<h1>2.4 The tumor microenvironment and metastasis</h1>
+<p class="lede">In one sentence: a tumor is not only cancer cells but also the normal cells it recruits and manipulates around it, and the deadliest thing cancer cells
+learn is to leave this home, travel through the blood or lymph and found colonies in other organs, which very few of them manage.</p>
+
+<p>This page closes the first half of the chapter (2.1.6 to 2.1.8). Two ideas: the <strong>microenvironment</strong> (the cells and matrix directly around the tumor) is an active partner of
+the cancer, and <strong>metastasis</strong> is a chain of difficult steps of which the last, colonization, is the hardest. The exam asks what angiogenesis does for a tumor; the word is explained here
+and on page 2.3.</p>
+
+<!-- ============================================================ -->
+<h2>1. The tumor microenvironment: the stroma is not a bystander (2.1.6)</h2>
+<p>The cancer cells in a tumor carry the dangerous mutations. But the other cells of the tumor, especially those of the supporting connective tissue, the <strong>stroma</strong>, are far from passive.
+A tumor develops through <strong>two-way communication</strong> between cancer cells and stroma, just as the normal development of an epithelial organ depends on communication between epithelial cells and
+<strong>mesenchymal cells</strong> (the connective-tissue cells of an embryo).</p>
+<p>What the stroma is made of (Figure 2-16): the <strong>framework</strong> of the tumor, like normal connective tissue, with</p>
+<ul>
+  <li><strong>fibroblasts</strong>: the connective-tissue cells that make the fibres of the matrix (in a tumor often called cancer-associated fibroblasts);</li>
+  <li><strong>inflammatory white blood cells</strong>: immune cells that have moved in (inflammation = ontsteking, the body's reaction to damage or infection: swelling, redness, immune cells arriving);</li>
+  <li><strong>endothelial cells</strong> that form <strong>blood and lymphatic vessels</strong> (lymphatic vessels carry lymph, a clear fluid that drains from the tissues, lymfe), with their attending
+  <strong>pericytes</strong> (vascular smooth muscle cells: contractile cells wrapped around small vessels);</li>
+  <li>the <strong>extracellular matrix</strong> between all of them.</li>
+</ul>
+<p>Only the cancer cells are thought to carry the mutations; the stromal cells are genetically normal, but their <em>behaviour</em> is changed.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 700 300" width="700" height="300" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="20" width="660" height="240" rx="14" class="ct"/>
+    <!-- matrix fibres -->
+    <path d="M40,60 C120,40 180,90 260,70 M60,200 C140,230 200,180 300,220 M400,250 C480,220 560,250 650,230 M520,40 C560,80 620,60 660,90" class="mat"/>
+    <!-- vessel -->
+    <path d="M40,150 C150,120 250,180 360,150 C470,120 560,170 660,140" class="ves"/>
+    <path d="M40,150 C150,120 250,180 360,150 C470,120 560,170 660,140" class="vesin"/>
+    <circle cx="140" cy="138" r="6" class="per"/><circle cx="300" cy="166" r="6" class="per"/><circle cx="470" cy="134" r="6" class="per"/><circle cx="600" cy="160" r="6" class="per"/>
+    <!-- tumor cell mass -->
+    <g>
+      <circle cx="330" cy="80" r="16" class="tum"/><circle cx="360" cy="70" r="16" class="tum"/><circle cx="345" cy="104" r="16" class="tum"/><circle cx="378" cy="98" r="16" class="tum"/><circle cx="312" cy="106" r="14" class="tum"/><circle cx="395" cy="72" r="13" class="tum"/>
+      <circle cx="340" cy="212" r="16" class="tum"/><circle cx="370" cy="222" r="16" class="tum"/><circle cx="356" cy="196" r="14" class="tum"/>
+    </g>
+    <!-- fibroblasts (spindle shapes) -->
+    <ellipse cx="200" cy="90" rx="26" ry="7" class="fib" transform="rotate(-20 200 90)"/>
+    <ellipse cx="470" cy="210" rx="26" ry="7" class="fib" transform="rotate(25 470 210)"/>
+    <ellipse cx="250" cy="230" rx="26" ry="7" class="fib" transform="rotate(-10 250 230)"/>
+    <ellipse cx="500" cy="60" rx="26" ry="7" class="fib" transform="rotate(15 500 60)"/>
+    <!-- immune cells -->
+    <circle cx="430" cy="100" r="10" class="imm"/><circle cx="290" cy="50" r="10" class="imm"/><circle cx="120" cy="220" r="10" class="imm"/><circle cx="560" cy="220" r="10" class="imm"/>
+    <!-- labels -->
+    <text x="350" y="40" class="txt small bold">cancer cells (the only mutated cells)</text>
+    <text x="200" y="112" class="txt small">fibroblast</text>
+    <text x="430" y="120" class="txt small">immune cell</text>
+    <text x="40" y="178" class="txt small left">blood vessel (endothelial cells)</text>
+    <text x="140" y="124" class="txt small muted">pericyte</text>
+    <text x="525" y="114" class="txt small muted left">extracellular matrix (dashed)</text>
+    <text x="40" y="250" class="txt small muted left">signals go both ways: cancer cells ⇄ stroma</text>
+    <text x="350" y="284" class="txt small">yellow = fibroblasts · purple = inflammatory white blood cells · blue = vessel · orange = pericytes · red = cancer cells</text>
+  </svg>
+  <figcaption>The tumor microenvironment (syllabus Figure 2-16): cancer cells embedded in stroma. The arrow sign ⇄ means "in both directions".</figcaption>
+</figure>
+
+<h3>How tumor and stroma shape each other</h3>
+<p>As a carcinoma progresses, the cancer cells change the stroma by secreting <strong>signal proteins</strong> that alter the behaviour of the stromal cells, and
+<strong>proteolytic enzymes</strong> (proteases: enzymes that cut proteins) that remodel the extracellular matrix. The stromal cells answer by secreting signal proteins that stimulate
+cancer-cell growth and division, and proteases that remodel the matrix further. So tumor and stroma <strong>evolve together</strong>, "like weeds and the ecosystem they invade", and the tumor can
+become <strong>dependent</strong> on its particular stromal cells.</p>
+
+<h3>The immune system: destroyer and helper</h3>
+<p>The immune cells in the stroma could destroy the tumor if they recognised it as abnormal tissue, but they can also <em>promote</em> it by giving signals that stimulate cancer-cell proliferation.
+The tumor manipulates the immune system in at least two ways:</p>
+<ol>
+  <li><strong>It invokes an inflammatory reaction</strong>, like the one that follows damage to normal tissue, and so acquires the stroma it needs. Tumors have been likened to <strong>unhealed wounds</strong>:
+  they trigger some of the same responses, including an increase in the <strong>permeability</strong> of nearby blood vessels (permeable = letting things through), which lets signalling molecules flow in and out,
+  and the deposition of extracellular matrix. Tumors also stimulate <strong>angiogenesis</strong>, the formation of new blood vessels, which keeps the tumor alive as it grows larger and its interior becomes
+  <strong>hypoxic</strong> (hypoxia = too little oxygen).</li>
+  <li><strong>It builds an immunosuppressive microenvironment</strong>: it blocks the activation of the white blood cells that could destroy it. Treatments that override this suppression have recently become
+  powerful tools in cancer therapy.</li>
+</ol>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 4: angiogenesis <strong>supplies blood to the tumor cells</strong>. The reason is here: a tumor's interior becomes hypoxic as it grows, and new vessels bring oxygen and nutrients.</p></div>
+
+<div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
+<p>The immunosuppressive trick has a name: cancer cells put proteins such as PDL1 on their surface that bind an inhibitory receptor (PD1) on the T cells that could kill them. Antibodies that block PD1 or PDL1,
+"immune checkpoint inhibitors", release the brake; a large fraction of patients with metastatic melanoma go into remission for years, and tumors with many mutations (more foreign-looking proteins) respond best.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Het <strong>stroma</strong> (fibroblasten, ontstekingscellen, endotheelcellen van bloed- en lymfevaten met <strong>pericyten</strong>, matrix) is een actieve partner: kankercellen sturen
+signaaleiwitten en <strong>proteasen</strong> (matrix-verbouwende enzymen), het stroma stuurt groeisignalen terug; ze evolueren samen ("onkruid en ecosysteem"). Alleen de kankercellen zijn gemuteerd.
+De tumor manipuleert het immuunsysteem: (1) hij wekt een <strong>ontsteking</strong> op als een <strong>niet-helende wonde</strong> (lekkende vaten, matrix, <strong>angiogenese</strong> tegen
+<strong>hypoxie</strong>); (2) hij maakt een <strong>immuunonderdrukkende</strong> omgeving. Therapieën die dat opheffen zijn krachtig.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Metastasis: surviving in a foreign land (2.1.7)</h2>
+<p>To kill us, cancer cells generally need to spread and multiply at new sites: <strong>metastasis</strong>. It is the most deadly and the least understood aspect of cancer, responsible for
+<strong>90 % of cancer deaths</strong>. Once spread through the body, a cancer is almost impossible to eradicate by surgery or local irradiation. Metastasis is a <strong>multistep process</strong>:</p>
+<ol>
+  <li><strong>Invade</strong> local tissue and vessels.</li>
+  <li><strong>Move through the circulation</strong> (the blood or the lymph).</li>
+  <li><strong>Leave the vessels.</strong></li>
+  <li><strong>Establish colonies</strong> at distant sites.</li>
+</ol>
+<p>Each step is complex and poorly understood at the molecular level, but the <strong>last step, colonization, is rate limiting</strong> (the slowest, hardest step that sets the pace of the whole process).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 300" width="880" height="300" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arF" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- left: origin -->
+    <rect x="10" y="30" width="260" height="180" rx="12" class="ct"/>
+    <text x="140" y="22" class="txt bold">organ of origin (e.g. bladder)</text>
+    <path d="M30,120 L250,120" class="lam"/>
+    <rect x="34" y="96" width="20" height="20" rx="5" class="epi"/><rect x="60" y="96" width="20" height="20" rx="5" class="epi"/><rect x="86" y="96" width="20" height="20" rx="5" class="tum"/><rect x="112" y="96" width="20" height="20" rx="5" class="tum"/><rect x="138" y="96" width="20" height="20" rx="5" class="tum"/><rect x="164" y="96" width="20" height="20" rx="5" class="epi"/><rect x="190" y="96" width="20" height="20" rx="5" class="epi"/><rect x="216" y="96" width="20" height="20" rx="5" class="epi"/>
+    <rect x="100" y="72" width="20" height="20" rx="5" class="tum"/><rect x="126" y="72" width="20" height="20" rx="5" class="tum"/>
+    <text x="60" y="60" class="txt small muted">1 benign tumor in the epithelium</text>
+    <rect x="112" y="124" width="20" height="20" rx="5" class="tum"/><rect x="128" y="146" width="20" height="20" rx="5" class="tum" transform="rotate(25 138 156)"/>
+    <text x="120" y="190" class="txt small">2 cells become invasive</text>
+    <path d="M30,175 C90,170 150,180 250,172" class="ves"/><path d="M30,175 C90,170 150,180 250,172" class="vesin"/>
+    <text x="215" y="162" class="txt small muted">capillary</text>
+    <circle cx="200" cy="175" r="6" class="tum"/>
+    <!-- middle: bloodstream -->
+    <path d="M275,120 L345,120" class="path accent" marker-end="url(#arF)"/>
+    <rect x="350" y="30" width="190" height="180" rx="12" class="ct"/>
+    <text x="445" y="22" class="txt bold">bloodstream</text>
+    <path d="M365,70 C410,60 470,80 525,70 M365,120 C410,130 470,110 525,120 M365,170 C410,160 470,180 525,170" class="ves"/>
+    <path d="M365,70 C410,60 470,80 525,70 M365,120 C410,130 470,110 525,120 M365,170 C410,160 470,180 525,170" class="vesin"/>
+    <circle cx="400" cy="68" r="5" class="tum"/><circle cx="470" cy="122" r="5" class="tum"/><circle cx="420" cy="170" r="5" class="tum"/><circle cx="500" cy="74" r="5" class="tum"/>
+    <text x="445" y="196" class="txt small">3 travel (CTCs)</text>
+    <text x="445" y="226" class="txt small bold">fewer than 1 in 1000</text>
+    <text x="445" y="240" class="txt small bold">still alive after 24 h</text>
+    <!-- right: liver -->
+    <path d="M545,120 L615,120" class="path accent" marker-end="url(#arF)"/>
+    <rect x="620" y="30" width="250" height="180" rx="12" class="organ"/>
+    <text x="745" y="22" class="txt bold">distant organ (e.g. liver)</text>
+    <path d="M640,80 C700,70 760,90 850,80" class="ves"/><path d="M640,80 C700,70 760,90 850,80" class="vesin"/>
+    <circle cx="700" cy="80" r="6" class="tum"/>
+    <text x="700" y="62" class="txt small muted">4 adhere to the vessel wall</text>
+    <path d="M706,88 L720,110" class="path accent" marker-end="url(#arF)"/>
+    <circle cx="726" cy="122" r="6" class="tum"/><circle cx="738" cy="128" r="6" class="tum"/><circle cx="730" cy="136" r="6" class="tum"/>
+    <text x="760" y="128" class="txt small left">5 escape the vessel:</text><text x="760" y="142" class="txt small left">micrometastasis</text>
+    <circle cx="700" cy="180" r="22" class="tum"/>
+    <text x="745" y="176" class="txt small left">6 colonize: full-blown</text><text x="745" y="190" class="txt small left">metastasis</text>
+    <text x="745" y="226" class="txt small bold">less than 0.1 % of the survivors</text>
+    <text x="745" y="240" class="txt small bold">colonize: the hardest step</text>
+    <text x="440" y="275" class="txt small muted">overall: fewer than one in thousands, perhaps one in millions, of the cells that enter the blood founds a metastasis</text>
+    <text x="440" y="292" class="txt small muted">(cells may also enter a lymphatic vessel first; clumps get trapped in lymph nodes → lymph-node metastases)</text>
+  </svg>
+  <figcaption>The steps of metastasis (syllabus Figure 2-17). CTC = circulating tumor cell, a cancer cell travelling in the blood. The numbers come from animal studies.</figcaption>
+</figure>
+
+<h3>Step 1: invasion needs loss of adhesion</h3>
+<p>To become malignant a cell must break free of the constraints that keep normal cells in place. Malignant tumors therefore show a disorganised pattern of growth with ragged borders and extensions into the
+surrounding tissue (page 2.2, Figure 2-7). The molecular changes are not well understood, but invasiveness almost certainly needs a disruption of the <strong>adhesive mechanisms</strong> (adhesion = sticking;
+the proteins that tether a cell to its neighbours and to the extracellular matrix).</p>
+
+<h3>Step 2: entering the circulation, blood or lymph</h3>
+<p>The invasive cells must penetrate the wall of a blood or lymphatic vessel. <strong>Lymphatic vessels</strong> are larger and have flimsier walls than blood vessels, so cancer cells can enter them in
+<strong>small clumps</strong>; such clumps often get trapped in <strong>lymph nodes</strong> (small organs along the lymph vessels that filter the lymph, lymfeklieren), giving <strong>lymph-node metastases</strong>.
+Cells that enter <strong>blood vessels</strong> do so singly or, more rarely, in small clusters. With modern cell-sorting techniques these <strong>circulating tumor cells</strong> (CTCs) can be detected in a blood sample,
+although they are a minute fraction of all blood cells. In a mouse model, <strong>clusters of CTCs</strong> gave rise to metastases at a much higher rate than single CTCs, presumably because cells sticking to each other
+override death signals and suppress apoptosis.</p>
+
+<h3>Steps 3 and 4: the experiment with labelled cells</h3>
+<p>Which later step is hardest? Label cancer cells with a fluorescent dye or with <strong>GFP</strong> (green fluorescent protein, a protein from a jellyfish that glows green; BIO01), inject them into the bloodstream
+of a mouse and follow them. Observed: many cells survive in the circulation, lodge in small vessels and exit into the tissue, whether or not they come from a tumor that metastasizes. Then:
+some die at once in the foreign tissue; others survive but fail to proliferate; others divide a few times and stop, forming <strong>micrometastases</strong> of ten to several thousand cells; <strong>very few</strong>
+establish full-blown metastases. The syllabus numbers: fewer than <strong>1 in 1000</strong> cells put into the blood is alive after 24 hours, and less than <strong>0.1 %</strong> of those survivors colonize a new tissue;
+overall fewer than one in thousands, perhaps one in millions. The syllabus compares them with the Vikings who landed in Greenland: most fail to survive in the alien environment, or found a small colony that dies out.</p>
+
+<h3>Dormant micrometastases</h3>
+<p>Many cancers are found before they have founded metastatic colonies and can be cured by destroying the primary tumor. But sometimes an undetected distant micrometastasis stays <strong>dormant</strong> (sleeping) for
+many years and then erupts into growth to form a large secondary tumor long after the primary tumor was removed.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Metastase</strong> veroorzaakt 90 % van de kankersterfte en is een proces in stappen: lokaal <strong>invaderen</strong> (verlies van <strong>adhesie</strong>), een bloed- of lymfevat binnengaan,
+<strong>reizen</strong> (circulerende tumorcellen, CTC's; clusters slagen beter), het vat verlaten, en <strong>koloniseren</strong>: de laatste stap is de <strong>snelheidsbepalende</strong>, moeilijkste.
+Lymfevaten zijn ruimer: klompjes cellen blijven steken in <strong>lymfeklieren</strong>. Muisproef met GFP-cellen: minder dan 1 op 1000 leeft na 24 u, minder dan 0,1 % daarvan koloniseert; de meeste
+vormen hoogstens een <strong>micrometastase</strong> die uitdooft, soms blijft er een jaren <strong>slapend</strong> en groeit later uit.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Summary of the first half of the chapter (2.1.8)</h2>
+<p>The syllabus summary, in simple words. Cancer cells, by definition, grow and proliferate in defiance of normal controls (<strong>neoplastic</strong>) and gain the ability to invade surrounding tissue and colonize
+distant organs (<strong>malignant</strong>). Because they make secondary tumors, metastases, they are hard to eradicate by surgery or local irradiation. Cancers start from a single cell with one initial mutation, but
+its progeny must change many more times. Tumor progression takes years and is a <strong>Darwinian process</strong> (named after Charles Darwin, who described natural selection): mutation and epigenetic change, natural
+selection, and occasional bursts of genomic chaos that create heterogeneity.</p>
+<p>As they evolve, cancer cells collect special properties: they grow and divide despite the signals that normally control proliferation; they lose the controls that permanently stop division or induce apoptosis after
+stress or DNA damage; they lose the mechanisms that keep cells in their proper place. All of this helps them survive and grow at home and then metastasize. The evolution of a tumor also depends on the <strong>stromal cells</strong>
+it attracts and manipulates. Because so many changes are needed, most cancer cells are genetically and/or epigenetically <strong>unstable</strong>; the instability is selected for because it accelerates the further changes.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Kankercellen zijn <strong>neoplastisch</strong> (delen ondanks de controles) en <strong>maligne</strong> (invaderen en koloniseren). Ze starten uit één cel, maar hebben vele extra veranderingen nodig:
+<strong>darwinistische evolutie</strong> met mutaties, epigenetische veranderingen, selectie en af en toe genomische chaos. Ze verliezen de remmen (stop, apoptose, plaats) en manipuleren het stroma.
+<strong>Instabiliteit</strong> wordt geselecteerd omdat ze de verdere veranderingen versnelt.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>microenvironment</td><td>the cells and matrix directly around the tumor cells</td></tr>
+  <tr><td>stroma</td><td>the supporting connective tissue of the tumor: fibroblasts, immune cells, vessels, matrix</td></tr>
+  <tr><td>mesenchymal cells</td><td>the connective-tissue cells of the embryo that talk to the epithelium during normal development</td></tr>
+  <tr><td>fibroblast</td><td>connective-tissue cell that makes matrix fibres</td></tr>
+  <tr><td>endothelial cell</td><td>cell of the inner wall of blood and lymphatic vessels</td></tr>
+  <tr><td>pericyte</td><td>vascular smooth muscle cell wrapped around a small vessel</td></tr>
+  <tr><td>lymph, lymphatic vessel, lymph node</td><td>fluid drained from the tissues; the vessels that carry it; the small filter organs along them</td></tr>
+  <tr><td>protease (proteolytic enzyme)</td><td>enzyme that cuts proteins; used to remodel the extracellular matrix</td></tr>
+  <tr><td>inflammation</td><td>the body's reaction to damage or infection: immune cells arrive, vessels leak</td></tr>
+  <tr><td>permeability</td><td>how easily a vessel wall lets molecules through</td></tr>
+  <tr><td>angiogenesis</td><td>formation of new blood vessels; supplies oxygen and nutrients</td></tr>
+  <tr><td>hypoxia, hypoxic</td><td>too little oxygen; the state of a large tumor's interior</td></tr>
+  <tr><td>immunosuppressive</td><td>suppressing the immune response (blocking the activation of white blood cells)</td></tr>
+  <tr><td>metastasis</td><td>spread to and growth at new sites; 90 % of cancer deaths; multistep</td></tr>
+  <tr><td>rate limiting</td><td>the slowest step that sets the pace of the whole process (colonization)</td></tr>
+  <tr><td>adhesion</td><td>cells sticking to neighbours and matrix; lost in invasion</td></tr>
+  <tr><td>circulating tumor cell (CTC)</td><td>a cancer cell travelling in the blood; clusters metastasize better than single cells</td></tr>
+  <tr><td>GFP</td><td>green fluorescent protein, used as a label to follow cells in a mouse</td></tr>
+  <tr><td>micrometastasis</td><td>a tiny colony of ten to several thousand cells that stops growing or dies out</td></tr>
+  <tr><td>dormant</td><td>sleeping: a micrometastasis that waits for years before growing</td></tr>
+  <tr><td>neoplastic</td><td>proliferating in defiance of normal controls</td></tr>
+  <tr><td>Darwinian process</td><td>evolution by variation, inheritance and natural selection</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "explain the concepts ... metastasis ... 'hallmarks of cancer'".</p>
+<ol>
+  <li>Name the components of the tumor stroma and explain the two-way communication with the cancer cells (signal proteins, proteases, co-evolution, dependence).</li>
+  <li>Explain the two ways a tumor manipulates the immune system: inflammation like an unhealed wound (permeability, matrix, angiogenesis) and immunosuppression.</li>
+  <li>State what angiogenesis does for a tumor and why the interior of a large tumor needs it (hypoxia) (exam Q4).</li>
+  <li>List the steps of metastasis and say which step is rate limiting (colonization).</li>
+  <li>Explain the role of adhesion in invasion, the difference between lymphatic and blood vessels (clumps, lymph nodes), and what CTCs are.</li>
+  <li>Describe the GFP mouse experiment and its numbers (less than 1 in 1000 survive 24 h; less than 0.1 % of those colonize; micrometastases; dormancy).</li>
+  <li>Give the summary 2.1.8: neoplastic, malignant, single cell, Darwinian process, instability selected for, stroma manipulated.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Which cells make up the tumor stroma, and which of them carry mutations?</dt>
+  <dd>Fibroblasts, inflammatory white blood cells, and the endothelial cells of blood and lymphatic vessels with their pericytes, in extracellular matrix. Only the cancer cells carry the mutations; the stromal cells are genetically normal but behave differently.</dd>
+
+  <dt>How do cancer cells change the stroma, and how does the stroma answer?</dt>
+  <dd>Cancer cells secrete signal proteins that change stromal-cell behaviour and proteases that remodel the matrix; stromal cells secrete signal proteins that stimulate cancer-cell growth and division and more proteases. They evolve together, and the tumor can become dependent on its stroma.</dd>
+
+  <dt>Why are tumors compared to unhealed wounds?</dt>
+  <dd>They invoke the same inflammatory reaction as damaged tissue: leakier blood vessels, deposition of extracellular matrix, and new blood vessels. This gives the tumor the stroma it needs.</dd>
+
+  <dt>What is angiogenesis and why does a growing tumor stimulate it?</dt>
+  <dd>The formation of new blood vessels. As the tumor grows larger its interior becomes hypoxic; new vessels supply oxygen and nutrients.</dd>
+
+  <dt>What is the second way the tumor manipulates the immune system?</dt>
+  <dd>It creates an immunosuppressive microenvironment by blocking the activation of the white blood cells that could destroy it. Therapies that override this suppression are powerful.</dd>
+
+  <dt>What fraction of cancer deaths is due to metastasis, and why?</dt>
+  <dd>About 90 %. A cancer that has spread through the body is almost impossible to eradicate by surgery or local irradiation.</dd>
+
+  <dt>List the steps of metastasis. Which is rate limiting?</dt>
+  <dd>Invade local tissue and vessels; move through the circulation; leave the vessels; establish colonies at distant sites. Colonization, the last step, is rate limiting.</dd>
+
+  <dt>Why do lymph-node metastases arise so often?</dt>
+  <dd>Lymphatic vessels are larger and have flimsier walls than blood vessels, so cancer cells enter them in small clumps, and the clumps get trapped in the lymph nodes.</dd>
+
+  <dt>What are circulating tumor cells, and what was found about clusters?</dt>
+  <dd>Cancer cells travelling in the blood, detectable by cell sorting although they are a minute fraction of blood cells. In a mouse model, clusters of CTCs metastasized far more often than single cells, probably because cell-cell adhesion suppresses apoptosis.</dd>
+
+  <dt>Describe the GFP experiment and its outcome.</dt>
+  <dd>Cancer cells labelled with GFP or a dye are injected into a mouse's bloodstream and followed. Many survive, lodge in small vessels and exit; then most die or fail to proliferate; some form micrometastases of ten to thousands of cells; very few form full metastases: fewer than 1 in 1000 survive 24 h, and less than 0.1 % of those colonize.</dd>
+
+  <dt>What is a dormant micrometastasis?</dt>
+  <dd>A tiny, undetected colony at a distant site that stays inactive for many years and then suddenly grows into a large secondary tumor, long after the primary tumor was removed.</dd>
+
+  <dt>Why does the summary call tumor progression a Darwinian process?</dt>
+  <dd>Because it works by mutation and epigenetic change (variation), inheritance by the clone, and natural selection, with occasional bursts of genomic chaos adding heterogeneity.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Stroma</strong> = fibroblasts + inflammatory white blood cells + endothelial cells (blood and lymph vessels) + pericytes + matrix; <strong>only cancer cells are mutated</strong>.</li>
+  <li><strong>Two-way talk</strong>: cancer cells → signal proteins + proteases; stroma → growth signals + proteases; "weeds and ecosystem"; tumor becomes dependent.</li>
+  <li>Immune trick 1: tumor = <strong>unhealed wound</strong>: inflammation, leaky vessels, matrix, <strong>angiogenesis</strong> against <strong>hypoxia</strong>.</li>
+  <li>Immune trick 2: <strong>immunosuppressive</strong> microenvironment; overriding it = powerful therapy.</li>
+  <li><strong>Angiogenesis supplies blood (oxygen, nutrients)</strong> to the tumor.</li>
+  <li><strong>Metastasis = 90 % of cancer deaths</strong>; steps: invade → enter vessel → travel → exit → <strong>colonize (rate limiting)</strong>.</li>
+  <li>Invasion needs <strong>loss of adhesion</strong>.</li>
+  <li><strong>Lymph vessels</strong>: flimsy walls, clumps, <strong>lymph-node metastases</strong>; blood: single cells = <strong>CTCs</strong>; CTC clusters do better.</li>
+  <li>GFP mouse: <strong>&lt; 1 in 1000</strong> alive after 24 h; <strong>&lt; 0.1 %</strong> of those colonize; micrometastases of 10 to thousands of cells.</li>
+  <li>A <strong>dormant micrometastasis</strong> can wake up years after the primary tumor is gone.</li>
+  <li>Summary: <strong>neoplastic + malignant</strong>, single cell, <strong>Darwinian</strong> evolution, instability selected for.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Which cells in a tumor carry the cancer mutations?
+    <ul class="opts"><li data-l="a">the fibroblasts</li><li data-l="b">the immune cells</li><li data-l="c">only the cancer cells</li><li data-l="d">all cells of the tumor</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> The stromal cells are genetically normal; the cancer cells change their <em>behaviour</em> with signals.</p></div></details></li>
+  <li>What is a pericyte?
+    <details><summary>Answer</summary><div class="ans"><p>A vascular smooth muscle cell wrapped around a small blood vessel; part of the stroma together with the endothelial cells that form the vessel.</p></div></details></li>
+  <li>Name two kinds of molecules cancer cells secrete to change their stroma.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Signal proteins</strong> (change the behaviour of stromal cells) and <strong>proteases</strong> (proteolytic enzymes that remodel the extracellular matrix).</p></div></details></li>
+  <li>True or false: "A tumor is like a wound that never heals."
+    <details><summary>Answer</summary><div class="ans"><p><strong>True.</strong> It invokes the inflammatory reaction of damaged tissue: leakier vessels, matrix deposition, new blood vessels; and that gives it the stroma it needs.</p></div></details></li>
+  <li>Why does the interior of a large tumor need angiogenesis?
+    <details><summary>Answer</summary><div class="ans"><p>Because it becomes <strong>hypoxic</strong> (too little oxygen) as the tumor grows; new blood vessels bring oxygen and nutrients. That is what "angiogenesis supplies blood to the tumor" means.</p></div></details></li>
+  <li>How does a tumor stop the immune cells in its stroma from killing it?
+    <details><summary>Answer</summary><div class="ans"><p>It builds an <strong>immunosuppressive microenvironment</strong>: it blocks the activation of the white blood cells that could destroy it.</p></div></details></li>
+  <li>Put the steps of metastasis in order: leave the vessel, invade locally, colonize, travel through the circulation, enter a vessel.
+    <details><summary>Answer</summary><div class="ans"><p>Invade locally → enter a vessel → travel through the circulation → leave the vessel → colonize. The last step is rate limiting.</p></div></details></li>
+  <li>Which step of metastasis is the hardest for a cancer cell?
+    <ul class="opts"><li data-l="a">entering the bloodstream</li><li data-l="b">surviving in the circulation</li><li data-l="c">leaving the vessel</li><li data-l="d">colonizing the distant organ</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> Many cells manage the earlier steps; very few survive and proliferate in the foreign tissue. Colonization is rate limiting.</p></div></details></li>
+  <li>Why do cancer cells enter lymphatic vessels in clumps but blood vessels singly?
+    <details><summary>Answer</summary><div class="ans"><p>Lymphatic vessels are larger with flimsier walls, so clumps can pass; those clumps get trapped in lymph nodes. Blood vessel walls only let single cells (rarely small clusters) through.</p></div></details></li>
+  <li>What is a CTC and which CTCs form metastases most easily?
+    <details><summary>Answer</summary><div class="ans"><p>A circulating tumor cell in the blood. <strong>Clusters</strong> of CTCs metastasize much more often than single cells (mouse model), presumably because adhesion between the cells suppresses apoptosis.</p></div></details></li>
+  <li>Give the two survival numbers from the syllabus.
+    <details><summary>Answer</summary><div class="ans"><p>Fewer than <strong>1 in 1000</strong> cancer cells put into the bloodstream is alive after 24 hours; less than <strong>0.1 %</strong> of those survivors colonize a new tissue. Overall one in thousands to one in millions.</p></div></details></li>
+  <li>What is a micrometastasis?
+    <details><summary>Answer</summary><div class="ans"><p>A small colony of ten to several thousand cells that stopped growing or dies out. One can stay <strong>dormant</strong> for years and later erupt into a large secondary tumor.</p></div></details></li>
+  <li>Why was GFP used in the mouse experiment?
+    <details><summary>Answer</summary><div class="ans"><p>To <strong>label</strong> the injected cancer cells so they could be followed in the living mouse and their fate at each step of metastasis could be seen.</p></div></details></li>
+  <li>Which molecular change is "almost certainly" needed for invasion?
+    <details><summary>Answer</summary><div class="ans"><p>Disruption of the <strong>adhesive mechanisms</strong> that keep a cell tethered to its neighbours and to the extracellular matrix.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="2.03_genetic_instability_and_hallmarks.html">← 2.3 Genetic instability and hallmarks</a><a href="index.html">Chapter 2 index</a><a href="2.05_oncogenes_and_tumor_suppressors.html">2.5 Oncogenes and tumor suppressors →</a></nav>
+</main>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How a cancer evolves</title>
+<link rel="stylesheet" href="anim.css">
+<style>
+:root { --ep: #cfe3f5; --tum1: #f0b35a; --tum2: #b57ad0; --tum3: #d64541; --lam: #8a6a2a; --vesc: #c9433b; --blood: #f6dcd9; --fib: #8fbf78; --imm: #4a7fb5;
+  --ct: #f4efe6; --organ: #e8d9c4; --chrom: #8cb4ff; --gene: #2f6fd6; --mut: #d1342f; --gas: #2fa37a; --brake: #d64541; --p53: #8e6cc0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ep: #2e4a63; --tum1: #d99a3c; --tum2: #a06fc4; --tum3: #e05a4e; --lam: #c9a35a; --vesc: #d9534a; --blood: #4a2c2a; --fib: #6f9e5c; --imm: #6fa3e0;
+    --ct: #262a2f; --organ: #3a3328; --chrom: #5f86c4; --gene: #6f9ae8; --mut: #ff6b5e; --gas: #45c495; --brake: #ff6b5e; --p53: #b39ae0; }
+}
+:root[data-theme="dark"] { --ep: #2e4a63; --tum1: #d99a3c; --tum2: #a06fc4; --tum3: #e05a4e; --lam: #c9a35a; --vesc: #d9534a; --blood: #4a2c2a; --fib: #6f9e5c; --imm: #6fa3e0;
+  --ct: #262a2f; --organ: #3a3328; --chrom: #5f86c4; --gene: #6f9ae8; --mut: #ff6b5e; --gas: #45c495; --brake: #ff6b5e; --p53: #b39ae0; }
+/* scene 1 */
+.ct { fill: var(--ct); }
+.lam { stroke: var(--lam); stroke-width: 4; }
+.ves { fill: var(--vesc); }
+.blood { fill: var(--blood); }
+.organ { fill: var(--organ); stroke: var(--muted); stroke-width: 1.5; }
+.ep { fill: var(--ep); stroke: var(--muted); stroke-width: 1; }
+.ep.mut { fill: var(--tum1); }
+.nuc { fill: var(--fg); opacity: .45; }
+.flash { fill: none; stroke: var(--hl); stroke-width: 4; }
+.gf { fill: var(--gas); }
+.stopsig { fill: var(--brake); }
+.tum1 { fill: var(--tum1); stroke: var(--fg); stroke-width: .6; }
+.tum2 { fill: var(--tum2); stroke: var(--fg); stroke-width: .6; }
+.tum3 { fill: var(--tum3); stroke: var(--fg); stroke-width: .6; }
+.fib { fill: var(--fib); }
+.imm { fill: var(--imm); }
+.angio { fill: none; stroke: var(--vesc); stroke-width: 5; stroke-linecap: round; }
+.dead { fill: var(--muted); opacity: .45; }
+.x { stroke: var(--fg); stroke-width: 2; }
+.hbox { fill: var(--card); stroke: var(--accent); stroke-width: 1.5; }
+.tbox { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.inset { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.lbl.red { fill: var(--stop); }
+.big2 { fill: var(--fg); font: 700 20px system-ui, sans-serif; text-anchor: middle; }
+.big2.w { fill: #fff; }
+.arrh { fill: var(--muted); }
+.arr { fill: none; stroke: var(--muted); stroke-width: 2; }
+/* scene 2 */
+.cellb { fill: var(--card); stroke: var(--muted); stroke-width: 2; }
+.chrom { fill: var(--chrom); }
+.geneb { fill: var(--gene); }
+.genebad { fill: var(--mut); }
+.mutdot { fill: var(--mut); }
+.prom { fill: var(--hl); }
+.xmark { stroke: var(--stop); stroke-width: 4; stroke-linecap: round; }
+.recO { fill: var(--gas); } .recI { fill: var(--gene); } .egfb { fill: var(--hl); }
+.panelb { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.gas { fill: var(--gas); } .brake, .brakeg { fill: var(--brake); }
+.stalk { stroke: var(--muted); stroke-width: 4; }
+.garc { fill: none; stroke: var(--line); stroke-width: 10; }
+.needle { stroke: var(--fg); stroke-width: 3; } .needle.red { stroke: var(--stop); }
+.nhub { fill: var(--fg); }
+.p53 { fill: var(--p53); }
+.swbox { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.swoff { fill: var(--line); } .swknob { fill: var(--stop); }
+.tline { stroke: var(--muted); stroke-width: 3; } .tdot { fill: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">← All chapters</a><a href="index.html">Animations</a><a href="../chapter_2/2.01_what_cancer_is.html">Page 2.1 What cancer is</a><a href="../chapter_2/2.02_one_cell_and_tumor_progression.html">2.2 Progression</a><a href="../chapter_2/2.04_microenvironment_and_metastasis.html">2.4 Metastasis</a><a href="../chapter_2/2.05_oncogenes_and_tumor_suppressors.html">2.5 Oncogenes</a><a href="../chapter_2/2.06_rb_and_losing_the_second_copy.html">2.6 Rb</a><a href="../chapter_2/2.08_p53_and_colorectal_cancer.html">2.8 p53</a><a href="../cheatsheet/cs2_cancer.html">Cheatsheet 2</a></nav>
+<h1>Cancer: how one cell becomes a tumour, and why one hit or two</h1>
+<p class="lede">Two animations of chapter 2. Press <b>▶ Play</b> to watch, or go step by step with <b>◀</b> and <b>▶|</b>. Click <b>🔇 Turn voice on</b> to hear every step. Keys: <span class="keys"><kbd>Space</kbd> play/pause, <kbd>←</kbd> <kbd>→</kbd> step, <kbd>Home</kbd> restart, <kbd>V</kbd> voice</span>.
+<span class="note">Simplified and not to scale: a real tumour has a billion cells before it can be felt, and takes 10 to 20 years to get there.</span></p>
+<div class="tabs" role="tablist">
+  <button data-tab="ev" role="tab" class="on"><b>1 · How a cancer evolves</b><small>one mutant cell → clone → benign → malignant → metastasis; the hallmarks</small></button>
+  <button data-tab="gen" role="tab"><b>2 · Oncogene versus tumor suppressor</b><small>gas and brake: one hit or two; Rb, p53, the three pathways, colorectal order</small></button>
+</div>
+<section class="player" id="pl-ev" aria-label="Part 1: how a cancer evolves"></section>
+<section class="player" id="pl-gen" aria-label="Part 2: oncogene versus tumor suppressor" hidden></section>
+<p class="note">Counting rule: a proto-oncogene needs <b>one</b> hit (dominant: the gas pedal sticks), a tumor suppressor gene needs <b>two</b> hits (recessive: the brake only fails when both copies are gone).</p>
+</main>
+<script src="audio/manifest.js"></script>
+<script src="player.js"></script>
+<script src="scenes_cancer.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.6 RNAi, CRISPR and knockout mice</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .dna { stroke: var(--c-N); stroke-width: 5; stroke-linecap: round; fill: none; }
+  .dna.red { stroke: var(--c-O); }
+  .dna.green { stroke: var(--c-Cl); }
+  .rna { stroke: var(--c-R); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .rna.thin { stroke-width: 2.5; }
+  .prot { fill: var(--c-P); fill-opacity: .55; stroke: var(--c-P); stroke-width: 1.5; }
+  .prot.cas { fill: var(--c-Cl); fill-opacity: .35; stroke: var(--c-Cl); }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .panel { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .mouse { fill: none; stroke: var(--fg); stroke-width: 1.5; }
+  .mouse.black { fill: var(--fg); }
+  .mouse.white { fill: var(--bg); }
+  .cut { stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 3 3; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.05_libraries_and_genome_manipulation.html">← 4.5 Libraries and genome manipulation</a><a href="index.html">Chapter 4 index</a><a href="4.07_detecting_molecules.html">4.7 Detecting molecules →</a></nav>
+
+<h1>4.6 Switching genes off: RNA interference, CRISPR-Cas9 and knockout mice</h1>
+<p class="lede">In one sentence: to learn what a gene does, you switch it off, either softly by destroying its mRNA (RNA interference), or for good by cutting or replacing
+the gene in the genome (CRISPR-Cas9, homologous recombination), and in a mouse that means growing a whole animal from engineered embryonic stem cells.</p>
+
+<p>Page 4.5 ended with three ways to change the use of a gene in the genome. This page explains them one by one, always starting from what the cell already has.
+RNA interference and CRISPR are both <em>borrowed from nature</em>: RNAi is a control system of plants, animals and fungi, and CRISPR-Cas is the immune system of bacteria.
+The syllabus explains each in an "intermezzo" (a short inserted text) and then shows how scientists turned them into tools. The knockout mouse is the oldest of the three
+methods and still the standard way to test what a gene does in a mammal.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>mRNA, translation</td><td>the RNA copy of a gene; reading it at the ribosome to make a protein (BIO01 chapter 5)</td></tr>
+  <tr><td>double-stranded RNA (dsRNA)</td><td>two RNA strands paired with each other, like DNA; rare in a cell, and a sign of a virus</td></tr>
+  <tr><td>miRNA</td><td>micro RNA: a tiny RNA of about 22 letters that a cell makes to switch its own genes down, by pairing with an mRNA (BIO01 chapter 6)</td></tr>
+  <tr><td>nuclease</td><td>an enzyme that cuts nucleic acids (DNA or RNA)</td></tr>
+  <tr><td>double-strand break</td><td>both strands of a DNA molecule broken at the same place: the most dangerous DNA damage (BIO01 chapter 4)</td></tr>
+  <tr><td>homologous recombination</td><td>the cell's own exchange of DNA between two molecules with the same sequence; used in meiosis (BIO01 chapter 7) and to repair double-strand breaks using the intact copy as a model</td></tr>
+  <tr><td>embryonic stem (ES) cell</td><td>a cell from an early embryo that can become every cell type (page 4.2)</td></tr>
+  <tr><td>selectable marker</td><td>a gene (for example antibiotic resistance) that lets only the cells that took up the DNA survive (page 4.4)</td></tr>
+  <tr><td>heterozygous, homozygous</td><td>having two different versions of a gene (one normal, one changed) / two identical versions (both changed)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: <strong>dsRNA</strong> = dubbelstrengs RNA, normaal zeldzaam in een cel. <strong>miRNA</strong> = klein RNA waarmee de cel eigen genen dempt (BIO01 hoofdstuk 6).
+<strong>Dubbelstrengsbreuk</strong> = beide DNA-strengen gebroken. <strong>Homologe recombinatie</strong> = uitwisseling tussen DNA-moleculen met dezelfde sequentie; de cel
+gebruikt dit om breuken te herstellen met de intacte kopie als model. <strong>Heterozygoot</strong> = één normaal en één veranderd exemplaar van een gen, <strong>homozygoot</strong> = beide gelijk.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. RNA interference: silencing a gene by destroying its mRNA (intermezzo, 4.5.2)</h2>
+<p><strong>RNA interference (RNAi)</strong> is a mechanism in which a cell uses a gene's <em>own sequence</em> to turn the gene off. Turning a gene off this way is called
+<strong>silencing</strong> (het zwijgen opleggen). It occurs in many organisms: animals, plants and fungi. Begin state: a cell with mRNAs being translated, and somewhere a
+<strong>double-stranded RNA (dsRNA)</strong> appears whose sequence matches one of those mRNAs. Goal of the cell: stop that gene.</p>
+<ol>
+  <li>An enzyme called <strong>Dicer</strong> (a nuclease; "to dice" = to cut into small cubes) cuts the long dsRNA into small pieces of about <strong>21 nucleotides</strong>, still double-stranded. These are the <strong>small interfering RNAs (siRNAs)</strong>.</li>
+  <li>An siRNA attaches to a protein of the <strong>Argonaute</strong> family (named after a sea animal; a protein that can hold an RNA and cut another).</li>
+  <li>One of the two strands is removed. The remaining strand stays in Argonaute and is now free to <strong>pair with a matching mRNA</strong> (A with U, G with C).</li>
+  <li>When the siRNA strand has found and paired with its mRNA, Argonaute either <strong>destroys the mRNA</strong> or <strong>blocks it</strong> so it cannot be used to make protein.</li>
+</ol>
+<p>Result: the gene is still in the DNA and is still transcribed, but its mRNA never becomes protein. This is how the cell controls which genes are active; it is also a defence against viruses (which make dsRNA). The miRNAs of BIO01 chapter 6 work through the same machinery.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 230" width="880" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- step 1: dsRNA -->
+    <path d="M20,40 L190,40 M20,52 L190,52" class="rna"/>
+    <text x="105" y="26" class="txt small bold">1 · long double-stranded RNA</text>
+    <path d="M105,66 L105,92" class="path accent" marker-end="url(#ar1)"/>
+    <ellipse cx="150" cy="80" rx="28" ry="12" class="prot"/><text x="150" y="84" class="txt small">Dicer</text>
+    <!-- step 2: siRNAs -->
+    <path d="M30,110 L70,110 M30,120 L70,120 M85,110 L125,110 M85,120 L125,120 M140,110 L180,110 M140,120 L180,120" class="rna thin"/>
+    <text x="105" y="142" class="txt small bold">2 · siRNAs, ≈ 21 nucleotides</text>
+    <path d="M200,115 L250,115" class="path accent" marker-end="url(#ar1)"/>
+    <!-- step 3: Argonaute with one strand -->
+    <ellipse cx="320" cy="115" rx="50" ry="28" class="prot"/>
+    <text x="320" y="104" class="txt small">Argonaute</text>
+    <path d="M290,124 L350,124" class="rna thin"/>
+    <text x="320" y="166" class="txt small bold">3 · one strand kept,</text>
+    <text x="320" y="180" class="txt small bold">the other removed</text>
+    <path d="M378,115 L428,115" class="path accent" marker-end="url(#ar1)"/>
+    <!-- step 4: pairing with mRNA -->
+    <path d="M440,140 L760,140" class="rna"/>
+    <text x="600" y="162" class="txt small muted">the matching mRNA of the gene</text>
+    <ellipse cx="600" cy="115" rx="50" ry="28" class="prot"/>
+    <text x="600" y="104" class="txt small">Argonaute</text>
+    <path d="M570,124 L630,124" class="rna thin"/>
+    <path d="M572,130 L572,136 M586,130 L586,136 M600,130 L600,136 M614,130 L614,136 M628,130 L628,136" class="bond hbond"/>
+    <text x="600" y="60" class="txt small bold">4 · siRNA strand pairs with the mRNA</text>
+    <text x="820" y="86" class="txt small">mRNA cut up,</text>
+    <text x="820" y="100" class="txt small">or translation</text>
+    <text x="820" y="114" class="txt small">blocked</text>
+    <text x="820" y="172" class="txt small bold">= gene silenced</text>
+    <path d="M770,140 L790,140" class="cut"/>
+  </svg>
+  <figcaption>RNA interference (syllabus Figure 4-16). Purple = RNA, orange = proteins, dotted blue = base pairing between the siRNA strand and the mRNA. The DNA of the gene is never touched.</figcaption>
+</figure>
+
+<h3>RNAi as a tool: knocking a gene down (4.5.2)</h3>
+<p>Instead of disrupting a gene in the DNA, a scientist can use this pathway to destroy a chosen mRNA. You order <strong>synthetic siRNAs</strong>: short double-stranded RNAs
+with the sequence of the gene you want to silence, already the right size, so Dicer is not needed. Put into cells, they load into Argonaute and the mRNA of that gene is destroyed.
+The gene's expression goes <em>down</em>, not necessarily to zero: this is called a <strong>knock-down</strong>. Libraries of siRNAs (page 4.5) can knock down every gene of a genome one at a time.</p>
+<table class="cmp">
+  <tr><td>principle</td><td>a short dsRNA with the gene's sequence guides Argonaute to the gene's mRNA, which is destroyed or blocked</td></tr>
+  <tr><td>what you need</td><td>synthetic siRNAs (≈ 21 nt, double-stranded) matching the target; a way to get them into the cells</td></tr>
+  <tr><td>steps</td><td>design siRNA → introduce into cells → Argonaute loads one strand → target mRNA destroyed → less protein</td></tr>
+  <tr><td>used for</td><td>quickly testing what happens when a gene is turned down; genome-wide screens</td></tr>
+  <tr><td>trap</td><td>knock-<em>down</em>, not knock-<em>out</em>: the DNA is unchanged, the effect is partial and temporary</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>RNA-interferentie</strong>: dubbelstrengs RNA wordt door <strong>Dicer</strong> in stukjes van ≈ 21 nucleotiden geknipt (<strong>siRNA's</strong>); een siRNA bindt aan
+<strong>Argonaute</strong>, één streng wordt verwijderd, de andere paart met het passende <strong>mRNA</strong>; Argonaute breekt dat mRNA af of blokkeert de vertaling = het gen
+is <strong>gesilenced</strong>. Het DNA verandert niet. Als werktuig: synthetische siRNA's tegen een gekozen gen geven een <strong>knock-down</strong> (minder expressie, niet nul).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. CRISPR-Cas: the immune system of bacteria (intermezzo)</h2>
+<p>Bacteria are attacked by viruses (bacteriophages, chapter 3). Some bacteria have a memory of past attacks. Begin state: a bacterium infected by a virus; it survives.</p>
+<ol>
+  <li>The bacterium <strong>captures a small piece of the virus's DNA</strong> and stores it in a special region of its own chromosome. That region is called <strong>CRISPR</strong>:
+  <em>clustered regularly interspaced short palindromic repeats</em>. In plain words: a row of short repeated sequences (the repeats), and between them the stored virus pieces.
+  A stored piece is called a <strong>spacer</strong> (it sits in the space between two repeats). The whole row is the <strong>CRISPR array</strong> (array = ordered row). This is the bacterium's <strong>memory</strong> of the virus.</li>
+  <li>The array is transcribed into RNA, which is cut into short pieces, one per spacer: the <strong>crRNAs</strong> (CRISPR RNAs).</li>
+  <li>Each crRNA attaches to a <strong>Cas</strong> protein (<em>CRISPR-associated</em>: a nuclease that cuts DNA) and guides it. If the same virus attacks again, the crRNA pairs with the
+  matching virus DNA, and Cas <strong>cuts and destroys</strong> it. The infection stops.</li>
+</ol>
+<p>So: a memory (the spacer in the DNA), a guide (the crRNA) and scissors (Cas). Scientists realised that the guide can be any sequence they like.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>CRISPR-Cas</strong> is het immuunsysteem van bacteriën. Een stukje virus-DNA wordt als <strong>spacer</strong> opgeslagen tussen herhalingen in de <strong>CRISPR-array</strong>
+(geheugen). De array wordt afgeschreven tot korte <strong>crRNA's</strong>; elk crRNA leidt een <strong>Cas</strong>-eiwit (DNA-schaar) naar het passende virus-DNA bij een volgende
+aanval, en Cas knipt het kapot.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. CRISPR-Cas9 as a tool: molecular scissors with a GPS (4.5.3)</h2>
+<p>The syllabus' image: <strong>a pair of molecular scissors guided by a GPS</strong>. The scissors are the protein <strong>Cas9</strong> (one particular Cas nuclease); the GPS is a
+<strong>guide RNA</strong> (gRNA, also called sgRNA, single guide RNA) that the scientist designs with the sequence of the target. Begin state: a eukaryotic cell (a cell with a nucleus:
+plant, animal, human) whose DNA you want to change at one chosen place. Goal: edit exactly there.</p>
+<ol>
+  <li>Design a guide RNA that matches the chosen DNA sequence; bring the guide RNA and Cas9 into the cell.</li>
+  <li>The guide RNA pairs with the complementary DNA sequence, so the Cas9 it carries sits exactly at the target.</li>
+  <li>Cas9 makes a <strong>double-strand break</strong> there (both strands cut).</li>
+  <li>The cell's own <strong>repair machinery</strong> steps in. Two routes (Figure 4-19):
+    <ul>
+      <li><strong>Non-homologous end joining (NHEJ)</strong>: the two broken ends are simply glued back together, without a model. This is sloppy ("more mutagenic"): letters get lost or added at the joint, which usually wrecks the gene. Good if you want a <strong>deletion or knockout</strong>.</li>
+      <li><strong>Homologous recombination</strong>: if a DNA fragment is supplied whose ends match the DNA on either side of the break, the cell uses that fragment as a model to repair the break, and copies in whatever is in the middle of the fragment. Good if you want to <strong>add, remove or replace</strong> a precise piece.</li>
+    </ul></li>
+  <li>With <strong>two guide RNAs</strong> aimed at two places on a chromosome, two cuts are made: the piece in between can be lost (a <strong>large deletion</strong>) or the pieces rejoined wrongly (a <strong>chromosomal rearrangement</strong>).</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 300" width="880" height="300" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- step 1: Cas9 + guide on DNA -->
+    <path d="M30,70 L420,70 M30,84 L420,84" class="dna"/>
+    <text x="225" y="20" class="txt small bold">1 · guide RNA brings Cas9 to the target sequence</text>
+    <ellipse cx="225" cy="60" rx="70" ry="34" class="prot cas"/>
+    <text x="225" y="50" class="txt small bold">Cas9</text>
+    <path d="M190,72 L260,72" class="rna thin"/>
+    <text x="225" y="104" class="txt small muted">guide RNA paired with one DNA strand</text>
+    <text x="130" y="54" class="txt small muted left">genomic DNA</text>
+    <!-- step 2: cut -->
+    <path d="M225,116 L225,140" class="path accent" marker-end="url(#ar2)"/>
+    <text x="240" y="132" class="txt small left">2 · double-strand break</text>
+    <path d="M30,160 L215,160 M30,174 L215,174 M235,160 L420,160 M235,174 L420,174" class="dna"/>
+    <path d="M225,150 L225,184" class="cut"/>
+    <!-- routes -->
+    <path d="M160,190 L110,222" class="path accent" marker-end="url(#ar2)"/>
+    <path d="M290,190 L340,222" class="path accent" marker-end="url(#ar2)"/>
+    <text x="100" y="246" class="txt small bold">3a · NHEJ: ends glued directly</text>
+    <path d="M30,262 L100,262 M30,276 L100,276 M118,262 L190,262 M118,276 L190,276" class="dna"/>
+    <path d="M100,262 L118,262 M100,276 L118,276" class="dna red"/>
+    <text x="100" y="294" class="txt small muted">letters lost or added → gene broken (knockout)</text>
+    <text x="350" y="246" class="txt small bold">3b · homologous recombination</text>
+    <path d="M260,262 L320,262 M260,276 L320,276 M380,262 L440,262 M380,276 L440,276" class="dna"/>
+    <path d="M320,262 L380,262 M320,276 L380,276" class="dna green"/>
+    <text x="350" y="294" class="txt small muted">supplied template copied in → precise change</text>
+    <!-- right: two guides -->
+    <line x1="470" y1="8" x2="470" y2="292" class="path" style="stroke-dasharray:3 5"/>
+    <text x="675" y="20" class="txt small bold">two guide RNAs = two cuts</text>
+    <path d="M490,70 L860,70 M490,84 L860,84" class="dna"/>
+    <path d="M580,60 L580,94 M770,60 L770,94" class="cut"/>
+    <text x="580" y="50" class="txt small muted">cut 1</text><text x="770" y="50" class="txt small muted">cut 2</text>
+    <path d="M675,100 L675,130" class="path accent" marker-end="url(#ar2)"/>
+    <path d="M490,160 L580,160 M490,174 L580,174 M600,160 L690,160 M600,174 L690,174" class="dna"/>
+    <text x="590" y="200" class="txt small">large deletion: the piece in between is lost</text>
+    <path d="M490,240 L580,240 M490,254 L580,254" class="dna"/>
+    <path d="M600,240 L690,240 M600,254 L690,254" class="dna red"/>
+    <path d="M710,240 L800,240 M710,254 L800,254" class="dna"/>
+    <text x="645" y="280" class="txt small">rearrangement: pieces rejoined in the wrong order</text>
+  </svg>
+  <figcaption>CRISPR-Cas9 (syllabus Figure 4-19). Blue = genomic DNA, purple = guide RNA, green = a supplied repair template, red = a wrong joint or a misplaced piece. The scientist only designs the guide (and the template); the cutting and the repair are done by Cas9 and the cell.</figcaption>
+</figure>
+
+<table class="cmp">
+  <tr><td>principle</td><td>a designed guide RNA aims the nuclease Cas9 at one DNA sequence; the cell's repair of the cut makes the change</td></tr>
+  <tr><td>what you need</td><td>Cas9 protein (or its gene), a guide RNA matching the target, optionally a DNA template for precise repair</td></tr>
+  <tr><td>steps</td><td>design guide → deliver guide + Cas9 → pairing at the target → double-strand break → NHEJ (sloppy, knockout) or homologous recombination (precise, with template)</td></tr>
+  <tr><td>used for</td><td>knockouts, precise edits, large deletions (two guides); faster, cheaper and more accurate than older methods</td></tr>
+  <tr><td>trap</td><td>Cas9 cuts, it does not edit: the result depends on which repair route the cell uses; and no method is 100 % accurate (cuts elsewhere happen)</td></tr>
+</table>
+
+<h3>Applications and ethics</h3>
+<ul>
+  <li><strong>Medicine:</strong> correcting defective genes in genetic disorders such as cystic fibrosis (a disease of thick mucus in the lungs), sickle cell anemia (misshapen red blood cells) and some forms of blindness; <strong>cancer therapy</strong>: modifying a patient's immune cells so they recognise and attack the tumour (<strong>CAR-T cells</strong>).</li>
+  <li><strong>Agriculture:</strong> crops resistant to pests, diseases and harsh weather, for example wheat resistant to fungal infection, rice that grows in drought.</li>
+  <li><strong>Infectious disease:</strong> changing the DNA of mosquitoes so they can no longer transmit the malaria parasite.</li>
+  <li><strong>Ethical questions:</strong> editing human <strong>embryos</strong>, and changes that are <strong>passed on to future generations</strong> (changes in the germ line: the cells that become eggs and sperm). The syllabus: use this powerful tool responsibly.</li>
+</ul>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>CRISPR-Cas9</strong> = moleculaire schaar (Cas9) met een GPS (<strong>guide-RNA</strong>, ontworpen door de onderzoeker). Het guide-RNA paart met de doelsequentie, Cas9
+maakt daar een <strong>dubbelstrengsbreuk</strong>, en de cel herstelt die: via <strong>NHEJ</strong> (uiteinden direct aan elkaar, slordig → deletie, knock-out) of via
+<strong>homologe recombinatie</strong> met een meegeleverd DNA-stuk (precieze verandering). Twee guides → grote deletie of herschikking. Toepassingen: erfelijke ziekten,
+CAR-T-cellen tegen kanker, gewassen, malariamuggen. Ethiek: embryo's en erfelijke veranderingen.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Knockout mice: switching a gene off in a whole mammal (4.5.1, Figure 4-18)</h2>
+<p>A <strong>knockout mouse</strong> is a mouse in which one or more genes have been disrupted (knocked out) in every cell. These mice are important tools for studying the role
+of a gene in mammals. The method relies on <strong>homologous recombination</strong> in <strong>ES cells</strong> (page 4.2) and on coat colour as a visible marker. Begin state: ES cells
+from a <strong>white</strong> mouse, growing in culture, and a <strong>targeting vector</strong>: a piece of DNA in which the gene of interest has been replaced by a selectable marker
+(resistance to the drug <strong>G418</strong>, an antibiotic that kills mammalian cells) flanked by DNA matching the genome on both sides. Goal: a mouse in which both copies of the gene are gone.</p>
+<ol>
+  <li><strong>Grow ES cells</strong> from a white-coated mouse in culture.</li>
+  <li><strong>Introduce the targeting vector</strong>. In a few cells, homologous recombination swaps the normal gene for the marker: the matching ends line up with the genome and the middle is exchanged (the gene is replaced by the resistance gene).</li>
+  <li><strong>Select</strong>: grow the cells in medium with G418. Only cells that took up the marker correctly survive; grow them as a pure population.</li>
+  <li><strong>Inject</strong> these ES cells into a <strong>blastocyst</strong> of a <strong>black</strong> mouse. (A blastocyst is a very early embryo, a hollow ball of a few hundred cells.) The injected ES cells join the embryo's own cells and contribute to the tissues of the animal that develops.</li>
+  <li><strong>Implant</strong> the blastocyst in the uterus of a surrogate black female mouse (a surrogate = a stand-in mother).</li>
+  <li><strong>Chimeric pups</strong> are born: mice with a <strong>mixed black-and-white coat</strong>, because some skin patches came from the black embryo and some from the white engineered ES cells. (Chimera: a creature made of parts of different animals, from Greek mythology. The mother's own, untouched blastocysts simply give black mice.)</li>
+  <li><strong>Backcross</strong> the chimeras to black mice. If the engineered ES cells also contributed to the <strong>germ line</strong> (the cells that make eggs and sperm), some pups are white: they inherited the ES-cell genome, with one knocked-out copy (heterozygous).</li>
+  <li><strong>Cross</strong> these heterozygous mice with each other: a quarter of their pups are <strong>homozygous</strong>, with both copies knocked out in every cell. These are the knockout mice.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 240" width="880" height="240" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- 1 ES cells -->
+    <circle cx="60" cy="70" r="14" class="cell"/><circle cx="90" cy="60" r="14" class="cell"/><circle cx="78" cy="94" r="14" class="cell"/>
+    <text x="75" y="130" class="txt small bold">1 · ES cells</text><text x="75" y="144" class="txt small muted">white mouse</text>
+    <path d="M118,80 L150,80" class="path accent" marker-end="url(#ar3)"/>
+    <!-- 2-3 targeting + selection -->
+    <path d="M160,60 L250,60" class="dna"/><path d="M186,60 L224,60" class="dna green"/>
+    <text x="205" y="44" class="txt small muted">targeting vector</text>
+    <text x="205" y="82" class="txt small muted">gene → G418 marker</text>
+    <circle cx="205" cy="104" r="14" class="cell" style="stroke:var(--c-Cl);stroke-width:3"/>
+    <text x="205" y="130" class="txt small bold">2–3 · recombine,</text><text x="205" y="144" class="txt small bold">select with G418</text>
+    <path d="M262,80 L294,80" class="path accent" marker-end="url(#ar3)"/>
+    <!-- 4 blastocyst -->
+    <circle cx="345" cy="80" r="34" class="cell" style="stroke:var(--fg)"/>
+    <circle cx="333" cy="72" r="5" class="cell" style="fill:var(--fg)"/><circle cx="347" cy="64" r="5" class="cell" style="fill:var(--fg)"/><circle cx="356" cy="78" r="5" class="cell" style="fill:var(--fg)"/>
+    <circle cx="338" cy="90" r="5" class="cell" style="stroke:var(--c-Cl);stroke-width:2"/><circle cx="352" cy="94" r="5" class="cell" style="stroke:var(--c-Cl);stroke-width:2"/>
+    <text x="345" y="130" class="txt small bold">4 · inject into a</text><text x="345" y="144" class="txt small bold">black-mouse blastocyst</text>
+    <path d="M386,80 L418,80" class="path accent" marker-end="url(#ar3)"/>
+    <!-- 5-6 surrogate, chimera -->
+    <ellipse cx="470" cy="80" rx="30" ry="18" class="mouse black"/>
+    <ellipse cx="462" cy="76" rx="9" ry="8" class="mouse white"/><ellipse cx="482" cy="86" rx="7" ry="6" class="mouse white"/>
+    <text x="470" y="130" class="txt small bold">5–6 · surrogate</text><text x="470" y="144" class="txt small bold">mother, chimeric</text><text x="470" y="158" class="txt small bold">pup (patchy coat)</text>
+    <path d="M508,80 L540,80" class="path accent" marker-end="url(#ar3)"/>
+    <!-- 7 backcross -->
+    <ellipse cx="590" cy="80" rx="26" ry="16" class="mouse white"/>
+    <text x="590" y="84" class="txt small">+/−</text>
+    <text x="590" y="130" class="txt small bold">7 · backcross</text><text x="590" y="144" class="txt small bold">to black: white</text><text x="590" y="158" class="txt small bold">pups = germ line</text>
+    <text x="590" y="172" class="txt small muted">hit, heterozygous</text>
+    <path d="M626,80 L658,80" class="path accent" marker-end="url(#ar3)"/>
+    <!-- 8 homozygous -->
+    <ellipse cx="710" cy="80" rx="26" ry="16" class="mouse white"/>
+    <text x="710" y="84" class="txt small">−/−</text>
+    <text x="710" y="130" class="txt small bold">8 · cross +/− mice:</text><text x="710" y="144" class="txt small bold">1 in 4 is −/−</text>
+    <text x="710" y="158" class="txt small muted">= knockout mouse</text>
+    <text x="440" y="200" class="txt muted">white coat = from the engineered ES cells · black coat = from the host embryo · green = the replaced gene (G418 marker)</text>
+    <text x="440" y="222" class="txt muted">+/− = one copy knocked out, −/− = both copies knocked out</text>
+  </svg>
+  <figcaption>Making a knockout mouse (syllabus Figure 4-18). The two coat colours make it possible to see, by eye, which mice carry the engineered genome.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Why two coat colours</span>
+<p>The ES cells come from a white mouse and the host blastocyst from a black mouse. A pup with <strong>patches of both colours</strong> proves that the engineered ES cells
+contributed to its body (a chimera). A <strong>white pup</strong> from a chimera crossed to a black mouse proves that the ES cells also made its <strong>germ cells</strong>: only then is the
+knockout heritable. Coat colour is simply a visible marker; the knockout gene itself is invisible.</p></div>
+
+<table class="cmp">
+  <tr><td>principle</td><td>homologous recombination replaces the gene by a marker in ES cells; the ES cells grow into part of a mouse, including its germ line</td></tr>
+  <tr><td>what you need</td><td>ES cells (white mouse), a targeting vector with G418 resistance between matching ends, black-mouse blastocysts, surrogate mothers, breeding</td></tr>
+  <tr><td>steps</td><td>ES cells → vector in → select on G418 → inject into blastocyst → implant → chimeras → backcross (heterozygous) → cross (homozygous knockout)</td></tr>
+  <tr><td>used for</td><td>the ultimate test of what a gene does in a mammal; disease models (chapter 2: transgenic and knockout mice for cancer genes)</td></tr>
+  <tr><td>trap</td><td>a chimera is not yet a knockout: its own germ cells may be from the black embryo; only after two generations of crossing do you have homozygous knockouts in every cell</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Knock-out muis</strong>: in <strong>ES-cellen</strong> van een witte muis vervangt <strong>homologe recombinatie</strong> het gen door een G418-resistentiegen (targeting vector);
+selectie op G418; de ES-cellen worden in een <strong>blastocyst</strong> (vroeg embryo, holle bal van enkele honderden cellen) van een zwarte muis gespoten en in een draagmoeder
+geplaatst. De jongen zijn <strong>chimeren</strong> (zwart-wit gevlekt). Terugkruisen met zwart: witte jongen = de ES-cellen zaten ook in de kiembaan, heterozygoot. Heterozygoten
+onderling kruisen → 1 op 4 <strong>homozygoot</strong>: beide kopieën uit, in elke cel = de knock-out muis.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. The three methods side by side</h2>
+<table class="cmp">
+  <tr><th></th><th>RNAi (siRNA)</th><th>CRISPR-Cas9</th><th>Knockout mouse (homologous recombination)</th></tr>
+  <tr><td>what is changed</td><td>the mRNA (destroyed); DNA untouched</td><td>the DNA, at the cut site</td><td>the DNA: gene replaced by a marker</td></tr>
+  <tr><td>guide</td><td>siRNA sequence</td><td>guide RNA sequence</td><td>the matching ends of the targeting vector</td></tr>
+  <tr><td>who does the work</td><td>Dicer, Argonaute</td><td>Cas9 cuts; the cell repairs (NHEJ or homologous recombination)</td><td>the cell's homologous recombination</td></tr>
+  <tr><td>result</td><td>knock-down (less), temporary</td><td>knockout or precise edit, permanent</td><td>knockout in every cell of an animal, heritable</td></tr>
+  <tr><td>origin</td><td>gene control and antiviral defence of eukaryotes</td><td>immune system of bacteria</td><td>cell's own DNA repair/recombination</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>RNAi raakt het <strong>mRNA</strong> (tijdelijk, knock-down); CRISPR en homologe recombinatie veranderen het <strong>DNA</strong> (blijvend, knock-out of precieze wijziging). De
+knock-out muis is de enige die een heel dier met het defect in <strong>elke cel</strong> oplevert, erfelijk.</p></div>
+
+<!-- ============================================================ -->
+<h2>6. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>RNA interference (RNAi)</td><td>silencing a gene with a double-stranded RNA that matches its mRNA</td></tr>
+  <tr><td>silencing</td><td>switching a gene off (here: without changing its DNA)</td></tr>
+  <tr><td>Dicer</td><td>the enzyme that cuts long dsRNA into siRNAs of about 21 nucleotides</td></tr>
+  <tr><td>siRNA</td><td>small interfering RNA: a ≈ 21-nucleotide double-stranded RNA piece</td></tr>
+  <tr><td>Argonaute</td><td>the protein that holds one siRNA strand and destroys or blocks the matching mRNA</td></tr>
+  <tr><td>knock-down</td><td>expression of a gene reduced (RNAi), DNA unchanged</td></tr>
+  <tr><td>knockout</td><td>a gene inactivated in the genome itself</td></tr>
+  <tr><td>CRISPR</td><td>clustered regularly interspaced short palindromic repeats: the bacterial DNA region that stores virus pieces</td></tr>
+  <tr><td>spacer, CRISPR array</td><td>a stored piece of virus DNA; the row of repeats and spacers</td></tr>
+  <tr><td>crRNA</td><td>the short RNA made from one spacer, which guides Cas</td></tr>
+  <tr><td>Cas, Cas9</td><td>CRISPR-associated nuclease; Cas9 is the one used as a tool</td></tr>
+  <tr><td>guide RNA (gRNA, sgRNA)</td><td>the designed RNA that brings Cas9 to a chosen DNA sequence</td></tr>
+  <tr><td>double-strand break</td><td>both DNA strands cut at one place</td></tr>
+  <tr><td>NHEJ (non-homologous end joining)</td><td>repair that glues the broken ends straight back together, error-prone</td></tr>
+  <tr><td>homologous recombination</td><td>repair or exchange using a matching DNA sequence as model; precise</td></tr>
+  <tr><td>CAR-T cells</td><td>a patient's immune cells, modified to recognise and attack the tumour</td></tr>
+  <tr><td>germ line</td><td>the cells that become eggs and sperm; changes there are inherited</td></tr>
+  <tr><td>ES cells</td><td>embryonic stem cells: can become every cell type, including germ cells</td></tr>
+  <tr><td>targeting vector</td><td>DNA with matching ends and a marker in the middle, used to replace a gene by homologous recombination</td></tr>
+  <tr><td>G418</td><td>a drug that kills mammalian cells; the resistance gene is the selectable marker</td></tr>
+  <tr><td>blastocyst</td><td>very early embryo: a hollow ball of a few hundred cells</td></tr>
+  <tr><td>surrogate</td><td>stand-in mother that carries the embryo</td></tr>
+  <tr><td>chimera, chimeric</td><td>an animal made of cells of two different origins (here: patchy coat)</td></tr>
+  <tr><td>backcross</td><td>crossing an offspring back to one of the parent types (here: to a black mouse)</td></tr>
+  <tr><td>heterozygous / homozygous</td><td>one copy changed / both copies changed</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. What the quiz and exam expect from this section</h2>
+<p>Learning objective of the chapter: "The student describes the principle, methodology and applications of different forms of nucleic acid based technologies" and "utilizes fundamental concepts ... to solve problems related to biological processes at the molecular level".</p>
+<ol>
+  <li>Tell the RNAi story in order: dsRNA → Dicer → siRNA (≈ 21 nt) → Argonaute → one strand → pairs with mRNA → mRNA destroyed or blocked = silencing.</li>
+  <li>Explain how synthetic siRNAs knock a gene down, and why that is not a knockout.</li>
+  <li>Explain CRISPR-Cas as the bacterial immune system (spacer, array, crRNA, Cas).</li>
+  <li>Explain CRISPR-Cas9 as a tool: guide RNA, Cas9, double-strand break, NHEJ versus homologous recombination with a template, two guides for large deletions; applications and ethical issues.</li>
+  <li>Give the eight steps of making a knockout mouse and explain the role of the two coat colours, the selection on G418, the chimeras and the two rounds of crossing.</li>
+  <li>Define NHEJ, homologous recombination, blastocyst, chimera, germ line, heterozygous and homozygous.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>8. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What triggers RNA interference, and what is the result?</dt>
+  <dd>Double-stranded RNA whose sequence matches a gene. The result is silencing: the gene's mRNA is destroyed or blocked, so no protein is made, while the DNA stays unchanged.</dd>
+
+  <dt>What do Dicer and Argonaute do?</dt>
+  <dd>Dicer cuts long dsRNA into small interfering RNAs of about 21 nucleotides. Argonaute takes up an siRNA, removes one strand, and uses the other to find the matching mRNA, which it then destroys or blocks.</dd>
+
+  <dt>How do scientists use RNAi?</dt>
+  <dd>They introduce synthetic siRNAs (short double-stranded RNAs that need no processing by Dicer) with the sequence of a chosen gene. The gene's mRNA is degraded, so its expression is reduced: a knock-down.</dd>
+
+  <dt>What is CRISPR in a bacterium?</dt>
+  <dd>A region of the bacterial chromosome where pieces of DNA from viruses that attacked earlier are stored as spacers between short repeats. It is a memory. When the array is transcribed, each spacer gives a crRNA that guides a Cas nuclease to cut the same virus on a later attack.</dd>
+
+  <dt>In the "scissors with a GPS" picture, what is the scissors and what is the GPS?</dt>
+  <dd>The scissors are the Cas9 protein, which cuts both DNA strands. The GPS is the guide RNA, designed by the scientist, which pairs with the target sequence and so tells Cas9 where to cut.</dd>
+
+  <dt>Cas9 has cut the DNA. What happens next, and how does the scientist steer it?</dt>
+  <dd>The cell repairs the double-strand break. Without a template it uses non-homologous end joining, which is error-prone and usually wrecks the gene (knockout). If the scientist supplies a DNA fragment with matching ends, the cell repairs by homologous recombination and copies the fragment in: a precise addition, removal or replacement.</dd>
+
+  <dt>What can you do with two guide RNAs?</dt>
+  <dd>Make two cuts on one chromosome. The piece in between can be lost (a large deletion) or the pieces can be rejoined in the wrong order (a chromosomal rearrangement).</dd>
+
+  <dt>Name three applications of CRISPR-Cas9 and the main ethical concern.</dt>
+  <dd>Correcting genes in cystic fibrosis, sickle cell anemia or some forms of blindness; CAR-T cells against cancer; pest- and drought-resistant crops; mosquitoes that cannot transmit malaria. Concern: editing human embryos and making changes that are passed on to future generations.</dd>
+
+  <dt>Why are the ES cells and the blastocyst taken from mice of different coat colours?</dt>
+  <dd>So that the contribution of the engineered ES cells can be seen by eye: a patchy chimera shows the ES cells joined the body; a white pup from a chimera crossed to a black mouse shows the ES cells also made germ cells, so the knockout is heritable.</dd>
+
+  <dt>What does the targeting vector do, and how are the right ES cells found?</dt>
+  <dd>By homologous recombination its matching ends line up with the genome and the gene of interest is replaced by a G418-resistance gene. Growing the cells in G418 kills all cells without the marker; the survivors are grown as a pure population.</dd>
+
+  <dt>A chimeric mouse is born. Is it a knockout mouse?</dt>
+  <dd>No. Only some of its cells carry the knockout, and maybe not its germ cells. It is backcrossed to a black mouse; white pups are heterozygous (one copy knocked out). Crossing heterozygotes gives homozygous pups with both copies knocked out in every cell: those are the knockout mice.</dd>
+
+  <dt>What is the difference between NHEJ and homologous recombination?</dt>
+  <dd>NHEJ glues the two broken ends directly together, without a model, so letters are often lost or added. Homologous recombination uses a matching DNA sequence (the intact copy, or a supplied template) as a model, so the repair is exact.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>9. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>RNAi</strong>: dsRNA → <strong>Dicer</strong> cuts → <strong>siRNA ≈ 21 nt</strong> → <strong>Argonaute</strong>, one strand kept → pairs with <strong>mRNA</strong> → mRNA destroyed or blocked = <strong>silencing</strong>. DNA unchanged.</li>
+  <li>Synthetic siRNAs = <strong>knock-down</strong> (less, temporary); a <strong>knockout</strong> changes the DNA.</li>
+  <li><strong>CRISPR-Cas</strong> in bacteria = immune memory: virus piece stored as a <strong>spacer</strong> in the <strong>array</strong> → <strong>crRNA</strong> → guides <strong>Cas</strong> to cut that virus next time.</li>
+  <li><strong>CRISPR-Cas9 tool</strong>: <strong>guide RNA</strong> (GPS) + <strong>Cas9</strong> (scissors) → <strong>double-strand break</strong> at the chosen sequence.</li>
+  <li>Repair decides the outcome: <strong>NHEJ</strong> = sloppy, letters lost → knockout; <strong>homologous recombination</strong> + supplied template → precise edit.</li>
+  <li><strong>Two guides</strong> → large deletion or rearrangement.</li>
+  <li>Applications: cystic fibrosis, sickle cell, blindness, <strong>CAR-T</strong>, crops, malaria mosquitoes. Ethics: <strong>embryos, heritable changes</strong>.</li>
+  <li><strong>Knockout mouse</strong>: white-mouse <strong>ES cells</strong> + <strong>targeting vector</strong> (gene → <strong>G418</strong> marker) by <strong>homologous recombination</strong> → select → inject into black <strong>blastocyst</strong> → surrogate mother.</li>
+  <li><strong>Chimera</strong> = patchy coat; <strong>backcross</strong> to black → white pups = germ line, <strong>heterozygous</strong>; cross them → <strong>homozygous</strong> knockout (1 in 4).</li>
+  <li>Coat colour is only a <strong>visible marker</strong> for which cells came from the ES cells.</li>
+  <li>None of these methods is <strong>100 % accurate</strong>.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>10. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Put in order: Argonaute binds; dsRNA appears; mRNA destroyed; Dicer cuts; one strand removed; siRNA pairs with mRNA.
+    <details><summary>Answer</summary><div class="ans"><p><strong>dsRNA appears → Dicer cuts (siRNAs) → Argonaute binds → one strand removed → siRNA pairs with mRNA → mRNA destroyed (or blocked).</strong></p></div></details></li>
+  <li>How long is an siRNA, roughly?
+    <ul class="opts"><li data-l="a">about 21 nucleotides</li><li data-l="b">about 200 nucleotides</li><li data-l="c">about 2,000 nucleotides</li><li data-l="d">one nucleotide</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>a.</strong> Dicer cuts the long double-stranded RNA into pieces of about 21 building blocks, the same size class as the miRNAs of BIO01.</p></div></details></li>
+  <li>True or false: "After RNAi, the gene is no longer transcribed."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> The gene is still transcribed; its <strong>mRNA</strong> is destroyed or blocked afterwards. RNAi acts after transcription, and the DNA is untouched.</p></div></details></li>
+  <li>Why is an RNAi experiment called a knock-down rather than a knockout?
+    <details><summary>Answer</summary><div class="ans"><p>Because expression is <strong>reduced</strong>, not abolished, and the effect lasts only while siRNA is present. A knockout inactivates the gene in the DNA, permanently and completely.</p></div></details></li>
+  <li>In a bacterium, what is stored in the CRISPR array and why?
+    <details><summary>Answer</summary><div class="ans"><p>Short pieces of DNA of viruses that attacked before (<strong>spacers</strong>), between repeats. They are a <strong>memory</strong>: transcribed into crRNAs, they guide Cas to destroy the same virus on its next attack.</p></div></details></li>
+  <li>Which part of the CRISPR-Cas9 tool does the scientist design?
+    <ul class="opts"><li data-l="a">the Cas9 protein's shape</li><li data-l="b">the guide RNA sequence</li><li data-l="c">the repair enzymes</li><li data-l="d">nothing: it is all from the bacterium</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The guide RNA carries the sequence of the target. Cas9 is always the same protein, and the repair is done by the cell's own enzymes.</p></div></details></li>
+  <li>You want to simply destroy a gene with CRISPR-Cas9. Which repair route do you count on, and what do you supply?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Non-homologous end joining</strong>: you supply only Cas9 and the guide. The sloppy repair of the cut loses or adds letters, which breaks the gene (a knockout).</p></div></details></li>
+  <li>You want to change one letter of a gene precisely. What extra do you supply?
+    <details><summary>Answer</summary><div class="ans"><p>A <strong>DNA template</strong> whose ends match the DNA on both sides of the cut and that carries the wanted letter in the middle. The cell repairs by <strong>homologous recombination</strong> and copies the template in.</p></div></details></li>
+  <li>What is a CAR-T cell?
+    <details><summary>Answer</summary><div class="ans"><p>A patient's own immune cell (a T cell) that has been genetically modified so it recognises and attacks the patient's tumour cells. The syllabus lists it as a CRISPR application in cancer therapy.</p></div></details></li>
+  <li>In making a knockout mouse, what does the G418 step achieve?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Selection.</strong> G418 kills mammalian cells; only ES cells in which the targeting vector was incorporated (bringing the resistance gene in place of the gene of interest) survive, so you get a pure population of correctly targeted cells.</p></div></details></li>
+  <li>A pup from the surrogate mother is entirely black. What do you conclude?
+    <details><summary>Answer</summary><div class="ans"><p>The engineered white-mouse ES cells did <strong>not contribute</strong> to that pup (or it came from one of the mother's own, uninjected blastocysts). Only patchy, chimeric pups are useful.</p></div></details></li>
+  <li>A chimera is crossed to a black mouse and some pups are white. Are those white pups knockouts?
+    <details><summary>Answer</summary><div class="ans"><p>Not yet. They are <strong>heterozygous</strong>: one knocked-out copy (from the ES-cell germ line) and one normal copy (from the black parent). Crossing two such mice gives <strong>homozygous</strong> knockouts in a quarter of the pups.</p></div></details></li>
+  <li>Which method changes the genome in every cell of a whole animal?
+    <ul class="opts"><li data-l="a">synthetic siRNA</li><li data-l="b">knockout mouse via ES cells</li><li data-l="c">a cDNA library</li><li data-l="d">a plasmid with the gene</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Because the change is made in ES cells that go on to form the germ line, the offspring carry it in every cell. siRNA only knocks down mRNA in the treated cells; a library or plasmid does not touch the genome.</p></div></details></li>
+  <li>Correct this statement: "Cas9 edits the gene."
+    <details><summary>Answer</summary><div class="ans"><p>Cas9 only <strong>cuts</strong>. The <strong>cell's repair</strong> (NHEJ or homologous recombination) makes the actual change. That is why the outcome depends on the repair route and on whether a template was supplied.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.05_libraries_and_genome_manipulation.html">← 4.5 Libraries and genome manipulation</a><a href="index.html">Chapter 4 index</a><a href="4.07_detecting_molecules.html">4.7 Detecting molecules →</a></nav>
+</main>
+</body>
+</html>

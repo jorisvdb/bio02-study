@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.1 What is a virus</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .cap { fill: var(--key-bg); stroke: var(--c-N); stroke-width: 1.6; }
+  .gen { stroke: var(--c-O); stroke-width: 2.4; fill: none; stroke-linecap: round; }
+  .env { fill: none; stroke: var(--c-P); stroke-width: 3; }
+  .spike { stroke: var(--c-P); stroke-width: 2; stroke-linecap: round; fill: none; }
+  .spikehead { fill: var(--c-P); }
+  .tail { fill: var(--panel); stroke: var(--c-N); stroke-width: 1.4; }
+  .fibre { stroke: var(--c-N); stroke-width: 1.4; fill: none; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="index.html">← Chapter 3 index</a><a href="index.html">Chapter 3 index</a><a href="3.02_how_viruses_replicate.html">3.2 How viruses replicate →</a></nav>
+
+<h1>3.1 What is a virus: a genome in a protein coat</h1>
+<p class="lede">In one sentence: a virus is not a cell but a tiny particle made of a piece of DNA or RNA inside a protein shell (sometimes with a membrane around it),
+and it can do nothing on its own; it only "comes alive" inside a host cell.</p>
+
+<p>Chapter 3 is about human pathogens, the microbes that cause disease, but the syllabus says it will address <strong>only viruses</strong>: their structure (this page) and their
+replication in host cells (pages 3.2 and 3.3). Two of the fifteen example exam questions are about viruses, both about retroviruses and reverse transcriptase (page 3.3).
+Those questions make no sense without the vocabulary of this page: genome, capsid, envelope, DNA virus, RNA virus.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>nucleic acid</td><td>the family name for DNA and RNA: chains of nucleotides (nucleïnezuur)</td></tr>
+  <tr><td>double-stranded / single-stranded</td><td>two strands paired in a helix (DNA in our cells) or one strand alone (mRNA in our cells); "ds" and "ss" for short</td></tr>
+  <tr><td>genome</td><td>all the genetic information of an organism (or virus): its complete set of genes</td></tr>
+  <tr><td>gene</td><td>a stretch of DNA (or RNA, in some viruses) that codes for one protein</td></tr>
+  <tr><td>protein</td><td>a chain of amino acids folded into a shape; proteins do the work in cells</td></tr>
+  <tr><td>membrane</td><td>a double layer of phospholipids with proteins in it; every cell is wrapped in one (BIO01 chapter 2)</td></tr>
+  <tr><td>glycoprotein</td><td>a protein with sugar chains attached (glyco = sugar; BIO01 chapter 2)</td></tr>
+  <tr><td>ribosome</td><td>the machine that builds proteins from mRNA; about 25 nm across</td></tr>
+  <tr><td>prokaryote / eukaryote</td><td>cell without / with a nucleus (BIO01 chapter 1)</td></tr>
+  <tr><td>metabolism</td><td>all the chemical reactions a cell uses to make energy and building blocks (stofwisseling)</td></tr>
+  <tr><td>nm (nanometre)</td><td>one millionth of a millimetre; a ribosome is about 25 nm, a bacterium about 1000 nm (1 µm)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: <strong>nucleïnezuur</strong> = DNA of RNA, dubbel- of enkelstrengs; <strong>genoom</strong> = alle genen; <strong>glycoproteïne</strong> = eiwit met suikers eraan;
+<strong>metabolisme</strong> = de stofwisseling van een cel; <strong>nm</strong> = een miljoenste millimeter.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Why pathogens matter (3.1)</h2>
+<p>A <strong>pathogen</strong> (ziekteverwekker) is a microbe capable of causing an <strong>infectious disease</strong> (a disease you can catch from a pathogen, besmettelijke ziekte).
+The syllabus gives some numbers and examples:</p>
+<ul>
+  <li>Infectious diseases cause about <strong>one quarter of all human deaths</strong> worldwide: more than all forms of cancer combined, second only to cardiovascular (heart and blood vessel) diseases.</li>
+  <li>Old diseases such as <strong>tuberculosis</strong> and <strong>malaria</strong> stay a heavy burden and are getting harder to treat because of rising <strong>drug resistance</strong> (the microbes no longer respond to the medicines).</li>
+  <li>New diseases keep emerging: <strong>COVID-19</strong> (coronavirus disease 2019), first seen in 2019, infected hundreds of millions and killed millions in a <strong>pandemic</strong> (a worldwide epidemic).</li>
+  <li>Some diseases long blamed on other causes turn out to be infections: most <strong>stomach ulcers</strong> are caused not by stress or spicy food but by the bacterium <strong><em>Helicobacter pylori</em></strong> infecting the stomach lining.</li>
+  <li>The burden is unequal: poorer countries suffer more (cholera in Haiti after the 2010 earthquake, through poor sanitation), but some diseases are typical of industrialised countries (<strong>Legionnaires' disease</strong>, a bacterial lung infection spread by air-conditioning systems).</li>
+</ul>
+<p>Two more points. First, pathogens <strong>exploit the normal workings of their host's cells</strong>, so studying them teaches us normal cell biology and gives us ways to treat
+and prevent infections. Second, <strong>only a small fraction of microbes are pathogens</strong>. Microbes make up much of the biomass of Earth, produce the oxygen we breathe and
+the soil nutrients for our food, and most microbes living on and in our body are harmless or even helpful.</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>pathogeen</strong> is een microbe die een <strong>infectieziekte</strong> veroorzaakt. Infectieziekten = ongeveer <strong>een kwart</strong> van alle sterfgevallen (meer dan alle kankers
+samen). Oude ziekten (tbc, malaria) worden moeilijker te behandelen door <strong>resistentie</strong>; nieuwe duiken op (COVID-19, een <strong>pandemie</strong>); maagzweren komen door de
+bacterie <em>Helicobacter pylori</em>. Slechts een klein deel van de microben is ziekteverwekkend; de meeste zijn nuttig. Dit hoofdstuk gaat alleen over <strong>virussen</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. How a virus differs from a cell (3.2)</h2>
+<p>The syllabus opens with <strong>SARS-CoV-2</strong>, the virus that causes COVID-19: it infects the cells of the airways, multiplies there and spreads to other people in exhaled breath.
+How does such a virus differ from a cell?</p>
+<ul>
+  <li>Viruses are <strong>much smaller and simpler</strong> than both prokaryotic and eukaryotic cells.</li>
+  <li>They <strong>lack the structures and the metabolic machinery of cells</strong>: no ribosomes, no enzymes for making energy, no membrane of their own (an envelope, when present, is borrowed from the host).</li>
+  <li>They exist as <strong>infectious particles made of genes encased in a protein coat</strong>.</li>
+</ul>
+
+<h3>Are viruses alive?</h3>
+<p>Historically viruses were seen as biological chemicals; the Latin word <em>virus</em> means poison (gif). Because they cause so many diseases, researchers in the late 1800s compared them
+with bacteria and called them the simplest living forms. But a virus <strong>cannot reproduce or perform any metabolic activity without a host cell</strong>. Most biologists today agree that
+viruses are <strong>not truly alive</strong>: they occupy a grey area between living things and chemicals. Outside a cell a virus is "a packaged set of genes in transit from one host cell to another".</p>
+
+<div class="callout key"><span class="tag">Size</span>
+<p>The smallest viruses are about <strong>20 nm</strong> across, <strong>smaller than a ribosome</strong>; millions would fit on the head of a pin. Even the largest known virus, <strong>1500 nm</strong>,
+is barely visible in a light microscope. Compare: a bacterium is about 1000 nm, a human cell about 10 000 to 20 000 nm.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een virus is <strong>veel kleiner en eenvoudiger</strong> dan een cel: geen ribosomen, geen stofwisseling, alleen <strong>genen in een eiwitjas</strong>. Het kan zich niet vermenigvuldigen
+zonder gastheercel, dus de meeste biologen vinden virussen <strong>niet echt levend</strong>: een grijze zone tussen leven en chemie. Grootte: <strong>20 nm</strong> (kleiner dan een ribosoom) tot
+<strong>1500 nm</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. The parts of a virus (3.2.1, Figure 3-1)</h2>
+<p>Begin state: nothing but a particle. A virus is an infectious particle composed of <strong>one or more molecules of nucleic acid</strong>, <strong>encased in a protein coat</strong>, and
+<strong>sometimes enveloped by a membrane</strong>. Three parts, from the inside out.</p>
+
+<h3>3a. The viral genome</h3>
+<p>We usually think of genes as made of double-stranded DNA, but viruses break that rule. A viral genome may be <strong>double-stranded DNA, single-stranded DNA, double-stranded RNA or
+single-stranded RNA</strong>, depending on the type of virus. A virus is called a <strong>DNA virus</strong> or an <strong>RNA virus</strong> according to the kind of nucleic acid in its genome.
+The genome is usually a <strong>single linear or circular molecule</strong>, although some viruses have several molecules. Size: the smallest viruses have <strong>only three genes</strong>,
+the largest <strong>several hundred to 2000</strong>; for comparison, a bacterial genome has about 200 to a few thousand genes.</p>
+
+<h3>3b. The capsid: the protein coat</h3>
+<p>The protein shell that encloses the genome is the <strong>capsid</strong> (capside). It is built from many protein subunits, called <strong>capsomeres</strong>, but usually of only a few
+different kinds of protein. The shape depends on the virus:</p>
+<ul>
+  <li><strong>Rod-shaped = helical viruses:</strong> the subunits are arranged in a spiral (helix) around the genome. Example: <strong>tobacco mosaic virus</strong> (TMV, a plant virus), a rigid rod made of more than 1000 molecules of a single protein.</li>
+  <li><strong>Polyhedral = icosahedral viruses:</strong> a closed shell with flat faces. An <strong>icosahedron</strong> is a solid with 20 triangular faces (ikosaëder; eikosi = twenty). Example: <strong>adenoviruses</strong> (viruses of the respiratory tract of animals), with <strong>252 identical protein molecules</strong> arranged in such a 20-sided shell.</li>
+  <li><strong>More complex:</strong> the <strong>bacteriophages</strong>, or <strong>phages</strong> (viruses that infect bacteria; phagein = to eat) have the most complex capsids: an icosahedral head plus a protein tail with fibres, which they use to inject their DNA into a bacterium.</li>
+</ul>
+<p>Some viruses carry a few <strong>viral enzymes</strong> inside the capsid, such as a viral <strong>polymerase</strong> (an enzyme that copies nucleic acid). Page 3.3 shows why: a retrovirus brings its own reverse transcriptase.</p>
+
+<h3>3c. The envelope: a borrowed membrane</h3>
+<p>Some viruses have an extra layer outside the capsid: a <strong>membranous envelope</strong> (envelop = omhulsel). <strong>Influenza viruses, coronaviruses</strong> and many other animal viruses have one.
+The envelope is <strong>derived from the host cell's membranes</strong>: it contains host phospholipids and host membrane proteins, together with <strong>viral proteins and glycoproteins</strong> that stick out
+as spikes. Those spikes are the "keys" with which the virus recognises a host cell (page 3.2).</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 250" width="880" height="250" xmlns="http://www.w3.org/2000/svg">
+    <!-- helical rod -->
+    <g transform="translate(0,0)">
+      <rect x="40" y="40" width="130" height="34" rx="17" class="cap"/>
+      <path d="M48,57 C58,44 66,70 76,57 S94,44 104,57 S122,70 132,57 S150,44 160,57" class="gen"/>
+      <path d="M58,42 L58,72 M74,42 L74,72 M90,42 L90,72 M106,42 L106,72 M122,42 L122,72 M138,42 L138,72 M154,42 L154,72" class="fibre" style="opacity:.5"/>
+      <text x="105" y="104" class="txt bold">helical virus</text>
+      <text x="105" y="120" class="txt small muted">rod: subunits in a spiral</text>
+      <text x="105" y="134" class="txt small muted">around the genome (TMV)</text>
+      <text x="105" y="150" class="txt small muted">no envelope</text>
+    </g>
+    <!-- icosahedral -->
+    <g transform="translate(220,0)">
+      <polygon points="105,22 150,48 150,96 105,122 60,96 60,48" class="cap"/>
+      <path d="M105,22 L105,122 M60,48 L150,96 M150,48 L60,96" class="fibre" style="opacity:.5"/>
+      <path d="M88,60 C96,52 104,74 112,66 S124,54 120,80" class="gen"/>
+      <text x="105" y="150" class="txt bold">icosahedral virus</text>
+      <text x="105" y="166" class="txt small muted">20 triangular faces</text>
+      <text x="105" y="180" class="txt small muted">(adenovirus: 252 proteins)</text>
+      <text x="105" y="194" class="txt small muted">no envelope</text>
+    </g>
+    <!-- enveloped -->
+    <g transform="translate(440,0)">
+      <circle cx="105" cy="72" r="54" class="env"/>
+      <polygon points="105,40 133,56 133,88 105,104 77,88 77,56" class="cap"/>
+      <path d="M92,68 C98,60 104,80 110,72 S120,60 118,82" class="gen"/>
+      <path d="M105,18 L105,6 M143,34 L152,25 M159,72 L171,72 M143,110 L152,119 M105,126 L105,138 M67,110 L58,119 M51,72 L39,72 M67,34 L58,25" class="spike"/>
+      <circle cx="105" cy="4" r="3" class="spikehead"/><circle cx="154" cy="23" r="3" class="spikehead"/><circle cx="173" cy="72" r="3" class="spikehead"/><circle cx="154" cy="121" r="3" class="spikehead"/>
+      <circle cx="105" cy="140" r="3" class="spikehead"/><circle cx="56" cy="121" r="3" class="spikehead"/><circle cx="37" cy="72" r="3" class="spikehead"/><circle cx="56" cy="23" r="3" class="spikehead"/>
+      <text x="105" y="166" class="txt bold">enveloped virus</text>
+      <text x="105" y="182" class="txt small muted">capsid inside a host-derived</text>
+      <text x="105" y="196" class="txt small muted">membrane with glycoprotein spikes</text>
+      <text x="105" y="210" class="txt small muted">(influenza, coronavirus, HIV)</text>
+    </g>
+    <!-- phage -->
+    <g transform="translate(660,0)">
+      <polygon points="105,12 135,30 135,66 105,84 75,66 75,30" class="cap"/>
+      <path d="M92,42 C98,34 104,54 110,46 S120,36 118,58" class="gen"/>
+      <rect x="99" y="84" width="12" height="44" class="tail"/>
+      <rect x="92" y="128" width="26" height="8" class="tail"/>
+      <path d="M94,136 L72,160 M100,136 L88,164 M110,136 L122,164 M116,136 L138,160" class="fibre"/>
+      <text x="105" y="190" class="txt bold">bacteriophage (phage)</text>
+      <text x="105" y="206" class="txt small muted">icosahedral head + tail + fibres;</text>
+      <text x="105" y="220" class="txt small muted">injects its DNA into a bacterium</text>
+      <text x="105" y="234" class="txt small muted">the most complex capsid</text>
+    </g>
+  </svg>
+  <figcaption>Syllabus Figure 3-1 in schematic form. Blue = capsid (protein coat), red = the genome inside (DNA or RNA), orange = envelope with glycoprotein spikes. The four shapes are the four examples the syllabus gives: TMV, adenovirus, enveloped animal viruses, and a phage.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Must remember</span>
+<p>Every virus = <strong>genome + capsid</strong>. Some viruses = genome + capsid + <strong>envelope</strong>. The envelope is <em>not</em> made by the virus from scratch: it is a piece of
+<strong>host membrane</strong> with viral glycoproteins planted in it. The capsid and the envelope are what the virus uses to get into a cell; the genome is what it brings in.</p></div>
+
+<div class="callout key"><span class="tag">Why viruses were so useful to science</span>
+<p>The simplicity of viruses made them valuable tools. Studying the viruses that infect bacteria (phages) gave crucial evidence that <strong>genes are made of nucleic acids</strong>,
+and helped work out the molecular mechanisms of <strong>DNA replication, transcription and translation</strong> (the subjects of BIO01 chapters 4 and 5).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Drie onderdelen: (1) het <strong>genoom</strong>: dsDNA, ssDNA, dsRNA of ssRNA, meestal één lineaire of ronde molecule, 3 tot 2000 genen; <strong>DNA-virus</strong> of <strong>RNA-virus</strong>.
+(2) De <strong>capside</strong>: eiwitjas van vele subeenheden (capsomeren) van weinig soorten eiwit; <strong>helicaal</strong> (staaf, TMV) of <strong>icosaëdrisch</strong> (20 driehoekige vlakken,
+adenovirus met 252 eiwitten); <strong>bacteriofagen</strong> hebben de ingewikkeldste capside (kop + staart). Soms zitten er virale enzymen in (bv. een polymerase). (3) Soms een
+<strong>envelop</strong>: een membraan <strong>van de gastheercel</strong> met virale <strong>glycoproteïnen</strong> erin (influenza, coronavirus).</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>pathogen</td><td>a microbe (virus, bacterium, parasite) that can cause disease</td></tr>
+  <tr><td>infectious disease</td><td>a disease caused by a pathogen that can spread from one person to another</td></tr>
+  <tr><td>pandemic</td><td>a worldwide epidemic (an epidemic = many cases at once in a region)</td></tr>
+  <tr><td>drug resistance</td><td>a pathogen no longer responds to the medicine used against it</td></tr>
+  <tr><td><em>Helicobacter pylori</em></td><td>a bacterium that infects the stomach lining and causes most stomach ulcers</td></tr>
+  <tr><td>SARS-CoV-2</td><td>the coronavirus that causes COVID-19; infects airway cells; enveloped</td></tr>
+  <tr><td>virus</td><td>an infectious particle: nucleic acid in a protein coat, sometimes with an envelope; not a cell, not truly alive</td></tr>
+  <tr><td>viral genome</td><td>the nucleic acid of a virus: dsDNA, ssDNA, dsRNA or ssRNA; 3 to about 2000 genes</td></tr>
+  <tr><td>DNA virus / RNA virus</td><td>named after the kind of nucleic acid in the genome</td></tr>
+  <tr><td>capsid</td><td>the protein shell around the genome</td></tr>
+  <tr><td>capsomere</td><td>one protein subunit of a capsid</td></tr>
+  <tr><td>helical virus</td><td>rod-shaped virus; capsomeres in a spiral around the genome (TMV)</td></tr>
+  <tr><td>icosahedral virus</td><td>virus with a 20-faced (icosahedron) capsid (adenovirus: 252 identical proteins)</td></tr>
+  <tr><td>tobacco mosaic virus (TMV)</td><td>a plant virus with a rigid rod capsid of more than 1000 copies of one protein</td></tr>
+  <tr><td>adenovirus</td><td>an icosahedral virus of the respiratory tract of animals</td></tr>
+  <tr><td>envelope</td><td>a membrane around the capsid, derived from the host cell, with viral glycoproteins in it</td></tr>
+  <tr><td>glycoprotein</td><td>a protein with sugars attached; the spikes on an envelope</td></tr>
+  <tr><td>bacteriophage (phage)</td><td>a virus that infects bacteria; the most complex capsid, with a tail</td></tr>
+  <tr><td>viral polymerase</td><td>an enzyme that copies nucleic acid, carried inside some capsids</td></tr>
+  <tr><td>obligate intracellular parasite</td><td>can only multiply inside a host cell (page 3.2)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objectives of 3.2: "The student describes a virus" and "The student explains how viruses replicate" (pages 3.2 and 3.3).</p>
+<ol>
+  <li>Describe a virus: nucleic acid genome + protein capsid, sometimes an envelope; not a cell; no metabolism; a grey area between living and non-living.</li>
+  <li>List the four possible genome types (dsDNA, ssDNA, dsRNA, ssRNA) and say what "DNA virus" and "RNA virus" mean.</li>
+  <li>Tell helical (rod, TMV) from icosahedral (20 faces, adenovirus) capsids, and know that phages have the most complex capsids.</li>
+  <li>Explain where an envelope comes from (host membrane) and what sits in it (viral glycoproteins); name enveloped examples (influenza, coronavirus).</li>
+  <li>Give the size range (20 to 1500 nm) and the gene range (3 to 2000).</li>
+  <li>Give the numbers and examples from the introduction (a quarter of deaths; tuberculosis, malaria; COVID-19; <em>H. pylori</em>).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is a virus made of?</dt>
+  <dd>One or more molecules of nucleic acid (DNA or RNA), encased in a protein coat (the capsid), and in some viruses also wrapped in a membranous envelope.</dd>
+
+  <dt>Why are viruses said not to be truly alive?</dt>
+  <dd>They have no metabolism and no ribosomes, and they cannot reproduce or do anything without a host cell. Outside a cell they are packaged genes in transit; most biologists put them in a grey area between life and chemicals.</dd>
+
+  <dt>How big are viruses?</dt>
+  <dd>From about 20 nm (smaller than a ribosome; millions fit on a pinhead) to 1500 nm for the largest known virus, which is barely visible in a light microscope.</dd>
+
+  <dt>What kinds of nucleic acid can a viral genome be?</dt>
+  <dd>Double-stranded DNA, single-stranded DNA, double-stranded RNA or single-stranded RNA. The virus is called a DNA virus or an RNA virus accordingly. Usually one linear or circular molecule, sometimes several.</dd>
+
+  <dt>How many genes does a virus have?</dt>
+  <dd>From only three in the smallest viruses to several hundred or 2000 in the largest. A bacterium has about 200 to a few thousand.</dd>
+
+  <dt>What is a capsid, and what are the two common shapes?</dt>
+  <dd>The protein shell around the genome, built from many subunits (capsomeres) of few protein types. Rod-shaped helical capsids (TMV: over 1000 copies of one protein in a spiral) and icosahedral capsids with 20 triangular faces (adenovirus: 252 identical proteins).</dd>
+
+  <dt>Which viruses have the most complex capsids?</dt>
+  <dd>Bacteriophages (phages), the viruses that infect bacteria: a head, a tail and fibres used to inject DNA into the bacterium.</dd>
+
+  <dt>Where does a viral envelope come from, and what does it contain?</dt>
+  <dd>From the host cell's membranes. It contains host phospholipids and host membrane proteins plus viral proteins and glycoproteins. Influenza viruses and coronaviruses are enveloped.</dd>
+
+  <dt>Can a virus carry enzymes?</dt>
+  <dd>Yes, some carry a few viral enzymes inside the capsid, for example a viral polymerase.</dd>
+
+  <dt>What share of human deaths is caused by infectious diseases, and which bacterium causes most stomach ulcers?</dt>
+  <dd>About one quarter of all deaths worldwide. <em>Helicobacter pylori</em>, infecting the stomach lining, causes most stomach ulcers.</dd>
+
+  <dt>Why were viruses so useful for molecular biology?</dt>
+  <dd>Their simplicity. Phage experiments gave crucial evidence that genes are made of nucleic acids and helped work out DNA replication, transcription and translation.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Virus = <strong>nucleic acid genome + protein capsid</strong>, sometimes + <strong>envelope</strong>. Not a cell, no metabolism, no ribosomes.</li>
+  <li><strong>Not truly alive</strong>: cannot reproduce without a host cell; grey area between life and chemicals.</li>
+  <li>Size <strong>20 nm</strong> (smaller than a ribosome) to <strong>1500 nm</strong>.</li>
+  <li>Genome: <strong>dsDNA, ssDNA, dsRNA or ssRNA</strong>; linear or circular; <strong>3 to 2000 genes</strong>.</li>
+  <li><strong>Helical</strong> = rod, spiral of subunits (tobacco mosaic virus, 1000+ copies of one protein).</li>
+  <li><strong>Icosahedral</strong> = 20 triangular faces (adenovirus, 252 identical proteins).</li>
+  <li><strong>Phages</strong> (viruses of bacteria) = the most complex capsids, with a tail.</li>
+  <li><strong>Envelope</strong> = host membrane (host lipids and proteins) + viral <strong>glycoproteins</strong>; influenza, coronavirus.</li>
+  <li>Some capsids carry viral <strong>enzymes</strong> (a polymerase).</li>
+  <li>Infectious diseases: <strong>1/4 of deaths</strong>; tuberculosis, malaria (resistance); COVID-19 pandemic; <em>H. pylori</em> → ulcers.</li>
+  <li>Only a small fraction of microbes are pathogens; most are useful.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Which of these does every virus have?
+    <ul class="opts"><li data-l="a">a membrane envelope</li><li data-l="b">ribosomes</li><li data-l="c">a nucleic acid genome inside a protein capsid</li><li data-l="d">a tail to inject DNA</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Genome plus capsid is the definition. An envelope is present only in some viruses; a tail only in phages; ribosomes never (the virus uses the host's).</p></div></details></li>
+  <li>True or false: "A virus has its own metabolism, but it is very slow."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> A virus has no metabolism at all and no enzymes for making energy; it is completely dependent on the host cell. That is why it is not considered truly alive.</p></div></details></li>
+  <li>A particle is 20 nm across and consists of RNA in a protein shell. Is it bigger or smaller than a ribosome?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Smaller.</strong> The smallest viruses (about 20 nm) are smaller than a ribosome (about 25 nm). The largest viruses reach 1500 nm.</p></div></details></li>
+  <li>Name the four possible kinds of viral genome.
+    <details><summary>Answer</summary><div class="ans"><p>Double-stranded DNA, single-stranded DNA, double-stranded RNA, single-stranded RNA. Our own cells only use dsDNA as genome; viruses use all four.</p></div></details></li>
+  <li>What decides whether a virus is called a "DNA virus" or an "RNA virus"?
+    <details><summary>Answer</summary><div class="ans"><p>The kind of nucleic acid that makes up its <strong>genome</strong>. (Not what it uses inside the cell: an RNA virus still needs the host's DNA-based machinery, and a retrovirus even makes a DNA copy, page 3.3.)</p></div></details></li>
+  <li>Tobacco mosaic virus is a rigid rod of more than 1000 copies of one protein. What capsid type is this?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Helical.</strong> The subunits wind in a spiral (helix) around the genome; rod-shaped viruses are called helical viruses.</p></div></details></li>
+  <li>Adenovirus has 252 identical protein molecules arranged in 20 triangular faces. What is this shape called?
+    <details><summary>Answer</summary><div class="ans"><p>An <strong>icosahedron</strong>; such viruses are icosahedral viruses. Many protein copies, but only one kind of protein: capsids are built from few protein types.</p></div></details></li>
+  <li>Where does the envelope of an influenza virus come from?
+    <ul class="opts"><li data-l="a">it is made by viral enzymes from scratch</li><li data-l="b">it is a piece of host cell membrane with viral glycoproteins in it</li><li data-l="c">it is part of the capsid</li><li data-l="d">it comes from another virus</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> The envelope is derived from the host's membranes: host phospholipids and proteins, plus viral proteins and glycoproteins that the virus planted there (page 3.2 shows how).</p></div></details></li>
+  <li>Which viruses have the most complex capsids, and what is the extra part for?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Bacteriophages</strong>, the viruses of bacteria. Their tail apparatus injects the viral DNA into the bacterium.</p></div></details></li>
+  <li>How many genes can a viral genome contain?
+    <details><summary>Answer</summary><div class="ans"><p>From <strong>3</strong> (the smallest viruses) to <strong>several hundred or 2000</strong> (the largest). A bacterium has about 200 to a few thousand, so the biggest viruses overlap with the smallest bacteria.</p></div></details></li>
+  <li>Infectious diseases cause what fraction of human deaths worldwide, and how does that compare with cancer?
+    <details><summary>Answer</summary><div class="ans"><p>About <strong>one quarter</strong>; that is more than all forms of cancer combined, second only to cardiovascular diseases.</p></div></details></li>
+  <li>What causes most stomach ulcers?
+    <details><summary>Answer</summary><div class="ans"><p>Infection of the stomach lining by the bacterium <strong><em>Helicobacter pylori</em></strong>, not stress or spicy food. (An example of a disease now known to be an infection.)</p></div></details></li>
+  <li>Why does the syllabus say viruses "occupy a grey area"?
+    <details><summary>Answer</summary><div class="ans"><p>They have genes and can evolve and cause disease like living things, but they cannot reproduce or metabolise on their own; they need a host cell for everything. So they sit between living organisms and chemicals.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="index.html">← Chapter 3 index</a><a href="index.html">Chapter 3 index</a><a href="3.02_how_viruses_replicate.html">3.2 How viruses replicate →</a></nav>
+</main>
+</body>
+</html>

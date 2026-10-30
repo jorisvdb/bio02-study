@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.4 Cloning and restriction enzymes</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .ring { fill: none; stroke: var(--c-C); stroke-width: 5; }
+  .ori { stroke: var(--c-Cl); stroke-width: 9; fill: none; }
+  .amp { stroke: var(--c-O); stroke-width: 9; fill: none; }
+  .tet { stroke: var(--c-N); stroke-width: 9; fill: none; }
+  .site { stroke: var(--c-P); stroke-width: 3; }
+  .seq { font-family: ui-monospace, Consolas, monospace; font-size: 15px; font-weight: 700; fill: var(--fg); }
+  .seq.cut { fill: var(--c-O); }
+  .st { stroke: var(--c-C); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .st.ins { stroke: var(--c-O); }
+  .st.vec { stroke: var(--c-N); }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .dish { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .colony { fill: var(--c-O); }
+  .scis { stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 3 3; fill: none; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.03_pcr_and_cdna.html">← 4.3 PCR and cDNA</a><a href="index.html">Chapter 4 index</a><a href="4.05_libraries_and_genome_manipulation.html">4.5 Libraries and genome manipulation →</a></nav>
+
+<h1>4.4 DNA cloning: cutting a piece of DNA out and growing it in bacteria</h1>
+<p class="lede">In one sentence: to clone a piece of DNA you cut it and a carrier molecule (a plasmid) with the same restriction enzyme, glue them together with DNA
+ligase, put the result into bacteria, and let only the bacteria that took it up grow on a plate with an antibiotic.</p>
+
+<p>PCR (page 4.3) gives you many copies of a fragment in a tube. <strong>Cloning</strong> goes one step further: the fragment is built into a DNA molecule that living cells
+copy for you, generation after generation, and that you can modify at will. This is the heart of <strong>recombinant DNA technology</strong>, the set of methods
+behind transgenic organisms, knockout mice (page 4.6) and insulin made by bacteria. Exam questions 11 and 14 come from this page.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>plasmid</td><td>a small circular DNA molecule in bacteria, separate from the chromosome (BIO01 chapter 1)</td></tr>
+  <tr><td>origin of replication</td><td>the DNA sequence where copying of a DNA molecule starts (BIO01 chapter 4)</td></tr>
+  <tr><td>DNA ligase</td><td>the enzyme that joins two DNA ends by sealing the backbone (BIO01 chapter 4: it joins Okazaki fragments)</td></tr>
+  <tr><td>promoter</td><td>the DNA sequence in front of a gene where RNA polymerase binds to start transcription (BIO01 chapter 5)</td></tr>
+  <tr><td>antibiotic</td><td>a drug that kills bacteria (for example ampicillin, tetracycline); a bacterium with a <strong>resistance gene</strong> survives it</td></tr>
+  <tr><td>homology / homologous</td><td>two DNA sequences that are (nearly) the same (BIO01 chapter 1)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: een <strong>plasmide</strong> is een klein, rond DNA in bacteriën, los van het chromosoom; een <strong>replicatie-oorsprong</strong> is waar het kopiëren begint;
+<strong>DNA-ligase</strong> plakt DNA-uiteinden aan elkaar; een <strong>promotor</strong> is de startplaats van transcriptie; een <strong>antibioticum</strong> doodt bacteriën,
+behalve als ze een <strong>resistentiegen</strong> hebben.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. What cloning is, and the vector that carries the DNA (4.4, 4.4.1)</h2>
+<p><strong>DNA cloning</strong> = isolating a specific DNA region and <strong>propagating</strong> it (making many copies by letting cells multiply). The word "clone" means
+"identical copies from one original". Thanks to cloning, scientists can change the sequence and the expression of any gene.</p>
+<p>Begin state: a DNA fragment you are interested in (the <strong>insert</strong>). Goal: that fragment inside a DNA molecule that bacteria copy independently of their own chromosome.
+The first step is to put the fragment into a <strong>vector</strong> (vector = carrier). Because the final molecule contains DNA from two sources (the insert and the vector), it is
+<strong>recombinant DNA</strong> (recombined = put together in a new combination), and the methods are <strong>recombinant DNA techniques</strong>.</p>
+
+<h3>Vectors: plasmids and viruses</h3>
+<p>A vector can be a <strong>plasmid</strong> (circular, double-stranded, replicates on its own) or a <strong>virus</strong>. A useful plasmid vector (Figure 4-13 shows the classic pBR322) has three kinds of parts:</p>
+<ol>
+  <li>an <strong>origin of replication</strong> that the host's copying machinery recognises, so the plasmid is copied in the host (for E. coli: an E. coli origin);</li>
+  <li>a <strong>selectable marker</strong>: a gene that lets <em>only</em> cells with the plasmid grow under chosen conditions. Usually an <strong>antibiotic resistance gene</strong> (pBR322 has two: resistance to ampicillin and to tetracycline); alternatively a gene for a metabolic enzyme that lets the cell grow on a medium that would otherwise not feed it;</li>
+  <li>several <strong>unique restriction sites</strong>: places where a given restriction enzyme (section 2) cuts the plasmid exactly once, so it can be opened to insert DNA.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 560 250" width="560" height="250" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="150" cy="125" r="90" class="ring"/>
+    <!-- origin: arc at the bottom -->
+    <path d="M100,196 A90,90 0 0 0 200,196" class="ori"/>
+    <text x="150" y="232" class="txt small">origin of replication (ori)</text>
+    <!-- ampR: arc left top -->
+    <path d="M62,100 A90,90 0 0 1 120,42" class="amp"/>
+    <text x="86" y="38" class="txt small" style="text-anchor:end">amp<tspan baseline-shift="super" font-size="8">R</tspan>: ampicillin</text>
+    <text x="86" y="52" class="txt small" style="text-anchor:end">resistance gene</text>
+    <!-- tetR: arc right -->
+    <path d="M200,52 A90,90 0 0 1 238,140" class="tet"/>
+    <text x="262" y="92" class="txt small left">tet<tspan baseline-shift="super" font-size="8">R</tspan>: tetracycline</text>
+    <text x="262" y="106" class="txt small left">resistance gene</text>
+    <!-- restriction sites -->
+    <path d="M150,30 L150,42" class="site"/>
+    <text x="150" y="22" class="txt small">EcoRI site</text>
+    <path d="M68,160 L78,154" class="site"/>
+    <text x="40" y="178" class="txt small left">PstI site</text>
+    <path d="M232,165 L222,159" class="site"/>
+    <text x="236" y="182" class="txt small left">BamHI site</text>
+    <text x="150" y="118" class="txt bold">pBR322</text>
+    <text x="150" y="136" class="txt small muted">plasmid vector</text>
+    <text x="150" y="150" class="txt small muted">circular, double-stranded</text>
+    <!-- legend -->
+    <text x="330" y="150" class="txt small left bold">a vector needs:</text>
+    <text x="330" y="168" class="txt small left">1 an origin → copied by the host</text>
+    <text x="330" y="184" class="txt small left">2 a selectable marker → only cells</text>
+    <text x="330" y="198" class="txt small left">   with the plasmid survive the antibiotic</text>
+    <text x="330" y="214" class="txt small left">3 unique restriction sites → one cut,</text>
+    <text x="330" y="228" class="txt small left">   one opening to put the insert in</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-13: the plasmid pBR322. Green = origin, red and blue = the two antibiotic-resistance genes (the selectable markers), orange ticks = sites that are cut once by the named restriction enzymes. (Site positions are schematic.)</figcaption>
+</figure>
+
+<h3>Host and insert size</h3>
+<p><em>E. coli</em> is the organism of choice for most routine cloning (yeast and cultured cells are also used). Different vectors take inserts of different sizes:
+a typical bacterial plasmid up to about <strong>15 kb</strong> (kb = kilobase, a thousand base pairs), while a special vector called a <strong>bacterial artificial chromosome</strong>
+(<strong>BAC</strong>) can carry <strong>hundreds of kb</strong>.</p>
+
+<h3>What you can do once a gene is cloned</h3>
+<p>A cloned fragment is far easier to work with than the same sequence sitting in its native chromosome:</p>
+<ul>
+  <li><strong>Complementation test:</strong> put the cloned gene into a cell in which that gene is mutated or deleted; if the cell's lost activity is restored, the cloned gene "complements" the mutation, which proves which gene was broken.</li>
+  <li><strong>Fuse it to a reporter gene</strong>, for example the gene for <strong>green fluorescent protein</strong> (<strong>GFP</strong>, a jellyfish protein that glows green under blue light), or to a short <strong>peptide tag</strong> that makes the protein easy to detect or to purify.</li>
+  <li><strong>Put it behind a strong promoter</strong> to make the cell produce large amounts of the protein, which makes purification easier.</li>
+</ul>
+
+<h3>Two ways to build the recombinant molecule</h3>
+<p>Usually the insert is first amplified by <strong>PCR</strong>. Then there are two strategies:</p>
+<ul>
+  <li><strong>Ligation:</strong> cut both ends of the insert with <strong>restriction enzymes</strong> and glue it into the vector with <strong>DNA ligase</strong> (sections 2 and 3).</li>
+  <li><strong>Recombination:</strong> let recombination enzymes insert the fragment into the vector by <strong>sequence homology</strong> (the fragment's ends match sequences in the vector, and the enzymes swap it in). The syllabus only names this route.</li>
+</ul>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Klonen</strong> = een DNA-stuk (de <strong>insert</strong>) isoleren en vermeerderen in cellen, via een <strong>vector</strong> (plasmide of virus); het resultaat is
+<strong>recombinant DNA</strong>. Een plasmidevector heeft een <strong>replicatie-oorsprong</strong>, een <strong>selecteerbare merker</strong> (antibioticumresistentiegen, bv.
+pBR322: ampicilline en tetracycline) en <strong>unieke restrictieplaatsen</strong>. Gastheer meestal <em>E. coli</em>; plasmide tot ±15 kb, BAC honderden kb. Toepassingen:
+complementatietest, fusie aan een reporter (GFP) of tag, sterke promotor voor veel eiwit. Twee strategieën: <strong>ligatie</strong> (knippen + plakken) of
+<strong>recombinatie</strong> (op basis van homologie).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Restriction enzymes: the scissors (4.4.2, Figure 4-14)</h2>
+<p><strong>Restriction enzymes</strong> (restrictie-enzymen) are proteins from bacteria that recognise a <strong>specific short DNA sequence</strong> and cut the double-stranded DNA there.
+Bacteria use them as a <strong>defence</strong> against foreign DNA (for example from a virus): they chop it up. Scientists adopted them as tools; they were among the
+first tools for manipulating DNA.</p>
+<ul>
+  <li>The recognised sequence is a <strong>restriction site</strong>, typically <strong>4 to 8 bp</strong> long and <strong>palindromic</strong>. A palindrome in language reads the same backwards ("level"). In DNA it means: the sequence on one strand, read 5′ → 3′, is the same as the sequence on the other strand, read 5′ → 3′. Example: 5′-GAATTC-3′ on the top strand has 3′-CTTAAG-5′ underneath, which read 5′ → 3′ is again GAATTC.</li>
+  <li>There are <strong>hundreds</strong> of restriction enzymes, each with its own site and its own cutting position.</li>
+  <li>The cut can leave <strong>blunt ends</strong> (both strands cut at the same place: a straight cut) or <strong>overhangs</strong> (the two strands cut a few bases apart, leaving a short single-stranded tail at each end; a 5′ overhang or a 3′ overhang). Overhangs are nicknamed <strong>sticky ends</strong>, because two matching overhangs can base-pair and stick together.</li>
+</ul>
+<p>The classic example is <strong>EcoRI</strong> (an enzyme from <em>E. coli</em>): it recognises <strong>GAATTC</strong> and cuts after the G on both strands. Because the site is a
+palindrome, the two overhangs it makes (AATT) are complementary to each other: any two EcoRI ends can pair up again.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 640 190" width="640" height="190" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arE" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="150" y="20" class="txt bold">EcoRI site: a palindrome</text>
+    <text x="30" y="56" class="seq">5′ … G<tspan class="cut">A A T T C</tspan> … 3′</text>
+    <text x="30" y="84" class="seq">3′ … <tspan class="cut">C T T A A</tspan> G … 5′</text>
+    <path d="M86,40 L86,62 L96,62" class="scis"/>
+    <path d="M214,96 L214,76 L204,76" class="scis"/>
+    <text x="150" y="112" class="txt small">dashed = where EcoRI cuts (after the G on each strand)</text>
+    <text x="150" y="126" class="txt small muted">read the bottom strand 5′ → 3′: G A A T T C again</text>
+    <path d="M300,70 L340,70" class="path accent" marker-end="url(#arE)"/>
+    <text x="490" y="20" class="txt bold">two sticky ends (5′ overhangs)</text>
+    <text x="360" y="56" class="seq">5′ … G</text>
+    <text x="360" y="84" class="seq">3′ … C T T A A</text>
+    <text x="500" y="56" class="seq">A A T T C … 3′</text>
+    <text x="500" y="84" class="seq">G … 5′</text>
+    <text x="490" y="112" class="txt small">each end has a single-stranded AATT tail</text>
+    <text x="490" y="126" class="txt small muted">the two tails are complementary → they can pair</text>
+    <text x="320" y="166" class="txt muted">EcoRI = enzyme from E. coli; site GAATTC (6 bp); hundreds of other enzymes have other sites</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-14: EcoRI recognises GAATTC and cuts both strands after the G, leaving complementary single-stranded overhangs.</figcaption>
+</figure>
+
+<p>Restriction enzymes are also used for <strong>diagnostics</strong>: a mutation that creates or destroys a site changes the pattern of fragments (page 4.12).</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Restrictie-enzymen</strong>: bacteriële eiwitten (verdediging tegen vreemd DNA) die een specifieke <strong>restrictieplaats</strong> van 4–8 bp herkennen en het DNA daar knippen.
+De plaats is een <strong>palindroom</strong> (beide strengen 5′ → 3′ gelezen gelijk, bv. GAATTC). Ze laten <strong>stompe uiteinden</strong> of <strong>overhangen</strong> ("plakkerige
+uiteinden", 5′ of 3′) achter. <strong>EcoRI</strong> knipt GAATTC na de G → complementaire AATT-overhangen die weer kunnen paren. Honderden enzymen; ook voor diagnostiek.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Cloning by ligation, step by step (4.4.3, Figure 4-15)</h2>
+<p>Begin state: the insert (cut out of larger DNA with a restriction enzyme, or more often made by PCR with primers that carry the restriction site built into their
+ends, so the PCR product has the site at both ends) and the circular vector. Goal: bacteria that carry and copy vector + insert.</p>
+<ol>
+  <li><strong>Cut the insert</strong> with the chosen restriction enzyme(s). This usually gives single-stranded overhangs.</li>
+  <li><strong>Cut the vector</strong> with the <em>same</em> enzyme(s), so its overhangs are <strong>complementary</strong> to those of the insert. The circle is now open.</li>
+  <li><strong>Anneal:</strong> mix insert and vector; the compatible sticky ends <strong>base-pair</strong> with each other. This holds the insert in place but the backbones are still broken (nicks).</li>
+  <li><strong>Ligate:</strong> <strong>DNA ligase</strong> covalently joins the 5′ and 3′ ends, sealing the backbone: one closed circular recombinant plasmid.</li>
+  <li><strong>Transform:</strong> introduce the plasmid into bacteria. Cells do not take up DNA easily; they must first be made <strong>competent</strong> (able to take up DNA) by treating them with <strong>salts</strong> or exposing them to an <strong>electric field</strong>. The uptake is called <strong>transformation</strong>.</li>
+  <li><strong>Select:</strong> spread the cells on a plate with the <strong>antibiotic</strong>. Only cells that received the plasmid, and with it the resistance gene, survive and grow into colonies. Each colony is a clone carrying the recombinant plasmid.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 230" width="880" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arL" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- 1 cut -->
+    <text x="80" y="18" class="txt bold">1–2 cut both</text>
+    <circle cx="80" cy="80" r="34" class="st vec"/>
+    <path d="M80,40 L80,52" class="scis" style="stroke:var(--c-P)"/>
+    <path d="M40,150 L120,150" class="st ins"/>
+    <path d="M60,138 L60,162 M100,138 L100,162" class="scis" style="stroke:var(--c-P)"/>
+    <text x="80" y="190" class="txt small">vector (blue) and insert (red)</text>
+    <text x="80" y="204" class="txt small">with the SAME enzyme</text>
+    <path d="M140,110 L170,110" class="path accent" marker-end="url(#arL)"/>
+    <!-- 3 anneal -->
+    <text x="260" y="18" class="txt bold">3 anneal</text>
+    <path d="M226,60 A34,34 0 1 1 294,60" class="st vec"/>
+    <path d="M226,60 L226,72 M294,60 L294,72" class="st vec"/>
+    <path d="M226,72 L294,72" class="st ins"/>
+    <text x="260" y="130" class="txt small">sticky ends base-pair:</text>
+    <text x="260" y="144" class="txt small">insert held in the opened vector</text>
+    <text x="260" y="158" class="txt small muted">(backbone still has gaps)</text>
+    <path d="M320,110 L350,110" class="path accent" marker-end="url(#arL)"/>
+    <!-- 4 ligate -->
+    <text x="440" y="18" class="txt bold">4 ligate</text>
+    <path d="M406,60 A34,34 0 1 1 474,60" class="st vec"/>
+    <path d="M406,60 L406,72 M474,60 L474,72" class="st vec"/>
+    <path d="M406,72 L474,72" class="st ins"/>
+    <circle cx="406" cy="72" r="6" class="colony" style="fill:var(--c-S)"/><circle cx="474" cy="72" r="6" class="colony" style="fill:var(--c-S)"/>
+    <text x="440" y="130" class="txt small">DNA ligase seals the</text>
+    <text x="440" y="144" class="txt small">backbone: one closed</text>
+    <text x="440" y="158" class="txt small">recombinant plasmid</text>
+    <path d="M500,110 L530,110" class="path accent" marker-end="url(#arL)"/>
+    <!-- 5 transform -->
+    <text x="620" y="18" class="txt bold">5 transform</text>
+    <rect x="575" y="40" width="90" height="50" rx="22" class="cell"/>
+    <path d="M605,60 A14,14 0 1 1 635,60" class="st vec" style="stroke-width:3"/>
+    <path d="M605,60 L605,66 L635,66 L635,60" class="st ins" style="stroke-width:3"/>
+    <text x="620" y="130" class="txt small">competent E. coli</text>
+    <text x="620" y="144" class="txt small">(salts or electric field)</text>
+    <text x="620" y="158" class="txt small">takes the plasmid up</text>
+    <path d="M680,110 L710,110" class="path accent" marker-end="url(#arL)"/>
+    <!-- 6 select -->
+    <text x="800" y="18" class="txt bold">6 select</text>
+    <circle cx="800" cy="70" r="40" class="dish"/>
+    <circle cx="785" cy="60" r="4" class="colony"/><circle cx="810" cy="55" r="4" class="colony"/><circle cx="815" cy="82" r="4" class="colony"/><circle cx="790" cy="85" r="4" class="colony"/>
+    <text x="800" y="130" class="txt small">plate with antibiotic:</text>
+    <text x="800" y="144" class="txt small">only cells with the plasmid</text>
+    <text x="800" y="158" class="txt small">(resistance gene) grow</text>
+    <text x="440" y="220" class="txt muted">blue = vector · red = insert · yellow dots = sealed joints · each colony = one clone of the recombinant plasmid</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-15: cloning by ligation, from cutting to selection on an antibiotic plate.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Technique card: cloning by ligation</span>
+<table>
+  <tr><td>principle</td><td>matching sticky ends hold insert and vector together; ligase seals them; bacteria copy the plasmid; the marker selects the right cells</td></tr>
+  <tr><td>you need</td><td>insert (PCR product or restriction fragment), plasmid vector, restriction enzyme(s), DNA ligase, competent E. coli, plates with antibiotic</td></tr>
+  <tr><td>steps</td><td>cut insert → cut vector (same enzyme) → anneal → ligate → transform → select</td></tr>
+  <tr><td>used for</td><td>propagating any DNA, making recombinant genes, expressing proteins, libraries (page 4.5), transgenic organisms</td></tr>
+  <tr><td>trap</td><td>restriction enzymes <em>cut</em>, ligase <em>joins</em> (exam Q11 swaps them); cut vector and insert with the <em>same</em> enzyme or the ends will not match</td></tr>
+</table></div>
+
+<div class="callout quiz"><span class="tag">Exam links</span>
+<p><strong>Question 11</strong> (which pair is wrong): "DNA ligase – cutting DNA, creating sticky ends" is the wrong one. Sticky ends are made by <strong>restriction enzymes</strong>; ligase
+<strong>joins</strong>. Correct pairs: electrophoresis – separating fragments (page 4.8); DNA polymerase – PCR; reverse transcriptase – cDNA from mRNA.<br>
+<strong>Question 14</strong> (which is a transgenic organism): a <strong>rat with rabbit insulin genes</strong>. Transgenic = carrying a gene introduced from elsewhere into its genome (page 4.5).
+Not transgenic: a bacterium <em>treated with a chemical</em> that changes gene expression (no new gene); a fern <em>grown from one root cell</em> (a clone, same genes); a
+human <em>treated with insulin</em> that E. coli made (the human's genome is unchanged; the <em>bacterium</em> that got the human insulin gene was the transgenic one).</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Klonen door ligatie: (1) insert knippen, (2) vector knippen met <strong>hetzelfde</strong> enzym → complementaire overhangen, (3) <strong>annealen</strong>: plakkerige uiteinden
+paren, (4) <strong>DNA-ligase</strong> sluit de ruggengraat → gesloten recombinant plasmide, (5) <strong>transformatie</strong>: <strong>competente</strong> bacteriën (zout of
+elektrisch veld) nemen het plasmide op, (6) <strong>selectie</strong> op een plaat met antibioticum: alleen cellen met het plasmide (resistentiegen) groeien. Valkuil:
+restrictie-enzym knipt, ligase plakt. Transgeen = een organisme met een ingebracht vreemd gen (rat met konijnen-insulinegen).</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>DNA cloning</td><td>isolating a DNA region and propagating it (many identical copies) in cells</td></tr>
+  <tr><td>vector</td><td>a carrier DNA (plasmid or virus) that replicates in the host and holds the insert</td></tr>
+  <tr><td>insert</td><td>the DNA fragment you put into the vector</td></tr>
+  <tr><td>recombinant DNA</td><td>a DNA molecule assembled from DNA of different sources</td></tr>
+  <tr><td>plasmid</td><td>circular double-stranded DNA that replicates independently of the chromosome</td></tr>
+  <tr><td>origin of replication</td><td>sequence where the host machinery starts copying the plasmid</td></tr>
+  <tr><td>selectable marker</td><td>a gene (antibiotic resistance, or a metabolic enzyme) that lets only cells with the vector grow</td></tr>
+  <tr><td>restriction site</td><td>the short palindromic sequence (4–8 bp) that a restriction enzyme recognises</td></tr>
+  <tr><td>unique restriction site</td><td>a site that occurs only once in the vector, so the enzyme opens it at one place</td></tr>
+  <tr><td>kb, BAC</td><td>kilobase = 1000 base pairs; bacterial artificial chromosome, a vector for inserts of hundreds of kb</td></tr>
+  <tr><td>complementation</td><td>a cloned gene restores the activity lost by a mutation in a cell</td></tr>
+  <tr><td>reporter gene, GFP, tag</td><td>a gene whose product is easy to see (GFP glows green); a short peptide added to a protein for detection or purification</td></tr>
+  <tr><td>restriction enzyme</td><td>bacterial protein that cuts double-stranded DNA at its restriction site; a defence against foreign DNA</td></tr>
+  <tr><td>palindrome (DNA)</td><td>a sequence that reads the same 5′ → 3′ on both strands, e.g. GAATTC</td></tr>
+  <tr><td>blunt end / overhang (sticky end)</td><td>a straight cut / a short single-stranded tail (5′ or 3′) that can pair with a matching tail</td></tr>
+  <tr><td>EcoRI</td><td>restriction enzyme from E. coli; site GAATTC, cuts after the G, 5′ overhang AATT</td></tr>
+  <tr><td>ligation / DNA ligase</td><td>joining DNA ends covalently / the enzyme that does it</td></tr>
+  <tr><td>anneal</td><td>complementary single strands pairing up</td></tr>
+  <tr><td>transformation</td><td>a bacterium taking up DNA (a plasmid) from outside</td></tr>
+  <tr><td>competent cells</td><td>cells made able to take up DNA, by salts or an electric field</td></tr>
+  <tr><td>selection</td><td>growing cells under conditions (antibiotic) in which only the wanted ones survive</td></tr>
+  <tr><td>transgenic organism</td><td>an organism carrying a gene introduced from another organism (page 4.5)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. What the quiz and exam expect from this section</h2>
+<p>Learning objective: "The student describes the principle, methodology and applications of different forms of nucleic acid based technologies" and "utilizes fundamental concepts ... to solve problems".</p>
+<ol>
+  <li>Define cloning, vector, insert and recombinant DNA.</li>
+  <li>Name the three parts a plasmid vector needs and what each is for (origin, selectable marker, unique restriction sites); pBR322 as the example.</li>
+  <li>Explain what a restriction enzyme does, what a palindromic site is, blunt ends versus overhangs, and the EcoRI example.</li>
+  <li>Give the six steps of cloning by ligation in order and name the enzyme for each step.</li>
+  <li>Explain transformation, competent cells and selection with an antibiotic.</li>
+  <li>Pair each tool with its use (exam Q11): restriction enzyme cuts, ligase joins, polymerase copies in PCR, reverse transcriptase makes cDNA, electrophoresis separates.</li>
+  <li>Recognise a transgenic organism (exam Q14).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>6. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is DNA cloning?</dt>
+  <dd>Isolating a specific DNA fragment and propagating it: putting it into a vector that cells copy, so you get many identical copies and can modify it.</dd>
+
+  <dt>Why is the product called recombinant DNA?</dt>
+  <dd>Because the final molecule combines DNA from two sources: the insert and the vector.</dd>
+
+  <dt>What three features must a plasmid vector have?</dt>
+  <dd>An origin of replication recognised by the host, a selectable marker (usually an antibiotic resistance gene), and unique restriction sites to open it for the insert.</dd>
+
+  <dt>What is a selectable marker for?</dt>
+  <dd>To let only cells that carry the vector grow: on a plate with the antibiotic, cells without the resistance gene (so without the plasmid) die.</dd>
+
+  <dt>How much DNA fits in a plasmid, and in a BAC?</dt>
+  <dd>A typical bacterial plasmid takes inserts up to about 15 kb; a bacterial artificial chromosome takes hundreds of kb.</dd>
+
+  <dt>What is a restriction enzyme and what do bacteria use it for?</dt>
+  <dd>A bacterial protein that recognises a specific palindromic sequence of 4–8 bp and cuts the DNA there. Bacteria use it to destroy foreign DNA, such as viral DNA.</dd>
+
+  <dt>What does "palindromic" mean for a restriction site?</dt>
+  <dd>Reading each strand 5′ → 3′ gives the same sequence. GAATTC on the top strand has CTTAAG beneath it, which read 5′ → 3′ is GAATTC again.</dd>
+
+  <dt>What are sticky ends and why are they useful?</dt>
+  <dd>Short single-stranded overhangs left when the two strands are cut a few bases apart. Two ends made by the same enzyme have complementary overhangs, so they base-pair and hold insert and vector together before ligation.</dd>
+
+  <dt>Why must insert and vector be cut with the same enzyme?</dt>
+  <dd>So that their overhangs are complementary and can anneal. Ends made by different enzymes generally do not match.</dd>
+
+  <dt>What does DNA ligase do in cloning?</dt>
+  <dd>It covalently joins the adjacent 5′ and 3′ ends of insert and vector, sealing the backbone into one closed recombinant plasmid. It does not cut.</dd>
+
+  <dt>What is transformation and what are competent cells?</dt>
+  <dd>Transformation is a bacterium taking up a plasmid from its surroundings. Competent cells have been treated with salts or an electric field so that they can take DNA up.</dd>
+
+  <dt>How do you find the bacteria that received the plasmid?</dt>
+  <dd>Plate them on medium with the antibiotic; only the cells with the plasmid (and its resistance gene) grow into colonies.</dd>
+
+  <dt>Which of these is transgenic: a rat with rabbit insulin genes, or a human treated with insulin made by E. coli?</dt>
+  <dd>The rat: its genome carries a gene from another species. The treated human's genome is unchanged; the transgenic organism in that story is the bacterium carrying the human insulin gene.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>7. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Cloning</strong> = insert into a <strong>vector</strong> (plasmid or virus) → <strong>recombinant DNA</strong> → copied by cells (usually <em>E. coli</em>).</li>
+  <li>Vector needs: <strong>origin of replication</strong>, <strong>selectable marker</strong> (antibiotic resistance), <strong>unique restriction sites</strong>. Example: pBR322 (amp, tet).</li>
+  <li>Plasmid insert up to <strong>15 kb</strong>; <strong>BAC</strong> hundreds of kb.</li>
+  <li>Uses: complementation, fusion to <strong>GFP</strong> or a tag, strong promoter for lots of protein.</li>
+  <li><strong>Restriction enzymes</strong> (bacterial defence) cut at <strong>palindromic</strong> sites of <strong>4–8 bp</strong>; blunt ends or <strong>sticky</strong> overhangs.</li>
+  <li><strong>EcoRI</strong>: GAATTC, cuts after G → AATT overhangs that pair with each other.</li>
+  <li>Steps: <strong>cut insert → cut vector (same enzyme) → anneal → ligate → transform → select</strong>.</li>
+  <li><strong>Restriction enzyme cuts, DNA ligase joins</strong> (exam Q11).</li>
+  <li><strong>Competent</strong> cells (salts or electric field) take up DNA = <strong>transformation</strong>.</li>
+  <li><strong>Selection</strong>: antibiotic plate, only plasmid-carrying cells grow; each colony = one clone.</li>
+  <li><strong>Transgenic</strong> = carries a gene from another organism (rat with rabbit insulin gene, exam Q14).</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>8. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>Which tool is incorrectly paired with its use?
+    <ul class="opts"><li data-l="a">restriction enzyme – cutting DNA at a specific site</li><li data-l="b">DNA ligase – creating sticky ends</li><li data-l="c">DNA polymerase – PCR</li><li data-l="d">reverse transcriptase – cDNA from mRNA</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Sticky ends are made by restriction enzymes; ligase <strong>joins</strong> DNA ends. (This is exam question 11.)</p></div></details></li>
+  <li>Name the three parts every plasmid vector needs.
+    <details><summary>Answer</summary><div class="ans"><p>An <strong>origin of replication</strong> (so the host copies it), a <strong>selectable marker</strong> (antibiotic resistance gene, so plasmid-carrying cells can be picked out) and <strong>unique restriction sites</strong> (to open it in one place for the insert).</p></div></details></li>
+  <li>A plasmid is cut with EcoRI and gives one linear piece. What does that tell you?
+    <details><summary>Answer</summary><div class="ans"><p>The plasmid has exactly <strong>one</strong> EcoRI site: one cut opens the circle into one linear molecule. That is what "unique restriction site" means and why it is useful for inserting DNA.</p></div></details></li>
+  <li>Why is GAATTC called a palindrome?
+    <details><summary>Answer</summary><div class="ans"><p>Its partner strand is CTTAAG, and read in the 5′ → 3′ direction that is again <strong>GAATTC</strong>: both strands read the same. Consequence: the overhangs EcoRI makes are complementary to each other.</p></div></details></li>
+  <li>EcoRI cuts GAATTC after the G on each strand. What does each end look like?
+    <details><summary>Answer</summary><div class="ans"><p>A <strong>5′ overhang</strong> with the single-stranded sequence <strong>AATT</strong>: a sticky end. Any two EcoRI ends can anneal.</p></div></details></li>
+  <li>Blunt end or sticky end: what is the difference?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Blunt</strong>: both strands cut at the same position, no tail. <strong>Sticky</strong>: the strands are cut a few bases apart, leaving a short single-stranded tail that can base-pair with a matching tail.</p></div></details></li>
+  <li>Put the cloning steps in order: transform, cut vector, ligate, select, cut insert, anneal.
+    <details><summary>Answer</summary><div class="ans"><p>Cut insert → cut vector (same enzyme) → anneal → ligate → transform → select. Cut, pair, seal, put in, pick out.</p></div></details></li>
+  <li>You cut the insert with EcoRI and the vector with BamHI. What happens at the annealing step?
+    <details><summary>Answer</summary><div class="ans"><p>Nothing useful: the overhangs come from different enzymes and are <strong>not complementary</strong>, so insert and vector do not pair. Use the same enzyme for both.</p></div></details></li>
+  <li>How does a PCR product get restriction sites at its ends?
+    <details><summary>Answer</summary><div class="ans"><p>The <strong>primers</strong> are designed with the restriction site built into their 5′ ends, so the amplified fragment carries a site at both ends and can be cut like any other DNA.</p></div></details></li>
+  <li>What does DNA ligase need to have happened first, and what does it do?
+    <details><summary>Answer</summary><div class="ans"><p>The sticky ends of insert and vector must already be <strong>annealed</strong> (base-paired), which leaves nicks in the backbone. Ligase then <strong>covalently joins the 5′ and 3′ ends</strong> and closes the circle.</p></div></details></li>
+  <li>What is a competent cell?
+    <ul class="opts"><li data-l="a">a cell that can divide</li><li data-l="b">a cell treated with salts or an electric field so it can take up DNA</li><li data-l="c">a cell that carries a resistance gene</li><li data-l="d">a cell that makes restriction enzymes</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Bacteria normally do not take up DNA easily; the treatment makes them competent for <strong>transformation</strong>.</p></div></details></li>
+  <li>After transformation you plate the cells on medium with ampicillin. What do the colonies that appear have in common?
+    <details><summary>Answer</summary><div class="ans"><p>They all carry the plasmid with the ampicillin <strong>resistance gene</strong> (the selectable marker); cells without the plasmid were killed. Each colony is a clone of one transformed cell.</p></div></details></li>
+  <li>Which of these is a transgenic organism?
+    <ul class="opts"><li data-l="a">a bacterium treated with a compound that affects many of its genes</li><li data-l="b">a fern grown from a single root cell</li><li data-l="c">a human treated with insulin produced by E. coli</li><li data-l="d">a rat with rabbit insulin genes</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> Only the rat carries a gene introduced from another species in its genome. The treated bacterium has no new gene, the fern is a clone with its own genes, and the human's genome is unchanged (exam question 14).</p></div></details></li>
+  <li>Why put a cloned gene behind a strong promoter?
+    <details><summary>Answer</summary><div class="ans"><p>To make the host transcribe it a lot, so the cell produces <strong>large amounts of the protein</strong>, which makes purifying it much easier.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.03_pcr_and_cdna.html">← 4.3 PCR and cDNA</a><a href="index.html">Chapter 4 index</a><a href="4.05_libraries_and_genome_manipulation.html">4.5 Libraries and genome manipulation →</a></nav>
+</main>
+</body>
+</html>

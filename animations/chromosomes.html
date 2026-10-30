@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chromosomes: nondisjunction and structural changes</title>
+<link rel="stylesheet" href="anim.css">
+<style>
+:root { --mat: #d64541; --pat: #3f6fd8; --oth: #2fa37a; --cs: #e08a2e; --mt: #6f9e5c; --brk: #d1342f; --cellf: #f2f6fa; --cells: #9fb3c8;
+  --seg1: #3f6fd8; --seg2: #d64541; --seg3: #8a6fb5; --gene: #e3a33b; --ghost: #c9d1dc; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --mat: #ff7b6e; --pat: #8cb4ff; --oth: #45c495; --cs: #f0a050; --mt: #8fbf78; --brk: #ff6b5e; --cellf: #1f262e; --cells: #5d7184;
+    --seg1: #8cb4ff; --seg2: #ff7b6e; --seg3: #b39ae0; --gene: #f0b752; --ghost: #3a434e; }
+}
+:root[data-theme="dark"] { --mat: #ff7b6e; --pat: #8cb4ff; --oth: #45c495; --cs: #f0a050; --mt: #8fbf78; --brk: #ff6b5e; --cellf: #1f262e; --cells: #5d7184;
+  --seg1: #8cb4ff; --seg2: #ff7b6e; --seg3: #b39ae0; --gene: #f0b752; --ghost: #3a434e; }
+.chr rect { stroke-width: 0; }
+.chr.mat rect { fill: var(--mat); } .chr.pat rect { fill: var(--pat); } .chr.oth rect { fill: var(--oth); }
+.kin { fill: var(--fg); }
+.cellb { fill: var(--cellf); stroke: var(--cells); stroke-width: 2.5; }
+.tail { fill: none; stroke: var(--cells); stroke-width: 3; stroke-linecap: round; }
+.csb { fill: var(--cs); }
+.mt { stroke: var(--mt); stroke-width: 1.6; fill: none; opacity: .85; }
+.lbl.bad { fill: var(--brk); font-weight: 700; }
+.lbl.ck { fill: var(--hl); }
+.lbl.big2 { font-size: 20px; font-weight: 700; }
+.sm2 { fill: var(--fg); font: 13px system-ui, sans-serif; }
+.bar { fill: var(--accent); fill-opacity: .55; stroke: var(--accent); }
+.panel { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+.seg rect { stroke: var(--card); stroke-width: 1.5; }
+.seg.a rect { fill: var(--seg1); } .seg.b rect { fill: var(--seg2); } .seg.c rect { fill: var(--seg3); }
+.seg.g rect { fill: var(--muted); } .seg.gene rect { fill: var(--gene); }
+.segt { fill: #fff; font: 700 14px system-ui, sans-serif; text-anchor: middle; }
+.seg.gene .segt { fill: #2b1d00; }
+.ghostr { fill: var(--ghost); stroke: none; }
+.ghostt { fill: var(--muted); }
+.cenc { fill: var(--card); stroke: var(--fg); stroke-width: 2; }
+.arr { stroke: var(--muted); stroke-width: 2; fill: none; }
+.arr.head { fill: var(--muted); stroke: none; }
+.arr.red { stroke: var(--brk); stroke-width: 3; }
+.arr.red.head { fill: var(--brk); stroke: none; }
+.xo { stroke: var(--hl); stroke-width: 3; fill: none; }
+</style>
+</head>
+<body>
+<main>
+<nav class="nav"><a href="../index.html">← All chapters</a><a href="index.html">Animations</a><a href="../chapter_1/1.01_abnormal_chromosome_number.html">Page 1.1 Chromosome number</a><a href="../chapter_1/1.02_chromosome_structure_changes.html">Page 1.2 Structure</a><a href="../chapter_1/1.03_human_conditions.html">Page 1.3 Human conditions</a><a href="../cheatsheet/cs1_chromosomes.html">Cheatsheet 1</a></nav>
+<h1>Chromosomes: nondisjunction and structural changes</h1>
+<p class="lede">Two animations of chapter 1. The first follows one cell with 2 pairs of homologs (red from the mother, blue from the father) through meiosis, and shows what goes wrong in nondisjunction. The second takes one chromosome, drawn as pieces A to H, and shows a deletion, a duplication, an inversion and a translocation. Press <b>▶ Play</b> to watch, or go step by step with <b>◀</b> and <b>▶|</b>. Click <b>🔇 Turn voice on</b> to hear every step. Keys: <span class="keys"><kbd>Space</kbd> play/pause, <kbd>←</kbd> <kbd>→</kbd> step, <kbd>Home</kbd> restart, <kbd>V</kbd> voice</span>.
+<span class="note">Simplified and not to scale: a human cell has 23 pairs = 46 chromosomes, a gamete 23.</span></p>
+<div class="tabs" role="tablist">
+  <button data-tab="nd" role="tab" class="on"><b>1 · Nondisjunction and aneuploidy</b><small>meiosis I or II goes wrong → gametes n + 1 and n − 1 → trisomy, monosomy, polyploidy</small></button>
+  <button data-tab="st" role="tab"><b>2 · Structural changes</b><small>deletion, duplication, inversion, translocation; the Philadelphia chromosome</small></button>
+</div>
+<section class="player" id="pl-nd" aria-label="Part 1: nondisjunction and aneuploidy"></section>
+<section class="player" id="pl-st" aria-label="Part 2: structural changes of a chromosome" hidden></section>
+<p class="note">Counting rule: one centromere = one chromosome. n = one chromosome of each pair (a gamete), 2n = two of each (a body cell); n + 1 and 2n + 1 mean one chromosome extra.</p>
+</main>
+<script src="audio/manifest.js"></script>
+<script src="player.js"></script>
+<script src="scenes_chrom.js"></script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.1 Abnormal chromosome number</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .chr { stroke: var(--c-O); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .chr.blue { stroke: var(--c-N); }
+  .chr.green { stroke: var(--c-Cl); }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .cell.bad { stroke: var(--c-O); stroke-dasharray: 4 3; }
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="index.html">← Chapter 1 index</a><a href="index.html">Chapter 1 index</a><a href="1.02_chromosome_structure_changes.html">1.2 Changes in chromosome structure →</a></nav>
+
+<h1>1.1 Abnormal chromosome number: nondisjunction, aneuploidy and polyploidy</h1>
+<p class="lede">In one sentence: when the chromosomes are not shared out correctly during meiosis, a gamete gets one chromosome too many or
+too few; after fertilization every cell of the embryo then has the wrong number, and that upsets development.</p>
+
+<p>Chapter 1 of this course is about <strong>big</strong> genetic changes: not a single wrong letter in one gene (a point mutation, BIO01 chapter 5),
+but a whole chromosome too many, a whole chromosome missing, or a large piece of a chromosome broken off and moved. This first page is about
+<strong>number</strong>: how a cell ends up with 45 or 47 chromosomes instead of 46, or with whole extra sets. Page 1.2 is about <strong>structure</strong>
+(pieces lost, doubled, flipped or moved) and page 1.3 about the human conditions that result (Down syndrome, Klinefelter, Turner, cri du chat, a leukemia).
+The example exam opens with exactly this: "what genetic defect causes Klinefelter syndrome?" and "which mechanisms can cause Down syndrome?".</p>
+
+<!-- ============================================================ -->
+<h2>0. Words from the basic course that this page uses</h2>
+<p>Everything below builds on meiosis from BIO01 chapter 7. A quick reminder of the words, so that nothing on this page is new vocabulary except the few terms in bold later.</p>
+<table class="cmp">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>chromosome</td><td>one long DNA molecule packed with proteins; a human body cell has 46 of them (chromosoom)</td></tr>
+  <tr><td>homologous chromosomes (homologs)</td><td>a pair of chromosomes with the same genes in the same order: one from the mother, one from the father. They are a <em>pair</em>, not copies: the genes can come in different versions.</td></tr>
+  <tr><td>sister chromatids</td><td>the two <em>identical</em> copies of one chromosome, made when the DNA was copied (S phase), still glued together at the centromere (the narrow waist)</td></tr>
+  <tr><td>diploid, 2n</td><td>a cell with two sets of chromosomes (one set from each parent): human body cells, 2n = 46</td></tr>
+  <tr><td>haploid, n</td><td>a cell with one set: human gametes, n = 23</td></tr>
+  <tr><td>gamete</td><td>a sex cell: sperm or egg (geslachtscel)</td></tr>
+  <tr><td>zygote</td><td>the fertilized egg: the first cell of a new individual, made when a sperm (n) and an egg (n) fuse (bevruchte eicel), so 2n again</td></tr>
+  <tr><td>meiosis I</td><td>first division: the <strong>homologs</strong> are pulled apart; each daughter cell gets one chromosome of every pair (still made of two chromatids)</td></tr>
+  <tr><td>meiosis II</td><td>second division: the <strong>sister chromatids</strong> are pulled apart; result: four haploid cells</td></tr>
+  <tr><td>spindle</td><td>the set of protein fibres (microtubules) that pulls chromosomes to the two ends of a dividing cell (spoelfiguur)</td></tr>
+  <tr><td>phenotype</td><td>what an organism looks like and how it works: all its visible and measurable traits</td></tr>
+  <tr><td>allele</td><td>one version of a gene (for example the version that gives blue eyes); new alleles arise by mutation</td></tr>
+  <tr><td>somatic cell</td><td>any body cell that is not a gamete (soma = body)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling uit BIO01: een lichaamscel is <strong>diploïd</strong> (2n = 46), een gameet <strong>haploïd</strong> (n = 23). <strong>Homologen</strong> zijn de twee
+chromosomen van één paar (één van moeder, één van vader); <strong>zusterchromatiden</strong> zijn de twee identieke kopieën van één chromosoom. In
+<strong>meiose I</strong> gaan de homologen uit elkaar, in <strong>meiose II</strong> de zusterchromatiden. De <strong>spoel</strong> trekt ze naar de polen.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. Small changes and large changes (syllabus 1.1)</h2>
+<p>The syllabus starts by putting two kinds of genetic change next to each other:</p>
+<ul>
+  <li><strong>Small-scale changes</strong> hit one gene: a random <strong>mutation</strong> (a change in the DNA letters) makes a new <strong>allele</strong>, and that can give a new trait. This is the source of all new alleles. (BIO01 chapter 5 covered mutations.)</li>
+  <li><strong>Large-scale changes</strong> hit a whole chromosome or a big part of it. Two causes: <strong>physical or chemical damage</strong> (radiation, chemicals) that breaks chromosomes, and <strong>errors during meiosis</strong> that give a cell the wrong number of chromosomes.</li>
+</ul>
+<p>Large changes are usually much worse than small ones. In humans and other mammals they often cause a <strong>spontaneous abortion</strong> (a
+miscarriage, miskraam: the embryo dies early in the pregnancy, by itself). Individuals who are born with such a change usually have
+<strong>developmental disorders</strong> (ontwikkelingsstoornissen: the body or brain does not develop normally). Plants tolerate these changes much better than animals do; you will see why at the end of this page.</p>
+
+<div class="callout key"><span class="tag">Why a whole chromosome is such a problem</span>
+<p>A chromosome carries hundreds to thousands of genes. The amount of a gene's product that a cell makes depends on how many copies of the
+gene it has: this is the <strong>gene dose</strong> (dosis = hoeveelheid). With three copies of a chromosome instead of two, every gene on it is made in
+1.5 times the normal amount at once. Hundreds of genes out of balance at the same time is what disturbs development, not one broken gene.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Kleine veranderingen (een mutatie in één gen → een nieuw allel) tegenover grote veranderingen (een heel chromosoom te veel of te weinig, of een
+groot stuk verplaatst). Grote veranderingen komen door beschadiging (straling, chemicaliën) of door <strong>fouten in de meiose</strong>. Bij zoogdieren
+leiden ze meestal tot een <strong>miskraam</strong> of tot <strong>ontwikkelingsstoornissen</strong>; planten verdragen ze beter. Het probleem is de
+<strong>gendosis</strong>: honderden genen tegelijk in de verkeerde hoeveelheid.</p></div>
+
+<!-- ============================================================ -->
+<h2>2. Nondisjunction: the mistake itself (1.1.1, Figure 1-1)</h2>
+<p>Normally the spindle shares the chromosomes out without error. The occasional mishap is called <strong>nondisjunction</strong>
+(non-disjunctie; "disjunction" = going apart, so nondisjunction = <em>not</em> going apart). It can happen at two moments:</p>
+<ul>
+  <li><strong>In meiosis I:</strong> the two <strong>homologs</strong> of one pair do not move apart. Both go to the same daughter cell.</li>
+  <li><strong>In meiosis II:</strong> the two <strong>sister chromatids</strong> of one chromosome do not separate. Both go to the same daughter cell.</li>
+</ul>
+<p>In both cases the result is the same kind of accident: <strong>one gamete receives two copies of that chromosome, and another gamete receives no copy.</strong>
+All the other chromosomes are usually shared out normally. The difference is <em>how many</em> of the four gametes are affected:</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 900 312" width="900" height="312" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- ===== panel A: meiosis I nondisjunction ===== -->
+    <text x="220" y="14" class="txt bold">A · nondisjunction in meiosis I</text>
+    <circle cx="220" cy="48" r="30" class="cell"/>
+    <path d="M203,36 L213,60 M213,36 L203,60" class="chr"/>
+    <path d="M227,36 L237,60 M237,36 L227,60" class="chr blue"/>
+    <text x="300" y="44" class="txt small left">one pair of homologs,</text>
+    <text x="300" y="58" class="txt small left">each already copied (2 chromatids)</text>
+    <path d="M220,80 L220,96" class="path accent" marker-end="url(#ar1)"/>
+    <text x="232" y="92" class="txt small left muted">meiosis I: homologs should separate</text>
+    <!-- row 1 -->
+    <circle cx="150" cy="128" r="28" class="cell bad"/>
+    <path d="M134,116 L144,140 M144,116 L134,140" class="chr"/>
+    <path d="M156,116 L166,140 M166,116 L156,140" class="chr blue"/>
+    <circle cx="290" cy="128" r="28" class="cell bad"/>
+    <text x="290" y="132" class="txt small muted">none</text>
+    <text x="220" y="176" class="txt small">both homologs went left: the mistake</text>
+    <path d="M140,184 L112,210 M160,184 L188,210 M280,184 L252,210 M300,184 L328,210" class="path accent" marker-end="url(#ar1)"/>
+    <text x="12" y="200" class="txt small muted left">meiosis II (normal)</text>
+    <!-- row 2 -->
+    <circle cx="110" cy="238" r="24" class="cell bad"/><path d="M102,225 L102,251" class="chr"/><path d="M118,225 L118,251" class="chr blue"/>
+    <circle cx="190" cy="238" r="24" class="cell bad"/><path d="M182,225 L182,251" class="chr"/><path d="M198,225 L198,251" class="chr blue"/>
+    <circle cx="250" cy="238" r="24" class="cell bad"/>
+    <circle cx="330" cy="238" r="24" class="cell bad"/>
+    <text x="110" y="280" class="txt bold">n + 1</text><text x="190" y="280" class="txt bold">n + 1</text>
+    <text x="250" y="280" class="txt bold">n − 1</text><text x="330" y="280" class="txt bold">n − 1</text>
+    <text x="220" y="302" class="txt">all four gametes have the wrong number</text>
+    <!-- ===== panel B: meiosis II nondisjunction ===== -->
+    <line x1="450" y1="10" x2="450" y2="308" class="path" style="stroke-dasharray:3 5"/>
+    <text x="680" y="14" class="txt bold">B · nondisjunction in meiosis II</text>
+    <circle cx="680" cy="48" r="30" class="cell"/>
+    <path d="M663,36 L673,60 M673,36 L663,60" class="chr"/>
+    <path d="M687,36 L697,60 M697,36 L687,60" class="chr blue"/>
+    <path d="M680,80 L680,96" class="path accent" marker-end="url(#ar1)"/>
+    <text x="692" y="92" class="txt small left muted">meiosis I (normal)</text>
+    <!-- row 1 -->
+    <circle cx="610" cy="128" r="28" class="cell"/>
+    <path d="M605,116 L615,140 M615,116 L605,140" class="chr"/>
+    <circle cx="750" cy="128" r="28" class="cell"/>
+    <path d="M745,116 L755,140 M755,116 L745,140" class="chr blue"/>
+    <text x="610" y="176" class="txt small">sisters do not separate: the mistake</text>
+    <text x="760" y="176" class="txt small muted">normal</text>
+    <path d="M600,184 L572,210 M620,184 L648,210 M740,184 L712,210 M760,184 L788,210" class="path accent" marker-end="url(#ar1)"/>
+    <text x="462" y="200" class="txt small muted left">meiosis II</text>
+    <!-- row 2 -->
+    <circle cx="570" cy="238" r="24" class="cell bad"/><path d="M563,225 L563,251" class="chr"/><path d="M577,225 L577,251" class="chr"/>
+    <circle cx="650" cy="238" r="24" class="cell bad"/>
+    <circle cx="710" cy="238" r="24" class="cell"/><path d="M710,225 L710,251" class="chr blue"/>
+    <circle cx="790" cy="238" r="24" class="cell"/><path d="M790,225 L790,251" class="chr blue"/>
+    <text x="570" y="280" class="txt bold">n + 1</text><text x="650" y="280" class="txt bold">n − 1</text>
+    <text x="710" y="280" class="txt bold">n</text><text x="790" y="280" class="txt bold">n</text>
+    <text x="680" y="302" class="txt">two gametes normal, two abnormal</text>
+  </svg>
+  <figcaption>Syllabus Figure 1-1, drawn for one chromosome pair. Red = the chromosome from the mother, blue = the one from the father; an X is a copied chromosome (two sister chromatids), a single rod is one chromatid. A dashed cell border means "wrong number". n + 1 = one chromosome too many, n − 1 = one too few.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Must remember</span>
+<p><strong>Meiosis I nondisjunction → all 4 gametes abnormal (2 with n + 1, 2 with n − 1).</strong>
+<strong>Meiosis II nondisjunction → 2 normal gametes, 1 with n + 1, 1 with n − 1.</strong>
+The reason: a mistake in the first division is copied into both second divisions; a mistake in the second division only affects one of the two cells.</p></div>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 1: "In Klinefelter syndrome (47,XXY) individuals are male but have reduced sperm production ... What genetic defect causes
+this syndrome?" The answer is <strong>nondisjunction during meiosis</strong>: a gamete with two X chromosomes (or an X and a Y) instead of one. The other
+options (translocation, polyploidy, duplication) change the <em>structure</em> of a chromosome or add whole <em>sets</em>; they do not give one extra X. Page 1.3 has the details.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Non-disjunctie</strong> = chromosomen gaan niet uit elkaar. In <strong>meiose I</strong>: de twee homologen blijven samen → alle vier de gameten fout
+(2 × n + 1, 2 × n − 1). In <strong>meiose II</strong>: de twee zusterchromatiden blijven samen → twee gameten normaal, één n + 1, één n − 1. In beide gevallen
+krijgt één gameet een chromosoom te veel en een andere dat chromosoom niet; de andere chromosomen worden normaal verdeeld.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Aneuploidy: what happens after fertilization</h2>
+<p>A gamete with the wrong number is not a problem by itself; it becomes one at <strong>fertilization</strong>. If an abnormal gamete fuses with a normal one,
+the zygote also has the wrong number of that one chromosome. This condition is called <strong>aneuploidy</strong> (aneuploïdie; "eu" = good, "ploid" = sets, "an" = not:
+the sets are not complete). Two cases:</p>
+<table class="cmp">
+  <tr><th>Gamete</th><th>+ normal gamete (n)</th><th>Zygote</th><th>Name</th></tr>
+  <tr><td>n − 1 (no copy of chromosome X)</td><td>n</td><td><strong>2n − 1</strong>: one copy of that chromosome instead of two</td><td><strong>monosomic</strong> for that chromosome (monosomy, mono = one)</td></tr>
+  <tr><td>n + 1 (two copies)</td><td>n</td><td><strong>2n + 1</strong>: three copies instead of two</td><td><strong>trisomic</strong> for that chromosome (trisomy, tri = three)</td></tr>
+</table>
+<p>In humans: 2n − 1 = 45 chromosomes, 2n + 1 = 47 chromosomes. Note the wording: the cell is "trisomic <em>for chromosome 21</em>", not simply "trisomic".
+The other 22 pairs are normal.</p>
+<p>After fertilization the zygote divides by <strong>mitosis</strong>, which copies the chromosomes exactly. So the error is passed on <strong>to every cell of the embryo</strong>:
+every body cell has 45 or 47 chromosomes.</p>
+
+<h3>How common, and what it does</h3>
+<ul>
+  <li>Monosomy and trisomy are estimated to occur in <strong>10 to 25 % of all human conceptions</strong> (a conception = a fertilized egg). They are the <strong>main reason for pregnancy loss</strong>: most of these embryos die before birth.</li>
+  <li>If the organism survives, it usually has a fixed set of traits caused by the abnormal <strong>dose</strong> of the genes on the extra or missing chromosome. A fixed set of traits that go together is called a <strong>syndrome</strong> (page 1.3).</li>
+  <li><strong>Down syndrome</strong> is the example of a trisomy in humans: three copies of chromosome 21 (page 1.3).</li>
+</ul>
+
+<h3>Nondisjunction in mitosis</h3>
+<p>Nondisjunction is not limited to meiosis. It can also happen in <strong>mitosis</strong>, when sister chromatids fail to separate. If this happens
+<strong>early in embryonic development</strong>, the aneuploid cell keeps dividing and passes the error on to a large number of cells, so the effect on the
+organism can be substantial. The result is a body that is a mixture of cells with a normal number and cells with an abnormal number; such a mixture is
+called a <strong>mosaic</strong> (mozaïek, like a floor made of different tiles). The example exam uses the word <strong>mosaicism</strong> for this.</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 2: "Down syndrome can result from multiple genetic mechanisms." The syllabus names <strong>nondisjunction</strong> (in meiosis, the usual
+cause) and shows that nondisjunction in <strong>mitosis</strong> of an early embryo gives a <strong>mosaic</strong>. The third route in the exam option is a
+<strong>duplication</strong> of chromosome-21 material, a structural change (page 1.2). The option that lists all three, "nondisjunction, duplication or mosaicism",
+is the complete one. "Inversion" and "deletion" do not add chromosome 21 material, so they cannot cause it.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een foute gameet + een normale gameet = een <strong>aneuploïde</strong> zygote. <strong>Monosomie</strong> = 2n − 1 (één kopie, 45 chromosomen);
+<strong>trisomie</strong> = 2n + 1 (drie kopieën, 47). Mitose geeft de fout door aan <strong>alle cellen</strong> van het embryo. Mono- en trisomie komen voor bij 10 tot 25 %
+van de bevruchtingen en zijn de hoofdoorzaak van miskramen. Wie overleeft heeft een <strong>syndroom</strong> door de verkeerde <strong>gendosis</strong> (voorbeeld: Down,
+trisomie 21). Non-disjunctie in de <strong>mitose</strong> van een jong embryo geeft een <strong>mozaïek</strong>: deels normale, deels aneuploïde cellen.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. Polyploidy: whole extra sets</h2>
+<p>Aneuploidy is one chromosome too many or too few. <strong>Polyploidy</strong> (polyploïdie, poly = many) is different: the cell has <strong>more than two
+complete sets</strong> of chromosomes in all its somatic cells. The specific names count the sets:</p>
+<ul>
+  <li><strong>triploid</strong>, 3n: three complete sets (in a human that would be 69 chromosomes)</li>
+  <li><strong>tetraploid</strong>, 4n: four complete sets (92)</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 150" width="880" height="150" xmlns="http://www.w3.org/2000/svg">
+    <!-- 2n -->
+    <rect x="10" y="14" width="190" height="96" rx="8" class="box"/>
+    <path d="M40,30 L40,90 M84,42 L84,90 M128,58 L128,90" class="chr"/><path d="M62,30 L62,90 M106,42 L106,90 M150,58 L150,90" class="chr blue"/>
+    <text x="105" y="130" class="txt bold">2n (diploid, normal)</text>
+    <text x="105" y="144" class="txt small muted">2 sets of 3 chromosomes = 6</text>
+    <!-- 2n+1 -->
+    <rect x="230" y="14" width="190" height="96" rx="8" class="box"/>
+    <path d="M258,30 L258,90 M298,42 L298,90 M318,42 L318,90 M362,58 L362,90" class="chr"/><path d="M278,30 L278,90 M338,42 L338,90 M384,58 L384,90" class="chr blue"/>
+    <text x="325" y="130" class="txt bold">2n + 1 (trisomic)</text>
+    <text x="325" y="144" class="txt small muted">aneuploid: 7, the medium one in triplicate</text>
+    <!-- 2n-1 -->
+    <rect x="450" y="14" width="190" height="96" rx="8" class="box"/>
+    <path d="M480,30 L480,90 M524,42 L524,90 M568,58 L568,90" class="chr"/><path d="M502,30 L502,90 M546,42 L546,90" class="chr blue"/>
+    <text x="545" y="130" class="txt bold">2n − 1 (monosomic)</text>
+    <text x="545" y="144" class="txt small muted">aneuploid: 5, the short one only once</text>
+    <!-- 3n -->
+    <rect x="670" y="14" width="200" height="96" rx="8" class="box"/>
+    <path d="M692,30 L692,90 M746,42 L746,90 M800,58 L800,90" class="chr"/><path d="M708,30 L708,90 M762,42 L762,90 M816,58 L816,90" class="chr blue"/>
+    <path d="M724,30 L724,90 M778,42 L778,90 M832,58 L832,90" class="chr green"/>
+    <text x="770" y="130" class="txt bold">3n (triploid)</text>
+    <text x="770" y="144" class="txt small muted">polyploid: 3 complete sets = 9</text>
+  </svg>
+  <figcaption>An imaginary species with 3 chromosomes per set (long, medium, short), grouped by chromosome. Each colour is one complete set: red from the mother, blue from the father,
+  green a third set. Aneuploidy breaks the balance between chromosomes; polyploidy keeps every chromosome in the same proportion, only more of everything.</figcaption>
+</figure>
+
+<h3>How a polyploid cell can arise</h3>
+<ol>
+  <li><strong>Triploid (3n):</strong> nondisjunction of <em>all</em> chromosomes at once during meiosis gives an abnormal <strong>diploid egg</strong> (2n instead of n). Fertilized by a normal sperm (n), the zygote is 3n.</li>
+  <li><strong>Tetraploid (4n):</strong> a 2n zygote copies its chromosomes but then <strong>fails to divide</strong>. One cell now holds 4n. All later mitotic divisions are normal, so the whole embryo becomes 4n.</li>
+</ol>
+
+<h3>Polyploidy in plants and animals</h3>
+<p>Polyploidy is fairly common in the <strong>plant kingdom</strong> and plays an important role in plant evolution: a polyploid plant is often a new species in one step.
+Many of the species we eat are polyploid: <strong>bananas are triploid (3n)</strong>, <strong>wheat is hexaploid (6n)</strong> and <strong>strawberries are octoploid (8n)</strong>.
+Polyploid animals are much rarer; a few fishes and amphibians (frogs, salamanders) are known.</p>
+
+<div class="callout key"><span class="tag">Balance is what matters</span>
+<p>Polyploids generally look <strong>more nearly normal</strong> than aneuploids. One extra (or missing) chromosome upsets the <strong>genetic balance</strong> more than an
+entire extra set: with 3n, every gene is present in three copies, so the <em>proportions</em> between genes stay the same. With 2n + 1, the genes of one chromosome
+are out of proportion to all the others. This is also why plants cope so well: extra complete sets keep the balance.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Polyploïdie</strong> = meer dan twee complete sets in alle lichaamscellen: <strong>triploïd</strong> 3n, <strong>tetraploïd</strong> 4n. Ontstaan: 3n door een
+diploïde eicel (non-disjunctie van alle chromosomen) + normaal sperma; 4n doordat een 2n-zygote haar chromosomen kopieert maar niet deelt. Vaak bij planten (banaan 3n,
+tarwe 6n, aardbei 8n), zeldzaam bij dieren. Polyploïden zien er normaler uit dan aneuploïden: een hele set extra bewaart het <strong>evenwicht</strong> tussen de genen,
+één chromosoom extra niet.</p></div>
+
+<!-- ============================================================ -->
+<h2>5. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>nondisjunction</td><td>chromosomes (homologs in meiosis I, sister chromatids in meiosis II or mitosis) fail to move apart; one cell gets both, the other none</td></tr>
+  <tr><td>aneuploidy</td><td>a wrong number of <em>one</em> (or a few) chromosomes: 2n + 1 or 2n − 1, sets incomplete</td></tr>
+  <tr><td>monosomic / monosomy</td><td>only one copy of a particular chromosome (2n − 1; 45 in humans)</td></tr>
+  <tr><td>trisomic / trisomy</td><td>three copies of a particular chromosome (2n + 1; 47 in humans)</td></tr>
+  <tr><td>polyploidy</td><td>more than two complete chromosome sets in all somatic cells</td></tr>
+  <tr><td>triploid (3n), tetraploid (4n)</td><td>three, four complete sets; hexaploid 6n, octoploid 8n</td></tr>
+  <tr><td>gene dose</td><td>how many copies of a gene a cell has; three copies → about 1.5 times the normal amount of product</td></tr>
+  <tr><td>genetic balance</td><td>the normal proportions between all the genes; broken by one extra chromosome, kept by a whole extra set</td></tr>
+  <tr><td>spontaneous abortion</td><td>miscarriage: the embryo dies by itself early in pregnancy</td></tr>
+  <tr><td>developmental disorder</td><td>body or brain do not develop normally</td></tr>
+  <tr><td>syndrome</td><td>a fixed set of traits that occur together and have one cause</td></tr>
+  <tr><td>mosaic / mosaicism</td><td>one body made of cells with different chromosome numbers, after nondisjunction in mitosis early in the embryo</td></tr>
+  <tr><td>conception</td><td>a fertilization; "10 to 25 % of conceptions" = of all fertilized eggs</td></tr>
+  <tr><td>somatic cell</td><td>any body cell that is not a gamete</td></tr>
+  <tr><td>phenotype, allele</td><td>the traits of an organism; one version of a gene</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>6. What the quiz and exam expect from this section</h2>
+<p>Learning objective of the chapter: "The student describes different forms of genetic diversity" and "describes how alterations of chromosome number or structure cause genetic disorders".</p>
+<ol>
+  <li>Explain what nondisjunction is and at which two moments of meiosis it can happen; say how many gametes are affected in each case.</li>
+  <li>Define aneuploidy, monosomy (2n − 1) and trisomy (2n + 1), and link them to a gamete with n − 1 or n + 1.</li>
+  <li>Name nondisjunction as the cause of Klinefelter (XXY), Turner (X0) and Down (trisomy 21) syndromes (page 1.3), and know that nondisjunction in mitosis gives a mosaic.</li>
+  <li>Explain the difference between aneuploidy and polyploidy, and give the names triploid and tetraploid.</li>
+  <li>Give the two ways a polyploid zygote arises (diploid egg; zygote that copies its DNA but does not divide).</li>
+  <li>Explain why polyploids look more normal than aneuploids (genetic balance) and why plants tolerate it (banana 3n, wheat 6n, strawberry 8n).</li>
+  <li>Know the numbers: monosomy and trisomy in 10 to 25 % of conceptions, the main cause of pregnancy loss.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>7. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>What is nondisjunction?</dt>
+  <dd>A mistake in cell division in which chromosomes that should move apart stay together: homologs in meiosis I, or sister chromatids in meiosis II (or in mitosis). One daughter cell gets both, the other gets none.</dd>
+
+  <dt>Why does nondisjunction in meiosis I affect all four gametes, but nondisjunction in meiosis II only two?</dt>
+  <dd>Meiosis I makes the two cells that each go through meiosis II. If the error is in meiosis I, both of those cells are already wrong, so all four products are wrong (two n + 1, two n − 1). If the error happens in meiosis II, only one of the two cells makes a mistake: it gives one n + 1 and one n − 1 gamete, while the other cell gives two normal gametes.</dd>
+
+  <dt>What is the difference between a monosomic and a trisomic zygote?</dt>
+  <dd>Monosomic: one copy of a particular chromosome (2n − 1, 45 chromosomes in humans), from an n − 1 gamete. Trisomic: three copies (2n + 1, 47), from an n + 1 gamete. Both are aneuploid.</dd>
+
+  <dt>Why do all the cells of the body have the error, if the mistake happened in one gamete?</dt>
+  <dd>Because the zygote divides by mitosis, which copies the chromosomes exactly. Every cell of the embryo inherits the same abnormal number.</dd>
+
+  <dt>How common are monosomy and trisomy, and what is their main consequence?</dt>
+  <dd>They occur in an estimated 10 to 25 % of human conceptions and are the main reason for pregnancy loss; most such embryos are lost before birth.</dd>
+
+  <dt>If the embryo survives, what causes its symptoms?</dt>
+  <dd>The abnormal dose of all the genes on the extra or missing chromosome: hundreds of genes made in the wrong amount at once. The resulting fixed set of traits is a syndrome, for example Down syndrome (trisomy 21).</dd>
+
+  <dt>What happens if nondisjunction occurs in mitosis early in the embryo?</dt>
+  <dd>The aneuploid cell keeps dividing, so a large number of cells get the wrong number while the others stay normal: the individual is a mosaic. The effect can be substantial.</dd>
+
+  <dt>What is polyploidy, and how does it differ from aneuploidy?</dt>
+  <dd>Polyploidy is having more than two complete sets of chromosomes (3n triploid, 4n tetraploid) in all somatic cells. Aneuploidy is one chromosome too many or too few; the sets are incomplete.</dd>
+
+  <dt>Give two ways a polyploid can arise.</dt>
+  <dd>Triploid: a diploid egg (made by nondisjunction of all chromosomes at once) is fertilized by a normal haploid sperm. Tetraploid: a 2n zygote copies its chromosomes but fails to divide, and all later divisions are normal.</dd>
+
+  <dt>Why do polyploids look more normal than aneuploids?</dt>
+  <dd>A whole extra set keeps the genetic balance: every gene is in the same proportion to every other gene. One extra or missing chromosome breaks that balance.</dd>
+
+  <dt>Name three polyploid foods.</dt>
+  <dd>Banana (triploid, 3n), wheat (hexaploid, 6n), strawberry (octoploid, 8n). Polyploidy is common in plants and important in plant evolution, rare in animals (a few fishes and amphibians).</dd>
+
+  <dt>Which exam answer explains Klinefelter syndrome (47,XXY)?</dt>
+  <dd>Nondisjunction during meiosis: a gamete carried an extra sex chromosome. Translocation and duplication change chromosome structure; polyploidy adds whole sets, not one X.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>8. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li><strong>Nondisjunction</strong> = chromosomes do not move apart: homologs in <strong>meiosis I</strong>, sister chromatids in <strong>meiosis II</strong> (or mitosis).</li>
+  <li>Meiosis I error → <strong>4 abnormal gametes</strong> (2 × n + 1, 2 × n − 1). Meiosis II error → <strong>2 normal, 1 × n + 1, 1 × n − 1</strong>.</li>
+  <li>Abnormal gamete + normal gamete → <strong>aneuploid zygote</strong>: <strong>monosomic 2n − 1 (45)</strong> or <strong>trisomic 2n + 1 (47)</strong>.</li>
+  <li>Mitosis passes the error to <strong>every cell</strong> of the embryo.</li>
+  <li>Monosomy + trisomy: <strong>10 to 25 % of conceptions</strong>; <strong>main cause of pregnancy loss</strong>.</li>
+  <li>Survivors: a <strong>syndrome</strong> caused by the wrong <strong>gene dose</strong>; Down = trisomy 21.</li>
+  <li>Nondisjunction in <strong>mitosis</strong> early in the embryo → <strong>mosaic</strong> (mix of normal and aneuploid cells).</li>
+  <li><strong>Polyploidy</strong> = extra <strong>complete sets</strong>: triploid 3n, tetraploid 4n; <strong>aneuploidy</strong> = one chromosome extra or missing.</li>
+  <li>3n from a <strong>diploid egg</strong> + normal sperm; 4n from a <strong>2n zygote that copies but does not divide</strong>.</li>
+  <li>Plants: banana 3n, wheat 6n, strawberry 8n; polyploid animals rare (some fish, amphibians).</li>
+  <li><strong>Polyploids look more normal than aneuploids</strong>: a whole set keeps the <strong>genetic balance</strong>, one chromosome breaks it.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>9. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>In which division do homologous chromosomes normally separate, and in which do sister chromatids separate?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Homologs in meiosis I, sister chromatids in meiosis II.</strong> Nondisjunction in meiosis I therefore keeps two homologs together; in meiosis II it keeps two sister chromatids together.</p></div></details></li>
+  <li>Nondisjunction of one chromosome pair happens in meiosis I. How many of the four gametes are abnormal?
+    <ul class="opts"><li data-l="a">one</li><li data-l="b">two</li><li data-l="c">three</li><li data-l="d">four</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> Both cells coming out of meiosis I are wrong (one has both homologs, one has none), and meiosis II copies that: two gametes n + 1, two gametes n − 1.</p></div></details></li>
+  <li>Same question, but the nondisjunction happens in meiosis II.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Two abnormal, two normal.</strong> Meiosis I went well, so the cell that did not make the mistake gives two normal gametes. The cell with the error gives one n + 1 and one n − 1.</p></div></details></li>
+  <li>A sperm cell with 22 chromosomes fertilizes a normal egg. What is the zygote called, and how many chromosomes does it have?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Monosomic</strong> for the missing chromosome, 2n − 1 = <strong>45</strong> chromosomes. The sperm had n − 1 (one chromosome missing); the egg brought the normal 23.</p></div></details></li>
+  <li>True or false: "In a trisomic individual, only the cells of the affected organ have 47 chromosomes."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> The zygote already had 47, and mitosis copies that number into every cell of the body. (Only a <em>mosaic</em>, from nondisjunction in mitosis of an early embryo, has a mixture of cell types.)</p></div></details></li>
+  <li>What does "the cell is trisomic for chromosome 21" mean exactly?
+    <details><summary>Answer</summary><div class="ans"><p>It has <strong>three copies of chromosome 21</strong> and the normal two copies of every other chromosome: 47 in total. The words "for chromosome 21" say which chromosome is in triplicate.</p></div></details></li>
+  <li>Why do most aneuploid embryos never reach birth?
+    <details><summary>Answer</summary><div class="ans"><p>Because the extra or missing chromosome changes the <strong>dose</strong> of hundreds of genes at once, which disturbs development so much that the embryo dies and is lost as a miscarriage. Monosomy and trisomy are the main cause of pregnancy loss.</p></div></details></li>
+  <li>Which of these is <em>not</em> aneuploidy?
+    <ul class="opts"><li data-l="a">47 chromosomes with three copies of chromosome 21</li><li data-l="b">45 chromosomes with one X and no second sex chromosome</li><li data-l="c">69 chromosomes, three complete sets</li><li data-l="d">47 chromosomes with XXY</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Three complete sets is <strong>triploidy</strong>, a form of polyploidy. The others each have one chromosome too many or too few: aneuploidy.</p></div></details></li>
+  <li>How can a triploid (3n) zygote arise?
+    <details><summary>Answer</summary><div class="ans"><p>From an abnormal <strong>diploid egg</strong> (2n), made when <em>all</em> chromosomes failed to separate in meiosis, fertilized by a normal haploid sperm (n): 2n + n = 3n.</p></div></details></li>
+  <li>How can a tetraploid (4n) embryo arise?
+    <details><summary>Answer</summary><div class="ans"><p>A normal 2n zygote <strong>copies its chromosomes but then fails to divide</strong>, so one cell contains 4n. All the following mitotic divisions are normal and keep 4n.</p></div></details></li>
+  <li>Why does a plant with 3 complete sets grow quite normally, while a human with one extra chromosome has a serious syndrome?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Genetic balance.</strong> With three complete sets every gene is tripled, so the proportions between genes are unchanged. One extra chromosome puts the genes of that chromosome out of proportion to all the others, which upsets development much more.</p></div></details></li>
+  <li>Bananas, wheat and strawberries: give the number of chromosome sets of each.
+    <details><summary>Answer</summary><div class="ans"><p>Banana <strong>3n</strong> (triploid), wheat <strong>6n</strong> (hexaploid), strawberry <strong>8n</strong> (octoploid). Polyploidy is common in plants and important in their evolution.</p></div></details></li>
+  <li>Correct this statement: "Nondisjunction only occurs in meiosis."
+    <details><summary>Answer</summary><div class="ans"><p>It can also occur in <strong>mitosis</strong>. If that happens early in the embryo, the aneuploid cell line becomes a large part of the body: a <strong>mosaic</strong>. (The exam calls this mosaicism, one of the routes to Down syndrome.)</p></div></details></li>
+  <li>A student says Klinefelter syndrome (XXY) is caused by polyploidy. What is wrong?
+    <details><summary>Answer</summary><div class="ans"><p>Polyploidy means whole extra <em>sets</em> (3n, 4n). XXY is 47 chromosomes with <strong>one</strong> extra chromosome: aneuploidy, caused by <strong>nondisjunction</strong> of the sex chromosomes during meiosis in one of the parents.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="index.html">← Chapter 1 index</a><a href="index.html">Chapter 1 index</a><a href="1.02_chromosome_structure_changes.html">1.2 Changes in chromosome structure →</a></nav>
+</main>
+</body>
+</html>

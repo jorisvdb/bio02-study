@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.13 Detecting RNA, proteins and cells</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/draw.js" defer></script>
+<script src="assets/quiz.js" defer></script>
+<style>
+  .txt.small { font-size: 11px; }
+  .txt.bold { font-weight: 700; }
+  .ax { stroke: var(--fg); stroke-width: 1.5; fill: none; }
+  .curve { fill: none; stroke-width: 2.5; }
+  .curve.a { stroke: var(--c-O); } .curve.b { stroke: var(--c-N); } .curve.c { stroke: var(--c-Cl); }
+  .thr { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .dna { stroke-width: 5; stroke-linecap: round; }
+  .prom { stroke: var(--c-S); } .gfp { stroke: var(--c-Cl); } .orf { stroke: var(--c-N); }
+  .cellb { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .glow { fill: var(--c-Cl); opacity: .35; }
+  .spot.r { fill: var(--c-O); } .spot.g { fill: var(--c-Cl); } .spot.y { fill: var(--c-S); } .spot.k { fill: var(--line); }
+  .chip { fill: var(--panel); stroke: var(--line); }
+  .tube { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .liq.g { fill: var(--c-Cl); opacity: .5; } .liq.r { fill: var(--c-O); opacity: .5; }
+  .stepbox { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .band { fill: var(--c-C); }
+  .band.hi { fill: var(--c-O); }
+  .memb { fill: var(--key-bg); stroke: var(--key-border); }
+  .ab1 { fill: var(--c-N); } .ab2 { fill: var(--c-P); } .enz { fill: var(--c-S); }
+  .stream { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .laser { stroke: var(--c-O); stroke-width: 3; }
+  .det { fill: var(--panel); stroke: var(--fg); stroke-width: 1.2; }
+  .cellf { fill: var(--c-Cl); opacity: .8; } .celln { fill: var(--c-H); opacity: .8; }
+  table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+  table.pick td:first-child { font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+
+<nav class="nav"><a href="4.12_detecting_dna_sequences.html">← 4.12 Detecting DNA sequences</a><a href="index.html">Chapter 4 index</a><a href="../index.html">All chapters →</a></nav>
+
+<h1>4.13 Detecting RNA, proteins and cells: qRT-PCR, reporter genes, microarrays, RNA-seq, Western blot and flow cytometry</h1>
+<p class="lede">In one sentence: to find out whether a gene is <em>used</em>, you measure its mRNA (one gene with qRT-PCR, all genes with a microarray or RNA-seq) or its protein
+(with antibodies on a Western blot), or you let the gene light up a reporter; to sort and count the cells themselves, you send them one by one past a laser (flow cytometry).</p>
+
+<p>The pages before this one asked "which DNA is there?". The last page of the course asks "which genes are switched <em>on</em>?" and "is this protein present?". Different cells of
+one body have the same DNA but use different genes (BIO01 chapter 6), so these are the methods that tell a nerve cell from a muscle cell at the molecular level. Example exam question 15
+asks exactly this: which technique finds the genes that two cell types express? The answer is the <strong>DNA microarray</strong>. This page also closes the chapter with a "which technique for which question" table for the whole chapter.</p>
+
+<!-- ============================================================ -->
+<h2>0. Words used on this page</h2>
+<table class="tech">
+  <tr><th>Word</th><th>Reminder</th></tr>
+  <tr><td>gene expression</td><td>using a gene: copying it into mRNA (transcription) and then into protein (translation), BIO01 chapter 5. "Expressed" = switched on and in use.</td></tr>
+  <tr><td>mRNA</td><td>messenger RNA: the working copy of one gene that the ribosome reads. How much mRNA of a gene a cell contains is a measure of how strongly the gene is used.</td></tr>
+  <tr><td>promoter</td><td>the DNA stretch in front of a gene where RNA polymerase starts; it decides when and where the gene is transcribed (BIO01 chapters 5 and 6)</td></tr>
+  <tr><td>open reading frame (ORF)</td><td>the part of a gene that codes for the protein, from the start codon to the stop codon</td></tr>
+  <tr><td>cDNA</td><td>complementary DNA: a DNA copy of an mRNA, made by reverse transcriptase (page 4.3)</td></tr>
+  <tr><td>hybridize / probe</td><td>two single strands pair up (A with T or U, G with C). A probe is a labelled piece of DNA that pairs with the sequence you look for (page 4.12).</td></tr>
+  <tr><td>fluorescence / fluorophore</td><td>a molecule (fluorophore, fluorescent dye) absorbs light of one colour and sends out light of another; a detector sees the light (page 4.7)</td></tr>
+  <tr><td>antibody</td><td>a protein made by the immune system that sticks very tightly and very specifically to one target (antistof); explained in section 6</td></tr>
+  <tr><td>SDS-PAGE</td><td>the gel that separates proteins by size (page 4.8)</td></tr>
+  <tr><td>exponential</td><td>doubling every cycle: 1, 2, 4, 8, 16 ... (page 4.3, PCR)</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Herhaling: <strong>genexpressie</strong> = een gen gebruiken (DNA → mRNA → eiwit). De hoeveelheid <strong>mRNA</strong> van een gen zegt hoe sterk het gen aan staat.
+<strong>Promotor</strong> = startplaats voor RNA-polymerase; <strong>ORF</strong> = het eiwitcoderende deel; <strong>cDNA</strong> = DNA-kopie van mRNA; een <strong>probe</strong> is een
+gelabeld stukje DNA dat met zijn doelwit paart; een <strong>antistof</strong> is een eiwit dat heel specifiek aan één doelwit plakt.</p></div>
+
+<!-- ============================================================ -->
+<h2>1. The question: how strongly is a gene used? (4.11)</h2>
+<p>Many genes are regulated at the level of <strong>transcription</strong>: the cell decides how many mRNA copies to make. So the usual way to study the expression of a gene, or of
+a set of genes, is to <strong>measure how much of its RNA is present</strong>. The syllabus gives four ways to do that, from one gene to all genes at once:</p>
+<ol>
+  <li><strong>qRT-PCR</strong>: one gene (or a few), very sensitive, uses PCR on a cDNA copy.</li>
+  <li><strong>Reporter genes</strong>: you do not measure the RNA itself; you couple the gene's control region to an easily seen "reporter" protein and look where and when it appears.</li>
+  <li><strong>DNA microarray</strong>: thousands of genes at once, by hybridization of labelled cDNA to a chip of DNA spots.</li>
+  <li><strong>RNA-seq (deep sequencing)</strong>: all RNAs at once, by sequencing the cDNA copies (page 4.11).</li>
+</ol>
+<p>Most of these rely on <strong>hybridization to probes</strong>: a labelled DNA pairs with the RNA (or its cDNA copy) you are looking for. After the RNA methods, two more sections
+cover <strong>proteins</strong> (Western blot) and <strong>whole cells</strong> (flow cytometry).</p>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Veel genen worden geregeld bij de <strong>transcriptie</strong>, dus meet je de hoeveelheid <strong>RNA</strong>. Vier manieren: <strong>qRT-PCR</strong> (één gen),
+<strong>reportergenen</strong> (waar en wanneer een gen aan staat), <strong>microarray</strong> (duizenden genen tegelijk), <strong>RNA-seq</strong> (alle RNA's). Daarna: eiwitten
+(<strong>western blot</strong>) en cellen (<strong>flowcytometrie</strong>).</p></div>
+
+<!-- ============================================================ -->
+<h2>2. qRT-PCR: measuring the RNA of one gene (4.11.1, Figure 4-46)</h2>
+<p>The full name is <strong>quantitative reverse transcription PCR</strong> (qRT-PCR, also called quantitative PCR or qPCR). "Quantitative" (kwantitatief) means it gives a
+<em>number</em>: how much RNA there was. It is PCR (page 4.3) applied to RNA, in two stages:</p>
+<ol>
+  <li><strong>Reverse transcription:</strong> reverse transcriptase makes a cDNA copy of the RNA of interest (Figure 4-12).</li>
+  <li><strong>PCR with a second primer inside the transcript:</strong> the cDNA is amplified so that a conveniently sized product appears. The product is measured on an agarose gel,
+  or, much better, by a machine that watches a <strong>dye binding to the DNA</strong> after every cycle, "in real time".</li>
+</ol>
+<p><strong>The trick of reading the amount:</strong> in the <strong>exponential phase</strong> of PCR the amount of product doubles every cycle, so the amount of product after a given number
+of cycles is proportional to the amount of RNA you started with. The machine draws a horizontal <strong>threshold</strong> line and notes the cycle at which each sample crosses it.
+<strong>More RNA at the start = fewer cycles needed</strong> to reach the threshold. The syllabus example:</p>
+<table>
+  <tr><th>RNA in the sample</th><th>Cycles to reach the threshold</th></tr>
+  <tr><td>100 ng (nanogram, 10⁻⁹ gram)</td><td>about 18</td></tr>
+  <tr><td>1 ng</td><td>about 25</td></tr>
+  <tr><td>1 pg (picogram, 10⁻¹² gram, a thousand times less than 1 ng)</td><td>about 35</td></tr>
+</table>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 620 250" width="620" height="250" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <path d="M60,20 L60,200 L580,200" class="ax" marker-end="url(#ar1)"/>
+    <text x="40" y="110" class="txt small" transform="rotate(-90 40 110)">fluorescence (amount of DNA)</text>
+    <text x="320" y="228" class="txt">PCR cycle number</text>
+    <g class="txt small"><text x="60" y="214">0</text><text x="190" y="214">10</text><text x="320" y="214">20</text><text x="450" y="214">30</text><text x="580" y="214">40</text></g>
+    <!-- threshold -->
+    <line x1="60" y1="150" x2="580" y2="150" class="thr"/>
+    <text x="120" y="144" class="txt small muted">threshold</text>
+    <!-- curves: 100 ng crosses at 18 (x=60+18*13=294), 1 ng at 25 (385), 1 pg at 35 (515) -->
+    <path d="M60,198 C200,198 250,196 270,185 C290,160 300,110 330,70 C350,45 400,40 560,40" class="curve a"/>
+    <path d="M60,198 C290,198 340,196 360,185 C380,160 390,110 420,70 C440,45 490,40 560,40" class="curve b"/>
+    <path d="M60,198 C420,198 470,196 490,185 C510,160 520,110 550,70 C560,55 570,50 580,48" class="curve c"/>
+    <circle cx="294" cy="150" r="4" class="spot r"/><circle cx="385" cy="150" r="4" class="spot r"/><circle cx="515" cy="150" r="4" class="spot r"/>
+    <text x="294" y="168" class="txt small bold">18</text><text x="385" y="168" class="txt small bold">25</text><text x="515" y="168" class="txt small bold">35</text>
+    <text x="72" y="40" class="txt small left">red: 100 ng RNA · blue: 1 ng · green: 1 pg</text>
+    <text x="72" y="56" class="txt small left muted">flat end: a component ran out</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-46. Every curve rises exponentially and then flattens. The sample with the most RNA crosses the threshold first (cycle 18); a thousand times less
+  RNA needs about ten cycles more (2¹⁰ ≈ 1000). Compare samples only while they are still in the exponential phase.</figcaption>
+</figure>
+
+<table class="tech">
+  <tr><th>qRT-PCR</th><th></th></tr>
+  <tr><td>Principle</td><td>RNA → cDNA → PCR; the cycle at which the product crosses a threshold tells how much RNA you started with</td></tr>
+  <tr><td>You need</td><td>the RNA sample, reverse transcriptase, two primers inside the transcript, DNA polymerase, dNTPs, a DNA-binding dye, a real-time PCR machine</td></tr>
+  <tr><td>Steps</td><td>1 isolate RNA · 2 reverse transcribe to cDNA · 3 PCR, measure the dye after every cycle · 4 read the threshold cycle · 5 compare with controls</td></tr>
+  <tr><td>Used for</td><td>the expression level of one gene (or a few), with extreme sensitivity: very small amounts of RNA can be detected</td></tr>
+  <tr><td>Traps</td><td>only valid in the exponential phase; proper controls needed; only the stretch between the primers is seen, so different forms of the same RNA (for example differently spliced versions) are missed</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>qRT-PCR</strong> = eerst cDNA maken met reverse transcriptase, dan PCR waarbij een machine na elke cyclus een kleurstof meet. In de <strong>exponentiële fase</strong> is de
+hoeveelheid product evenredig met het start-RNA; je leest de <strong>cyclus waarbij de drempel wordt gehaald</strong>: meer RNA = minder cycli (100 ng ≈ 18, 1 ng ≈ 25, 1 pg ≈ 35).
+Voordeel: uiterst gevoelig. Nadeel: je ziet alleen het stuk tussen de primers.</p></div>
+
+<!-- ============================================================ -->
+<h2>3. Reporter genes: let the gene show itself (4.11.2, Figure 4-47)</h2>
+<p>A <strong>reporter gene</strong> is a gene whose product is easy to see. You fuse the <strong>regulatory region</strong> of the gene you study (its promoter) to the reporter, put the
+construct into cells or an organism, and wherever and whenever the promoter is active, the reporter appears. The common reporters:</p>
+<table>
+  <tr><th>Reporter</th><th>What it is</th><th>What you see</th></tr>
+  <tr><td>β-galactosidase (lacZ)</td><td>the enzyme of the <em>E. coli</em> lac operon (BIO01 chapter 6) that splits galactose sugars</td><td>a <strong>coloured product</strong> (blue) when a special galactose derivative is added</td></tr>
+  <tr><td>luciferase</td><td>the firefly enzyme (vuurvliegje)</td><td><strong>light</strong> from a chemical reaction</td></tr>
+  <tr><td>Green Fluorescent Protein (GFP)</td><td>a protein from a jellyfish (kwal) that fluoresces by itself</td><td><strong>green fluorescence</strong>, no added substance needed</td></tr>
+  <tr><td>Spinach</td><td>an RNA (not a protein) selected to fluoresce when it binds a specific compound</td><td>fluorescence from the RNA itself</td></tr>
+</table>
+<p>Two ways of coupling, which report different things:</p>
+<ul>
+  <li><strong>Promoter → reporter:</strong> the reporter is made whenever the promoter is switched on. It reports <strong>transcriptional</strong> regulation only.</li>
+  <li><strong>Reporter fused to the ORF:</strong> the reporter is attached to the gene's own protein-coding part. It is only made if the gene is transcribed from its own promoter
+  <em>and</em> translated with its own sequences, so it reports <strong>transcription and translation</strong> together.</li>
+</ul>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 620 200" width="620" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <text x="150" y="18" class="txt bold">A · promoter → GFP</text>
+    <line x1="30" y1="50" x2="130" y2="50" class="dna prom"/><line x1="134" y1="50" x2="270" y2="50" class="dna gfp"/>
+    <text x="80" y="70" class="txt small">promoter of gene X</text><text x="202" y="70" class="txt small">GFP gene</text>
+    <path d="M150,84 L150,110" class="path accent" marker-end="url(#ar2)"/>
+    <text x="150" y="100" class="txt small left muted" transform="translate(8,0)">promoter on → transcription</text>
+    <circle cx="150" cy="150" r="30" class="cellb"/><circle cx="150" cy="150" r="22" class="glow"/>
+    <text x="150" y="154" class="txt small">GFP</text>
+    <text x="150" y="192" class="txt small">cell glows green where gene X is transcribed</text>
+    <text x="460" y="18" class="txt bold">B · gene X ORF + GFP (fusion)</text>
+    <line x1="330" y1="50" x2="400" y2="50" class="dna prom"/><line x1="404" y1="50" x2="500" y2="50" class="dna orf"/><line x1="504" y1="50" x2="590" y2="50" class="dna gfp"/>
+    <text x="365" y="70" class="txt small">own promoter</text><text x="452" y="70" class="txt small">ORF of gene X</text><text x="547" y="70" class="txt small">GFP</text>
+    <path d="M460,84 L460,110" class="path accent" marker-end="url(#ar2)"/>
+    <text x="468" y="100" class="txt small left muted">transcribed AND translated</text>
+    <circle cx="460" cy="150" r="30" class="cellb"/><circle cx="460" cy="150" r="22" class="glow"/>
+    <text x="460" y="154" class="txt small">X–GFP</text>
+    <text x="460" y="192" class="txt small">reports transcription + translation of gene X</text>
+  </svg>
+  <figcaption>Two reporter constructs. A: the promoter of gene X drives GFP, so green light means "the promoter is active here and now". B: GFP is glued to the protein of gene X
+  itself, so the green protein appears only when the whole gene is used, including translation.</figcaption>
+</figure>
+
+<p><strong>Why reporters are useful:</strong> they can be read quickly and repeatedly, so you can follow expression <strong>over time</strong>; they show expression in particular
+<strong>tissues of a whole organism</strong> (Figure 4-47: GFP fused to the promoter of the cyclin E gene in the worm <em>C. elegans</em> lights up a row of dividing cells in the
+ventral nerve cord); and they allow you to <strong>screen thousands of bacterial colonies</strong> for the ones that contain the gene or regulatory region you want (a colony that
+turns blue has lacZ switched on). As an alternative, specific transcripts can also be detected inside cells with the <strong>FISH</strong> approach of page 4.12.</p>
+
+<table class="tech">
+  <tr><th>Reporter gene</th><th></th></tr>
+  <tr><td>Principle</td><td>a gene with an easily seen product is coupled to the control region (or the ORF) of the gene of interest</td></tr>
+  <tr><td>You need</td><td>a cloned construct (page 4.4): promoter or ORF of your gene + lacZ, luciferase or GFP; cells or an organism to put it in; a microscope or light detector</td></tr>
+  <tr><td>Steps</td><td>1 clone the construct · 2 introduce it · 3 let the cells grow or develop · 4 look for colour, light or fluorescence · 5 repeat over time or across tissues</td></tr>
+  <tr><td>Used for</td><td>where and when a gene is switched on; screening colonies; time courses in living organisms</td></tr>
+  <tr><td>Trap</td><td>promoter → reporter shows transcription only; a fusion with the ORF shows transcription and translation</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>reportergen</strong> maakt een product dat je makkelijk ziet: <strong>β-galactosidase</strong> (lacZ, blauwe kleur), <strong>luciferase</strong> (licht),
+<strong>GFP</strong> (groene fluorescentie), <strong>Spinach</strong> (fluorescerend RNA). Koppel je de <strong>promotor</strong> van je gen aan de reporter, dan zie je waar en wanneer
+het gen wordt afgeschreven; koppel je de reporter aan het <strong>ORF</strong>, dan zie je transcriptie én translatie. Handig voor tijdsverloop, weefsels in een heel organisme
+(cycline E:GFP in <em>C. elegans</em>) en het screenen van duizenden kolonies.</p></div>
+
+<!-- ============================================================ -->
+<h2>4. DNA microarray: thousands of genes on one chip (4.11.3, Figure 4-48)</h2>
+<p>A <strong>DNA microarray</strong> (chip) is a glass slide with thousands of tiny <strong>spots</strong> in rows and columns; every spot contains many copies of one DNA fragment,
+for example a piece of every known ORF of the genome. You met the same kind of chip in aCGH (page 4.12), where genomic DNA was hybridized to it. Here the chip is used to measure
+<strong>transcription genome-wide</strong>:</p>
+<ol>
+  <li>Isolate the pool of RNA from the cells.</li>
+  <li>Make <strong>fluorescently labelled cDNA</strong> copies of it (reverse transcriptase + labelled nucleotides).</li>
+  <li>Hybridize the cDNA mixture to the chip. A cDNA pairs with the spot that holds the complementary DNA fragment, that is, the spot of its own gene.</li>
+  <li>Scan the chip: the <strong>brightness of each spot</strong> reflects how much mRNA of that gene the cells contained.</li>
+</ol>
+<p><strong>Two samples at once:</strong> to compare two conditions (wild type versus mutant, with and without heat shock, nerve cell versus muscle cell), you label the cDNA of
+sample 1 with a <strong>green</strong> dye (Cy3) and that of sample 2 with a <strong>red</strong> dye (Cy5), mix them and hybridize both to the same chip. Each spot is scanned at
+both colours:</p>
+<figure>
+  <svg class="molsvg" viewBox="0 0 640 230" width="640" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- sample tubes -->
+    <path d="M30,30 L30,95 Q45,112 60,95 L60,30" class="tube"/><rect x="31" y="60" width="28" height="40" class="liq g"/>
+    <text x="45" y="22" class="txt small">sample 1</text><text x="45" y="128" class="txt small">cDNA + Cy3</text><text x="45" y="142" class="txt small muted">green</text>
+    <path d="M100,30 L100,95 Q115,112 130,95 L130,30" class="tube"/><rect x="101" y="60" width="28" height="40" class="liq r"/>
+    <text x="115" y="22" class="txt small">sample 2</text><text x="115" y="128" class="txt small">cDNA + Cy5</text><text x="115" y="142" class="txt small muted">red</text>
+    <path d="M80,160 L80,180 L150,180 L150,172" class="path"/>
+    <text x="80" y="200" class="txt small">mix</text>
+    <path d="M160,100 L215,100" class="path accent" marker-end="url(#ar3)"/>
+    <text x="187" y="90" class="txt small muted">hybridize</text>
+    <!-- chip -->
+    <rect x="225" y="30" width="170" height="170" rx="6" class="chip"/>
+    <g>
+      <circle cx="250" cy="55" r="9" class="spot y"/><circle cx="285" cy="55" r="9" class="spot r"/><circle cx="320" cy="55" r="9" class="spot y"/><circle cx="355" cy="55" r="9" class="spot g"/>
+      <circle cx="250" cy="90" r="9" class="spot g"/><circle cx="285" cy="90" r="9" class="spot y"/><circle cx="320" cy="90" r="9" class="spot k"/><circle cx="355" cy="90" r="9" class="spot r"/>
+      <circle cx="250" cy="125" r="9" class="spot r"/><circle cx="285" cy="125" r="9" class="spot y"/><circle cx="320" cy="125" r="9" class="spot y"/><circle cx="355" cy="125" r="9" class="spot g"/>
+      <circle cx="250" cy="160" r="9" class="spot y"/><circle cx="285" cy="160" r="9" class="spot k"/><circle cx="320" cy="160" r="9" class="spot r"/><circle cx="355" cy="160" r="9" class="spot y"/>
+    </g>
+    <text x="310" y="218" class="txt small">microarray: one spot = one gene</text>
+    <!-- legend -->
+    <circle cx="430" cy="55" r="9" class="spot y"/><text x="448" y="59" class="txt small left">yellow: equal in both samples</text>
+    <circle cx="430" cy="90" r="9" class="spot r"/><text x="448" y="94" class="txt small left">red: more mRNA in sample 2</text>
+    <circle cx="430" cy="125" r="9" class="spot g"/><text x="448" y="129" class="txt small left">green: more mRNA in sample 1</text>
+    <circle cx="430" cy="160" r="9" class="spot k"/><text x="448" y="164" class="txt small left">dark: gene not expressed in either</text>
+    <text x="430" y="200" class="txt small left muted">(red + green light together looks yellow)</text>
+  </svg>
+  <figcaption>Syllabus Figure 4-48a. Green cDNA from sample 1 and red cDNA from sample 2 compete for the same spots. Equal amounts give a yellow spot; a colour difference means the
+  gene is expressed more in one of the two samples.</figcaption>
+</figure>
+<p>Figure 4-48b of the syllabus shows a famous use: yeast cells were made to go through the cell cycle in step, RNA was taken at fixed time points, and every gene's expression was
+plotted as one row (red = more than the control, green = less). Genes with a similar pattern were placed next to each other (<strong>clustering</strong>), which revealed groups of
+genes that are switched on together at particular moments of the cycle.</p>
+
+<div class="callout quiz"><span class="tag">Exam link</span>
+<p>Example exam question 15: nerve cells and muscle cells express different genes; which technique is most efficient to identify the genes each cell type expresses? Answer:
+<strong>a DNA microarray</strong>. Why not the others? <strong>PCR</strong> amplifies DNA, and qRT-PCR would need a separate reaction per gene. <strong>Gel electrophoresis of DNA
+fragments</strong> separates DNA by size; it says nothing about which genes are used. <strong>Isolating all proteins</strong> of each tissue is possible (mass spectrometry, page 4.8)
+but far less efficient than one chip that reads thousands of genes in one hybridization. (Today RNA-seq would also do the job; the exam expects the microarray.)</p></div>
+
+<table class="tech">
+  <tr><th>DNA microarray</th><th></th></tr>
+  <tr><td>Principle</td><td>labelled cDNA of a cell's RNA hybridizes to spots of known genes; spot brightness = expression level</td></tr>
+  <tr><td>You need</td><td>a chip with a DNA spot per gene (synthetic oligonucleotides or PCR fragments), the RNA of the samples, reverse transcriptase and fluorescent nucleotides (Cy3, Cy5), a scanner with lasers</td></tr>
+  <tr><td>Steps</td><td>1 isolate RNA of two samples · 2 make green and red cDNA · 3 mix and hybridize to the chip · 4 scan at both colours · 5 compare the ratio per spot, cluster genes</td></tr>
+  <tr><td>Used for</td><td>genome-wide expression: which genes differ between two conditions or two cell types</td></tr>
+  <tr><td>Traps</td><td>you only see genes that are on the chip; the cDNA step can bias the result (see section 5); yellow = equal, not "off"</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>microarray</strong> is een glasplaatje met duizenden <strong>spots</strong>, één per gen. Je maakt <strong>fluorescerend cDNA</strong> van het RNA van je cellen en laat
+het hybridiseren; de helderheid van een spot = hoeveel mRNA van dat gen er was. Twee monsters tegelijk: monster 1 <strong>groen</strong> (Cy3), monster 2 <strong>rood</strong> (Cy5);
+<strong>geel</strong> = even veel, rood of groen = meer in één van beide. Zo vind je welke genen twee celtypes (of twee condities) verschillend gebruiken: het antwoord op examenvraag 15.
+Genen met hetzelfde patroon worden geclusterd (gistcelcyclus, Figuur 4-48b).</p></div>
+
+<!-- ============================================================ -->
+<h2>5. RNA-seq: just sequence all the cDNAs (4.11.4)</h2>
+<p>The newest and most important approach is simply to <strong>sequence the cDNAs</strong> made from the RNA population, a method called <strong>RNA-seq</strong> (page 4.11, Figure
+4-42). With deep sequencing it is easy to read many millions of cDNAs; counting how often each gene's sequence appears tells its expression level, especially when two
+populations are compared directly. RNA-seq can also be aimed at <strong>sub-populations</strong> of RNA: RNAs below a certain size, or RNAs processed in a specific way. One trick
+from the syllabus: to find <strong>unprocessed</strong> RNAs, which still carry a 5′ triphosphate (three phosphates at their 5′ end, the way RNA polymerase made them), treat the
+total RNA with a <strong>terminator exonuclease</strong>, an enzyme that eats RNAs with a 5′ cap or a single phosphate; only the unprocessed ones survive and are sequenced.</p>
+
+<div class="callout key"><span class="tag">One caveat for all cDNA methods (microarray and RNA-seq)</span>
+<p>Both methods need a <strong>cDNA copy</strong>, and reverse transcriptase does not copy every RNA equally well. An RNA with a strong <strong>secondary structure</strong>
+(a region folded back on itself) or with a <strong>modified nucleotide</strong> can make the enzyme fall off, so that RNA is under-counted or missed. Researchers turn this weakness
+into a tool: where reverse transcriptase stops tells where the structure or modification sits, and some modifications make the enzyme insert the <em>wrong</em> nucleotide, so a
+"mutation" in the sequencing data marks the modified position.</p></div>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>RNA-seq</strong> = de cDNA's van alle RNA's sequencen; hoe vaak een gen voorkomt = expressie. Ook mogelijk voor deelverzamelingen (kleine RNA's; onbewerkte RNA's met
+5′-trifosfaat, na afbraak van de rest met een terminator-exonuclease). Valkuil voor microarray én RNA-seq: <strong>reverse transcriptase</strong> stopt bij vouwingen of
+gemodificeerde nucleotiden, dus zulke RNA's worden gemist; omgekeerd verraden die stops en foute letters waar de modificaties zitten.</p></div>
+
+<!-- ============================================================ -->
+<h2>6. Western blot: finding one protein with antibodies (4.12, Figure 4-49)</h2>
+<p>To follow one specific <strong>protein</strong>, in a cell extract or in its place in the cell, there are two approaches: antibodies against the protein itself, or antibodies
+against a <strong>tag</strong> added to the protein by cloning (page 4.4). This section is about antibodies against the protein.</p>
+<p><strong>What an antibody is.</strong> The immune system of an animal makes <strong>antibodies</strong>: Y-shaped proteins that bind one target with very high
+<strong>affinity</strong> (strength of binding) and <strong>specificity</strong> (they bind that target and almost nothing else). To obtain antibodies against your protein, you inject
+a mouse, rabbit, goat or chicken with the purified protein, or with a short <strong>peptide</strong> (a piece of its amino acid chain), and collect the antibodies from its blood.</p>
+<p>The <strong>Western blot</strong> (also called <strong>immunoblot</strong>) detects a specific protein that has been fixed on a membrane:</p>
+<ol>
+  <li><strong>SDS-PAGE:</strong> the protein mixture is separated by size on a polyacrylamide gel (page 4.8). Proteins of known size (markers) run alongside.</li>
+  <li><strong>Transfer:</strong> an electric field moves the proteins out of the gel onto a <strong>membrane</strong> (a thin sheet that proteins stick to, hydrophobic or positively charged). A dye such as Ponceau S red can show all the proteins and the markers on the membrane.</li>
+  <li><strong>Blocking:</strong> the membrane is soaked in a protein-rich solution (for example BSA, bovine serum albumin, a cheap cow protein) so that antibodies cannot stick to empty spots: this reduces <strong>non-specific binding</strong>.</li>
+  <li><strong>Primary antibody:</strong> the antibody against your protein is added; it binds its band. Unbound antibody is washed away.</li>
+  <li><strong>Secondary antibody:</strong> an antibody that binds the <em>primary</em> antibody is added. It carries the label: radioactivity, a fluorophore, or an enzyme such as
+  <strong>horseradish peroxidase</strong> (mierikswortelperoxidase) that makes a coloured or light-emitting product. Wash again.</li>
+  <li><strong>Detection:</strong> autoradiography (for radioactivity) or a phosphorimager / camera (for fluorescence or light) shows one band at the size of your protein.</li>
+</ol>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 660 230" width="660" height="230" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- 1 gel -->
+    <rect x="15" y="40" width="80" height="120" rx="4" class="stepbox"/>
+    <rect x="25" y="60" width="24" height="5" class="band"/><rect x="25" y="85" width="24" height="5" class="band"/><rect x="25" y="105" width="24" height="5" class="band hi"/><rect x="25" y="135" width="24" height="5" class="band"/>
+    <rect x="62" y="55" width="24" height="4" class="band"/><rect x="62" y="80" width="24" height="4" class="band"/><rect x="62" y="110" width="24" height="4" class="band"/><rect x="62" y="140" width="24" height="4" class="band"/>
+    <text x="33" y="175" class="txt small">sample</text><text x="80" y="175" class="txt small">markers</text>
+    <text x="55" y="28" class="txt small bold">1 SDS-PAGE</text>
+    <path d="M100,100 L125,100" class="path accent" marker-end="url(#ar4)"/>
+    <!-- 2 membrane -->
+    <rect x="135" y="40" width="80" height="120" rx="4" class="memb"/>
+    <rect x="145" y="60" width="24" height="5" class="band"/><rect x="145" y="85" width="24" height="5" class="band"/><rect x="145" y="105" width="24" height="5" class="band hi"/><rect x="145" y="135" width="24" height="5" class="band"/>
+    <text x="175" y="28" class="txt small bold">2 transfer</text><text x="175" y="175" class="txt small">to a membrane</text><text x="175" y="189" class="txt small muted">(electric field)</text>
+    <path d="M220,100 L245,100" class="path accent" marker-end="url(#ar4)"/>
+    <!-- 3-4 block + primary -->
+    <rect x="255" y="40" width="80" height="120" rx="4" class="memb"/>
+    <rect x="265" y="105" width="24" height="5" class="band hi"/>
+    <path d="M277,104 L277,90 M277,90 L270,80 M277,90 L284,80" class="ab1" style="fill:none;stroke:var(--c-N);stroke-width:3"/>
+    <text x="295" y="28" class="txt small bold">3–4 block, then</text><text x="295" y="175" class="txt small">primary antibody</text><text x="295" y="189" class="txt small muted">binds the protein</text>
+    <path d="M340,100 L365,100" class="path accent" marker-end="url(#ar4)"/>
+    <!-- 5 secondary -->
+    <rect x="375" y="40" width="80" height="120" rx="4" class="memb"/>
+    <rect x="385" y="105" width="24" height="5" class="band hi"/>
+    <path d="M397,104 L397,90 M397,90 L390,80 M397,90 L404,80" style="fill:none;stroke:var(--c-N);stroke-width:3"/>
+    <path d="M404,80 L410,70 M410,70 L405,60 M410,70 L417,62" style="fill:none;stroke:var(--c-P);stroke-width:3"/>
+    <circle cx="420" cy="58" r="6" class="enz"/>
+    <text x="415" y="28" class="txt small bold">5 secondary antibody</text><text x="415" y="175" class="txt small">binds the primary one,</text><text x="415" y="189" class="txt small muted">carries the label</text>
+    <path d="M460,100 L485,100" class="path accent" marker-end="url(#ar4)"/>
+    <!-- 6 detect -->
+    <rect x="495" y="40" width="80" height="120" rx="4" class="stepbox"/>
+    <rect x="505" y="105" width="24" height="5" class="band hi"/>
+    <rect x="542" y="55" width="24" height="4" class="band"/><rect x="542" y="80" width="24" height="4" class="band"/><rect x="542" y="110" width="24" height="4" class="band"/><rect x="542" y="140" width="24" height="4" class="band"/>
+    <text x="535" y="28" class="txt small bold">6 detect</text><text x="535" y="175" class="txt small">one band at the size</text><text x="535" y="189" class="txt small muted">of your protein</text>
+    <text x="330" y="215" class="txt small muted">red band = the protein of interest · blue Y = primary antibody · orange Y = secondary antibody · yellow dot = enzyme or fluorophore</text>
+  </svg>
+  <figcaption>The Western blot (syllabus Figure 4-49). The gel sorts by size; the membrane makes the proteins reachable for antibodies; the secondary antibody brings the signal.
+  The marker lane tells you the size of the band.</figcaption>
+</figure>
+
+<div class="callout key"><span class="tag">Controls</span>
+<p>The result is only as good as the <strong>specificity of the primary antibody</strong>. Some antibodies, especially <strong>polyclonal</strong> ones (a mixture of antibodies
+from the animal, recognising several spots, or <em>epitopes</em>, on the protein), also react with other proteins. So always include controls, for example an extract from
+cells that lack the protein of interest: if a band still appears there, the antibody is not specific.</p></div>
+
+<table class="tech">
+  <tr><th>Western blot</th><th></th></tr>
+  <tr><td>Principle</td><td>proteins separated by size, transferred to a membrane, and one of them detected with a specific antibody</td></tr>
+  <tr><td>You need</td><td>a cell extract, SDS-PAGE gel, size markers, a membrane and transfer chamber, blocking solution (BSA), a primary antibody, a labelled secondary antibody, a detector</td></tr>
+  <tr><td>Steps</td><td>1 SDS-PAGE · 2 transfer · 3 block · 4 primary antibody, wash · 5 secondary antibody, wash · 6 detect</td></tr>
+  <tr><td>Used for</td><td>is protein X present, how much, and what size is it</td></tr>
+  <tr><td>Traps</td><td>non-specific binding and cross-reactivity (polyclonal antibodies); always run a control without the protein</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Een <strong>antistof</strong> is een Y-vormig eiwit van het immuunsysteem dat heel specifiek aan één doelwit bindt; je maakt ze door een dier (muis, konijn, geit, kip) in te
+spuiten met het eiwit of een stukje ervan. <strong>Western blot</strong>: 1 SDS-PAGE, 2 overbrengen naar een <strong>membraan</strong> (elektrisch veld), 3 blokkeren met BSA,
+4 <strong>primaire antistof</strong> tegen het eiwit, 5 <strong>secundaire antistof</strong> tegen de primaire, met het label (radioactief, fluorofoor of enzym zoals
+mierikswortelperoxidase), 6 detecteren: één band op de grootte van het eiwit. Altijd een controle zonder het eiwit: polyklonale antistoffen kunnen kruisreageren.</p></div>
+
+<!-- ============================================================ -->
+<h2>7. Flow cytometry: cells one by one past a laser (4.13)</h2>
+<p><strong>Flow cytometry</strong> (flowcytometrie; "cyto" = cell, "metry" = measuring) analyses the properties of <strong>cells or particles in a fluid</strong>. The cells are lined
+up in a <strong>single-file stream</strong> and pass one at a time through a <strong>laser beam</strong>, like cars driving one by one through a toll booth (tolhuisje). As each cell
+passes, detectors record how it scatters the light (its <strong>size and shape</strong>) and whether it fluoresces. Thousands of cells are examined in a few minutes.</p>
+<p><strong>Markers:</strong> the power of the method is that you can <strong>tag</strong> features of interest with fluorescent dyes or with fluorescently labelled antibodies:
+a protein on the cell surface, DNA content, or another molecule. When a tagged cell passes the laser, the dye lights up and the instrument records the signal. This identifies
+different cell types (for example kinds of immune cells) and reveals changes in behaviour: are the cells growing, dividing or dying?</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 620 210" width="620" height="210" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+    <!-- funnel and stream -->
+    <path d="M60,20 L120,20 L100,70 L100,190 M80,70 L80,190 M60,20 L80,70 M120,20 L100,70" class="stream"/>
+    <circle cx="90" cy="40" r="9" class="cellf"/><circle cx="76" cy="52" r="8" class="celln"/><circle cx="104" cy="50" r="8" class="celln"/>
+    <circle cx="90" cy="95" r="7" class="celln"/><circle cx="90" cy="125" r="7" class="cellf"/><circle cx="90" cy="155" r="7" class="celln"/><circle cx="90" cy="182" r="7" class="cellf"/>
+    <text x="90" y="12" class="txt small">cell suspension</text>
+    <text x="128" y="62" class="txt small left">cells in single file</text>
+    <!-- laser -->
+    <line x1="20" y1="125" x2="83" y2="125" class="laser"/>
+    <text x="40" y="142" class="txt small">laser</text>
+    <!-- detectors -->
+    <line x1="97" y1="125" x2="150" y2="125" class="path" style="stroke-dasharray:3 3"/>
+    <rect x="148" y="113" width="92" height="24" rx="4" class="det"/><text x="194" y="129" class="txt small">scatter detector</text>
+    <text x="194" y="152" class="txt small muted">size and shape</text>
+    <line x1="90" y1="132" x2="90" y2="160" class="path" style="stroke-dasharray:3 3"/>
+    <rect x="232" y="55" width="124" height="24" rx="4" class="det"/><text x="294" y="71" class="txt small">fluorescence detector</text>
+    <line x1="97" y1="120" x2="230" y2="70" class="path" style="stroke-dasharray:3 3"/>
+    <text x="290" y="94" class="txt small muted">tagged cells light up</text>
+    <!-- result plot -->
+    <path d="M400,30 L400,170 L600,170" class="ax" marker-end="url(#ar5)"/>
+    <text x="500" y="192" class="txt small">fluorescence per cell</text>
+    <text x="388" y="100" class="txt small" transform="rotate(-90 388 100)">number of cells</text>
+    <path d="M405,168 C430,168 440,60 460,60 C480,60 490,168 510,168" class="curve b"/>
+    <path d="M505,168 C530,168 540,90 555,90 C570,90 580,168 598,168" class="curve c"/>
+    <text x="460" y="52" class="txt small">untagged</text><text x="556" y="82" class="txt small">tagged</text>
+    <text x="500" y="20" class="txt small bold">result: two populations</text>
+  </svg>
+  <figcaption>Flow cytometry. Each cell crosses the laser alone; the scattered light reports size and shape, the fluorescence reports whether the cell carries the tagged marker.
+  Plotting thousands of cells gives populations, here untagged (grey cells) and tagged (green cells).</figcaption>
+</figure>
+
+<p><strong>Uses:</strong> in medicine, flow cytometry diagnoses diseases such as <strong>leukemia</strong> by finding abnormal cells in the blood, and monitors the immune system in people
+with <strong>HIV</strong> (chapter 3: the virus kills particular immune cells, so counting them tracks the disease) or during cancer treatment. In research it shows how cells
+function, respond to treatments or change in different environments.</p>
+
+<table class="tech">
+  <tr><th>Flow cytometry</th><th></th></tr>
+  <tr><td>Principle</td><td>cells pass a laser one at a time; light scatter gives size and shape, fluorescence gives tagged features</td></tr>
+  <tr><td>You need</td><td>cells in suspension, fluorescent dyes or fluorescently labelled antibodies, a flow cytometer (laser + detectors)</td></tr>
+  <tr><td>Steps</td><td>1 make a single-cell suspension · 2 tag the feature of interest · 3 run the cells through the laser · 4 record scatter and fluorescence per cell · 5 plot the populations</td></tr>
+  <tr><td>Used for</td><td>identifying and counting cell types; leukemia diagnosis; immune monitoring in HIV; growth, division and death of cells</td></tr>
+  <tr><td>Trap</td><td>it measures whole cells in suspension, not molecules in a tube: for "is protein X present in the extract" use a Western blot</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>Flowcytometrie</strong>: cellen in een vloeistof gaan <strong>één voor één</strong> door een <strong>laserstraal</strong>. Verstrooid licht = grootte en vorm; fluorescentie
+= of de cel een <strong>gelabeld kenmerk</strong> draagt (kleurstof of fluorescerende antistof tegen een eiwit, DNA ...). Duizenden cellen in minuten. Gebruik: celtypes
+onderscheiden, <strong>leukemie</strong> diagnosticeren, het immuunsysteem volgen bij <strong>hiv</strong> of kankerbehandeling, groei/deling/sterfte van cellen.</p></div>
+
+<!-- ============================================================ -->
+<h2>8. Which technique for which question? (whole chapter)</h2>
+<p>The exam likes to give a question and ask for the tool. This table collects the chapter.</p>
+<table class="pick">
+  <tr><th>The question</th><th>The tool</th><th>Page</th></tr>
+  <tr><td>I have very little DNA; I want millions of copies of one region</td><td>PCR (primers, dNTPs, heat-stable polymerase)</td><td>4.3</td></tr>
+  <tr><td>I want a DNA copy of an mRNA, without introns</td><td>reverse transcriptase → cDNA</td><td>4.3</td></tr>
+  <tr><td>I want to propagate and modify a DNA fragment in bacteria</td><td>cloning: restriction enzymes cut, DNA ligase joins, plasmid vector, transformation, selectable marker</td><td>4.4</td></tr>
+  <tr><td>I want to switch a gene off in a mouse / knock it down in cells / edit it precisely</td><td>knockout by homologous recombination / RNAi (siRNA) / CRISPR-Cas9</td><td>4.6</td></tr>
+  <tr><td>How much DNA or protein is in my tube, and is the DNA pure?</td><td>absorbance at 260 and 280 nm, A260/A280 ≈ 2</td><td>4.7</td></tr>
+  <tr><td>Separate DNA fragments by size / proteins by size</td><td>agarose gel electrophoresis / SDS-PAGE</td><td>4.8</td></tr>
+  <tr><td>Identify a protein or its modifications from a gel spot</td><td>mass spectrometry (trypsin peptides, m/z, MS/MS)</td><td>4.8</td></tr>
+  <tr><td>Read the sequence of one DNA fragment</td><td>Sanger sequencing (ddNTPs)</td><td>4.9</td></tr>
+  <tr><td>Guess the function of a new gene from its sequence</td><td>BLAST alignment (homology, E value)</td><td>4.9</td></tr>
+  <tr><td>Read a whole genome</td><td>shotgun sequencing with Illumina (short reads) or Nanopore (long reads); coverage</td><td>4.10</td></tr>
+  <tr><td>Find disease variants cheaply in the coding part only</td><td>exome sequencing (WES)</td><td>4.11</td></tr>
+  <tr><td>Which microbes live in this sample?</td><td>metagenome sequencing</td><td>4.11</td></tr>
+  <tr><td>Where is DNA methylated / chromatin open?</td><td>bisulfite sequencing / ATAC-seq (ChIP-seq for histone marks)</td><td>4.11</td></tr>
+  <tr><td>Are there extra or missing chromosomes, big rearrangements?</td><td>karyotype (Giemsa banding)</td><td>4.12</td></tr>
+  <tr><td>Where on a chromosome does this sequence sit; is there a translocation?</td><td>FISH (fluorescent probe, merged signal)</td><td>4.12</td></tr>
+  <tr><td>Which regions are deleted or duplicated, genome-wide, without prior knowledge?</td><td>array CGH (green/red/yellow)</td><td>4.12</td></tr>
+  <tr><td>How strongly is <em>one</em> gene expressed?</td><td>qRT-PCR (threshold cycle)</td><td>4.13</td></tr>
+  <tr><td>Where and when is a gene switched on in a living organism?</td><td>reporter gene (GFP, luciferase, lacZ)</td><td>4.13</td></tr>
+  <tr><td>Which genes differ between two cell types or conditions?</td><td>DNA microarray (two colours) or RNA-seq</td><td>4.13</td></tr>
+  <tr><td>Is protein X present, and how big is it?</td><td>Western blot (antibodies)</td><td>4.13</td></tr>
+  <tr><td>How many cells of a certain type are in this blood sample?</td><td>flow cytometry</td><td>4.13</td></tr>
+</table>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p>Vraag → tool: veel kopieën = <strong>PCR</strong>; mRNA → DNA = <strong>reverse transcriptase</strong>; een gen vermeerderen in bacteriën = <strong>klonen</strong>; sequentie
+lezen = <strong>Sanger</strong> / <strong>Illumina</strong> / <strong>Nanopore</strong>; chromosomen tellen = <strong>karyotype</strong>; plaats op een chromosoom = <strong>FISH</strong>;
+kopieaantal genoomwijd = <strong>aCGH</strong>; expressie van één gen = <strong>qRT-PCR</strong>; waar en wanneer een gen aan staat = <strong>reportergen</strong>; alle genen
+vergelijken = <strong>microarray</strong> of <strong>RNA-seq</strong>; één eiwit = <strong>western blot</strong>; cellen tellen en sorteren = <strong>flowcytometrie</strong>.</p></div>
+
+<!-- ============================================================ -->
+<h2>9. Vocabulary</h2>
+<table>
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>qRT-PCR (qPCR)</td><td>quantitative reverse transcription PCR: RNA → cDNA → PCR, product measured after every cycle to find how much RNA there was</td></tr>
+  <tr><td>real time</td><td>the machine reads the amount of product during the run, after each cycle, not only at the end</td></tr>
+  <tr><td>exponential phase</td><td>the cycles in which the product still doubles each time; only here is the amount proportional to the input</td></tr>
+  <tr><td>threshold (cycle)</td><td>a fixed fluorescence level; the cycle at which a sample crosses it (18, 25, 35 for 100 ng, 1 ng, 1 pg of RNA)</td></tr>
+  <tr><td>ng, pg</td><td>nanogram (10⁻⁹ g) and picogram (10⁻¹² g); 1 pg is a thousand times less than 1 ng</td></tr>
+  <tr><td>reporter gene</td><td>a gene whose product is easy to see (colour, light, fluorescence), fused to the control region or ORF of the gene you study</td></tr>
+  <tr><td>β-galactosidase / lacZ</td><td>the <em>E. coli</em> enzyme that splits galactose derivatives; gives a coloured (blue) product</td></tr>
+  <tr><td>luciferase</td><td>firefly enzyme that produces light</td></tr>
+  <tr><td>GFP</td><td>Green Fluorescent Protein from a jellyfish; fluoresces by itself</td></tr>
+  <tr><td>Spinach</td><td>a selected RNA that fluoresces when it binds a specific compound: an RNA reporter</td></tr>
+  <tr><td>DNA microarray (chip)</td><td>a slide with thousands of DNA spots, one per gene, to which labelled cDNA is hybridized</td></tr>
+  <tr><td>Cy3, Cy5</td><td>green and red fluorescent dyes used to label the cDNA of two samples</td></tr>
+  <tr><td>clustering</td><td>placing genes with similar expression patterns next to each other in the display</td></tr>
+  <tr><td>RNA-seq / deep sequencing</td><td>sequencing millions of cDNAs to count the RNAs of a cell</td></tr>
+  <tr><td>5′ triphosphate</td><td>three phosphates at the 5′ end of an RNA that has not been processed yet</td></tr>
+  <tr><td>terminator exonuclease</td><td>an enzyme that degrades RNAs with a 5′ cap or a single phosphate, leaving the unprocessed ones</td></tr>
+  <tr><td>antibody</td><td>Y-shaped immune protein that binds one target with high affinity and specificity (antistof)</td></tr>
+  <tr><td>primary / secondary antibody</td><td>the antibody against your protein / an antibody against the primary antibody that carries the label</td></tr>
+  <tr><td>Western blot (immunoblot)</td><td>proteins from an SDS-PAGE gel transferred to a membrane and detected with antibodies</td></tr>
+  <tr><td>membrane (blot)</td><td>a thin sheet that proteins stick to after transfer from the gel</td></tr>
+  <tr><td>blocking, BSA</td><td>covering the empty membrane with a cheap protein (bovine serum albumin) so antibodies only bind their target</td></tr>
+  <tr><td>Ponceau S</td><td>a red dye that shows all proteins on the membrane</td></tr>
+  <tr><td>horseradish peroxidase</td><td>an enzyme linked to the secondary antibody; makes a coloured or light-emitting product</td></tr>
+  <tr><td>polyclonal antibody, epitope, cross-reactivity</td><td>a mixture of antibodies recognising several spots (epitopes) on a protein; may also bind other proteins (cross-react)</td></tr>
+  <tr><td>flow cytometry</td><td>cells in single file pass a laser; scatter gives size and shape, fluorescence gives tagged markers</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>10. What the quiz and exam expect from this section</h2>
+<p>Learning objectives: "describe the principle, methodology and applications of nucleic acid based technologies, including ... microarrays ... and transcriptomics", "describe
+various techniques used in the analysis of proteins", and "utilize these concepts to solve problems related to biological processes".</p>
+<ol>
+  <li>Explain qRT-PCR: the two stages, why only the exponential phase counts, and how the threshold cycle relates to the amount of RNA (more RNA = fewer cycles).</li>
+  <li>Name the reporter genes (lacZ, luciferase, GFP, Spinach) and say what each shows; explain the difference between promoter → reporter and ORF fusion.</li>
+  <li>Describe a two-colour microarray experiment and read the colours: yellow equal, red or green different. Answer exam question 15 (microarray).</li>
+  <li>Explain RNA-seq as an alternative and the cDNA caveat (reverse transcriptase stops at structures and modifications).</li>
+  <li>Give the six steps of a Western blot and the roles of the primary and secondary antibody; name the controls.</li>
+  <li>Explain flow cytometry and its uses (leukemia diagnosis, HIV immune monitoring).</li>
+  <li>Choose the right technique for a given question (section 8).</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>11. Questions and answers</h2>
+<p class="small">Cover the answers and try each question first.</p>
+<dl class="qa">
+  <dt>Why do we measure RNA to study gene expression?</dt>
+  <dd>Because many genes are regulated at transcription: the amount of mRNA of a gene reflects how strongly the cell uses it.</dd>
+
+  <dt>What are the two stages of qRT-PCR?</dt>
+  <dd>First reverse transcriptase makes a cDNA copy of the RNA; then the cDNA is amplified by PCR while a machine measures the DNA-binding dye after every cycle.</dd>
+
+  <dt>Why must samples be compared in the exponential phase?</dt>
+  <dd>Only while the product still doubles every cycle is its amount proportional to the starting RNA. Later a component runs out and the curve flattens, so the amounts no longer reflect the input.</dd>
+
+  <dt>Sample A crosses the threshold at cycle 25, sample B at cycle 35. Which had more RNA, and roughly how much more?</dt>
+  <dd>Sample A. Ten cycles earlier means about 2¹⁰ ≈ 1000 times more RNA (in the syllabus example: 1 ng versus 1 pg).</dd>
+
+  <dt>What is the main limitation of qRT-PCR?</dt>
+  <dd>It only detects the segment between the two primers, so other forms of the same RNA (for example alternatively spliced versions) are missed; it also needs good controls.</dd>
+
+  <dt>What is a reporter gene, and name three.</dt>
+  <dd>A gene whose product is easily detected, fused to the regulatory region of the gene you study: β-galactosidase (lacZ, coloured product), luciferase (light), GFP (green fluorescence); also the RNA reporter Spinach.</dd>
+
+  <dt>What is the difference between fusing a reporter to a promoter and to an ORF?</dt>
+  <dd>Promoter → reporter shows transcriptional regulation only. Reporter fused to the ORF is only made when the gene is transcribed from its own promoter and translated with its own sequences, so it shows transcription and translation.</dd>
+
+  <dt>How does a two-colour microarray work, and what does a yellow spot mean?</dt>
+  <dd>cDNA of sample 1 is labelled green (Cy3), of sample 2 red (Cy5); both are hybridized to the same chip of gene spots. Yellow = equal expression in both; red or green = higher in one sample.</dd>
+
+  <dt>Nerve cells and muscle cells express different genes. Which technique identifies these genes most efficiently?</dt>
+  <dd>A DNA microarray (exam question 15): one hybridization reports thousands of genes at once. PCR, DNA gels and isolating all proteins are less efficient or answer a different question.</dd>
+
+  <dt>What caveat applies to both microarrays and RNA-seq?</dt>
+  <dd>Both need a cDNA copy, and reverse transcriptase can fall off at RNA secondary structures or modified nucleotides, so such RNAs are missed (a weakness that is also used to map those sites).</dd>
+
+  <dt>Describe the Western blot in six steps.</dt>
+  <dd>SDS-PAGE; transfer to a membrane with an electric field; blocking with BSA; primary antibody against the protein, wash; secondary antibody (against the primary, carrying radioactivity, a fluorophore or an enzyme such as horseradish peroxidase), wash; detection of the band.</dd>
+
+  <dt>Why is a control lysate without the protein included in a Western blot?</dt>
+  <dd>To check the specificity of the primary antibody: polyclonal antibodies may cross-react with other proteins, which would show up as a band in the control.</dd>
+
+  <dt>What does flow cytometry measure, and give two medical uses.</dt>
+  <dd>Cells pass a laser one by one; scattered light gives size and shape, fluorescence shows tagged markers. Uses: diagnosing leukemia from abnormal blood cells, monitoring the immune system in HIV or during cancer treatment.</dd>
+</dl>
+
+<!-- ============================================================ -->
+<h2>12. To memorize</h2>
+<div class="callout memo"><span class="tag">Learn these by heart</span>
+<ul>
+  <li>Gene expression is measured as <strong>RNA</strong> (most regulation is at transcription).</li>
+  <li><strong>qRT-PCR</strong> = reverse transcription → PCR with a real-time dye; valid in the <strong>exponential phase</strong>; <strong>more RNA = fewer cycles</strong> to the threshold (100 ng ≈ 18, 1 ng ≈ 25, 1 pg ≈ 35).</li>
+  <li>qRT-PCR: extremely sensitive, but sees only the stretch between the primers.</li>
+  <li><strong>Reporter genes</strong>: lacZ (β-galactosidase, colour), luciferase (light), GFP (green fluorescence), Spinach (fluorescent RNA).</li>
+  <li>Promoter → reporter = transcription only; reporter fused to the <strong>ORF</strong> = transcription + translation.</li>
+  <li><strong>Microarray</strong>: labelled cDNA hybridizes to spots of genes; two colours Cy3 green / Cy5 red; <strong>yellow = equal</strong>, red or green = different.</li>
+  <li>Exam Q15: genes expressed by two cell types → <strong>DNA microarray</strong>.</li>
+  <li><strong>RNA-seq</strong> counts cDNAs by deep sequencing; caveat for all cDNA methods: reverse transcriptase stops at structures and modifications.</li>
+  <li><strong>Western blot</strong>: SDS-PAGE → transfer to membrane → block (BSA) → primary antibody → labelled secondary antibody → detect one band.</li>
+  <li>Antibody = immune protein, high affinity and specificity; control without the protein checks for cross-reactivity.</li>
+  <li><strong>Flow cytometry</strong>: cells in single file past a laser; scatter = size and shape, fluorescence = tagged markers; leukemia diagnosis, HIV immune monitoring.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>13. Mini-quiz</h2>
+<p class="small">Answer each one in your head or on paper, then click to check. Written by Claude, not from the course quiz.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq">
+  <li>In qRT-PCR, what does the "RT" stand for, and which enzyme does that step?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Reverse transcription</strong>, done by <strong>reverse transcriptase</strong> (an enzyme from retroviruses, chapter 3) that copies RNA into cDNA. Only then can PCR amplify it.</p></div></details></li>
+  <li>Three samples cross the threshold at cycles 18, 25 and 35. Which contained the least RNA?
+    <ul class="opts"><li data-l="a">the one at cycle 18</li><li data-l="b">the one at cycle 25</li><li data-l="c">the one at cycle 35</li><li data-l="d">they are equal; the cycle number does not depend on the amount</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Less starting RNA needs more doublings to reach the threshold. In the syllabus: 100 ng ≈ 18, 1 ng ≈ 25, 1 pg ≈ 35 cycles.</p></div></details></li>
+  <li>True or false: "In qRT-PCR you can compare samples at any cycle, as long as you use the same machine."
+    <details><summary>Answer</summary><div class="ans"><p><strong>False.</strong> Only in the <strong>exponential phase</strong> is the product proportional to the input. Once a component becomes limiting the curves flatten and no longer reflect the starting amounts.</p></div></details></li>
+  <li>Name the reporter that gives (a) a blue colour, (b) light, (c) green fluorescence without any added substance.
+    <details><summary>Answer</summary><div class="ans"><p>(a) <strong>β-galactosidase</strong> (lacZ) with a galactose derivative, (b) <strong>luciferase</strong>, (c) <strong>GFP</strong>, green fluorescent protein from a jellyfish.</p></div></details></li>
+  <li>You fuse GFP to the promoter of gene X and see green cells. What do you know, and what do you not know?
+    <details><summary>Answer</summary><div class="ans"><p>You know the <strong>promoter of X is active</strong> (transcription) in those cells at that moment. You do not know whether X's own mRNA is translated efficiently: for that you would fuse GFP to the <strong>ORF</strong> of X.</p></div></details></li>
+  <li>Which reporter is itself an RNA rather than a protein?
+    <details><summary>Answer</summary><div class="ans"><p><strong>Spinach</strong>: a selected RNA that fluoresces when it binds a specific compound. The other reporters (lacZ, luciferase, GFP) are proteins.</p></div></details></li>
+  <li>On a two-colour microarray (sample 1 green, sample 2 red), a spot is bright red. What does that mean?
+    <ul class="opts"><li data-l="a">the gene is not expressed in either sample</li><li data-l="b">the gene is expressed equally in both</li><li data-l="c">the gene is expressed more in sample 2</li><li data-l="d">the gene is expressed more in sample 1</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> Red is the dye of sample 2's cDNA, so more red means more mRNA of that gene in sample 2. Equal amounts give yellow (red + green); a dark spot means expressed in neither.</p></div></details></li>
+  <li>Which technique would you choose to find the genes that a liver cell expresses but a skin cell does not, in one experiment?
+    <details><summary>Answer</summary><div class="ans"><p>A <strong>DNA microarray</strong> (or RNA-seq): label liver cDNA with one colour and skin cDNA with the other, hybridize to one chip, and read the spots that differ. This is example exam question 15.</p></div></details></li>
+  <li>Why can an RNA with a strongly folded structure be missed by a microarray or by RNA-seq?
+    <details><summary>Answer</summary><div class="ans"><p>Both need a <strong>cDNA copy</strong>, and <strong>reverse transcriptase</strong> can fall off at a secondary structure or a modified nucleotide, so no full cDNA is made and the RNA is under-counted.</p></div></details></li>
+  <li>Put the Western blot steps in order: secondary antibody, SDS-PAGE, blocking, primary antibody, detection, transfer to a membrane.
+    <details><summary>Answer</summary><div class="ans"><p><strong>SDS-PAGE → transfer to a membrane → blocking → primary antibody → secondary antibody → detection.</strong> Washes follow each antibody step.</p></div></details></li>
+  <li>What is the job of the secondary antibody, and why is it needed?
+    <details><summary>Answer</summary><div class="ans"><p>It binds the <strong>primary antibody</strong> and carries the <strong>label</strong> (radioactivity, a fluorophore or an enzyme such as horseradish peroxidase). This way one labelled secondary antibody can be used with many different primary antibodies, and the signal is amplified.</p></div></details></li>
+  <li>A Western blot shows a band in the lysate of cells that are known to lack the protein. What is the most likely explanation?
+    <details><summary>Answer</summary><div class="ans"><p>The primary antibody is <strong>not specific</strong>: it cross-reacts with another protein (common with polyclonal antibodies). This is exactly why such a control is run.</p></div></details></li>
+  <li>Which technique counts how many cells in a blood sample carry a given surface protein?
+    <ul class="opts"><li data-l="a">Western blot</li><li data-l="b">flow cytometry</li><li data-l="c">qRT-PCR</li><li data-l="d">FISH</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> Tag the protein with a fluorescent antibody and send the cells one by one past the laser; the instrument counts the fluorescent cells. A Western blot sees the protein in an extract, not per cell.</p></div></details></li>
+  <li>Give one medical use of flow cytometry and explain it in one sentence.
+    <details><summary>Answer</summary><div class="ans"><p><strong>Leukemia diagnosis</strong>: abnormal blood cells are recognised by their size, shape and markers as they pass the laser. Or: <strong>HIV monitoring</strong>, counting the immune cells that the virus destroys.</p></div></details></li>
+</ol>
+
+<nav class="nav" style="margin-top:40px"><a href="4.12_detecting_dna_sequences.html">← 4.12 Detecting DNA sequences</a><a href="index.html">Chapter 4 index</a><a href="../index.html">All chapters →</a></nav>
+</main>
+</body>
+</html>
