@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2.8 p53 and colorectal cancer</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -18,6 +20,25 @@
   .epi.tum { fill: var(--c-O); opacity: .6; }
   .lamina { stroke: var(--c-N); stroke-width: 2.5; fill: none; }
   .lamina.broken { stroke-dasharray: 4 4; }
+  .nucl { fill: var(--quiz-bg); stroke: var(--quiz-border); stroke-width: 1.2; }
+  .dnaline { stroke: var(--c-N); stroke-width: 4; fill: none; stroke-linecap: round; }
+  .dnabreak { stroke: var(--c-O); stroke-width: 3; fill: none; }
+  .gbox { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.4; }
+  .ribo { fill: var(--muted); opacity: .6; }
+  .trash { fill: var(--panel); stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 2; }
+  .cross { stroke: var(--c-O); stroke-width: 3; fill: none; }
+  .crossw { stroke: var(--fg); stroke-width: 2; fill: none; }
+  .gene { fill: var(--c-Cl); opacity: .8; }
+  .p21 { fill: var(--c-N); }
+  .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .cell.apo { stroke-dasharray: 4 3; }
+  .apob { fill: var(--muted); opacity: .6; }
+  .strm { fill: var(--c-S); opacity: .07; stroke: var(--c-S); stroke-width: 1; stroke-dasharray: 3 4; }
+  .ves { fill: none; stroke: var(--c-N); stroke-width: 8; stroke-linecap: round; }
+  .vesin { fill: none; stroke: var(--key-bg); stroke-width: 4; stroke-linecap: round; }
+  .epic { fill: var(--hl-polar); stroke: var(--c-Cl); stroke-width: 1.2; }
+  .epic.hi { fill: var(--c-S); stroke: var(--c-S); opacity: .75; }
+  .epic.tum { fill: var(--c-O); stroke: var(--c-O); opacity: .8; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   .txt.red { fill: var(--c-O); font-weight: 700; }
@@ -113,6 +134,163 @@ A cell with unrepaired DNA damage and a working p53 pathway <strong>cannot proli
   suicide by apoptosis. Lose p53, and a damaged cell keeps dividing.</figcaption>
 </figure>
 
+<h3>Build it up yourself: p53, the stress sensor, step by step</h3>
+<p>Press <strong>Next</strong>. Steps 1 to 10 show what p53 does in a healthy cell when the DNA is damaged; steps 11 and 12 show what happens when p53 is lost.</p>
+
+<div class="stepper" id="p53-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of the p53 response">
+    <defs>
+      <marker id="arP5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+      <marker id="arP5T" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+
+    <!-- 1 cell, nucleus, cycle track -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <ellipse cx="300" cy="235" rx="200" ry="75" class="nucl"/>
+      <text x="120" y="200" class="txt small muted left">nucleus</text>
+      <path d="M130,250 L470,250" class="dnaline"/>
+      <text x="300" y="300" class="txt small muted">DNA</text>
+      <rect x="560" y="70" width="90" height="40" rx="8" class="gbox"/><text x="605" y="88" class="txt small bold">G1</text><text x="605" y="102" class="txt small muted">waits</text>
+      <rect x="690" y="70" width="90" height="40" rx="8" class="gbox"/><text x="735" y="88" class="txt small bold">Cdks</text><text x="735" y="102" class="txt small muted">engine</text>
+      <path d="M650,90 L688,90 M780,90 L808,90" class="path accent" marker-end="url(#arP5)"/>
+      <rect x="810" y="70" width="46" height="40" rx="8" class="gbox"/><text x="833" y="94" class="txt small bold">S</text>
+      <text x="705" y="312" class="txt small muted">right: the cell cycle, G1, then the Cdks drive the cell into S phase</text>
+      <text x="300" y="48" class="lbl txt small">a healthy cell: nucleus with DNA;</text><text x="300" y="60" class="lbl txt small">its cycle runs when growth signals say so (page 2.7)</text>
+    </g>
+
+    <!-- 2 p53 made all the time -->
+    <g data-step="2">
+      <ellipse cx="100" cy="110" rx="20" ry="13" class="ribo"/><text x="100" y="140" class="txt small muted">ribosome</text>
+      <path d="M124,110 L158,110" class="path accent" marker-end="url(#arP5)"/>
+      <circle cx="172" cy="110" r="8" class="p53"/><text x="172" y="134" class="txt small">p53</text>
+      <text x="300" y="60" class="lbl txt small">the cell makes p53 protein all the time (named after its mass, 53 kilodaltons)</text>
+    </g>
+
+    <!-- 3 ... and degrades it at once -->
+    <g data-step="3" data-until="5">
+      <path d="M184,110 L226,110" class="path accent" marker-end="url(#arP5)"/>
+      <rect x="230" y="96" width="44" height="28" rx="5" class="trash"/><text x="252" y="114" class="txt small">waste</text>
+      <text x="252" y="140" class="txt small muted">rapidly degraded</text>
+      <text x="300" y="60" class="lbl txt small">... and breaks it down immediately: the p53 level in a normal cell is very low</text>
+    </g>
+
+    <!-- 4 DNA damage -->
+    <g data-step="4">
+      <path d="M296,250 L300,238 L306,262 L312,250" class="dnabreak"/>
+      <text x="300" y="48" class="lbl txt small bold" style="fill:var(--c-O)">danger: the DNA is damaged</text><text x="300" y="60" class="lbl txt small" style="fill:var(--c-O)">(or: telomeres shorten, hypoxia, osmotic or oxidative stress, oncogenes in overdrive)</text>
+    </g>
+
+    <!-- 5 p53 stabilised, level rises -->
+    <g data-step="5" data-until="11">
+      <path d="M184,110 L226,110" class="path accent" style="stroke-dasharray:3 3;opacity:.4"/>
+      <path d="M222,98 L240,122 M240,98 L222,122" class="cross"/>
+      <text x="252" y="140" class="txt small muted">degradation stops</text>
+      <circle cx="160" cy="146" r="8" class="p53"/><circle cx="180" cy="152" r="8" class="p53"/><circle cx="200" cy="146" r="8" class="p53"/><circle cx="170" cy="168" r="8" class="p53"/><circle cx="190" cy="170" r="8" class="p53"/>
+      <text x="300" y="48" class="lbl txt small">the damage signal stops the degradation:</text><text x="300" y="60" class="lbl txt small">p53 is stabilised and its level rises quickly</text>
+    </g>
+
+    <!-- 6 p53 binds DNA -->
+    <g data-step="6" data-until="11">
+      <circle cx="200" cy="250" r="8" class="p53"/><circle cx="400" cy="250" r="8" class="p53"/>
+      <text x="300" y="48" class="lbl txt small">p53 is a transcription regulator: it binds the DNA at its target genes</text><text x="300" y="60" class="lbl txt small">with its DNA-binding domain and switches them on</text>
+    </g>
+
+    <!-- 7 p21 gene on -->
+    <g data-step="7" data-until="11">
+      <rect x="150" y="260" width="100" height="14" rx="3" class="gene"/><text x="200" y="288" class="txt small">p21 gene: ON</text>
+      <path d="M250,262 C330,230 420,180 500,150" class="path accent" marker-end="url(#arP5)"/>
+      <rect x="505" y="136" width="42" height="22" rx="5" class="p21"/><text x="526" y="151" class="txt small bold" style="fill:#fff">p21</text>
+      <text x="300" y="60" class="lbl txt small">target 1: the gene for p21 is switched on and p21 protein is made</text>
+    </g>
+
+    <!-- 8 p21 blocks the Cdks: arrest -->
+    <g data-step="8" data-until="11">
+      <path d="M547,142 L712,60" class="path accent" marker-end="url(#arP5)"/>
+      <rect x="714" y="42" width="42" height="22" rx="5" class="p21"/><text x="735" y="57" class="txt small bold" style="fill:#fff">p21</text>
+      <path d="M785,80 L803,100 M803,80 L785,100" class="cross"/>
+      <text x="705" y="130" class="txt small bold">STOP: cell-cycle arrest</text>
+      <text x="705" y="144" class="txt small muted">time out to repair; if permanent: senescence</text>
+      <text x="300" y="48" class="lbl txt small">p21 binds and blocks the Cdk complexes:</text><text x="300" y="60" class="lbl txt small">no S phase, no DNA copying while the DNA is damaged</text>
+    </g>
+
+    <!-- 9 pro-apoptotic genes: apoptosis -->
+    <g data-step="9" data-until="11">
+      <rect x="350" y="260" width="100" height="14" rx="3" class="gene"/><text x="400" y="288" class="txt small">pro-apoptotic genes: ON</text>
+      <path d="M450,262 C560,250 640,240 700,230" class="path accent" marker-end="url(#arP5)"/>
+      <circle cx="750" cy="235" r="26" class="cell apo"/><circle cx="742" cy="228" r="6" class="apob"/><circle cx="760" cy="240" r="7" class="apob"/><circle cx="748" cy="248" r="4" class="apob"/>
+      <text x="750" y="280" class="txt small bold">apoptosis</text><text x="750" y="294" class="txt small muted">the good death: eaten by neighbours</text>
+      <text x="300" y="48" class="lbl txt small">target 2, if the damage is too great: pro-apoptotic genes</text><text x="300" y="60" class="lbl txt small">are switched on and the cell kills itself cleanly</text>
+    </g>
+
+    <!-- 10 repaired: back to normal -->
+    <g data-step="10" data-until="11">
+      <rect x="290" y="232" width="30" height="36" class="nucl" style="stroke:none"/>
+      <path d="M290,250 L320,250" class="dnaline"/>
+      <text x="300" y="48" class="lbl txt small">if repair succeeds the damage signal fades, p53 is degraded again,</text><text x="300" y="60" class="lbl txt small">p21 disappears and the cycle resumes: the normal ending</text>
+    </g>
+
+    <!-- 11 p53 mutated -->
+    <g data-step="11">
+      <circle cx="160" cy="146" r="8" class="p53"/><circle cx="180" cy="152" r="8" class="p53"/><circle cx="200" cy="146" r="8" class="p53"/>
+      <path d="M154,140 L166,152 M166,140 L154,152 M174,146 L186,158 M186,146 L174,158 M194,140 L206,152 M206,140 L194,152" class="crossw"/>
+      <text x="310" y="160" class="txt small" style="fill:var(--c-O)">mutant p53: cannot bind the DNA</text>
+      <text x="300" y="48" class="lbl txt small bold" style="fill:var(--c-O)">cancer: a mutation in the DNA-binding domain cripples p53</text><text x="300" y="60" class="lbl txt small" style="fill:var(--c-O)">no p21, no pro-apoptotic genes: no stop, no death</text>
+    </g>
+
+    <!-- 12 damaged cell keeps dividing -->
+    <g data-step="12">
+      <path d="M650,90 L808,90" class="sigT" marker-end="url(#arP5T)"/>
+      <text x="705" y="130" class="txt small bold" style="fill:var(--c-O)">the damaged cell copies its broken DNA and divides</text>
+      <text x="705" y="144" class="txt small muted">mutations pile up; stressed, overdriven cells survive</text>
+      <text x="300" y="48" class="lbl txt small">p53 is mutated in about 50 % of all cancers;</text><text x="300" y="60" class="lbl txt small">mice without p53 all get cancer before 10 months</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+  { t: "1 · A healthy cell",
+    en: "One cell with its nucleus and DNA. At the right its cell cycle, drawn as a road: in G1 the cell waits; the Cdk complexes (cyclin-dependent kinases, the engine of the cycle) drive it into S phase, where the DNA is copied. This runs when growth signals say so (page 2.7).",
+    nl: "Eén cel met haar kern en DNA. Rechts haar celcyclus, getekend als een weg: in G1 wacht de cel; de Cdk-complexen (cycline-afhankelijke kinasen, de motor van de cyclus) drijven haar naar de S-fase, waar het DNA gekopieerd wordt. Dit loopt wanneer groeisignalen het zeggen (pagina 2.7)." },
+  { t: "2 · p53 is made all the time",
+    en: "The cell's ribosomes make the p53 protein continuously. The name comes from its mass, 53 kilodaltons (one dalton is the mass of one hydrogen atom). Nothing special so far.",
+    nl: "De ribosomen van de cel maken voortdurend het eiwit p53. De naam komt van zijn massa, 53 kilodalton (één dalton is de massa van één waterstofatoom). Tot hier niets bijzonders." },
+  { t: "3 · ... and broken down at once",
+    en: "Unlike Rb, p53 is rapidly degraded: each molecule is broken down almost as soon as it is made. So a normal cell contains very little p53. It is a guard that is off duty but can be called in within minutes.",
+    nl: "Anders dan Rb wordt p53 snel afgebroken: elk molecuul wordt bijna meteen na aanmaak afgebroken. Een normale cel bevat dus heel weinig p53. Het is een bewaker die buiten dienst is maar binnen minuten opgeroepen kan worden." },
+  { t: "4 · Danger: the DNA is damaged",
+    en: "Something pathological happens: here a break in the DNA. The same alarm is raised by shortened telomeres, hypoxia (too little oxygen), osmotic or oxidative stress, or oncogenes driven far beyond their normal level, like an engine driven too fast. All of these put the cell in danger.",
+    nl: "Er gebeurt iets ziekelijks: hier een breuk in het DNA. Hetzelfde alarm gaat af bij verkorte telomeren, hypoxie (te weinig zuurstof), osmotische of oxidatieve stress, of oncogenen die ver boven hun normale niveau gedreven worden, als een motor die te snel draait. Al die dingen brengen de cel in gevaar." },
+  { t: "5 · p53 is stabilised: the level rises",
+    en: "The damage signal stops the degradation of p53. Because it is still being made all the time, its level now rises within minutes. This is the antenna of Figure 2-26: many different dangers, one response.",
+    nl: "Het schadesignaal stopt de afbraak van p53. Omdat het nog altijd voortdurend gemaakt wordt, stijgt het niveau nu binnen minuten. Dit is de antenne van figuur 2-26: veel verschillende gevaren, één antwoord." },
+  { t: "6 · p53 binds the DNA",
+    en: "p53 works as a transcription regulator: it goes into the nucleus and binds the DNA at its target genes with its DNA-binding domain, then switches those genes on. Remember that domain: it is where most cancer mutations of p53 sit.",
+    nl: "p53 werkt als een transcriptieregulator: het gaat de kern in en bindt het DNA bij zijn doelgenen met zijn DNA-bindend domein, en zet die genen dan aan. Onthoud dat domein: daar zitten de meeste kankermutaties van p53." },
+  { t: "7 · Target 1: the p21 gene",
+    en: "The first target is the gene for p21, a small protein. The gene is switched on, p21 is made and goes to the cell cycle machinery.",
+    nl: "Het eerste doelwit is het gen voor p21, een klein eiwit. Het gen wordt aangezet, p21 wordt gemaakt en gaat naar de celcyclusmachinerie." },
+  { t: "8 · p21 blocks the Cdks: stop",
+    en: "p21 binds and inhibits the Cdk complexes. With the engine blocked the cell cannot enter S phase and cannot copy its damaged DNA: cell-cycle arrest, a time out for repair. If the arrest becomes permanent it is called senescence. Chain to remember: stress, p53 up, p21 made, Cdks blocked, no S phase.",
+    nl: "p21 bindt en remt de Cdk-complexen. Met de motor geblokkeerd kan de cel niet naar de S-fase en kan ze haar beschadigde DNA niet kopiëren: celcyclusarrest, een time-out om te herstellen. Wordt het arrest blijvend, dan heet het senescentie. Keten om te onthouden: stress, p53 omhoog, p21 gemaakt, Cdk's geblokkeerd, geen S-fase." },
+  { t: "9 · Target 2: apoptosis",
+    en: "If the damage is too great, p53 switches on many pro-apoptotic genes, genes whose products push the cell into apoptosis: the good death, in which the cell is eaten by its neighbours and recycled without inflammation. Either way a deranged cell does not proliferate.",
+    nl: "Is de schade te groot, dan zet p53 veel pro-apoptotische genen aan, genen waarvan de producten de cel in apoptose duwen: de goede dood, waarbij de cel door haar buren opgegeten en gerecycleerd wordt zonder ontsteking. In beide gevallen vermenigvuldigt een ontspoorde cel zich niet." },
+  { t: "10 · Repair done: the normal ending",
+    en: "When the repair succeeds the damage signal fades. p53 is degraded again, its level drops, p21 disappears and the Cdks are free: the cycle resumes. The guard goes back off duty.",
+    nl: "Als het herstel lukt verdwijnt het schadesignaal. p53 wordt weer afgebroken, zijn niveau daalt, p21 verdwijnt en de Cdk's zijn vrij: de cyclus hervat. De bewaker gaat weer buiten dienst." },
+  { t: "11 · Cancer: p53 is crippled",
+    en: "Now the cancer case. The most common p53 mutations in human tumors sit in the DNA-binding domain. The mutant protein is still made and still accumulates after damage, but it cannot bind its target genes. No p21, no pro-apoptotic genes: the cell neither stops nor dies.",
+    nl: "Nu het kankergeval. De meest voorkomende p53-mutaties in menselijke tumoren zitten in het DNA-bindend domein. Het mutante eiwit wordt nog gemaakt en stapelt zich na schade nog op, maar het kan zijn doelgenen niet binden. Geen p21, geen pro-apoptotische genen: de cel stopt niet en sterft niet." },
+  { t: "12 · The damaged cell keeps dividing",
+    en: "With the watchdog gone the cell copies its broken DNA and divides; mutations pile up, and cells driven by overactive oncogenes survive instead of dying. That is why cancer cells need this: p53 is mutated in about 50 % of all cancers, and mice without the gene all develop cancer before the age of 10 months. p53 guards the genome; Rb guards the cell-cycle gate.",
+    nl: "Zonder de waakhond kopieert de cel haar gebroken DNA en deelt ze; mutaties stapelen zich op, en cellen gedreven door overactieve oncogenen overleven in plaats van te sterven. Daarom hebben kankercellen dit nodig: p53 is gemuteerd in ongeveer 50 % van alle kankers, en muizen zonder het gen krijgen allemaal kanker voor de leeftijd van 10 maanden. p53 bewaakt het genoom; Rb bewaakt de celcyclus-poort." }
+];
+Stepper.init('p53-stepper', steps, 'p53');
+})();
+</script>
+
 <h3>How p53 acts: a transcription regulator</h3>
 <p>p53 does its job mainly as a <strong>transcription regulator</strong>: it binds DNA and switches genes on. That explains where the cancer mutations sit: the most common p53 mutations in
 human tumors are in its <strong>DNA-binding domain</strong>, where they cripple its ability to bind its target sequences. Two kinds of target genes:</p>
@@ -142,6 +320,31 @@ S-fase. Dood: pro-apoptotische genen aan. Een kankercel is ontregeld en moet p53
 
 <!-- ============================================================ -->
 <h2>2. Colorectal cancer: the mutations come in order (2.2.9)</h2>
+<p><strong>Why we suddenly look at the colon.</strong> Chapter 2 introduced the genes one at a time: Ras (page 2.7), Rb (page 2.6), p53 (section 1 above).
+But page 2.3 said a cancer needs several mutations piled up in one cell line. The open question is: in a real tumor, <em>which</em> genes break, and <em>in which order</em>?
+Colorectal cancer is the example the syllabus uses to answer that, because in the colon every stage can be seen: polyps are removed during a colonoscopy, from tiny benign ones
+to large ones to carcinomas, and each can be tested for mutations. A mutation found as often in tiny polyps as in carcinomas must happen early; one found only in carcinomas happens late.
+Section 1 ended with "a cancer cell must switch off p53 to survive"; this section shows that happening, as the last step of a sequence.</p>
+
+<div class="callout nl"><span class="tag">De keten van slechte gebeurtenissen</span>
+<p>Zo loopt het typisch, stap voor stap, in één cel van de darmbekleding (het <strong>epitheel</strong>, de dunne laag cellen die de binnenkant van de darm bekleedt):</p>
+<ol>
+  <li><strong>Normale darmbekleding.</strong> Deze cellen delen veel (de bekleding wordt om de paar dagen vernieuwd). Het eiwit <strong>APC</strong> werkt als rem op dat delen.</li>
+  <li><strong>Apc valt uit.</strong> In één cel gaan beide kopieën van het tumorsuppressorgen <em>Apc</em> kapot (een rem is recessief: beide kopieën moeten weg, pagina 2.5).
+    De rem is weg. Gevolg: de dochtercellen stapelen zich op. Dat heet <strong>hyperplastisch</strong> epitheel, letterlijk "te veel cellen". Het wordt een kleine <strong>poliep</strong>,
+    een knobbeltje dat uit de bekleding steekt. Nog goedaardig.</li>
+  <li><strong>De cel wordt onstabiel.</strong> Vroeg gaat vaak ook een DNA-herstelgen kapot (bv. mismatch repair, dat verkeerd gepaarde letters na het kopiëren verbetert).
+    Fouten worden niet meer hersteld, dus elke volgende mutatie komt sneller. Bij sommige darmkankers is dit zelfs de allereerste stap.</li>
+  <li><strong>K-Ras gaat permanent aan.</strong> Een puntmutatie zet <em>K-Ras</em> vast in de aan-stand. Ras is de schakelaar van pagina 2.7 die het groeisignaal doorgeeft;
+    nu geeft hij "groei" door zonder dat er een groeifactor is. Eén gemuteerde kopie volstaat (een gaspedaal is dominant). De poliep groeit uit tot een groter
+    <strong>adenoom</strong> (goedaardig gezwel van klierachtig epitheel), met verstoorde differentiatie en weefselpatroon.</li>
+  <li><strong>p53 zou nu moeten ingrijpen.</strong> Een cel met een vastzittend groeisignaal en ongecontroleerde deling is precies het soort ontregelde cel dat p53 opmerkt
+    (sectie 1: te sterke groeisignalen zijn een van zijn alarmen). Normaal zou p53 de cyclus stoppen of de cel in apoptose sturen. Zolang p53 werkt, blijft het gezwel dus een adenoom.</li>
+  <li><strong>p53 valt uit.</strong> Pas als ook beide kopieën van <em>p53</em> kapot zijn, verdwijnt die laatste bewaker. De cel overleeft met al haar schade, verzamelt nog meer mutaties,
+    en kan door de basale lamina breken: een <strong>carcinoom</strong>, kwaadaardig. Daarom zijn p53-mutaties zeldzaam in poliepen en frequent in carcinomen: het is de laatste poort.</li>
+</ol>
+<p>Onthoud de volgorde <strong>Apc → K-Ras → p53</strong>: eerst de rem weg, dan het gaspedaal vast, dan de bewaker uit. Lees de pijl als "gevolgd door".</p></div>
+
 <p>Some words first. The <strong>colon</strong> and <strong>rectum</strong> are the large intestine and its last part (dikke darm, endeldarm); <strong>colorectal cancer</strong> arises from the
 epithelium lining them. A <strong>polyp</strong> is a small lump of tissue sticking out from that lining; a benign polyp of gland-like epithelium is an <strong>adenoma</strong> (page 2.1) and a
 malignant one a <strong>carcinoma</strong>. <strong>Hyperplastic</strong> means "with too many cells" (hyper = too much, plasia = growth): the first, mild overgrowth. Three gene names:</p>
@@ -223,6 +426,166 @@ through different genes. Nevertheless certain mutations are particularly common 
   <figcaption>Syllabus Figure 2-27: a suggested typical sequence for colorectal carcinoma. Oversimplified: many other mutations are involved and different colon cancers take different routes,
   but the order Apc → K-Ras → p53 is the one to remember. (Smad4 is another tumor suppressor the syllabus figure names; you do not need to know what it does.)</figcaption>
 </figure>
+
+<h3>Build it up yourself: from a normal colon lining to a carcinoma, mutation by mutation</h3>
+<p>Press <strong>Next</strong>. One lesion grows in front of you; the gene change that drives each stage appears above it, in the characteristic order of the syllabus.</p>
+
+<div class="stepper" id="colon-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of colorectal cancer">
+    <defs>
+      <marker id="arCo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+      <marker id="arCoT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+
+    <!-- 1 normal lining -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="30" y="44" class="txt small muted left">inside of the gut (lumen)</text>
+      <rect x="40" y="200" width="800" height="110" rx="8" class="strm"/>
+      <text x="48" y="218" class="txt small muted left">stroma (connective tissue, vessels)</text>
+      <path d="M40,200 L840,200" class="lamina"/>
+      <text x="800" y="194" class="txt small muted">basal lamina</text>
+      <path d="M45,280 C150,266 260,296 380,280 C500,264 620,298 740,280 C790,273 815,287 835,280" class="ves"/>
+      <path d="M45,280 C150,266 260,296 380,280 C500,264 620,298 740,280 C790,273 815,287 835,280" class="vesin"/>
+      <g>
+        <rect x="60" y="158" width="48" height="40" rx="6" class="epic"/><rect x="112" y="158" width="48" height="40" rx="6" class="epic"/><rect x="164" y="158" width="48" height="40" rx="6" class="epic"/><rect x="216" y="158" width="48" height="40" rx="6" class="epic"/><rect x="268" y="158" width="48" height="40" rx="6" class="epic"/><rect x="320" y="158" width="48" height="40" rx="6" class="epic"/><rect x="372" y="158" width="48" height="40" rx="6" class="epic"/><rect x="424" y="158" width="48" height="40" rx="6" class="epic"/><rect x="476" y="158" width="48" height="40" rx="6" class="epic"/><rect x="528" y="158" width="48" height="40" rx="6" class="epic"/><rect x="580" y="158" width="48" height="40" rx="6" class="epic"/><rect x="632" y="158" width="48" height="40" rx="6" class="epic"/><rect x="684" y="158" width="48" height="40" rx="6" class="epic"/><rect x="736" y="158" width="48" height="40" rx="6" class="epic"/><rect x="788" y="158" width="48" height="40" rx="6" class="epic"/>
+      </g>
+      <text x="440" y="316" class="lbl txt small">the colon lining: one layer of epithelial cells on the basal lamina, renewed every few days; the APC protein holds their proliferation back</text>
+    </g>
+
+    <!-- 2 Apc lost -->
+    <g data-step="2">
+      <rect x="424" y="158" width="48" height="40" rx="6" class="epic hi"/>
+      <text x="448" y="44" class="txt red">loss of Apc</text>
+      <path d="M448,50 L448,64" class="sigT" marker-end="url(#arCoT)"/>
+      <text x="440" y="316" class="lbl txt small">in one cell both copies of the tumor suppressor Apc are lost: the brake on proliferation in the gut lining is gone (recessive: both copies)</text>
+    </g>
+
+    <!-- 3 hyperplastic epithelium -->
+    <g data-step="3" data-until="5">
+      <rect x="372" y="118" width="48" height="40" rx="6" class="epic hi"/><rect x="424" y="118" width="48" height="40" rx="6" class="epic hi"/><rect x="476" y="118" width="48" height="40" rx="6" class="epic hi"/>
+      <text x="440" y="316" class="lbl txt small">the daughters pile up: hyperplastic epithelium (too many cells), a small polyp, still benign and still on the lamina</text>
+    </g>
+    <g data-step="3">
+      <rect x="372" y="158" width="48" height="40" rx="6" class="epic hi"/><rect x="476" y="158" width="48" height="40" rx="6" class="epic hi"/>
+    </g>
+
+    <!-- 4 instability -->
+    <g data-step="4">
+      <text x="200" y="44" class="txt red">instability</text>
+      <text x="200" y="58" class="txt small muted">mismatch repair lost, epigenetic changes</text>
+      <path d="M200,64 L200,150" class="sigT" marker-end="url(#arCoT)"/>
+      <text x="440" y="316" class="lbl txt small">early as well: changes that make the cells genetically and epigenetically unstable, so later mutations come faster (the engine of progression)</text>
+    </g>
+
+    <!-- 5 early adenoma -->
+    <g data-step="5" data-until="6">
+      <ellipse cx="448" cy="136" rx="60" ry="34" class="epic hi"/>
+      <text x="440" y="316" class="lbl txt small">early adenoma: a benign, gland-like growth bulging into the lumen</text>
+    </g>
+
+    <!-- 6 K-Ras activated: intermediate adenoma -->
+    <g data-step="6" data-until="7">
+      <ellipse cx="448" cy="130" rx="80" ry="46" class="epic hi"/>
+      <text x="440" y="316" class="lbl txt small">intermediate adenoma: with K-Ras switched on permanently the cells get a growth signal without a signal</text>
+    </g>
+    <g data-step="6">
+      <text x="640" y="44" class="txt red">activation of K-Ras</text>
+      <path d="M620,50 L548,88" class="sigT" marker-end="url(#arCoT)"/>
+    </g>
+
+    <!-- 7 late adenoma -->
+    <g data-step="7" data-until="9">
+      <ellipse cx="448" cy="124" rx="100" ry="56" class="epic hi"/>
+      <text x="440" y="316" class="lbl txt small">late adenoma: further tumor suppressors lost (the syllabus names Smad4), tissue pattern and differentiation disturbed</text>
+    </g>
+    <g data-step="7">
+      <text x="790" y="44" class="txt red">loss of Smad4,</text><text x="790" y="58" class="txt red">other suppressors</text>
+      <path d="M770,64 L552,120" class="sigT" marker-end="url(#arCoT)"/>
+    </g>
+
+    <!-- 8 overdrive: p53 in the way -->
+    <g data-step="8" data-until="9">
+      <ellipse cx="640" cy="250" rx="40" ry="16" class="p53"/><text x="640" y="254" class="txt small bold" style="fill:#fff">p53 alarm</text>
+      <text x="700" y="245" class="txt small left">oncogenes beyond the safe limit = stress:</text>
+      <text x="700" y="259" class="txt small left">p53 would stop or kill these cells</text>
+    </g>
+
+    <!-- 9 p53 lost: carcinoma -->
+    <g data-step="9">
+      <ellipse cx="448" cy="124" rx="100" ry="56" class="epic tum"/>
+      <rect x="360" y="196" width="176" height="8" class="ct"/>
+      <path d="M360,200 L536,200" class="lamina broken"/>
+      <ellipse cx="420" cy="214" rx="14" ry="9" class="epic tum"/><ellipse cx="470" cy="220" rx="14" ry="9" class="epic tum"/>
+      <text x="640" y="235" class="txt red">loss of p53</text>
+      <path d="M600,232 L520,190" class="sigT" marker-end="url(#arCoT)"/>
+      <text x="440" y="316" class="lbl txt small">carcinoma: without p53 the overdriven cells survive; they break through the basal lamina into the stroma: malignant</text>
+    </g>
+
+    <!-- 10 invasion and metastasis -->
+    <g data-step="10">
+      <ellipse cx="400" cy="248" rx="12" ry="8" class="epic tum"/><ellipse cx="500" cy="252" rx="12" ry="8" class="epic tum"/>
+      <circle cx="455" cy="281" r="7" class="epic tum" style="opacity:1"/>
+      <path d="M466,281 L540,281" class="path accent" marker-end="url(#arCo)"/>
+      <text x="440" y="316" class="lbl txt small">invasion deeper into the stroma, and a cell enters a vessel: metastasis (page 2.4)</text>
+    </g>
+
+    <!-- 11 the order lesson -->
+    <g data-step="11">
+      <text x="440" y="304" class="lbl txt small bold">the order: Apc early, K-Ras in the middle, p53 late. The evidence is where each mutation is found:</text>
+      <text x="440" y="316" class="lbl txt small">Apc: as common in small polyps as in carcinomas · K-Ras: rare in small polyps, common in large ones · p53: rare in polyps, common in carcinomas</text>
+    </g>
+
+    <!-- 12 caveat -->
+    <g data-step="12">
+      <text x="440" y="304" class="lbl txt small bold">but: every colorectal cancer is different</text>
+      <text x="440" y="316" class="lbl txt small">some start with a mismatch repair gene, the order can vary, many other mutations take part; Apc, K-Ras, p53 is the typical route, not the only one</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+  { t: "1 · The normal colon lining",
+    en: "A cross-section of the wall of the colon (dikke darm). Top: the inside of the gut, the lumen. The lining is one layer of epithelial cells standing on the basal lamina (blue line), with the stroma (connective tissue with blood vessels) below. This lining is renewed every few days, so its cells divide a lot; the protein APC holds that proliferation in check.",
+    nl: "Een doorsnede van de darmwand. Boven: de binnenkant van de darm, het lumen. De bekleding is één laag epitheelcellen op de basale lamina (blauwe lijn), met daaronder het stroma (bindweefsel met bloedvaten). Deze bekleding wordt om de paar dagen vernieuwd, dus haar cellen delen veel; het eiwit APC houdt die proliferatie in toom." },
+  { t: "2 · Apc is lost in one cell",
+    en: "In one cell both copies of the Apc gene are inactivated. Apc is a tumor suppressor, so both copies must go (page 2.5, recessive). The brake on proliferation in that cell is gone. Nothing is visible yet.",
+    nl: "In één cel worden beide kopieën van het Apc-gen uitgeschakeld. Apc is een tumorsuppressor, dus beide kopieën moeten weg (pagina 2.5, recessief). De rem op de proliferatie in die cel is weg. Er is nog niets te zien." },
+  { t: "3 · Hyperplastic epithelium: a small polyp",
+    en: "The cell's daughters pile up: hyperplastic epithelium, 'with too many cells'. It becomes a small polyp, a lump sticking out of the lining. Still benign, still on top of the lamina. Apc loss is found at the same high frequency in small polyps as in large tumors, which is how we know it comes first.",
+    nl: "De dochters van de cel stapelen zich op: hyperplastisch epitheel, 'met te veel cellen'. Het wordt een kleine poliep, een knobbel die uit de bekleding steekt. Nog goedaardig, nog bovenop de lamina. Apc-verlies wordt even vaak gevonden in kleine poliepen als in grote tumoren, en zo weten we dat het eerst komt." },
+  { t: "4 · Instability arrives early",
+    en: "Also early: changes that make the cells genetically and epigenetically unstable, for example loss of a DNA mismatch repair gene (the system that corrects wrongly paired letters after copying, BIO01 chapter 4). The mutation rate goes up, which speeds up all the later steps. In some colorectal cancers this is even the first event.",
+    nl: "Ook vroeg: veranderingen die de cellen genetisch en epigenetisch onstabiel maken, bijvoorbeeld verlies van een DNA-mismatchherstelgen (het systeem dat verkeerd gepaarde letters na het kopiëren corrigeert, BIO01 hoofdstuk 4). De mutatiesnelheid gaat omhoog, wat alle latere stappen versnelt. Bij sommige darmkankers is dit zelfs de eerste gebeurtenis." },
+  { t: "5 · Early adenoma",
+    en: "The polyp grows into an early adenoma: a benign tumor of gland-like epithelium that bulges into the lumen. Benign means it stays in place and does not invade (page 2.1).",
+    nl: "De poliep groeit uit tot een vroeg adenoom: een goedaardige tumor van klierachtig epitheel die in het lumen uitpuilt. Goedaardig betekent dat hij ter plaatse blijft en niet binnendringt (pagina 2.1)." },
+  { t: "6 · K-Ras is activated: intermediate adenoma",
+    en: "Now an oncogene: a point mutation switches K-Ras on permanently. K-Ras is one of the three human Ras genes, the switch that passes growth signals into the cell (page 2.7). One mutated copy is enough. The cells now get a 'grow' signal without any growth factor. K-Ras mutations are rare in small polyps and common in larger ones: this step comes later than Apc.",
+    nl: "Nu een oncogen: een puntmutatie zet K-Ras blijvend aan. K-Ras is een van de drie menselijke Ras-genen, de schakelaar die groeisignalen de cel in doorgeeft (pagina 2.7). Eén gemuteerde kopie volstaat. De cellen krijgen nu een 'groei'-signaal zonder enige groeifactor. K-Ras-mutaties zijn zeldzaam in kleine poliepen en vaak in grotere: deze stap komt later dan Apc." },
+  { t: "7 · Late adenoma",
+    en: "Further tumor suppressors are lost (the syllabus figure names Smad4; you need not know what it does). The adenoma is large, its differentiation and tissue pattern are disturbed, but it is still benign: the lamina is intact.",
+    nl: "Verdere tumorsuppressors gaan verloren (de syllabusfiguur noemt Smad4; wat het doet hoef je niet te kennen). Het adenoom is groot, zijn differentiatie en weefselpatroon zijn verstoord, maar het is nog goedaardig: de lamina is intact." },
+  { t: "8 · The limit: p53 stands in the way",
+    en: "To shift from slow to fast, malignant growth the oncogenes must be driven beyond their normal limits. That is stressful for a cell, and stress calls p53 (section 1): the cells would be arrested or killed. So there is now strong selection for a cell that has lost p53.",
+    nl: "Om van trage naar snelle, kwaadaardige groei over te schakelen moeten de oncogenen voorbij hun normale grenzen gedreven worden. Dat is stress voor een cel, en stress roept p53 op (deel 1): de cellen zouden gestopt of gedood worden. Er is nu dus sterke selectie voor een cel die p53 verloren heeft." },
+  { t: "9 · p53 is lost: carcinoma",
+    en: "A cell loses both copies of p53. Now the overdriven cells survive, the growth turns malignant, and the cells cut through the basal lamina into the stroma: a carcinoma. p53 mutations are rare in polyps and common in carcinomas: the late step.",
+    nl: "Een cel verliest beide kopieën van p53. Nu overleven de overgedreven cellen, de groei wordt kwaadaardig, en de cellen snijden door de basale lamina het stroma in: een carcinoom. p53-mutaties zijn zeldzaam in poliepen en vaak in carcinomen: de late stap." },
+  { t: "10 · Invasion and metastasis",
+    en: "The cancer cells move deeper into the stroma, and one enters a blood vessel: metastasis, the chain of steps of page 2.4. Other, still unknown mutations help here.",
+    nl: "De kankercellen trekken dieper het stroma in, en één gaat een bloedvat binnen: metastase, de keten van stappen van pagina 2.4. Andere, nog onbekende mutaties helpen hier." },
+  { t: "11 · The lesson: the mutations come in order",
+    en: "Apc first, K-Ras in the middle, p53 late. The evidence is where each mutation is found: Apc as often in small polyps as in carcinomas; K-Ras rare in small polyps, common in large ones; p53 rare in polyps, common in carcinomas. If a change were late, small polyps would rarely have it.",
+    nl: "Apc eerst, K-Ras in het midden, p53 laat. Het bewijs is waar elke mutatie gevonden wordt: Apc even vaak in kleine poliepen als in carcinomen; K-Ras zeldzaam in kleine poliepen, vaak in grote; p53 zeldzaam in poliepen, vaak in carcinomen. Was een verandering laat, dan zouden kleine poliepen ze zelden hebben." },
+  { t: "12 · But every cancer is different",
+    en: "The syllabus stresses that this is a typical route, not the only one. Some colorectal cancers start with a mismatch repair gene, the order of the shared mutations can vary, and many other mutations take part. Each case has its own combination. Remember the order Apc, K-Ras, p53 and remember that it is oversimplified.",
+    nl: "De syllabus benadrukt dat dit een typische route is, niet de enige. Sommige darmkankers beginnen met een mismatchherstelgen, de volgorde van de gedeelde mutaties kan variëren, en veel andere mutaties doen mee. Elk geval heeft zijn eigen combinatie. Onthoud de volgorde Apc, K-Ras, p53 en onthoud dat ze te eenvoudig is." }
+];
+Stepper.init('colon-stepper', steps, 'colon');
+})();
+</script>
 
 <h3>Why p53 is lost late: oncogenes beyond the safe limit</h3>
 <p>Losing p53 lets cancer cells endure stress and avoid apoptosis and arrest. But there is a second link: loss of p53 is tied to the <strong>heightened activation of oncogenes</strong> such

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.1 Model organisms and cell culture</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -16,6 +18,14 @@
   .dish { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
   .cl { fill: var(--c-N); fill-opacity: .55; stroke: var(--c-N); stroke-width: 1; }
   .cl.pile { fill: var(--c-O); fill-opacity: .55; stroke: var(--c-O); }
+  .tissue { fill: var(--c-Na); fill-opacity: .2; stroke: var(--c-Na); stroke-width: 1.5; }
+  .medium { fill: var(--c-O); fill-opacity: .1; stroke: none; }
+  .surf { fill: var(--muted); fill-opacity: .6; stroke: none; }
+  .cl.sen { fill: var(--muted); fill-opacity: .5; stroke: var(--muted); }
+  .zoom { fill: var(--bg); stroke: var(--line); stroke-width: 1.2; }
+  .chrom { stroke: var(--c-N); stroke-width: 8; stroke-linecap: round; fill: none; }
+  .telo { stroke: var(--c-Cl); stroke-width: 8; stroke-linecap: round; fill: none; }
+  .telo.on { stroke: var(--c-O); }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -196,6 +206,146 @@ commonly used cell lines; they have been central to the study of eukaryotic cell
   </svg>
   <figcaption>Primary cells (blue) grow as a single layer and stop; a cell line (red) ignores contact and keeps growing.</figcaption>
 </figure>
+
+<h3>Build it up yourself: from a piece of tissue to a cell line</h3>
+<p>Press <strong>Next</strong> to follow animal cells from the tissue into a flask, and see why primary cells stop while a cell line never does.</p>
+
+<div class="stepper" id="culture-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: tissue, primary cells, senescence, cell line">
+    <defs>
+      <marker id="arCu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <ellipse cx="110" cy="120" rx="55" ry="45" class="tissue"/>
+      <circle cx="85" cy="105" r="9" class="cl"/><circle cx="110" cy="98" r="9" class="cl"/><circle cx="135" cy="108" r="9" class="cl"/><circle cx="92" cy="130" r="9" class="cl"/><circle cx="118" cy="125" r="9" class="cl"/><circle cx="140" cy="135" r="9" class="cl"/><circle cx="105" cy="150" r="9" class="cl"/><circle cx="128" cy="152" r="9" class="cl"/>
+      <text x="110" y="190" class="txt small muted">a piece of tissue</text>
+      <text x="40" y="296" class="lbl txt small left">1 · begin state: a small piece of tissue taken from an animal; the cells sit tightly together in their matrix</text>
+    </g>
+    <g data-step="2">
+      <path d="M172,120 L212,120" class="path accent" marker-end="url(#arCu)"/>
+      <circle cx="236" cy="96" r="9" class="cl"/><circle cx="252" cy="124" r="9" class="cl"/><circle cx="234" cy="150" r="9" class="cl"/>
+      <text x="245" y="178" class="txt small muted">single cells</text>
+      <text x="40" y="296" class="lbl txt small left">2 · enzymes dissociate the tissue (break it into single cells): these freshly isolated cells are primary cells</text>
+    </g>
+    <g data-step="3">
+      <rect x="300" y="60" width="320" height="200" rx="10" class="glass"/>
+      <rect x="304" y="64" width="312" height="192" rx="8" class="medium"/>
+      <rect x="304" y="246" width="312" height="8" class="surf"/>
+      <text x="460" y="52" class="txt small muted">plastic flask</text>
+      <text x="460" y="275" class="txt small muted">grey bar = the plastic surface</text>
+      <text x="40" y="296" class="lbl txt small left">3 · a plastic flask with medium: nutrients, buffered pH (acidity kept constant), pink from a pH indicator dye</text>
+    </g>
+    <g data-step="4" data-until="6">
+      <circle cx="380" cy="237" r="9" class="cl"/><circle cx="460" cy="237" r="9" class="cl"/><circle cx="540" cy="237" r="9" class="cl"/>
+    </g>
+    <g data-step="4">
+      <path d="M262,124 L298,160" class="path accent" marker-end="url(#arCu)"/>
+      <text x="40" y="296" class="lbl txt small left">4 · the cells are put in the flask; they sink and adhere (stick) to the plastic surface</text>
+    </g>
+    <g data-step="5" data-until="6">
+      <circle cx="340" cy="237" r="9" class="cl"/><circle cx="420" cy="237" r="9" class="cl"/><circle cx="500" cy="237" r="9" class="cl"/><circle cx="580" cy="237" r="9" class="cl"/>
+    </g>
+    <g data-step="5">
+      <text x="40" y="296" class="lbl txt small left">5 · the primary cells divide and spread out over the surface, each cell staying in contact with the plastic</text>
+    </g>
+    <g data-step="6" data-until="9">
+      <circle cx="322" cy="237" r="9" class="cl"/><circle cx="340" cy="237" r="9" class="cl"/><circle cx="358" cy="237" r="9" class="cl"/><circle cx="376" cy="237" r="9" class="cl"/><circle cx="394" cy="237" r="9" class="cl"/><circle cx="412" cy="237" r="9" class="cl"/><circle cx="430" cy="237" r="9" class="cl"/><circle cx="448" cy="237" r="9" class="cl"/><circle cx="466" cy="237" r="9" class="cl"/><circle cx="484" cy="237" r="9" class="cl"/><circle cx="502" cy="237" r="9" class="cl"/><circle cx="520" cy="237" r="9" class="cl"/><circle cx="538" cy="237" r="9" class="cl"/><circle cx="556" cy="237" r="9" class="cl"/><circle cx="574" cy="237" r="9" class="cl"/><circle cx="592" cy="237" r="9" class="cl"/>
+    </g>
+    <g data-step="6">
+      <text x="460" y="215" class="lbl txt small">one layer (monolayer): the cells touch and stop dividing</text>
+      <text x="40" y="296" class="lbl txt small left">6 · contact inhibition: when cells on a surface touch each other, the contact arrests the cell cycle; they form one layer and stop</text>
+    </g>
+    <g data-step="7">
+      <rect x="650" y="60" width="200" height="120" rx="8" class="zoom"/>
+      <text x="750" y="80" class="txt small bold">zoom: one chromosome</text>
+      <path d="M690,110 L810,110" class="chrom"/>
+    </g>
+    <g data-step="7" data-until="8">
+      <path d="M690,110 L716,110 M784,110 L810,110" class="telo"/>
+      <text x="750" y="140" class="txt small">telomeres (green) = the ends</text>
+      <text x="750" y="154" class="txt small muted">a bit shorter at every division</text>
+      <text x="40" y="296" class="lbl txt small left">7 · meanwhile, inside every cell: each division shortens the telomeres, the repeated DNA at the chromosome ends (no telomerase in normal cells)</text>
+    </g>
+    <g data-step="8" data-until="9">
+      <path d="M690,110 L698,110 M802,110 L810,110" class="telo"/>
+      <text x="750" y="140" class="txt small">telomeres too short</text>
+      <text x="750" y="154" class="txt small muted">→ senescence: permanent stop</text>
+      <circle cx="322" cy="237" r="9" class="cl sen"/><circle cx="340" cy="237" r="9" class="cl sen"/><circle cx="358" cy="237" r="9" class="cl sen"/><circle cx="376" cy="237" r="9" class="cl sen"/><circle cx="394" cy="237" r="9" class="cl sen"/><circle cx="412" cy="237" r="9" class="cl sen"/><circle cx="430" cy="237" r="9" class="cl sen"/><circle cx="448" cy="237" r="9" class="cl sen"/><circle cx="466" cy="237" r="9" class="cl sen"/><circle cx="484" cy="237" r="9" class="cl sen"/><circle cx="502" cy="237" r="9" class="cl sen"/><circle cx="520" cy="237" r="9" class="cl sen"/><circle cx="538" cy="237" r="9" class="cl sen"/><circle cx="556" cy="237" r="9" class="cl sen"/><circle cx="574" cy="237" r="9" class="cl sen"/><circle cx="592" cy="237" r="9" class="cl sen"/>
+    </g>
+    <g data-step="8">
+      <text x="460" y="215" class="lbl txt small">20 to 50 divisions later: grey = senescent, no more division</text>
+      <text x="40" y="296" class="lbl txt small left">8 · senescence (ageing): once the telomeres are too short the cell stops for good; primary cells are a limited resource</text>
+    </g>
+    <g data-step="9">
+      <circle cx="380" cy="237" r="9" class="cl pile"/><circle cx="460" cy="237" r="9" class="cl pile"/><circle cx="540" cy="237" r="9" class="cl pile"/>
+      <text x="460" y="215" class="lbl txt small">start again, with cells from a tumour (red)</text>
+      <text x="40" y="296" class="lbl txt small left">9 · the way around both limits: a cell line, usually derived from a tumour (or made by infecting cells with a cancer-causing virus)</text>
+    </g>
+    <g data-step="10">
+      <circle cx="322" cy="237" r="9" class="cl pile"/><circle cx="340" cy="237" r="9" class="cl pile"/><circle cx="358" cy="237" r="9" class="cl pile"/><circle cx="398" cy="237" r="9" class="cl pile"/><circle cx="416" cy="237" r="9" class="cl pile"/><circle cx="434" cy="237" r="9" class="cl pile"/><circle cx="480" cy="237" r="9" class="cl pile"/><circle cx="500" cy="237" r="9" class="cl pile"/><circle cx="520" cy="237" r="9" class="cl pile"/><circle cx="560" cy="237" r="9" class="cl pile"/><circle cx="580" cy="237" r="9" class="cl pile"/><circle cx="598" cy="237" r="9" class="cl pile"/>
+      <circle cx="389" cy="221" r="9" class="cl pile"/><circle cx="407" cy="221" r="9" class="cl pile"/><circle cx="425" cy="221" r="9" class="cl pile"/><circle cx="470" cy="221" r="9" class="cl pile"/><circle cx="490" cy="221" r="9" class="cl pile"/><circle cx="510" cy="221" r="9" class="cl pile"/><circle cx="530" cy="221" r="9" class="cl pile"/><circle cx="569" cy="221" r="9" class="cl pile"/><circle cx="589" cy="221" r="9" class="cl pile"/>
+      <circle cx="398" cy="205" r="9" class="cl pile"/><circle cx="416" cy="205" r="9" class="cl pile"/><circle cx="480" cy="205" r="9" class="cl pile"/><circle cx="500" cy="205" r="9" class="cl pile"/><circle cx="520" cy="205" r="9" class="cl pile"/><circle cx="579" cy="205" r="9" class="cl pile"/>
+      <circle cx="490" cy="189" r="9" class="cl pile"/><circle cx="510" cy="189" r="9" class="cl pile"/>
+      <text x="460" y="170" class="lbl txt small">no contact inhibition: they pile up in layers</text>
+      <text x="40" y="296" class="lbl txt small left">10 · the brakes are gone (chapter 2 explains why cancer cells behave like this): touching neighbours does not stop them, so they pile up</text>
+    </g>
+    <g data-step="11">
+      <path d="M690,110 L716,110 M784,110 L810,110" class="telo on"/>
+      <text x="750" y="140" class="txt small">telomerase is switched on</text>
+      <text x="750" y="154" class="txt small muted">→ telomeres rebuilt, no senescence</text>
+      <text x="40" y="296" class="lbl txt small left">11 · the cell line actively expresses telomerase, the enzyme that rebuilds telomeres: the divisions never run out, the line is immortal</text>
+    </g>
+    <g data-step="12">
+      <text x="750" y="210" class="lbl txt small bold" style="fill:var(--c-O)">caution: immortal, but not normal</text>
+      <text x="40" y="296" class="lbl txt small left">12 · the same changes that let the cells grow forever make them different from real tissue; in culture they collect new mutations;</text>
+      <text x="40" y="310" class="lbl txt small left">and lines get mixed up between laboratories, so check what you really have, and remember results may not hold for intact tissue</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin state: a piece of tissue",
+      en: "Cells from an animal can be cultured, but they do not come loose by themselves. We start with a small piece of tissue, for example skin, in which the cells sit tightly together, held by the matrix between them.",
+      nl: "Cellen van een dier kunnen gekweekt worden, maar ze komen niet vanzelf los. We beginnen met een stukje weefsel, bijvoorbeeld huid, waarin de cellen dicht tegen elkaar zitten, vastgehouden door de matrix ertussen." },
+    { t: "2 · Dissociate: single cells",
+      en: "Enzymes that cut proteins break the matrix and the contacts, and the tissue falls apart into single cells. Freshly isolated cells like these are called primary cells: they are still the normal cells of the animal.",
+      nl: "Enzymen die eiwitten knippen breken de matrix en de contacten, en het weefsel valt uiteen in losse cellen. Zulke vers geïsoleerde cellen heten primaire cellen: het zijn nog de normale cellen van het dier." },
+    { t: "3 · A flask with medium",
+      en: "A plastic flask or plate holds the medium: a liquid with nutrients, buffered so the acidity stays constant. The medium is often pink because it contains a pH indicator dye, a dye whose colour shows the acidity; a colour change warns that the cells have used up the medium.",
+      nl: "Een plastic fles of plaat bevat het medium: een vloeistof met voedingsstoffen, gebufferd zodat de zuurtegraad constant blijft. Het medium is vaak roze door een pH-indicator, een kleurstof waarvan de kleur de zuurtegraad toont; een kleurverandering waarschuwt dat de cellen het medium hebben opgebruikt." },
+    { t: "4 · The cells adhere to the plastic",
+      en: "The primary cells are put into the flask. Most animal cells only grow when they can adhere, stick to a solid surface, so they sink and attach to the plastic. Some cell types, such as blood cells, can float in the liquid for a short time.",
+      nl: "De primaire cellen gaan in de fles. De meeste dierlijke cellen groeien alleen als ze kunnen hechten aan een vast oppervlak, dus ze zakken en plakken aan het plastic. Sommige celtypes, zoals bloedcellen, kunnen korte tijd in de vloeistof zweven." },
+    { t: "5 · They divide and spread",
+      en: "With food, warmth and a surface the primary cells divide and spread out. Every cell keeps touching the plastic; the culture grows sideways, not upwards.",
+      nl: "Met voedsel, warmte en een oppervlak delen de primaire cellen en spreiden ze uit. Elke cel blijft het plastic raken; de kweek groeit zijwaarts, niet omhoog." },
+    { t: "6 · Contact inhibition: one layer and stop",
+      en: "When cells on a solid surface touch each other, the contact triggers a cell-cycle arrest (the cell cycle is BIO01 chapter 7). So they form one layer, a monolayer, and then stop dividing. This is contact inhibition, the first limit of primary cells.",
+      nl: "Wanneer cellen op een vast oppervlak elkaar raken, veroorzaakt dat contact een stop van de celcyclus (celcyclus: BIO01 hoofdstuk 7). Ze vormen dus één laag, een monolaag, en stoppen dan met delen. Dit is contactinhibitie, de eerste beperking van primaire cellen." },
+    { t: "7 · Inside the cells: telomeres get shorter",
+      en: "Zoom in on one chromosome. Its two ends are the telomeres, stretches of repeated DNA (BIO01 chapter 4). DNA polymerase cannot copy the very end, so every division makes the telomeres a little shorter. Normal body cells do not make telomerase, the enzyme that could rebuild them.",
+      nl: "Zoom in op één chromosoom. De twee uiteinden zijn de telomeren, stukken herhaald DNA (BIO01 hoofdstuk 4). DNA-polymerase kan het allerlaatste eindje niet kopiëren, dus elke deling maakt de telomeren een beetje korter. Normale lichaamscellen maken geen telomerase, het enzym dat ze zou kunnen herstellen." },
+    { t: "8 · Senescence: a permanent stop",
+      en: "After about 20 to 50 divisions the telomeres are too short and the cell enters senescence (ageing): it stays alive but never divides again. This is the second limit: a primary culture can only be split and grown on a fixed number of times.",
+      nl: "Na ongeveer 20 tot 50 delingen zijn de telomeren te kort en gaat de cel in senescentie (veroudering): ze blijft leven maar deelt nooit meer. Dit is de tweede beperking: een primaire kweek kan maar een vast aantal keren gesplitst en doorgekweekt worden." },
+    { t: "9 · Another start: cells from a tumour",
+      en: "To get around both limits, researchers use cell lines: special strains of cells that bypass senescence. They are usually derived from tumours. Cells can also be made to grow continuously by infecting them with a cancer-causing virus.",
+      nl: "Om beide beperkingen te omzeilen gebruiken onderzoekers cellijnen: speciale celstammen die de senescentie omzeilen. Ze zijn meestal afkomstig van tumoren. Cellen kunnen ook eindeloos aan het groeien gebracht worden door ze te infecteren met een kankerverwekkend virus." },
+    { t: "10 · No contact inhibition: they pile up",
+      en: "Tumour-derived cells carry genetic changes that remove the normal brakes on division (chapter 2 explains how). Touching a neighbour no longer stops them, so they keep dividing and pile up in several layers.",
+      nl: "Tumorcellen dragen genetische veranderingen die de normale remmen op deling wegnemen (hoofdstuk 2 legt uit hoe). Een buur raken stopt hen niet meer, dus ze blijven delen en stapelen zich op in meerdere lagen." },
+    { t: "11 · Telomerase on: immortal",
+      en: "These cells actively express telomerase, so their telomeres are rebuilt after every division and senescence never comes. The line can be grown indefinitely: it is immortal. Such cell lines have been central to the study of eukaryotic cells.",
+      nl: "Deze cellen brengen telomerase actief tot expressie, dus hun telomeren worden na elke deling hersteld en de senescentie komt nooit. De lijn kan onbeperkt gekweekt worden: ze is onsterfelijk. Zulke cellijnen zijn centraal geweest in de studie van eukaryote cellen." },
+    { t: "12 · Caution: immortal, but not normal",
+      en: "The syllabus insists: the very changes that let a cell line grow forever also make it different from cells in a real tissue; in culture the genome keeps acquiring new mutations and rearrangements; and lines have been mixed up between laboratories, so the cells you receive may not be what the label says. Be vigilant, and remember that results may not hold for intact tissue.",
+      nl: "De syllabus benadrukt: precies de veranderingen die een cellijn eindeloos laten groeien maken haar anders dan cellen in echt weefsel; in kweek blijft het genoom nieuwe mutaties en herschikkingen oplopen; en lijnen zijn tussen laboratoria verwisseld, zodat de cellen die je krijgt niet zijn wat het etiket zegt. Wees waakzaam, en onthoud dat resultaten niet altijd gelden voor intact weefsel." }
+  ];
+  Stepper.init('culture-stepper', steps, 'culture');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Caution with cell lines (the syllabus insists on this)</span>
 <ul>

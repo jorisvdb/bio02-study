@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.11 Sequencing applications</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -23,6 +25,15 @@
   .adap { stroke: var(--c-P); stroke-width: 4; }
   .stepbox { fill: var(--panel); stroke: var(--line); }
   table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+  .tubebox { fill: var(--bg); stroke: var(--muted); stroke-width: 1.5; }
+  .ssdna { stroke: var(--c-C); stroke-width: 2.5; stroke-linecap: round; }
+  .exon.ss { stroke-width: 4; }
+  .magnet { fill: var(--c-O); stroke: none; }
+  .wash { fill: var(--bg); fill-opacity: .75; stroke: none; }
+  .cellc { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .rnaB { stroke: var(--c-P); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .geneA { stroke: var(--c-O); stroke-width: 6; }
+  .geneB { stroke: var(--c-P); stroke-width: 6; }
 </style>
 </head>
 <body>
@@ -143,6 +154,192 @@ reads all the exons of all known protein-coding genes.</p>
   </svg>
   <figcaption>Syllabus Figure 4-40, exome capture. Only fragments that pair with a biotinylated exon probe are caught by the streptavidin beads; the magnet holds the beads while everything else is washed away.</figcaption>
 </figure>
+
+<h3>Build it up yourself: exome capture, fishing the exons out</h3>
+<p>Press <strong>Next</strong> to pull the 1.5 % of the genome that codes for protein out of the tube.</p>
+
+<div class="stepper" id="exome-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of exome capture">
+    <defs><marker id="arEX" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker></defs>
+    <g data-step="1" data-until="2">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="40" y="50" width="540" height="260" rx="14" class="tubebox"/>
+      <text x="440" y="40" class="lbl txt small">begin state: a tube with fragmented genomic DNA, linkers attached, amplified by PCR (page 4.10); a few fragments contain an exon (purple)</text>
+      <path d="M90,90 L230,90" class="gdna"/>
+      <path d="M84,90 L90,90" class="adap"/>
+      <path d="M230,90 L236,90" class="adap"/>
+      <path d="M140,90 L185,90" class="exon"/>
+      <path d="M300,80 L440,80" class="gdna"/>
+      <path d="M294,80 L300,80" class="adap"/>
+      <path d="M440,80 L446,80" class="adap"/>
+      <path d="M420,110 L560,110" class="gdna"/>
+      <path d="M414,110 L420,110" class="adap"/>
+      <path d="M560,110 L566,110" class="adap"/>
+      <path d="M470,110 L515,110" class="exon"/>
+      <path d="M100,150 L240,150" class="gdna"/>
+      <path d="M94,150 L100,150" class="adap"/>
+      <path d="M240,150 L246,150" class="adap"/>
+      <path d="M330,170 L470,170" class="gdna"/>
+      <path d="M324,170 L330,170" class="adap"/>
+      <path d="M470,170 L476,170" class="adap"/>
+      <path d="M380,170 L425,170" class="exon"/>
+      <path d="M160,230 L300,230" class="gdna"/>
+      <path d="M154,230 L160,230" class="adap"/>
+      <path d="M300,230 L306,230" class="adap"/>
+      <path d="M380,240 L520,240" class="gdna"/>
+      <path d="M374,240 L380,240" class="adap"/>
+      <path d="M520,240 L526,240" class="adap"/>
+      <text x="640" y="110" class="txt small left muted">grey = genomic DNA</text>
+      <text x="640" y="124" class="txt small left muted">purple = an exon</text>
+      <text x="640" y="138" class="txt small left muted">orange = linkers</text>
+      <text x="640" y="160" class="lbl txt small left">exons are only 1.5 % of the genome</text>
+    </g>
+    <g data-step="2">
+      <text x="440" y="40" class="lbl txt small">denature: heat separates the double strands into single strands, so that the probes can pair with them</text>
+      <path d="M90,90 L230,90" class="ssdna"/>
+      <path d="M84,90 L90,90" class="adap"/>
+      <path d="M230,90 L236,90" class="adap"/>
+      <path d="M140,90 L185,90" class="exon ss"/>
+      <path d="M420,110 L560,110" class="ssdna"/>
+      <path d="M414,110 L420,110" class="adap"/>
+      <path d="M560,110 L566,110" class="adap"/>
+      <path d="M470,110 L515,110" class="exon ss"/>
+      <path d="M330,170 L470,170" class="ssdna"/>
+      <path d="M324,170 L330,170" class="adap"/>
+      <path d="M470,170 L476,170" class="adap"/>
+      <path d="M380,170 L425,170" class="exon ss"/>
+    </g>
+    <g data-step="2" data-until="7">
+      <path d="M300,80 L440,80" class="ssdna"/>
+      <path d="M294,80 L300,80" class="adap"/>
+      <path d="M440,80 L446,80" class="adap"/>
+      <path d="M100,150 L240,150" class="ssdna"/>
+      <path d="M94,150 L100,150" class="adap"/>
+      <path d="M240,150 L246,150" class="adap"/>
+      <path d="M160,230 L300,230" class="ssdna"/>
+      <path d="M154,230 L160,230" class="adap"/>
+      <path d="M300,230 L306,230" class="adap"/>
+      <path d="M380,240 L520,240" class="ssdna"/>
+      <path d="M374,240 L380,240" class="adap"/>
+      <path d="M520,240 L526,240" class="adap"/>
+    </g>
+    <g data-step="3" data-until="4">
+      <text x="440" y="40" class="lbl txt small">add RNA probes (green): synthetic RNA matching every known exon, each carrying a biotin (red dot), a small vitamin that works as a hook</text>
+      <path d="M140,82 L185,82" class="probe"/>
+      <circle cx="188" cy="82" r="4" class="biot"/>
+      <path d="M470,102 L515,102" class="probe"/>
+      <circle cx="518" cy="102" r="4" class="biot"/>
+      <path d="M380,162 L425,162" class="probe"/>
+      <circle cx="428" cy="162" r="4" class="biot"/>
+      <path d="M220,290 L265,290" class="probe"/>
+      <circle cx="268" cy="290" r="4" class="biot"/>
+      <path d="M440,290 L485,290" class="probe"/>
+      <circle cx="488" cy="290" r="4" class="biot"/>
+      <text x="640" y="200" class="lbl txt small left">probe = RNA copy of an exon</text>
+      <text x="640" y="214" class="lbl txt small left">with a biotin hook</text>
+    </g>
+    <g data-step="4" data-until="8">
+      <text x="440" y="40" class="lbl txt small">hybridise: a probe pairs with the fragment that contains its exon; fragments from the other 98.5 % find no partner</text>
+      <path d="M140,86 L185,86" class="probe"/>
+      <circle cx="188" cy="86" r="4" class="biot"/>
+      <path d="M470,106 L515,106" class="probe"/>
+      <circle cx="518" cy="106" r="4" class="biot"/>
+      <path d="M380,166 L425,166" class="probe"/>
+      <circle cx="428" cy="166" r="4" class="biot"/>
+      <path d="M220,290 L265,290" class="probe"/>
+      <circle cx="268" cy="290" r="4" class="biot"/>
+      <path d="M440,290 L485,290" class="probe"/>
+      <circle cx="488" cy="290" r="4" class="biot"/>
+      <text x="640" y="200" class="lbl txt small left">paired: exon fragment + probe</text>
+      <text x="640" y="214" class="lbl txt small left muted">(two probes found no fragment)</text>
+    </g>
+    <g data-step="5" data-until="8">
+      <text x="440" y="40" class="lbl txt small">add magnetic beads coated with streptavidin (blue), a protein that grips biotin extremely tightly: every probe, with its fragment, is now stuck to a bead</text>
+      <circle cx="198" cy="80" r="9" class="bead"/>
+      <circle cx="198" cy="80" r="4" class="strep"/>
+      <circle cx="528" cy="100" r="9" class="bead"/>
+      <circle cx="528" cy="100" r="4" class="strep"/>
+      <circle cx="438" cy="160" r="9" class="bead"/>
+      <circle cx="438" cy="160" r="4" class="strep"/>
+      <circle cx="290" cy="290" r="9" class="bead"/>
+      <circle cx="290" cy="290" r="4" class="strep"/>
+      <circle cx="510" cy="290" r="9" class="bead"/>
+      <circle cx="510" cy="290" r="4" class="strep"/>
+      <text x="640" y="240" class="lbl txt small left">bead = tiny iron ball</text>
+      <text x="640" y="254" class="lbl txt small left">coated with streptavidin</text>
+    </g>
+    <g data-step="6" data-until="8">
+      <text x="440" y="40" class="lbl txt small">a magnet on the tube wall pulls the beads, and everything they hold, to the side</text>
+      <rect x="585" y="60" width="22" height="240" rx="4" class="magnet"/>
+      <text x="596" y="185" class="txt small bold" style="fill:#fff">N</text>
+      <path d="M520,180 L570,180" class="path accent" marker-end="url(#arEX)"/>
+    </g>
+    <g data-step="7">
+      <text x="440" y="40" class="lbl txt small">wash: the liquid with all unbound fragments (the 98.5 % without an exon) is poured off; only the beads with exon fragments stay</text>
+      <text x="300" y="200" class="lbl txt small bold" style="fill:var(--c-O)">the 98.5 % without an exon: poured off</text>
+    </g>
+    <g data-step="8">
+      <text x="440" y="40" class="lbl txt small">elute: the captured DNA is released from the probes and beads; the tube now holds only exon-containing fragments</text>
+      <text x="640" y="280" class="lbl txt small left bold">1.5 % of the genome left</text>
+    </g>
+    <g data-step="9">
+      <text x="440" y="40" class="lbl txt small">sequence them deeply (Illumina): far less data than a whole genome, so more depth (50 to 100X) for the same cost; but promoters, splice sites and all non-coding DNA are missed</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · Begin state: a genomic library",
+  en: "A tube with the genomic DNA broken into fragments, linkers on their ends, amplified by PCR, exactly as in shotgun sequencing (page 4.10). Only about 1.5 % of these fragments contain an exon, a protein-coding part of a gene (purple). We want to keep those and throw the rest away.",
+  nl: "Een buisje met het genomische DNA in fragmenten, linkers aan de uiteinden, vermenigvuldigd met PCR, precies zoals bij shotgun-sequencing (pagina 4.10). Slechts ongeveer 1,5 % van deze fragmenten bevat een exon, een eiwitcoderend deel van een gen (paars). Die willen we houden en de rest weggooien."
+  },
+  {
+  t: "2 · Denature",
+  en: "Heat separates the double strands into single strands. A single strand can pair with any complementary strand, and that is what the next step uses.",
+  nl: "Warmte scheidt de dubbele strengen in enkele strengen. Een enkele streng kan paren met elke complementaire streng, en daar maakt de volgende stap gebruik van."
+  },
+  {
+  t: "3 · Add biotinylated RNA probes",
+  en: "Synthetic RNA molecules are added whose sequences match all known exons: the probes. Each probe carries a biotin, a small vitamin that serves as a hook, because another molecule can grip it extremely tightly.",
+  nl: "Synthetische RNA-moleculen worden toegevoegd waarvan de sequenties op alle bekende exonen passen: de probes. Elke probe draagt een biotine, een kleine vitamine die als haak dient, omdat een ander molecuul ze extreem stevig kan vastgrijpen."
+  },
+  {
+  t: "4 · Hybridise",
+  en: "Each probe pairs (hybridises) with the fragment that contains its exon. Fragments from the other 98.5 % of the genome find no probe and stay loose in the liquid.",
+  nl: "Elke probe paart (hybridiseert) met het fragment dat haar exon bevat. Fragmenten uit de andere 98,5 % van het genoom vinden geen probe en blijven los in de vloeistof."
+  },
+  {
+  t: "5 · Streptavidin beads",
+  en: "Magnetic beads are added: tiny iron-containing balls coated with streptavidin, a bacterial protein that grips biotin. Biotin and streptavidin are molecular Velcro. Every probe, together with the DNA fragment attached to it, is now stuck to a bead.",
+  nl: "Magnetische korrels worden toegevoegd: piepkleine ijzerhoudende bolletjes bedekt met streptavidine, een bacterieel eiwit dat biotine vastgrijpt. Biotine en streptavidine zijn moleculair klittenband. Elke probe, samen met het DNA-fragment dat eraan vastzit, zit nu aan een korrel."
+  },
+  {
+  t: "6 · Magnet",
+  en: "A magnet is held against the wall of the tube. It pulls all the beads to the side, and with them the probes and the exon fragments. The loose fragments without an exon are not affected.",
+  nl: "Een magneet wordt tegen de wand van het buisje gehouden. Hij trekt alle korrels naar de zijkant, en daarmee de probes en de exonfragmenten. De losse fragmenten zonder exon worden niet beïnvloed."
+  },
+  {
+  t: "7 · Wash",
+  en: "With the beads held by the magnet, the liquid is poured off and replaced by clean buffer. The 98.5 % of fragments that carried no exon go down the drain.",
+  nl: "Terwijl de magneet de korrels vasthoudt, wordt de vloeistof afgegoten en vervangen door schone buffer. De 98,5 % fragmenten zonder exon gaan door de afvoer."
+  },
+  {
+  t: "8 · Elute",
+  en: "The captured DNA is released (eluted) from the probes and the beads. What remains in the tube is only the exon-containing fragments: the exome, 1.5 % of the genome, about 21 000 genes.",
+  nl: "Het gevangen DNA wordt losgemaakt (geëlueerd) van de probes en de korrels. Wat in het buisje overblijft zijn alleen de exonbevattende fragmenten: het exoom, 1,5 % van het genoom, ongeveer 21 000 genen."
+  },
+  {
+  t: "9 · Sequence deeply",
+  en: "The captured fragments are sequenced with Illumina or another deep-sequencing method. Because there is far less to read, you can afford more depth (more than 50X, up to about 100X) and more patients for the same cost. The price: mutations in promoters, splice sites and all other non-coding DNA are missed.",
+  nl: "De gevangen fragmenten worden gesequencet met Illumina of een andere diepe sequencingmethode. Omdat er veel minder te lezen is, kun je meer diepte (meer dan 50X, tot ongeveer 100X) en meer patiënten betalen voor dezelfde kost. De prijs: mutaties in promotors, splice sites en al het andere niet-coderende DNA worden gemist."
+  }
+];
+Stepper.init('exome-stepper', steps, 'exome');
+})();
+</script>
 
 <p><strong>The price of reading less:</strong> WES misses mutations in <strong>promoters</strong> and <strong>splice sites</strong> and all other non-coding regions, which can also disturb a gene.
 For many questions the gain (1.5 % of the data to interpret) outweighs that loss, so WES has become common. As WGS keeps getting cheaper and analysis tools better, the syllabus
@@ -273,6 +470,261 @@ lezen: welke soorten, welke genen, zonder te kweken.</p></div>
   </svg>
   <figcaption>Syllabus Figure 4-42, the RNA-seq workflow. The number of reads that map to a gene measures how much RNA that gene produced.</figcaption>
 </figure>
+
+<h3>Build it up yourself: RNA-seq, from cells to read counts</h3>
+<p>Press <strong>Next</strong> to follow the RNA of two genes from the cell to a number per gene.</p>
+
+<div class="stepper" id="rnaseq-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of RNA-seq">
+    <g data-step="1" data-until="2">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="440" y="40" class="lbl txt small">begin state: cells of a tissue; inside, thousands of different RNAs, each in its own amount (here gene A: 5 copies, gene B: 1 copy)</text>
+      <circle cx="130" cy="150" r="70" class="cellc"/>
+      <circle cx="300" cy="150" r="70" class="cellc"/>
+      <text x="130" y="240" class="txt small muted">cell</text>
+      <text x="300" y="240" class="txt small muted">cell</text>
+      <path d="M90,120 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M120,140 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M95,165 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M140,180 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M110,195 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M150,120 q5,-5 10,0 t10,0 t10,0" class="rnaB"/>
+      <path d="M260,120 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M290,140 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M265,165 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M310,180 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M280,195 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M320,120 q5,-5 10,0 t10,0 t10,0" class="rnaB"/>
+      <text x="420" y="130" class="txt small left">red = RNA of gene A (5 per cell)</text>
+      <text x="420" y="146" class="txt small left">orange = RNA of gene B (1 per cell)</text>
+    </g>
+    <g data-step="2" data-until="3">
+      <text x="440" y="40" class="lbl txt small">isolate total RNA: break the cells open and purify all the RNA into a tube</text>
+      <rect x="60" y="80" width="300" height="200" rx="14" class="tubebox"/>
+      <path d="M90,110 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M150,130 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M100,160 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M200,170 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M120,200 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M220,220 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M90,250 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M180,110 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M240,150 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M160,250 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0" class="rna"/>
+      <path d="M260,200 q5,-5 10,0 t10,0 t10,0" class="rnaB"/>
+      <path d="M300,120 q5,-5 10,0 t10,0 t10,0" class="rnaB"/>
+    </g>
+    <g data-step="3" data-until="4">
+      <text x="440" y="40" class="lbl txt small">fragment the RNA into pieces of sequencing size</text>
+      <rect x="60" y="80" width="300" height="200" rx="14" class="tubebox"/>
+      <path d="M90,110 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M150,130 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M100,160 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M200,170 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M120,200 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M220,220 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M90,250 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M180,110 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M240,150 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M160,250 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M300,100 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M280,240 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M320,180 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M110,130 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M260,110 q5,-5 10,0 t10,0 t10,0" class="rna"/>
+      <path d="M260,200 q5,-5 10,0 t10,0 t10,0" class="rnaB"/>
+      <path d="M300,140 q5,-5 10,0 t10,0 t10,0" class="rnaB"/>
+    </g>
+    <g data-step="4" data-until="5">
+      <text x="440" y="40" class="lbl txt small">reverse transcriptase copies every RNA piece into cDNA (blue): DNA is stable and is what the sequencer can read (page 4.3)</text>
+      <rect x="60" y="80" width="300" height="200" rx="14" class="tubebox"/>
+      <path d="M90,110 L120,110" class="cdna"/>
+      <path d="M150,130 L180,130" class="cdna"/>
+      <path d="M100,160 L130,160" class="cdna"/>
+      <path d="M200,170 L230,170" class="cdna"/>
+      <path d="M120,200 L150,200" class="cdna"/>
+      <path d="M220,220 L250,220" class="cdna"/>
+      <path d="M90,250 L120,250" class="cdna"/>
+      <path d="M180,110 L210,110" class="cdna"/>
+      <path d="M240,150 L270,150" class="cdna"/>
+      <path d="M160,250 L190,250" class="cdna"/>
+      <path d="M300,100 L330,100" class="cdna"/>
+      <path d="M280,240 L310,240" class="cdna"/>
+      <path d="M320,180 L350,180" class="cdna"/>
+      <path d="M110,130 L140,130" class="cdna"/>
+      <path d="M260,110 L290,110" class="cdna"/>
+      <path d="M260,200 L290,200" class="cdna"/>
+      <path d="M300,140 L330,140" class="cdna"/>
+    </g>
+    <g data-step="5" data-until="6">
+      <text x="440" y="40" class="lbl txt small">ligate adapters (orange) and amplify by PCR: a sequencing library</text>
+      <rect x="60" y="80" width="300" height="200" rx="14" class="tubebox"/>
+      <path d="M90,110 L120,110" class="cdna"/>
+      <path d="M85,110 L90,110" class="adap"/>
+      <path d="M120,110 L125,110" class="adap"/>
+      <path d="M150,130 L180,130" class="cdna"/>
+      <path d="M145,130 L150,130" class="adap"/>
+      <path d="M180,130 L185,130" class="adap"/>
+      <path d="M100,160 L130,160" class="cdna"/>
+      <path d="M95,160 L100,160" class="adap"/>
+      <path d="M130,160 L135,160" class="adap"/>
+      <path d="M200,170 L230,170" class="cdna"/>
+      <path d="M195,170 L200,170" class="adap"/>
+      <path d="M230,170 L235,170" class="adap"/>
+      <path d="M120,200 L150,200" class="cdna"/>
+      <path d="M115,200 L120,200" class="adap"/>
+      <path d="M150,200 L155,200" class="adap"/>
+      <path d="M220,220 L250,220" class="cdna"/>
+      <path d="M215,220 L220,220" class="adap"/>
+      <path d="M250,220 L255,220" class="adap"/>
+      <path d="M90,250 L120,250" class="cdna"/>
+      <path d="M85,250 L90,250" class="adap"/>
+      <path d="M120,250 L125,250" class="adap"/>
+      <path d="M180,110 L210,110" class="cdna"/>
+      <path d="M175,110 L180,110" class="adap"/>
+      <path d="M210,110 L215,110" class="adap"/>
+      <path d="M240,150 L270,150" class="cdna"/>
+      <path d="M235,150 L240,150" class="adap"/>
+      <path d="M270,150 L275,150" class="adap"/>
+      <path d="M160,250 L190,250" class="cdna"/>
+      <path d="M155,250 L160,250" class="adap"/>
+      <path d="M190,250 L195,250" class="adap"/>
+      <path d="M300,100 L330,100" class="cdna"/>
+      <path d="M295,100 L300,100" class="adap"/>
+      <path d="M330,100 L335,100" class="adap"/>
+      <path d="M280,240 L310,240" class="cdna"/>
+      <path d="M275,240 L280,240" class="adap"/>
+      <path d="M310,240 L315,240" class="adap"/>
+      <path d="M320,180 L350,180" class="cdna"/>
+      <path d="M315,180 L320,180" class="adap"/>
+      <path d="M350,180 L355,180" class="adap"/>
+      <path d="M110,130 L140,130" class="cdna"/>
+      <path d="M105,130 L110,130" class="adap"/>
+      <path d="M140,130 L145,130" class="adap"/>
+      <path d="M260,110 L290,110" class="cdna"/>
+      <path d="M255,110 L260,110" class="adap"/>
+      <path d="M290,110 L295,110" class="adap"/>
+      <path d="M260,200 L290,200" class="cdna"/>
+      <path d="M255,200 L260,200" class="adap"/>
+      <path d="M290,200 L295,200" class="adap"/>
+      <path d="M300,140 L330,140" class="cdna"/>
+      <path d="M295,140 L300,140" class="adap"/>
+      <path d="M330,140 L335,140" class="adap"/>
+    </g>
+    <g data-step="6" data-until="7">
+      <text x="440" y="40" class="lbl txt small">sequence by NGS, deeply: many millions of reads, each the letters of one cDNA piece</text>
+      <text x="60" y="100" class="txt small bold left">reads:</text>
+      <text x="60" y="118" class="mono" style="font-size:11px">AGCTTAGGCATC…</text>
+      <text x="60" y="132" class="mono" style="font-size:11px">TTGACCGTAAGC…</text>
+      <text x="60" y="146" class="mono" style="font-size:11px">GGCATCTAGCCA…</text>
+      <text x="60" y="160" class="mono" style="font-size:11px">AGCTTAGGCATC…</text>
+      <text x="60" y="174" class="mono" style="font-size:11px">CCTAGGATCGTA…</text>
+      <text x="60" y="188" class="mono" style="font-size:11px">GCATCTAGCCAT…</text>
+    </g>
+    <g data-step="7">
+      <text x="440" y="40" class="lbl txt small">map: the computer finds where in the reference genome each read belongs (gene A, gene B, …)</text>
+      <path d="M60,230 L820,230" class="ref"/>
+      <path d="M150,230 L330,230" class="geneA"/>
+      <path d="M560,230 L680,230" class="geneB"/>
+      <text x="240" y="250" class="txt small bold">gene A</text>
+      <text x="620" y="250" class="txt small bold">gene B</text>
+      <text x="50" y="233" class="txt small muted" style="text-anchor:end">genome</text>
+      <path d="M150,214 L220,214" class="read"/>
+      <path d="M180,205 L250,205" class="read"/>
+      <path d="M210,196 L280,196" class="read"/>
+      <path d="M240,187 L310,187" class="read"/>
+      <path d="M260,178 L330,178" class="read"/>
+      <path d="M160,168 L230,168" class="read"/>
+      <path d="M200,159 L270,159" class="read"/>
+      <path d="M230,150 L300,150" class="read"/>
+      <path d="M270,141 L330,141" class="read"/>
+      <path d="M190,132 L260,132" class="read"/>
+      <path d="M580,214 L660,214" class="read"/>
+      <path d="M600,205 L680,205" class="read"/>
+    </g>
+    <g data-step="8">
+      <text x="440" y="40" class="lbl txt small">count the reads per gene: gene A has five times more reads than gene B, so gene A is expressed five times more strongly</text>
+      <text x="240" y="290" class="txt small bold" style="fill:var(--accent)">10 reads</text>
+      <text x="620" y="290" class="txt small bold" style="fill:var(--accent)">2 reads</text>
+      <text x="440" y="310" class="lbl txt small muted">reads per gene = how much RNA that gene made = its expression level</text>
+    </g>
+    <g data-step="9">
+      <text x="440" y="40" class="lbl txt small">compare conditions: do the same for a second sample (tumour vs normal, treated vs untreated); genes whose counts change are the interesting ones</text>
+      <text x="740" y="100" class="txt small bold">sample 1</text>
+      <text x="800" y="100" class="txt small bold">sample 2</text>
+      <text x="690" y="118" class="txt small">gene A:</text>
+      <text x="740" y="118" class="txt small">10</text>
+      <text x="800" y="118" class="txt small">2</text>
+      <text x="690" y="132" class="txt small">gene B:</text>
+      <text x="740" y="132" class="txt small">2</text>
+      <text x="800" y="132" class="txt small">2</text>
+      <text x="720" y="152" class="lbl txt small" style="fill:var(--c-O)">gene A is switched down in sample 2</text>
+    </g>
+    <g data-step="10">
+      <text x="440" y="40" class="lbl txt small">RNA-seq also shows which splice variants are made (reads that skip an exon), which non-coding RNAs are present, and RNA variants; page 4.13 compares it with the microarray</text>
+      <path d="M150,120 L200,120 C230,100 260,100 290,120 L330,120" class="read" style="fill:none"/>
+      <text x="240" y="92" class="lbl txt small">a read that skips an exon: a splice variant</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · Begin state: cells full of RNA",
+  en: "Cells of a tissue, each containing thousands of different RNAs in different amounts. The RNA of a strongly used gene is present in many copies, that of a weakly used gene in few. The goal: know which RNAs are there and how much of each, the transcriptome.",
+  nl: "Cellen van een weefsel, elk met duizenden verschillende RNA's in verschillende hoeveelheden. Het RNA van een sterk gebruikt gen is in veel kopieën aanwezig, dat van een zwak gebruikt gen in weinig. Het doel: weten welke RNA's er zijn en hoeveel van elk, het transcriptoom."
+  },
+  {
+  t: "2 · Isolate total RNA",
+  en: "The cells are broken open and all their RNA is purified into a tube. The relative amounts are preserved: five molecules of gene A for every one of gene B.",
+  nl: "De cellen worden opengebroken en al hun RNA wordt gezuiverd in een buisje. De verhoudingen blijven bewaard: vijf moleculen van gen A voor elk molecuul van gen B."
+  },
+  {
+  t: "3 · Fragment",
+  en: "The RNA molecules are broken into pieces of the size the sequencer can read, a few hundred letters.",
+  nl: "De RNA-moleculen worden in stukken gebroken van de grootte die de sequencer kan lezen, enkele honderden letters."
+  },
+  {
+  t: "4 · Convert to cDNA",
+  en: "Sequencers read DNA, not RNA. Reverse transcriptase, the retroviral enzyme of page 4.3, copies every RNA piece into complementary DNA, cDNA, which is also far more stable.",
+  nl: "Sequencers lezen DNA, geen RNA. Reverse transcriptase, het retrovirale enzym van pagina 4.3, kopieert elk RNA-stuk naar complementair DNA, cDNA, dat bovendien veel stabieler is."
+  },
+  {
+  t: "5 · Adapters and PCR",
+  en: "Adapters are ligated to the ends and the pieces are amplified by PCR: a sequencing library, exactly like a DNA library on page 4.10.",
+  nl: "Adapters worden aan de uiteinden geligeerd en de stukken worden vermenigvuldigd met PCR: een sequencingbibliotheek, precies zoals een DNA-bibliotheek op pagina 4.10."
+  },
+  {
+  t: "6 · Deep sequencing",
+  en: "The library is sequenced by NGS, so deeply that even rare RNAs are read: many millions of reads, each the letters of one cDNA piece.",
+  nl: "De bibliotheek wordt gesequencet met NGS, zo diep dat zelfs zeldzame RNA's gelezen worden: vele miljoenen reads, elk de letters van één cDNA-stuk."
+  },
+  {
+  t: "7 · Map the reads",
+  en: "The computer looks up where in the reference genome (or reference transcriptome) each read belongs. Reads from gene A pile up on gene A, reads from gene B on gene B.",
+  nl: "De computer zoekt op waar in het referentiegenoom (of referentietranscriptoom) elke read hoort. Reads van gen A stapelen zich op gen A, reads van gen B op gen B."
+  },
+  {
+  t: "8 · Count per gene",
+  en: "The number of reads that map to a gene measures how much RNA that gene produced: its expression level. Here gene A gets five times more reads than gene B, so it is expressed five times more strongly. This is the prevalence of each transcript.",
+  nl: "Het aantal reads dat op een gen valt, meet hoeveel RNA dat gen heeft gemaakt: zijn expressieniveau. Hier krijgt gen A vijf keer meer reads dan gen B, dus het komt vijf keer sterker tot expressie. Dit is de prevalentie van elk transcript."
+  },
+  {
+  t: "9 · Compare two conditions",
+  en: "The real question is usually a comparison: tumour versus normal tissue, treated versus untreated cells. Do the whole procedure for both samples and look for genes whose read counts change. This is how the cancer pages of chapter 2 found which genes a tumour switches on or off.",
+  nl: "De echte vraag is meestal een vergelijking: tumor tegenover normaal weefsel, behandelde tegenover onbehandelde cellen. Doe de hele procedure voor beide stalen en zoek genen waarvan het aantal reads verandert. Zo vonden de kankerpagina's van hoofdstuk 2 welke genen een tumor aan- of uitzet."
+  },
+  {
+  t: "10 · More than counts",
+  en: "Because every read is a sequence, RNA-seq also shows which splice variants are made (a read that jumps from one exon to a non-neighbouring exon), which non-coding RNAs are present, and RNA variants. With special chemical treatments even RNA modifications can be mapped. Page 4.13 compares RNA-seq with the older DNA microarray.",
+  nl: "Omdat elke read een sequentie is, toont RNA-seq ook welke splice-varianten gemaakt worden (een read die van een exon naar een niet-aangrenzend exon springt), welke niet-coderende RNA's er zijn, en RNA-varianten. Met speciale chemische behandelingen kunnen zelfs RNA-modificaties in kaart gebracht worden. Pagina 4.13 vergelijkt RNA-seq met de oudere DNA-microarray."
+  }
+];
+Stepper.init('rnaseq-stepper', steps, 'rnaseq');
+})();
+</script>
 
 <p><strong>What RNA-seq tells you:</strong> how strongly each gene is expressed in those cells (the <strong>prevalence</strong> of each transcript), which <strong>splice variants</strong> are made,
 which <strong>non-coding RNAs</strong> are present, and RNA variants. Page 4.13 compares it with the older microarray method. RNA can also be treated with enzymes or chemicals that react with

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2.6 Rb and losing the second copy</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -16,6 +18,8 @@
   .rb { fill: var(--c-Cl); }
   .rb.x { fill: none; stroke: var(--c-O); stroke-width: 2; }
   .me { fill: var(--c-R); }
+  .gbox { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.4; }
+  .cross { stroke: var(--c-O); stroke-width: 3; fill: none; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -235,6 +239,205 @@ The syllabus makes a useful distinction:</p>
   </svg>
   <figcaption>Syllabus Figure 2-23, using <em>Rb</em> as the example. The start cell is healthy. Every one of the six outcomes leaves no working Rb protein (in 6 the copy is intact but switched off).</figcaption>
 </figure>
+
+<h3>Build it up yourself: two hits on <em>Rb</em>, and the six ways to lose the second copy</h3>
+<p>Press <strong>Next</strong> to add one idea at a time. Steps 1 to 4 show what Rb does in a healthy retina cell, steps 5 to 8 the two forms of retinoblastoma, steps 9 to 14 the six ways a cell can lose its last good copy.</p>
+
+<div class="stepper" id="rb-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of the Rb story">
+    <defs>
+      <marker id="arRb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+      <marker id="arRbT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+
+    <!-- 1 the cell with two chromosomes 13 -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="140" y="44" class="txt small bold">one retina precursor cell</text>
+      <circle cx="140" cy="180" r="90" class="cell"/>
+      <path d="M115,112 L115,248" class="chr mat"/><path d="M165,112 L165,248" class="chr"/>
+      <text x="100" y="286" class="txt small muted">from mother</text><text x="182" y="286" class="txt small muted">from father</text>
+      <text x="140" y="302" class="txt small muted">the two chromosomes 13</text>
+      <text x="440" y="60" class="lbl txt small">a cell of the immature retina (netvlies), still going to become a nerve cell; it carries two copies of chromosome 13</text>
+    </g>
+
+    <!-- 2 two Rb copies -->
+    <g data-step="2">
+      <circle cx="115" cy="180" r="7" class="rb"/><circle cx="165" cy="180" r="7" class="rb"/>
+      <text x="440" y="60" class="lbl txt small">green dot = a working copy of the Rb gene; every cell starts with two, one on each chromosome 13</text>
+    </g>
+
+    <!-- 3 the brake / gate -->
+    <g data-step="3">
+      <rect x="440" y="100" width="130" height="46" rx="8" class="gbox"/><text x="505" y="120" class="txt small bold">G1</text><text x="505" y="136" class="txt small muted">cell waits</text>
+      <rect x="720" y="100" width="140" height="46" rx="8" class="gbox"/><text x="790" y="120" class="txt small bold">S phase</text><text x="790" y="136" class="txt small muted">copies its DNA, divides</text>
+      <path d="M570,123 L640,123" class="path accent"/>
+      <rect x="646" y="90" width="14" height="66" rx="4" class="rb"/>
+      <text x="653" y="80" class="txt small bold">Rb protein</text>
+      <text x="653" y="172" class="txt small muted">= the brake (gate)</text>
+      <text x="440" y="40" class="lbl txt small left">the Rb gene codes for the Rb protein, a brake that holds the cell in G1:</text><text x="440" y="52" class="lbl txt small left">the way to S phase is closed</text>
+    </g>
+
+    <!-- 4 proper signals open the gate briefly -->
+    <g data-step="4" data-until="5">
+      <rect x="646" y="90" width="14" height="66" rx="4" class="rb" transform="rotate(-70 653 156)"/>
+      <path d="M570,123 L716,123" class="path accent" marker-end="url(#arRb)"/>
+      <text x="440" y="40" class="lbl txt small left">when the proper growth signals arrive the brake is released for a moment,</text><text x="440" y="52" class="lbl txt small left">the cell passes into S phase and divides once</text>
+      <text x="440" y="192" class="lbl txt small left">this is normal division: with permission, and only then</text>
+    </g>
+
+    <!-- 5 first hit: one copy lost -->
+    <g data-step="5">
+      <circle cx="115" cy="180" r="7" class="rb x" style="fill:var(--panel)"/>
+      <text x="440" y="40" class="lbl txt small left">first hit: one copy of Rb is lost or inactivated</text><text x="440" y="52" class="lbl txt small left">(a small deletion or a point mutation)</text>
+      <text x="440" y="192" class="lbl txt small left">one good copy still makes enough Rb protein: the brake works, the cell is healthy</text>
+    </g>
+
+    <!-- 6 hereditary form: every cell carries the first hit -->
+    <g data-step="6" data-until="8">
+      <text x="330" y="226" class="txt small bold left">hereditary form: a child inherits the bad copy, so every cell of the body already has hit 1</text>
+      <g class="tiny">
+        <circle cx="350" cy="275" r="22" class="cell"/><circle cx="342" cy="275" r="5" class="rb x"/><circle cx="358" cy="275" r="5" class="rb"/>
+        <circle cx="420" cy="275" r="22" class="cell"/><circle cx="412" cy="275" r="5" class="rb x"/><circle cx="428" cy="275" r="5" class="rb"/>
+        <circle cx="490" cy="275" r="22" class="cell"/><circle cx="482" cy="275" r="5" class="rb x"/><circle cx="498" cy="275" r="5" class="rb"/>
+        <circle cx="560" cy="275" r="22" class="cell"/><circle cx="552" cy="275" r="5" class="rb x"/><circle cx="568" cy="275" r="5" class="rb"/>
+        <circle cx="630" cy="275" r="22" class="cell"/><circle cx="622" cy="275" r="5" class="rb x"/><circle cx="638" cy="275" r="5" class="rb"/>
+        <circle cx="700" cy="275" r="22" class="cell"/><circle cx="692" cy="275" r="5" class="rb x"/><circle cx="708" cy="275" r="5" class="rb"/>
+        <circle cx="770" cy="275" r="22" class="cell"/><circle cx="762" cy="275" r="5" class="rb x"/><circle cx="778" cy="275" r="5" class="rb"/>
+      </g>
+      <text x="560" y="312" class="txt small muted">retina cells of the child: all with 1 bad, 1 good copy</text>
+    </g>
+
+    <!-- 7 second hit in one cell -->
+    <g data-step="7" data-until="9">
+      <circle cx="165" cy="180" r="7" class="rb x" style="fill:var(--panel)"/>
+      <circle cx="140" cy="180" r="90" class="cell bad" style="fill:none"/>
+      <path d="M636,80 L670,166 M670,80 L636,166" class="cross"/>
+      <path d="M570,123 L716,123" class="sigT" marker-end="url(#arRbT)"/>
+      <text x="440" y="40" class="lbl txt small left">second hit, in one retina cell: the last good copy goes too</text><text x="440" y="52" class="lbl txt small left">no Rb protein, no brake: the gate is always open</text>
+      <text x="440" y="192" class="lbl txt small left">the cell divides without permission: a tumor starts here</text>
+      <circle cx="490" cy="275" r="22" class="cell bad" style="fill:none"/><circle cx="498" cy="275" r="5" class="rb x" style="fill:var(--panel)"/>
+      <circle cx="700" cy="275" r="22" class="cell bad" style="fill:none"/><circle cx="708" cy="275" r="5" class="rb x" style="fill:var(--panel)"/>
+      <text x="490" y="248" class="lbl txt small" style="fill:var(--c-O)">tumor</text><text x="700" y="248" class="lbl txt small" style="fill:var(--c-O)">tumor</text>
+    </g>
+
+    <!-- 8 nonhereditary -->
+    <g data-step="8" data-until="9">
+      <text x="330" y="226" class="txt small bold left">nonhereditary form: every cell starts with 2 good copies; one cell line needs 2 independent accidents</text>
+      <g>
+        <circle cx="350" cy="275" r="22" class="cell"/><circle cx="342" cy="275" r="5" class="rb"/><circle cx="358" cy="275" r="5" class="rb"/>
+        <circle cx="420" cy="275" r="22" class="cell"/><circle cx="412" cy="275" r="5" class="rb"/><circle cx="428" cy="275" r="5" class="rb"/>
+        <circle cx="490" cy="275" r="22" class="cell"/><circle cx="482" cy="275" r="5" class="rb"/><circle cx="498" cy="275" r="5" class="rb"/>
+        <circle cx="560" cy="275" r="22" class="cell bad"/><circle cx="552" cy="275" r="5" class="rb x"/><circle cx="568" cy="275" r="5" class="rb x"/>
+        <circle cx="630" cy="275" r="22" class="cell"/><circle cx="622" cy="275" r="5" class="rb"/><circle cx="638" cy="275" r="5" class="rb"/>
+        <circle cx="700" cy="275" r="22" class="cell"/><circle cx="692" cy="275" r="5" class="rb"/><circle cx="708" cy="275" r="5" class="rb"/>
+        <circle cx="770" cy="275" r="22" class="cell"/><circle cx="762" cy="275" r="5" class="rb"/><circle cx="778" cy="275" r="5" class="rb"/>
+      </g>
+      <text x="560" y="248" class="txt small" style="fill:var(--c-O)">hit 1 + hit 2</text>
+      <text x="560" y="312" class="txt small muted">very rare: about 1 in 30 000 people, one tumor in one eye</text>
+    </g>
+
+    <!-- 9..14 six ways, zoom on the chromosome pair of the cell with 1 bad, 1 good copy -->
+    <g data-step="9">
+      <text x="440" y="192" class="txt small bold left">the question of 2.2.4: how does the cell lose its last good copy?</text>
+      <text x="440" y="40" class="lbl txt small left">the first hit is usually small and precise; the second is often</text><text x="440" y="52" class="lbl txt small left">a large, sloppy accident of an unstable cell (page 2.3)</text>
+    </g>
+    <g data-step="9" data-until="10">
+      <text x="440" y="212" class="txt small bold left">1 · deletion</text>
+      <path d="M470,220 L470,320" class="chr mat"/><path d="M510,220 L510,258 M510,282 L510,320" class="chr"/>
+      <circle cx="470" cy="270" r="6" class="rb x"/>
+      <text x="540" y="262" class="txt small left">the piece of the father's chromosome</text><text x="540" y="276" class="txt small left">holding the good copy is cut out and lost</text>
+      <text x="540" y="296" class="txt small left muted">kind: a change of the DNA sequence, small</text>
+    </g>
+    <g data-step="10" data-until="11">
+      <text x="440" y="212" class="txt small bold left">2 · point mutation</text>
+      <path d="M470,220 L470,320" class="chr mat"/><path d="M510,220 L510,320" class="chr"/>
+      <circle cx="470" cy="270" r="6" class="rb x"/><circle cx="510" cy="270" r="6" class="rb x"/>
+      <text x="540" y="262" class="txt small left">one DNA letter changes in the good copy</text><text x="540" y="276" class="txt small left">and the protein no longer works</text>
+      <text x="540" y="296" class="txt small left muted">kind: a change of the DNA sequence, small</text>
+    </g>
+    <g data-step="11" data-until="12">
+      <text x="440" y="212" class="txt small bold left">3 · chromosome loss</text>
+      <path d="M470,220 L470,320" class="chr mat"/><path d="M510,220 L510,320" class="chr faint"/>
+      <circle cx="470" cy="270" r="6" class="rb x"/>
+      <text x="540" y="262" class="txt small left">a segregation error in mitosis: the whole</text><text x="540" y="276" class="txt small left">father's chromosome goes missing (aneuploidy, chapter 1)</text>
+      <text x="540" y="296" class="txt small left muted">kind: large-scale</text>
+    </g>
+    <g data-step="12" data-until="13">
+      <text x="440" y="212" class="txt small bold left">4 · mitotic recombination</text>
+      <path d="M470,220 L470,270" class="chr mat"/><path d="M470,270 L470,320" class="chr"/>
+      <path d="M510,220 L510,270" class="chr mat"/><path d="M510,270 L510,320" class="chr"/>
+      <circle cx="470" cy="248" r="6" class="rb x"/><circle cx="510" cy="248" r="6" class="rb x"/>
+      <text x="540" y="262" class="txt small left">the two chromosomes swap pieces during mitosis</text><text x="540" y="276" class="txt small left">(like crossing-over); a daughter gets the bad copy twice</text>
+      <text x="540" y="296" class="txt small left muted">kind: large-scale</text>
+    </g>
+    <g data-step="13" data-until="14">
+      <text x="440" y="212" class="txt small bold left">5 · gene conversion</text>
+      <path d="M470,220 L470,320" class="chr mat"/><path d="M510,220 L510,320" class="chr"/>
+      <circle cx="470" cy="270" r="6" class="rb x"/><circle cx="510" cy="270" r="6" class="rb x"/>
+      <path d="M478,264 L500,264" class="path accent" marker-end="url(#arRb)"/>
+      <text x="540" y="262" class="txt small left">during such a recombination the good copy is</text><text x="540" y="276" class="txt small left">overwritten with the sequence of the bad one</text>
+      <text x="540" y="296" class="txt small left muted">kind: large-scale</text>
+    </g>
+    <g data-step="14">
+      <text x="440" y="212" class="txt small bold left">6 · epigenetic silencing</text>
+      <path d="M470,220 L470,320" class="chr mat"/><path d="M510,220 L510,320" class="chr"/>
+      <circle cx="470" cy="270" r="6" class="rb x"/><circle cx="510" cy="270" r="6" class="rb"/>
+      <circle cx="520" cy="258" r="3" class="me"/><circle cx="523" cy="267" r="3" class="me"/><circle cx="521" cy="276" r="3" class="me"/>
+      <text x="540" y="262" class="txt small left">the DNA letters are intact, but the promoter is methylated</text><text x="540" y="276" class="txt small left">(pink): the good copy is switched off, in all daughter cells too</text>
+      <text x="540" y="296" class="txt small left muted">kind: epigenetic</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+  { t: "1 · One retina cell with its two chromosomes 13",
+    en: "We start with one precursor cell of the retina (netvlies), the light-sensing layer at the back of the eye; it is still going to become a nerve cell. Like every body cell it is diploid: it has two copies of each chromosome, here drawn for chromosome 13, one from the mother (red) and one from the father (blue).",
+    nl: "We beginnen met één voorlopercel van het netvlies, de lichtgevoelige laag achteraan in het oog; ze moet nog een zenuwcel worden. Zoals elke lichaamscel is ze diploïd: twee kopieën van elk chromosoom, hier getekend voor chromosoom 13, één van de moeder (rood) en één van de vader (blauw)." },
+  { t: "2 · Two copies of the Rb gene",
+    en: "On each chromosome 13 sits one copy of the Rb gene (green dot). The gene is named after retinoblastoma, the eye cancer through which it was found. Two good copies is the normal state.",
+    nl: "Op elk chromosoom 13 zit één kopie van het Rb-gen (groene stip). Het gen is genoemd naar retinoblastoom, de oogkanker waardoor het gevonden werd. Twee goede kopieën is de normale toestand." },
+  { t: "3 · What the Rb protein does: a brake",
+    en: "The Rb gene codes for the Rb protein, a universal regulator of the cell cycle in almost all cells. Read the right-hand drawing as a road: in G1 the cell waits; in S phase it copies its DNA and goes on to divide. Rb is the gate between them: it holds the cell in G1 until the proper signals arrive.",
+    nl: "Het Rb-gen codeert voor het Rb-eiwit, een universele regelaar van de celcyclus in bijna alle cellen. Lees de rechtertekening als een weg: in G1 wacht de cel; in de S-fase kopieert ze haar DNA en gaat ze delen. Rb is de poort ertussen: het houdt de cel in G1 tot de juiste signalen er zijn." },
+  { t: "4 · Division with permission",
+    en: "When growth signals from outside arrive, the brake is released for a moment, the cell passes the gate into S phase and divides once. Afterwards the brake is back on. This is how a healthy cell divides: only when told to.",
+    nl: "Als groeisignalen van buiten aankomen wordt de rem even losgelaten, de cel gaat door de poort naar de S-fase en deelt één keer. Daarna staat de rem weer aan. Zo deelt een gezonde cel: alleen als het gevraagd wordt." },
+  { t: "5 · The first hit",
+    en: "One copy of Rb is lost or inactivated, typically by a small, precise event: a small deletion on chromosome 13 or a point mutation from a copying error (red open circle). One good copy still makes enough Rb protein, so the brake works and the cell behaves as a healthy cell. A tumor suppressor acts recessively: one lost copy is not enough.",
+    nl: "Eén kopie van Rb gaat verloren of wordt uitgeschakeld, meestal door een kleine, precieze gebeurtenis: een kleine deletie op chromosoom 13 of een puntmutatie door een kopieerfout (rode open cirkel). Eén goede kopie maakt nog genoeg Rb-eiwit, dus de rem werkt en de cel gedraagt zich gezond. Een tumorsuppressor werkt recessief: één verloren kopie volstaat niet." },
+  { t: "6 · Hereditary form: hit 1 is in every cell",
+    en: "In the hereditary form of retinoblastoma the child inherited the bad copy from a parent. So every somatic cell of the body, including every retina cell, already carries hit 1 from birth. All these cells are predisposed (made more likely) to become cancerous, but none is yet: each still has one good copy.",
+    nl: "Bij de erfelijke vorm van retinoblastoom heeft het kind de slechte kopie van een ouder geërfd. Elke lichaamscel, dus ook elke netvliescel, draagt hit 1 al vanaf de geboorte. Al die cellen zijn gepredisponeerd (vatbaarder gemaakt), maar nog geen enkele is kanker: elk heeft nog één goede kopie." },
+  { t: "7 · The second hit: a tumor starts",
+    en: "In one retina cell a somatic event now destroys the remaining good copy. No Rb protein is left, the gate stands open, and the cell divides without permission: a tumor starts. Because only one accident was needed, and the retina has millions of cells, it happens in several cells: most carriers get multiple tumors, usually in both eyes.",
+    nl: "In één netvliescel vernietigt een somatische gebeurtenis nu de overblijvende goede kopie. Er is geen Rb-eiwit meer, de poort staat open en de cel deelt zonder toestemming: een tumor begint. Omdat maar één ongeluk nodig was, en het netvlies miljoenen cellen heeft, gebeurt het in meerdere cellen: de meeste dragers krijgen meerdere tumoren, meestal in beide ogen." },
+  { t: "8 · Nonhereditary form: two hits in one cell line",
+    en: "A child without the inherited mutation starts with two good copies in every cell. A tumor needs two independent accidents in the same line of cells: hit 1 in a cell, hit 2 in one of its descendants. Two rare events in one lineage is very rare, about 1 in 30 000 people, and it gives one tumor in one eye.",
+    nl: "Een kind zonder de geërfde mutatie begint met twee goede kopieën in elke cel. Een tumor vereist twee onafhankelijke ongelukken in dezelfde cellijn: hit 1 in een cel, hit 2 in een van haar nakomelingen. Twee zeldzame gebeurtenissen in één lijn is heel zeldzaam, ongeveer 1 op 30 000 mensen, en het geeft één tumor in één oog." },
+  { t: "9 · Way 1 to lose the last good copy: deletion",
+    en: "Back to the cell with one bad and one good copy. The syllabus lists six ways to lose the good one. The first hit was small and precise; the second is more often a large, sloppy accident of a cell that is already genetically unstable (page 2.3). Way 1: the piece of the father's chromosome holding the good copy is cut out and lost.",
+    nl: "Terug naar de cel met één slechte en één goede kopie. De syllabus noemt zes manieren om de goede te verliezen. De eerste hit was klein en precies; de tweede is vaker een groot, slordig ongeluk van een cel die al genetisch onstabiel is (pagina 2.3). Manier 1: het stuk van het vaderlijke chromosoom met de goede kopie wordt uitgeknipt en gaat verloren." },
+  { t: "10 · Way 2: point mutation",
+    en: "One letter changes in the good copy, through a random copying error, and the protein made from it no longer works. Like the deletion this is a small change of the DNA sequence.",
+    nl: "Eén letter verandert in de goede kopie, door een toevallige kopieerfout, en het eiwit dat ervan gemaakt wordt werkt niet meer. Net als de deletie is dit een kleine verandering van de DNA-volgorde." },
+  { t: "11 · Way 3: the whole chromosome is lost",
+    en: "During mitosis the chromosomes are not distributed correctly (a segregation error, as in chapter 1) and a daughter cell receives no father's chromosome 13 at all. It keeps only the mother's chromosome with the bad copy. This is aneuploidy: a large-scale accident.",
+    nl: "Tijdens de mitose worden de chromosomen niet correct verdeeld (een segregatiefout, zoals in hoofdstuk 1) en een dochtercel krijgt helemaal geen vaderlijk chromosoom 13. Ze houdt alleen het moederlijke chromosoom met de slechte kopie. Dit is aneuploïdie: een grootschalig ongeluk." },
+  { t: "12 · Way 4: mitotic recombination",
+    en: "During mitosis the two homologous chromosomes exchange pieces, the way crossing-over does in meiosis. If the exchange happens below the Rb gene, one daughter cell can receive the top part with the bad copy twice and the good copy not at all.",
+    nl: "Tijdens de mitose wisselen de twee homologe chromosomen stukken uit, zoals crossing-over in de meiose. Gebeurt de uitwisseling onder het Rb-gen, dan kan een dochtercel het bovenste stuk met de slechte kopie twee keer krijgen en de goede kopie helemaal niet." },
+  { t: "13 · Way 5: gene conversion",
+    en: "During such a recombination the good copy can be 'overwritten' with the sequence of the bad copy (conversion = being changed into). Both chromosomes now read the mutant version, although nothing was lost.",
+    nl: "Tijdens zo'n recombinatie kan de goede kopie 'overschreven' worden met de volgorde van de slechte kopie (conversie = veranderd worden in). Beide chromosomen lezen nu de mutante versie, hoewel er niets verloren ging." },
+  { t: "14 · Way 6: epigenetic silencing",
+    en: "The DNA letters of the good copy are intact, but the C's of CG pairs in its promoter become methylated (pink dots): a methyl group is attached, the gene is switched off permanently, and the methylation is copied to all daughter cells. No DNA change, same result: no working Rb protein. Every one of the six ways ends the same way: the brake is gone.",
+    nl: "De DNA-letters van de goede kopie zijn intact, maar de C's van CG-paren in zijn promotor worden gemethyleerd (roze stippen): er wordt een methylgroep aan gehangen, het gen wordt blijvend uitgeschakeld, en de methylering wordt naar alle dochtercellen gekopieerd. Geen DNA-verandering, hetzelfde resultaat: geen werkend Rb-eiwit. Alle zes manieren eindigen hetzelfde: de rem is weg." }
+];
+Stepper.init('rb-stepper', steps, 'rb');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
 <p>Viruses can take the Rb brake out without any mutation. Human papillomaviruses (HPV), the cause of cervical cancer, carry two genes, <em>E6</em> and <em>E7</em>, whose proteins bind

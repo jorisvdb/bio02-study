@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2.4 Microenvironment and metastasis</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -17,8 +19,17 @@
   .per { fill: var(--c-P); stroke: none; }
   .mat { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; fill: none; }
   .lam { stroke: var(--c-S); stroke-width: 4; fill: none; stroke-linecap: round; }
-  .ct { fill: var(--panel); stroke: none; }
   .organ { fill: var(--quiz-bg); stroke: var(--quiz-border); stroke-width: 1.4; }
+  .nuc { fill: var(--muted); opacity: .55; }
+  .bm { stroke: var(--fg); stroke-width: 3; fill: none; stroke-linecap: round; }
+  .bmbroken { stroke: var(--fg); stroke-width: 3; fill: none; stroke-dasharray: 6 10; opacity: .5; }
+  .strm { fill: var(--c-S); opacity: .07; stroke: var(--c-S); stroke-width: 1; stroke-dasharray: 3 4; }
+  .cut { stroke: var(--c-O); stroke-width: 1.6; fill: none; }
+  .tumc { fill: var(--c-O); stroke: var(--c-O); opacity: .85; }
+  .nuct { fill: #fff; opacity: .7; }
+  .silence { stroke: var(--fg); stroke-width: 2.5; fill: none; opacity: .8; }
+  .stepper:focus { outline: 2px solid var(--accent); }
+  .stepbtn:disabled { opacity: .4; cursor: default; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -51,6 +62,266 @@ A tumor develops through <strong>two-way communication</strong> between cancer c
   <li>the <strong>extracellular matrix</strong> between all of them.</li>
 </ul>
 <p>Only the cancer cells are thought to carry the mutations; the stromal cells are genetically normal, but their <em>behaviour</em> is changed.</p>
+
+<p><strong>Where the stroma sits.</strong> Think of any organ with a lining: the gut, the skin, a gland. The lining is the <strong>epithelium</strong> (a sheet of tightly packed cells; most cancers, the carcinomas, start here).
+The epithelium stands on a thin sheet, the <strong>basement membrane</strong> (basaalmembraan), and <em>under</em> that lies the connective tissue: the stroma. In a healthy organ the stroma is quiet.
+In a carcinoma the cancer cells break through the basement membrane into the stroma and rebuild it to their liking.</p>
+
+<figure>
+  <svg class="molsvg" viewBox="0 0 880 396" width="880" height="396" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arTum" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+      <marker id="arFib" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahF"/></marker>
+    </defs>
+
+    <!-- ===== Panel A: normal tissue ===== -->
+    <rect x="20" y="20" width="410" height="310" rx="14" class="ct"/>
+    <text x="225" y="42" class="txt bold">A · Normal tissue: an epithelium standing on its stroma</text>
+    <!-- epithelium -->
+    <g>
+      <rect x="45" y="58" width="48" height="42" rx="6" class="epi"/><rect x="95" y="58" width="48" height="42" rx="6" class="epi"/><rect x="145" y="58" width="48" height="42" rx="6" class="epi"/>
+      <rect x="195" y="58" width="48" height="42" rx="6" class="epi"/><rect x="245" y="58" width="48" height="42" rx="6" class="epi"/><rect x="295" y="58" width="48" height="42" rx="6" class="epi"/><rect x="345" y="58" width="48" height="42" rx="6" class="epi"/>
+      <circle cx="69" cy="79" r="6" class="nuc"/><circle cx="119" cy="79" r="6" class="nuc"/><circle cx="169" cy="79" r="6" class="nuc"/><circle cx="219" cy="79" r="6" class="nuc"/><circle cx="269" cy="79" r="6" class="nuc"/><circle cx="319" cy="79" r="6" class="nuc"/><circle cx="369" cy="79" r="6" class="nuc"/>
+    </g>
+    <text x="398" y="83" class="txt small left">epithelium</text>
+    <!-- basement membrane -->
+    <path d="M40,104 L394,104" class="bm"/>
+    <text x="398" y="108" class="txt small left muted">basement</text><text x="398" y="120" class="txt small left muted">membrane</text>
+    <!-- stroma -->
+    <rect x="40" y="112" width="354" height="200" rx="8" class="strm"/>
+    <text x="48" y="130" class="txt small bold left">STROMA = the connective tissue under the epithelium</text>
+    <path d="M55,150 C110,140 150,175 210,160 M250,300 C300,280 340,305 390,290 M60,290 C100,270 130,300 180,285 M260,150 C300,140 340,170 385,150" class="mat"/>
+    <ellipse cx="110" cy="190" rx="26" ry="7" class="fib" transform="rotate(-15 110 190)"/>
+    <ellipse cx="300" cy="195" rx="26" ry="7" class="fib" transform="rotate(20 300 195)"/>
+    <text x="110" y="212" class="txt small">fibroblast</text>
+    <text x="300" y="217" class="txt small">fibroblast</text>
+    <path d="M45,250 C120,235 200,265 290,250 C340,242 370,255 390,250" class="ves"/>
+    <path d="M45,250 C120,235 200,265 290,250 C340,242 370,255 390,250" class="vesin"/>
+    <circle cx="150" cy="243" r="6" class="per"/><circle cx="330" cy="247" r="6" class="per"/>
+    <text x="90" y="272" class="txt small left">blood vessel, with a pericyte wrapped around it</text>
+    <circle cx="215" cy="300" r="9" class="imm"/>
+    <text x="238" y="304" class="txt small left">a few immune cells</text>
+    <text x="225" y="326" class="txt small muted">quiet: vessels stay where they are, little inflammation</text>
+
+    <!-- ===== Panel B: carcinoma ===== -->
+    <rect x="450" y="20" width="410" height="310" rx="14" class="ct"/>
+    <text x="655" y="40" class="txt bold">B · Carcinoma: the stroma is recruited and rebuilt</text>
+    <!-- remaining epithelium -->
+    <rect x="475" y="58" width="48" height="42" rx="6" class="epi"/><circle cx="499" cy="79" r="6" class="nuc"/>
+    <rect x="782" y="58" width="48" height="42" rx="6" class="epi"/><circle cx="806" cy="79" r="6" class="nuc"/>
+    <!-- cancer cells above and through the membrane -->
+    <g>
+      <circle cx="560" cy="72" r="14" class="tum"/><circle cx="590" cy="66" r="14" class="tum"/><circle cx="620" cy="74" r="14" class="tum"/><circle cx="650" cy="66" r="14" class="tum"/><circle cx="680" cy="74" r="14" class="tum"/><circle cx="710" cy="68" r="14" class="tum"/><circle cx="740" cy="76" r="14" class="tum"/>
+      <circle cx="575" cy="98" r="14" class="tum"/><circle cx="605" cy="104" r="14" class="tum"/><circle cx="635" cy="98" r="14" class="tum"/><circle cx="665" cy="104" r="14" class="tum"/><circle cx="695" cy="98" r="14" class="tum"/><circle cx="725" cy="102" r="14" class="tum"/>
+      <circle cx="620" cy="144" r="13" class="tum"/><circle cx="648" cy="152" r="13" class="tum"/><circle cx="676" cy="142" r="13" class="tum"/><circle cx="636" cy="174" r="12" class="tum"/><circle cx="662" cy="178" r="12" class="tum"/>
+    </g>
+    <!-- broken basement membrane -->
+    <path d="M470,104 L585,104" class="bm"/><path d="M585,104 L720,104" class="bmbroken"/><path d="M720,104 L840,104" class="bm"/>
+    <text x="726" y="121" class="txt small left muted">← membrane broken through</text>
+    <!-- reactive stroma -->
+    <rect x="470" y="112" width="370" height="200" rx="8" class="strm"/>
+    <path d="M478,178 C510,172 535,186 575,180 M700,300 C740,285 780,305 830,290 M480,290 C520,270 550,300 600,285 M740,150 C780,140 810,170 835,150 M560,200 C590,190 610,210 640,200" class="mat"/>
+    <path d="M556,186 l8,-8 M556,178 l8,8 M702,206 l8,-8 M702,198 l8,8" class="cut"/>
+    <ellipse cx="530" cy="200" rx="24" ry="7" class="fib" transform="rotate(-20 530 200)"/>
+    <ellipse cx="560" cy="240" rx="24" ry="7" class="fib" transform="rotate(15 560 240)"/>
+    <ellipse cx="775" cy="185" rx="24" ry="7" class="fib" transform="rotate(25 775 185)"/>
+    <ellipse cx="815" cy="222" rx="24" ry="7" class="fib" transform="rotate(-10 815 222)"/>
+    <text x="482" y="222" class="txt small left">activated fibroblasts</text>
+    <!-- vessel with new sprouts -->
+    <path d="M475,282 C560,268 640,296 720,282 C770,274 800,288 835,282" class="ves"/>
+    <path d="M475,282 C560,268 640,296 720,282 C770,274 800,288 835,282" class="vesin"/>
+    <path d="M640,290 C638,262 650,232 656,196" class="ves"/><path d="M640,290 C638,262 650,232 656,196" class="vesin"/>
+    <path d="M700,286 C708,262 712,240 712,218" class="ves"/><path d="M700,286 C708,262 712,240 712,218" class="vesin"/>
+    <circle cx="520" cy="275" r="6" class="per"/><circle cx="760" cy="281" r="6" class="per"/><circle cx="648" cy="235" r="5" class="per"/>
+    <text x="722" y="245" class="txt small left">new vessels grow</text><text x="722" y="257" class="txt small left">toward the tumor</text><text x="722" y="269" class="txt small left muted">(angiogenesis)</text>
+    <!-- immune cells -->
+    <circle cx="500" cy="163" r="9" class="imm"/><circle cx="610" cy="262" r="9" class="imm"/><circle cx="820" cy="150" r="9" class="imm"/><circle cx="520" cy="300" r="9" class="imm"/><circle cx="700" cy="150" r="9" class="imm"/><circle cx="770" cy="305" r="9" class="imm"/>
+    <text x="478" y="138" class="txt small left">many immune cells, but</text><text x="478" y="150" class="txt small left">silenced or even helping</text>
+    <!-- two-way signals -->
+    <path d="M612,190 L597,248" class="sigT" marker-end="url(#arTum)"/>
+    <path d="M702,262 L690,196" class="sigF" marker-end="url(#arFib)"/>
+    <text x="655" y="326" class="txt small muted">busy, like a wound that never heals: both sides keep signalling</text>
+
+    <!-- legend -->
+    <text x="440" y="350" class="txt small">red = cancer cells (the only mutated cells) · green = normal epithelium cells · yellow = fibroblasts · purple = immune cells</text>
+    <text x="440" y="365" class="txt small">blue = blood vessel · orange = pericytes · dashed = matrix fibres · red crosses = matrix cut by proteases</text>
+    <text x="440" y="382" class="txt small muted">red arrow down = cancer cells send signal proteins and proteases into the stroma · yellow arrow up = stroma sends growth signals (and proteases) back</text>
+  </svg>
+  <figcaption>Where the stroma is, and what cancer does to it. Left: a normal organ lining; the stroma is the connective tissue under the basement membrane. Right: a carcinoma has broken through the membrane; the same stroma is now full of activated fibroblasts, new vessels and immune cells, and the two sides keep signalling to each other (the arrows).</figcaption>
+</figure>
+
+<h3>Build it up yourself: from empty tissue to a carcinoma, step by step</h3>
+<p>Press <strong>Next</strong> to add one layer at a time. Each step says what is added and why it matters. Steps 1 to 7 build a healthy piece of tissue; steps 8 to 14 turn it into a carcinoma with its microenvironment.</p>
+
+<div class="stepper" id="stroma-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of tissue and tumor">
+    <defs>
+      <marker id="arTum2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+      <marker id="arFib2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahF"/></marker>
+      <marker id="arN2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 area -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="440" y="40" class="lbl txt small muted">a small piece of the wall of an organ (gut, skin, breast, prostate...)</text>
+      <text x="30" y="310" class="lbl txt small muted left">outside / inside of the organ is at the top; deeper tissue at the bottom</text>
+    </g>
+
+    <!-- 2 matrix -->
+    <g data-step="2">
+      <rect x="40" y="112" width="800" height="180" rx="8" class="strm"/>
+      <path d="M55,150 C110,140 150,175 210,160 M250,290 C300,270 340,295 400,280 M60,290 C100,270 130,300 180,285 M260,150 C300,140 340,170 400,150 M470,150 C520,140 560,175 620,160 M650,290 C700,270 740,295 800,280 M480,290 C520,270 560,300 600,285 M660,150 C700,140 740,170 820,150 M560,210 C600,200 640,225 700,210" class="mat"/>
+      <text x="48" y="130" class="lbl txt small bold left">connective tissue: matrix fibres (collagen) in a gel</text>
+    </g>
+
+    <!-- 3 fibroblasts -->
+    <g data-step="3">
+      <ellipse cx="130" cy="195" rx="26" ry="7" class="fib" transform="rotate(-15 130 195)"/>
+      <ellipse cx="420" cy="200" rx="26" ry="7" class="fib" transform="rotate(20 420 200)"/>
+      <ellipse cx="760" cy="195" rx="26" ry="7" class="fib" transform="rotate(-10 760 195)"/>
+      <text x="130" y="217" class="lbl txt small">fibroblast</text>
+    </g>
+
+    <!-- 4 vessel -->
+    <g data-step="4">
+      <path d="M45,250 C150,235 250,268 360,250 C470,232 560,270 660,250 C740,236 790,262 835,250" class="ves"/>
+      <path d="M45,250 C150,235 250,268 360,250 C470,232 560,270 660,250 C740,236 790,262 835,250" class="vesin"/>
+      <circle cx="200" cy="246" r="6" class="per"/><circle cx="520" cy="248" r="6" class="per"/><circle cx="780" cy="251" r="6" class="per"/>
+      <text x="60" y="272" class="lbl txt small left">blood vessel: a tube of endothelial cells, with pericytes wrapped around it</text>
+    </g>
+
+    <!-- 5 immune cells -->
+    <g data-step="5">
+      <circle cx="300" cy="300" r="9" class="imm"/><circle cx="640" cy="300" r="9" class="imm"/>
+      <text x="322" y="304" class="lbl txt small left">patrolling immune cell</text>
+    </g>
+
+    <!-- 6 basement membrane -->
+    <g data-step="6">
+      <path d="M40,104 L840,104" class="bm"/>
+      <text x="844" y="108" class="txt small left muted">basement</text><text x="844" y="120" class="txt small left muted">membrane</text>
+    </g>
+
+    <!-- 7 epithelium -->
+    <g data-step="7">
+      <rect x="50" y="58" width="48" height="42" rx="6" class="epi"/><rect x="102" y="58" width="48" height="42" rx="6" class="epi"/><rect x="154" y="58" width="48" height="42" rx="6" class="epi"/><rect x="206" y="58" width="48" height="42" rx="6" class="epi"/><rect x="258" y="58" width="48" height="42" rx="6" class="epi"/><rect x="310" y="58" width="48" height="42" rx="6" class="epi"/><rect x="362" y="58" width="48" height="42" rx="6" class="epi"/><rect x="414" y="58" width="48" height="42" rx="6" class="epi"/><rect x="466" y="58" width="48" height="42" rx="6" class="epi"/><rect x="518" y="58" width="48" height="42" rx="6" class="epi"/><rect x="570" y="58" width="48" height="42" rx="6" class="epi"/><rect x="622" y="58" width="48" height="42" rx="6" class="epi"/><rect x="674" y="58" width="48" height="42" rx="6" class="epi"/><rect x="726" y="58" width="48" height="42" rx="6" class="epi"/><rect x="778" y="58" width="48" height="42" rx="6" class="epi"/>
+      <circle cx="74" cy="79" r="6" class="nuc"/><circle cx="126" cy="79" r="6" class="nuc"/><circle cx="178" cy="79" r="6" class="nuc"/><circle cx="230" cy="79" r="6" class="nuc"/><circle cx="282" cy="79" r="6" class="nuc"/><circle cx="334" cy="79" r="6" class="nuc"/><circle cx="386" cy="79" r="6" class="nuc"/><circle cx="438" cy="79" r="6" class="nuc"/><circle cx="490" cy="79" r="6" class="nuc"/><circle cx="542" cy="79" r="6" class="nuc"/><circle cx="594" cy="79" r="6" class="nuc"/><circle cx="646" cy="79" r="6" class="nuc"/><circle cx="698" cy="79" r="6" class="nuc"/><circle cx="750" cy="79" r="6" class="nuc"/><circle cx="802" cy="79" r="6" class="nuc"/>
+      <text x="844" y="83" class="txt small left">epithelium</text>
+    </g>
+
+    <!-- 8 one mutated cell -->
+    <g data-step="8">
+      <rect x="414" y="58" width="48" height="42" rx="6" class="tumc"/><circle cx="438" cy="79" r="7" class="nuct"/>
+      <text x="438" y="52" class="lbl txt small bold">one mutated cell</text>
+    </g>
+
+    <!-- 9 clone grows, still above the membrane -->
+    <g data-step="9">
+      <rect x="362" y="58" width="48" height="42" rx="6" class="tumc"/><rect x="466" y="58" width="48" height="42" rx="6" class="tumc"/><rect x="310" y="58" width="48" height="42" rx="6" class="tumc"/><rect x="518" y="58" width="48" height="42" rx="6" class="tumc"/>
+      <circle cx="386" cy="79" r="7" class="nuct"/><circle cx="490" cy="79" r="7" class="nuct"/><circle cx="334" cy="79" r="7" class="nuct"/><circle cx="542" cy="79" r="7" class="nuct"/>
+      <circle cx="350" cy="44" r="12" class="tum"/><circle cx="378" cy="36" r="12" class="tum"/><circle cx="406" cy="44" r="12" class="tum"/><circle cx="434" cy="34" r="12" class="tum"/><circle cx="462" cy="44" r="12" class="tum"/><circle cx="490" cy="36" r="12" class="tum"/><circle cx="518" cy="44" r="12" class="tum"/>
+      <text x="560" y="44" class="lbl txt small bold left">a clone: the daughters pile up (still contained)</text>
+    </g>
+
+    <!-- 10 invasion through the membrane -->
+    <g data-step="10">
+      <rect x="330" y="100" width="220" height="8" class="ct"/>
+      <path d="M330,104 L550,104" class="bmbroken"/>
+      <circle cx="400" cy="124" r="12" class="tum"/><circle cx="428" cy="132" r="12" class="tum"/><circle cx="456" cy="122" r="12" class="tum"/><circle cx="484" cy="132" r="12" class="tum"/>
+      <circle cx="414" cy="156" r="11" class="tum"/><circle cx="442" cy="160" r="11" class="tum"/><circle cx="470" cy="154" r="11" class="tum"/>
+      <path d="M352,96 l8,-8 M352,88 l8,8 M528,96 l8,-8 M528,88 l8,8" class="cut"/>
+      <text x="560" y="128" class="lbl txt small bold left">proteases cut the membrane: invasion</text>
+    </g>
+
+    <!-- 11 stroma reacts: fibroblasts, matrix, immune cells, signals -->
+    <g data-step="11">
+      <ellipse cx="330" cy="190" rx="24" ry="7" class="fib" transform="rotate(-25 330 190)"/>
+      <ellipse cx="560" cy="190" rx="24" ry="7" class="fib" transform="rotate(25 560 190)"/>
+      <ellipse cx="300" cy="213" rx="24" ry="7" class="fib" transform="rotate(10 300 213)"/>
+      <ellipse cx="590" cy="225" rx="24" ry="7" class="fib" transform="rotate(-10 590 225)"/>
+      <path d="M276,154 l8,-8 M276,146 l8,8 M606,214 l8,-8 M606,206 l8,8" class="cut"/>
+      <circle cx="350" cy="150" r="9" class="imm"/><circle cx="520" cy="152" r="9" class="imm"/><circle cx="370" cy="290" r="9" class="imm"/><circle cx="560" cy="290" r="9" class="imm"/>
+      <path d="M380,166 L352,226" class="sigT" marker-end="url(#arTum2)"/>
+      <text x="200" y="166" class="lbl txt small left">signal proteins + proteases</text>
+      <text x="200" y="178" class="lbl txt small left muted">from the cancer cells</text>
+      <text x="640" y="200" class="lbl txt small left">more fibroblasts, more immune</text><text x="640" y="212" class="lbl txt small left">cells, matrix rebuilt: inflammation,</text><text x="640" y="224" class="lbl txt small left">as around a wound</text>
+    </g>
+
+    <!-- 12 angiogenesis -->
+    <g data-step="12">
+      <path d="M410,258 C408,232 418,200 428,170" class="ves"/><path d="M410,258 C408,232 418,200 428,170" class="vesin"/>
+      <path d="M480,256 C488,236 492,200 486,170" class="ves"/><path d="M480,256 C488,236 492,200 486,170" class="vesin"/>
+      <circle cx="416" cy="215" r="5" class="per"/>
+      <text x="640" y="200" class="lbl txt small left">angiogenesis: the tumor is short of oxygen</text><text x="640" y="212" class="lbl txt small left">(hypoxia) and calls in new vessels</text>
+    </g>
+
+    <!-- 13 stroma signals back, immune cells silenced -->
+    <g data-step="13">
+      <path d="M512,226 L498,172" class="sigF" marker-end="url(#arFib2)"/>
+      <text x="636" y="178" class="lbl txt small left">growth signals back from the stroma (two-way talk)</text>
+      <path d="M342,142 l16,16 M512,144 l16,16 M362,282 l16,16 M552,282 l16,16" class="silence"/>
+      <text x="60" y="300" class="lbl txt small left">immune cells present but switched off</text>
+      <text x="60" y="312" class="lbl txt small left muted">(immunosuppressive environment)</text>
+    </g>
+
+    <!-- 14 a cell enters the blood -->
+    <g data-step="14">
+      <circle cx="440" cy="252" r="7" class="tum"/>
+      <path d="M452,252 L540,252" class="path accent" marker-end="url(#arN2)"/>
+      <text x="60" y="236" class="lbl txt small bold left">one cell enters the blood: metastasis begins (section 2)</text>
+    </g>
+  </svg>
+
+</div>
+
+<script>
+var steps = [
+  { t: "1 · Start: a piece of organ wall",
+    en: "We take a small piece of the wall of an organ, for example the gut or the breast. Top = the surface of the organ, bottom = deeper tissue. Nothing is drawn yet.",
+    nl: "We nemen een stukje wand van een orgaan, bijvoorbeeld de darm of de borst. Boven = het oppervlak, onder = dieper weefsel. Er staat nog niets." },
+  { t: "2 · Connective tissue: the matrix",
+    en: "First the filling: connective tissue. It is mostly not cells but material between cells, the extracellular matrix: fibres of collagen (a rope-like protein) in a watery gel. This is the framework everything else hangs in.",
+    nl: "Eerst de vulling: bindweefsel. Dat is vooral geen cellen maar materiaal tussen de cellen, de extracellulaire matrix: vezels van collageen (een touwachtig eiwit) in een waterige gel. Dit is het raamwerk waar al de rest in hangt." },
+  { t: "3 · Fibroblasts: the cells that make the matrix",
+    en: "Scattered in the matrix lie fibroblasts, spindle-shaped cells that produce the collagen fibres and the gel, and repair them after damage. Few cells, lots of matrix: that is what connective tissue looks like.",
+    nl: "Verspreid in de matrix liggen fibroblasten, spoelvormige cellen die de collageenvezels en de gel aanmaken en herstellen na schade. Weinig cellen, veel matrix: zo ziet bindweefsel eruit." },
+  { t: "4 · A blood vessel with pericytes",
+    en: "Through the connective tissue runs a blood vessel: a tube made of flat endothelial cells, with pericytes (contractile cells) wrapped around it. It brings oxygen and food to every cell within about 0.1 mm.",
+    nl: "Door het bindweefsel loopt een bloedvat: een buis van platte endotheelcellen, met pericyten (samentrekbare cellen) eromheen. Het brengt zuurstof en voedsel tot bij elke cel binnen ongeveer 0,1 mm." },
+  { t: "5 · A few immune cells on patrol",
+    en: "White blood cells leave the vessel now and then and wander through the connective tissue, looking for microbes or abnormal cells. In healthy tissue there are only a few. This completes the stroma: matrix, fibroblasts, vessels, immune cells.",
+    nl: "Witte bloedcellen verlaten af en toe het vat en dwalen door het bindweefsel, op zoek naar microben of abnormale cellen. In gezond weefsel zijn er maar enkele. Hiermee is het stroma compleet: matrix, fibroblasten, vaten, immuuncellen." },
+  { t: "6 · The basement membrane",
+    en: "On top of the connective tissue lies a thin, tough sheet of matrix proteins: the basement membrane. It is the floor the epithelium stands on and the border between epithelium and stroma. Nothing crosses it easily.",
+    nl: "Bovenop het bindweefsel ligt een dun, taai vel van matrixeiwitten: het basaalmembraan. Het is de vloer waar het epitheel op staat en de grens tussen epitheel en stroma. Niets kruist het zomaar." },
+  { t: "7 · The epithelium: healthy tissue is complete",
+    en: "On the membrane stands the epithelium, a sheet of tightly packed cells that faces the outside world and divides often to renew itself. Epithelium on top, stroma below: this is what every lined organ looks like, and this is the 'before' picture.",
+    nl: "Op het membraan staat het epitheel, een laag dicht opeengepakte cellen die naar de buitenwereld kijkt en vaak deelt om zich te vernieuwen. Epitheel boven, stroma onder: zo ziet elk bekleed orgaan eruit, en dit is de 'voor'-foto." },
+  { t: "8 · One epithelium cell mutates",
+    en: "The many divisions of the epithelium give many chances for a DNA error. One cell gets a mutation that lets it divide when it should not. Nothing is visible yet; it is one cell among millions. Chapter 2.2: a tumor starts from a single cell.",
+    nl: "De vele delingen van het epitheel geven veel kansen op een DNA-fout. Eén cel krijgt een mutatie waardoor ze deelt wanneer het niet mag. Er is nog niets te zien; het is één cel op miljoenen. Hoofdstuk 2.2: een tumor begint uit één cel." },
+  { t: "9 · A clone grows, still contained",
+    en: "The mutated cell's daughters pile up and collect more mutations (tumor progression). As long as they stay above the basement membrane the growth is a carcinoma in situ, 'in place': not yet dangerous, because it cannot reach vessels. The stroma has not noticed much.",
+    nl: "De dochters van de gemuteerde cel stapelen zich op en verzamelen meer mutaties (tumorprogressie). Zolang ze boven het basaalmembraan blijven is het een carcinoma in situ, 'ter plaatse': nog niet gevaarlijk, want ze bereiken geen vaten. Het stroma heeft nog weinig gemerkt." },
+  { t: "10 · Invasion: through the membrane",
+    en: "The cancer cells start secreting proteases, enzymes that cut proteins. They cut a hole in the basement membrane and move into the stroma. From this moment the growth is a real carcinoma, malignant: it invades.",
+    nl: "De kankercellen beginnen proteasen af te scheiden, enzymen die eiwitten knippen. Ze knippen een gat in het basaalmembraan en dringen het stroma binnen. Vanaf nu is het een echt carcinoom, kwaadaardig: het invadeert." },
+  { t: "11 · The stroma reacts, like around a wound",
+    en: "The cancer cells send signal proteins and more proteases into the stroma. Fibroblasts multiply and become 'cancer-associated', the matrix is cut and rebuilt, immune cells stream in. The body reads this as damage and starts its wound-healing program: an inflammation. Only the red cells are mutated; all the others are normal cells that behave differently.",
+    nl: "De kankercellen sturen signaaleiwitten en nog meer proteasen het stroma in. Fibroblasten vermenigvuldigen zich en worden 'kanker-geassocieerd', de matrix wordt geknipt en herbouwd, immuuncellen stromen toe. Het lichaam leest dit als schade en start zijn wondgenezingsprogramma: een ontsteking. Alleen de rode cellen zijn gemuteerd; al de andere zijn normale cellen die zich anders gedragen." },
+  { t: "12 · Angiogenesis: new vessels",
+    en: "The tumor grows beyond 0.1 mm from the nearest vessel, so its inner cells run short of oxygen (hypoxia). Hypoxic cells send out a signal (VEGF) and the vessel grows new branches toward the tumor. Now the tumor is fed and can grow bigger. This is what the exam means by 'what angiogenesis does for a tumor'.",
+    nl: "De tumor groeit verder dan 0,1 mm van het dichtstbijzijnde vat, dus zijn binnenste cellen komen zuurstof tekort (hypoxie). Hypoxische cellen sturen een signaal uit (VEGF) en het vat groeit nieuwe takken naar de tumor toe. Nu wordt de tumor gevoed en kan hij groter worden. Dit bedoelt het examen met 'wat angiogenese voor een tumor doet'." },
+  { t: "13 · Two-way talk, and the immune cells are switched off",
+    en: "The activated stroma sends growth signals back; tumor and stroma now evolve together and the tumor becomes dependent on its stroma. At the same time the tumor makes an immunosuppressive environment: the immune cells are there, but their attack program is blocked, while their wound-healing program keeps running. This is the full tumor microenvironment.",
+    nl: "Het geactiveerde stroma stuurt groeisignalen terug; tumor en stroma evolueren nu samen en de tumor wordt afhankelijk van zijn stroma. Tegelijk maakt de tumor een immuunonderdrukkende omgeving: de immuuncellen zijn er wel, maar hun aanvalsprogramma is geblokkeerd, terwijl hun wondgenezingsprogramma blijft lopen. Dit is de volledige tumor-micro-omgeving." },
+  { t: "14 · One cell enters the blood",
+    en: "The new vessels are leaky and close by. A cancer cell squeezes into one and is carried away by the blood. That is the start of metastasis, the subject of section 2 of this page. Almost all such cells die on the way; the rare one that survives founds a colony elsewhere.",
+    nl: "De nieuwe vaten zijn lek en dichtbij. Een kankercel wringt zich erin en wordt meegevoerd door het bloed. Dat is het begin van metastase, het onderwerp van deel 2 van deze pagina. Bijna al die cellen sterven onderweg; de zeldzame die overleeft sticht elders een kolonie." }
+];
+Stepper.init('stroma-stepper', steps, 'stroma');
+</script>
 
 <figure>
   <svg class="molsvg" viewBox="0 0 700 300" width="700" height="300" xmlns="http://www.w3.org/2000/svg">

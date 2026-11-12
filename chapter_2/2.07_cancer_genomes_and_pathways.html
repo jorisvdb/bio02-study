@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2.7 Cancer genomes and the three pathways</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -17,6 +19,12 @@
   .box3.cycle { stroke: var(--c-N); stroke-width: 2.5; }
   .box3.prolif { stroke: var(--c-Cl); stroke-width: 2.5; }
   .box3.surv { stroke: var(--c-O); stroke-width: 2.5; }
+  .mem { stroke: var(--muted); stroke-width: 1.5; fill: var(--key-bg); }
+  .gf { fill: var(--c-S); }
+  .rec { fill: var(--c-N); }
+  .ph { fill: var(--c-O); }
+  .pbox { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.4; }
+  .rbbar { fill: var(--c-Cl); }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -212,6 +220,157 @@ relay signals to the core machinery.</p>
   </svg>
   <figcaption>Syllabus Figure 2-25: the three major pathways that contribute to tumor formation, in the syllabus's short names (cell cycle, cell proliferation, cell survival). The chapter has already treated Rb (page 2.6) and treats p53 next (page 2.8).</figcaption>
 </figure>
+
+<h3>Build it up yourself: the growth-signal pathway, and where cancer breaks it</h3>
+<p>Press <strong>Next</strong> to add one link of the chain at a time. Steps 1 to 8 build the normal pathway from a growth factor outside the cell to DNA copying inside; steps 9 to 12 show where oncogenes and tumor suppressors hit, and why "three pathways" is the lesson of this section.</p>
+
+<div class="stepper" id="path-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of the growth signal pathway">
+    <defs>
+      <marker id="arPw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+      <marker id="arPwT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+
+    <!-- 1 the cell -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="20" y="60" width="840" height="18" class="mem"/>
+      <text x="30" y="44" class="txt small muted left">outside the cell</text>
+      <text x="30" y="96" class="txt small muted left">inside the cell</text>
+      <text x="470" y="44" class="lbl txt small">question: how does the message "grow and divide" travel from outside the cell to the machinery that copies the DNA?</text>
+    </g>
+
+    <!-- 2 growth factor -->
+    <g data-step="2">
+      <circle cx="120" cy="34" r="9" class="gf"/>
+      <text x="140" y="38" class="lbl txt small left">a growth factor (for example EGF): the message, floating outside</text>
+    </g>
+
+    <!-- 3 receptor tyrosine kinase -->
+    <g data-step="3">
+      <rect x="113" y="42" width="14" height="18" rx="4" class="rec"/><rect x="113" y="78" width="14" height="42" rx="4" class="rec"/>
+      <circle cx="135" cy="92" r="5" class="ph"/><circle cx="135" cy="106" r="5" class="ph"/>
+      <text x="120" y="134" class="txt small">RTK</text>
+      <text x="150" y="96" class="lbl txt small left">RTK = receptor tyrosine kinase: catches the growth factor,</text>
+      <text x="150" y="108" class="lbl txt small left">then adds phosphate groups (red P) on its own inside part</text>
+    </g>
+
+    <!-- 4 Ras -->
+    <g data-step="4">
+      <path d="M120,122 L150,148" class="path accent" marker-end="url(#arPw)"/>
+      <rect x="150" y="150" width="100" height="40" rx="8" class="pbox"/><text x="200" y="169" class="txt small bold">Ras</text><text x="200" y="183" class="txt small muted">the switch</text>
+      <text x="200" y="214" class="lbl txt small">a small switch protein just under the membrane; the receptor's phosphates flip it on</text>
+    </g>
+
+    <!-- 5 PI 3-kinase -->
+    <g data-step="5">
+      <path d="M252,170 L288,170" class="path accent" marker-end="url(#arPw)"/>
+      <rect x="290" y="150" width="110" height="40" rx="8" class="pbox"/><text x="345" y="169" class="txt small bold">PI 3-kinase</text><text x="345" y="183" class="txt small muted">drives growth</text>
+      <text x="345" y="214" class="lbl txt small">the next enzyme in the chain, switched on by Ras; it drives cell growth</text>
+    </g>
+
+    <!-- 6 chain of kinases -->
+    <g data-step="6">
+      <path d="M402,170 L438,170" class="path accent" marker-end="url(#arPw)"/>
+      <rect x="440" y="150" width="130" height="40" rx="8" class="pbox"/><text x="505" y="169" class="txt small bold">more kinases</text><text x="505" y="183" class="txt small muted">each activates the next</text>
+      <text x="505" y="214" class="lbl txt small">a signaling pathway: a chain of proteins, each adding a phosphate to the next one</text>
+    </g>
+
+    <!-- 7 Cdk complexes -->
+    <g data-step="7">
+      <path d="M572,170 L598,170" class="path accent" marker-end="url(#arPw)"/>
+      <rect x="600" y="150" width="100" height="40" rx="8" class="pbox"/><text x="650" y="169" class="txt small bold">Cdk complexes</text><text x="650" y="183" class="txt small muted">cell-cycle engine</text>
+      <text x="650" y="214" class="lbl txt small">cyclin-dependent kinases (BIO01 ch 7): the engine of the cell cycle, now running</text>
+    </g>
+
+    <!-- 8 Rb brake released, S phase -->
+    <g data-step="8">
+      <path d="M702,170 L756,170" class="path accent" marker-end="url(#arPw)"/>
+      <rect x="733" y="96" width="12" height="50" rx="4" class="rbbar"/>
+      <circle cx="751" cy="106" r="5" class="ph"/>
+      <text x="739" y="88" class="txt small bold">Rb, lifted</text>
+      <rect x="760" y="150" width="90" height="40" rx="8" class="pbox"/><text x="805" y="169" class="txt small bold">S phase</text><text x="805" y="183" class="txt small muted">copy DNA, divide</text>
+            <text x="739" y="214" class="lbl txt small">the Cdks phosphorylate Rb, the brake swings open</text>
+      <text x="739" y="226" class="lbl txt small">and the cell copies its DNA (page 2.6)</text>
+    </g>
+
+    <!-- 9 where oncogenes hit -->
+    <g data-step="9">
+      <text x="120" y="250" class="txt small" style="fill:var(--c-O);font-weight:700">gain</text>
+      <text x="200" y="250" class="txt small" style="fill:var(--c-O);font-weight:700">gain</text>
+      <text x="345" y="250" class="txt small" style="fill:var(--c-O);font-weight:700">gain</text>
+      <path d="M120,240 L120,142 M200,240 L200,194 M345,240 L345,194" class="sigT" style="stroke-dasharray:4 3"/>
+      <text x="60" y="276" class="lbl txt small left">RTK, Ras, PI 3-kinase are proto-oncogenes: a gain-of-function mutation makes the link</text>
+      <text x="60" y="288" class="lbl txt small left">fire on its own, and the whole chain downstream believes a growth factor is there</text>
+    </g>
+
+    <!-- 10 where Rb (tumor suppressor) hits -->
+    <g data-step="10">
+      <text x="739" y="250" class="txt small" style="fill:var(--c-N);font-weight:700">loss</text>
+      <path d="M739,240 L739,232" class="path accent" style="stroke-dasharray:4 3"/>
+      <text x="520" y="276" class="lbl txt small left">Rb is a tumor suppressor: losing both copies removes the brake;</text>
+      <text x="520" y="288" class="lbl txt small left">the gate stands open even when the chain is silent</text>
+    </g>
+
+    <!-- 11 the p53 watchdog -->
+    <g data-step="11">
+      <rect x="440" y="246" width="110" height="34" rx="8" class="pbox"/><text x="495" y="260" class="txt small bold">stress, DNA damage</text><text x="495" y="273" class="txt small muted">sensed by p53</text>
+      <path d="M550,263 L588,263" class="path accent" marker-end="url(#arPw)"/>
+      <rect x="590" y="246" width="100" height="34" rx="8" class="pbox" style="stroke:var(--c-O)"/><text x="640" y="260" class="txt small bold">p53 pathway</text><text x="640" y="273" class="txt small muted">stop or die</text>
+      <path d="M650,244 L650,194" class="sigT" style="stroke-dasharray:4 3"/>
+      <text x="60" y="306" class="lbl txt small left">a third control stands beside the chain: when the DNA is damaged or the cell is stressed, p53 blocks the Cdks (via p21) or orders apoptosis (page 2.8)</text>
+    </g>
+
+    <!-- 12 three pathways -->
+    <g data-step="12">
+      <text x="60" y="300" class="lbl txt small left bold">three pathways, broken in almost every cancer: Rb (cell cycle) · RTK / Ras / PI 3-kinase (proliferation) · p53 (survival)</text>
+      <text x="60" y="313" class="lbl txt small left">glioblastoma: 74 % of tumors hit in all three; ovarian cancer: 67 %, 45 %, more than 96 %; one mutated gene per pathway is enough</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+  { t: "1 · The question",
+    en: "One cell: the membrane is the wall, the outside is above it. Somewhere inside sits the machinery that copies the DNA and divides the cell. The question of this section: how does the message 'grow and divide' get from the outside of the cell to that machinery? The answer is a chain of proteins, a signaling pathway.",
+    nl: "Eén cel: het membraan is de muur, de buitenkant ligt erboven. Ergens binnenin zit de machinerie die het DNA kopieert en de cel deelt. De vraag van dit deel: hoe komt de boodschap 'groei en deel' van buiten de cel tot bij die machinerie? Het antwoord is een keten van eiwitten, een signaalroute." },
+  { t: "2 · A growth factor outside",
+    en: "Other cells release a growth factor, a small protein such as EGF (page 2.5). It floats outside the cell. It is the message, but it cannot enter the cell.",
+    nl: "Andere cellen laten een groeifactor los, een klein eiwit zoals EGF (pagina 2.5). Het drijft buiten de cel. Het is de boodschap, maar het kan de cel niet in." },
+  { t: "3 · RTK: the receptor catches it",
+    en: "A receptor tyrosine kinase, RTK, sits in the membrane. Receptor: it catches the growth factor on its outside part. Kinase: once the factor is bound, its inside part adds phosphate groups (red P) to the amino acid tyrosine on itself. Read P as 'switched on'. The EGF receptor of page 2.5 is an RTK.",
+    nl: "Een receptor-tyrosinekinase, RTK, zit in het membraan. Receptor: het vangt de groeifactor met zijn buitenste deel. Kinase: zodra de factor gebonden is, hangt het binnenste deel fosfaatgroepen (rode P) aan het aminozuur tyrosine op zichzelf. Lees P als 'aangezet'. De EGF-receptor van pagina 2.5 is een RTK." },
+  { t: "4 · Ras: the switch",
+    en: "Just under the membrane lies Ras, a small switch protein. The phosphates on the receptor attract helper proteins that flip Ras to 'on'. Ras is the famous proto-oncogene of this chapter; humans have three Ras genes, K-Ras among them (page 2.8).",
+    nl: "Vlak onder het membraan ligt Ras, een klein schakelaar-eiwit. De fosfaten op de receptor trekken hulpeiwitten aan die Ras op 'aan' zetten. Ras is het beroemde proto-oncogen van dit hoofdstuk; mensen hebben drie Ras-genen, waaronder K-Ras (pagina 2.8)." },
+  { t: "5 · PI 3-kinase",
+    en: "Ras switches on the next enzyme, PI 3-kinase (phosphoinositide 3-kinase). It drives cell growth: the cell takes up more food and makes more protein. The gene PIK3CA codes for one of its subunits and is itself often mutated in cancer.",
+    nl: "Ras zet het volgende enzym aan, PI 3-kinase (fosfo-inositide 3-kinase). Het drijft de celgroei: de cel neemt meer voedsel op en maakt meer eiwit. Het gen PIK3CA codeert voor een van zijn onderdelen en is zelf vaak gemuteerd bij kanker." },
+  { t: "6 · A chain of kinases",
+    en: "From here the message is passed along a chain: each kinase adds a phosphate to the next protein and so switches it on. That is what the syllabus calls a signaling pathway. The exact names do not matter for the exam; the principle does: one link activates the next.",
+    nl: "Van hieruit wordt de boodschap langs een keten doorgegeven: elk kinase hangt een fosfaat aan het volgende eiwit en zet het zo aan. Dat noemt de syllabus een signaalroute. De exacte namen doen er niet toe voor het examen; het principe wel: elke schakel activeert de volgende." },
+  { t: "7 · The Cdk complexes start the engine",
+    en: "The chain ends at the cyclin-dependent kinase complexes, Cdks, the engine of the cell cycle from BIO01 chapter 7. Switched on, they push the cell forward through G1.",
+    nl: "De keten eindigt bij de cycline-afhankelijke kinasecomplexen, Cdk's, de motor van de celcyclus uit BIO01 hoofdstuk 7. Aangezet duwen ze de cel vooruit door G1." },
+  { t: "8 · Rb lets go: S phase",
+    en: "The Cdks phosphorylate the Rb protein, the brake of page 2.6. With phosphates on it, Rb swings open and the cell enters S phase: it copies its DNA and divides. When the growth factor is gone the chain falls silent, the phosphates are removed and Rb closes the gate again. This is the whole normal pathway.",
+    nl: "De Cdk's fosforyleren het Rb-eiwit, de rem van pagina 2.6. Met fosfaten erop zwaait Rb open en de cel gaat de S-fase in: ze kopieert haar DNA en deelt. Als de groeifactor weg is valt de keten stil, de fosfaten worden weggehaald en Rb sluit de poort weer. Dit is de hele normale route." },
+  { t: "9 · Where oncogenes hit: gain of function",
+    en: "RTK, Ras and PI 3-kinase are proto-oncogenes. A gain-of-function mutation in any one of them (page 2.5: hyperactive protein or too much of it) makes that link fire on its own. Everything downstream cannot tell the difference and behaves as if a growth factor were present all the time. One mutated copy is enough: dominant.",
+    nl: "RTK, Ras en PI 3-kinase zijn proto-oncogenen. Een gain-of-function-mutatie in een ervan (pagina 2.5: hyperactief eiwit of te veel ervan) laat die schakel uit zichzelf vuren. Alles stroomafwaarts ziet het verschil niet en gedraagt zich alsof er voortdurend een groeifactor is. Eén gemuteerde kopie volstaat: dominant." },
+  { t: "10 · Where tumor suppressors hit: loss of function",
+    en: "Rb is a tumor suppressor. When both copies are lost (page 2.6) there is no brake at all: the gate stands open even when the chain is silent, and the cell copies its DNA without any signal. Both kinds of mutation, gain upstream or loss at the gate, have the same effect: division without permission.",
+    nl: "Rb is een tumorsuppressor. Als beide kopieën verloren zijn (pagina 2.6) is er helemaal geen rem: de poort staat open ook als de keten stil is, en de cel kopieert haar DNA zonder enig signaal. Beide soorten mutatie, winst stroomopwaarts of verlies aan de poort, hebben hetzelfde effect: deling zonder toestemming." },
+  { t: "11 · The watchdog: the p53 pathway",
+    en: "A third control stands beside the chain. When the DNA is damaged or the cell is under stress, p53 (page 2.8) blocks the Cdks through the protein p21, or orders the cell to die by apoptosis. A cancer cell that fires its growth chain all the time is a stressed cell, so it must also break this watchdog to survive.",
+    nl: "Een derde controle staat naast de keten. Als het DNA beschadigd is of de cel onder stress staat, blokkeert p53 (pagina 2.8) de Cdk's via het eiwit p21, of beveelt het de cel te sterven door apoptose. Een kankercel die haar groeiketen voortdurend laat vuren is een gestreste cel, dus ze moet ook deze waakhond breken om te overleven." },
+  { t: "12 · The lesson: three pathways, one hit each",
+    en: "Sorted into pathways, the mutations of 91 glioblastomas fell into three groups: the Rb pathway (cell cycle), the RTK / Ras / PI 3-kinase pathway (proliferation) and the p53 pathway (survival). 74 % of the tumors had all three broken, and almost always by only one mutated gene per pathway: once a control is disabled, a second hit in the same pathway gives no advantage. Ovarian cancer shows the same pattern (67 %, 45 %, more than 96 %). Look at pathways, not single genes.",
+    nl: "Gesorteerd in routes vielen de mutaties van 91 glioblastomen in drie groepen: de Rb-route (celcyclus), de RTK / Ras / PI 3-kinase-route (proliferatie) en de p53-route (overleving). 74 % van de tumoren had alle drie gebroken, en bijna altijd door maar één gemuteerd gen per route: als een controle uitgeschakeld is, geeft een tweede hit in dezelfde route geen voordeel. Eierstokkanker toont hetzelfde patroon (67 %, 45 %, meer dan 96 %). Kijk naar routes, niet naar losse genen." }
+];
+Stepper.init('path-stepper', steps, 'path');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
 <p>The growth pathway explains an old observation. Tumor cells import glucose up to 100 times faster than their neighbours and burn it wastefully (the "Warburg effect", noticed by

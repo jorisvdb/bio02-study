@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.6 RNAi, CRISPR and knockout mice</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -21,6 +23,19 @@
   .mouse.black { fill: var(--fg); }
   .mouse.white { fill: var(--bg); }
   .cut { stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 3 3; }
+  .target { fill: var(--c-S); opacity: .25; stroke: none; }
+  .pairline { stroke: var(--c-N); stroke-width: 1.5; stroke-dasharray: 2 2; }
+  .gap { fill: var(--panel); stroke: none; }
+  .cutx { stroke: var(--c-O); stroke-width: 2; fill: none; }
+  .dish { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.5; }
+  .escell { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; }
+  .escell.dead { stroke: var(--c-O); opacity: .4; }
+  .blast { fill: none; stroke: var(--accent); stroke-width: 2; }
+  .needle { stroke: var(--fg); stroke-width: 2; fill: none; }
+  .mouse.patch { fill: var(--fg); stroke: none; }
+  .ribo { fill: var(--c-S); opacity: .7; }
+  .protdot { fill: var(--c-Cl); }
+  .cutm { stroke: var(--c-O); stroke-width: 2; fill: none; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -108,6 +123,127 @@ gebruikt dit om breuken te herstellen met de intacte kopie als model. <strong>He
   </svg>
   <figcaption>RNA interference (syllabus Figure 4-16). Purple = RNA, orange = proteins, dotted blue = base pairing between the siRNA strand and the mRNA. The DNA of the gene is never touched.</figcaption>
 </figure>
+
+<h3>Build it up yourself: RNA interference, from a double-stranded RNA to a silenced gene</h3>
+<p>Press <strong>Next</strong> to watch the cell switch a gene off without touching its DNA.</p>
+
+<div class="stepper" id="rnai-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of RNA interference">
+    <defs>
+      <marker id="arRn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 a gene being expressed -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <path d="M60,60 L300,60" class="dna"/>
+      <text x="180" y="48" class="txt small muted">the gene (DNA) in the nucleus</text>
+      <path d="M180,66 L180,88" class="path accent" marker-end="url(#arRn)"/>
+      <path d="M80,100 L280,100" class="rna"/>
+      <text x="300" y="104" class="txt small left muted">its mRNA</text>
+      <path d="M160,100 L220,100" class="ribo" style="stroke:var(--c-S);stroke-width:12;stroke-linecap:round;opacity:.6"/>
+      <g class="protdot"><circle cx="372" cy="100" r="4"/><circle cx="384" cy="100" r="4"/><circle cx="396" cy="100" r="4"/></g>
+      <text x="384" y="118" class="txt small muted">protein</text>
+      <text x="440" y="310" class="lbl txt small">begin state: a gene is transcribed into mRNA, ribosomes (yellow) translate the mRNA, protein is made. Goal of the cell (or the scientist): stop this gene</text>
+    </g>
+
+    <!-- 2 dsRNA appears -->
+    <g data-step="2" data-until="3">
+      <path d="M500,70 L700,70 M500,80 L700,80" class="rna"/>
+    </g>
+    <g data-step="2">
+      <text x="600" y="58" class="txt small">double-stranded RNA (dsRNA) with the gene's sequence</text>
+      <text x="600" y="98" class="lbl txt small muted">from a virus, or made by the cell, or ordered by a scientist</text>
+      <text x="440" y="310" class="lbl txt small">a double-stranded RNA appears whose sequence matches this mRNA; dsRNA is rare in a cell and normally a sign of a virus</text>
+    </g>
+
+    <!-- 3 Dicer cuts -->
+    <g data-step="3">
+      <path d="M500,70 L540,70 M500,80 L540,80 M552,70 L592,70 M552,80 L592,80 M604,70 L644,70 M604,80 L644,80 M656,70 L696,70 M656,80 L696,80" class="rna thin"/>
+      <path d="M544,62 l6,6 M544,68 l6,-6 M596,62 l6,6 M596,68 l6,-6 M648,62 l6,6 M648,68 l6,-6" class="cutm"/>
+      <text x="735" y="78" class="txt small left">Dicer cuts:</text>
+      <text x="735" y="90" class="txt small left muted">siRNAs, ≈ 21 nucleotides</text>
+      <text x="440" y="310" class="lbl txt small">the enzyme Dicer ("to dice" = cut into small cubes) chops the long dsRNA into small interfering RNAs (siRNAs) of about 21 nucleotides, still double-stranded</text>
+    </g>
+
+    <!-- 4 Argonaute takes one siRNA -->
+    <g data-step="4">
+      <ellipse cx="520" cy="170" rx="40" ry="24" class="prot"/>
+      <text x="520" y="150" class="txt small">Argonaute</text>
+      <path d="M500,166 L540,166 M500,176 L540,176" class="rna thin"/>
+      <path d="M572,88 L548,148" class="path accent" marker-end="url(#arRn)"/>
+      <text x="440" y="310" class="lbl txt small">one siRNA attaches to a protein of the Argonaute family: a protein that can hold an RNA and cut another RNA</text>
+    </g>
+
+    <!-- 5 one strand removed -->
+    <g data-step="5">
+      <path d="M500,176 L540,176" class="rna thin" style="stroke:var(--panel);stroke-width:5"/>
+      <path d="M548,180 L600,200" class="path accent" marker-end="url(#arRn)"/>
+      <text x="625" y="206" class="txt small left muted">one strand thrown away</text>
+      <text x="440" y="310" class="lbl txt small">one of the two strands is removed; the other stays in Argonaute with its letters free to pair</text>
+    </g>
+
+    <!-- 6 pairing with the mRNA -->
+    <g data-step="6">
+      <path d="M482,188 L248,226" class="path accent" marker-end="url(#arRn)"/>
+      <ellipse cx="200" cy="232" rx="40" ry="24" class="prot"/>
+      <path d="M80,254 L330,254" class="rna"/>
+      <path d="M180,246 L220,246" class="rna thin"/>
+      <path d="M184,250 l0,4 M192,250 l0,4 M200,250 l0,4 M208,250 l0,4 M216,250 l0,4" class="pairline"/>
+      <text x="200" y="210" class="txt small">Argonaute on the mRNA</text>
+      <text x="440" y="310" class="lbl txt small">the siRNA strand searches the cell's mRNAs and pairs with the one that matches (A with U, G with C): it brings Argonaute to the gene's mRNA</text>
+    </g>
+
+    <!-- 7 mRNA cut or blocked -->
+    <g data-step="7">
+      <path d="M236,246 l8,8 M236,254 l8,-8" class="cutm"/>
+      <text x="200" y="282" class="txt small" style="fill:var(--c-O)">mRNA cut up, or translation blocked</text>
+      <path d="M160,100 L220,100" style="stroke:var(--panel);stroke-width:14;stroke-linecap:round"/>
+      <path d="M366,92 l16,16 M366,108 l16,-16" class="cutm"/>
+      <text x="440" y="310" class="lbl txt small">Argonaute destroys the mRNA or blocks it, so no protein is made from it: the gene is silenced</text>
+    </g>
+
+    <!-- 8 result -->
+    <g data-step="8">
+      <text x="640" y="250" class="txt small bold">to remember</text>
+      <text x="640" y="266" class="txt small">the DNA is untouched, the gene is still transcribed</text>
+      <text x="640" y="280" class="txt small">only its mRNA is destroyed: knock-down, not knockout</text>
+      <text x="640" y="294" class="txt small muted">synthetic siRNAs skip Dicer: already 21 nucleotides</text>
+      <text x="440" y="310" class="lbl txt small">as a tool: order synthetic siRNAs with the gene's sequence, put them into cells, less protein is made: a knock-down, partial and temporary, with the DNA unchanged</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: a gene that is switched on",
+      en: "A gene in the nucleus is transcribed into mRNA; in the cytoplasm ribosomes (yellow) read the mRNA and make the protein (green). This is normal expression. The goal, for the cell as a defence or for a scientist as a tool, is to stop this gene without touching its DNA.",
+      nl: "Een gen in de kern wordt afgeschreven tot mRNA; in het cytoplasma lezen ribosomen (geel) het mRNA en maken het eiwit (groen). Dit is normale expressie. Het doel, voor de cel als verdediging of voor een onderzoeker als werktuig, is dit gen stoppen zonder aan het DNA te komen." },
+    { t: "2 · A double-stranded RNA appears",
+      en: "Somewhere in the cell a double-stranded RNA (dsRNA) appears: two RNA strands paired with each other, like DNA. Its sequence matches this gene's mRNA. dsRNA is rare in a healthy cell and usually means a virus is replicating, which is why cells treat it as an alarm. A scientist can also put it in on purpose.",
+      nl: "Ergens in de cel verschijnt een dubbelstrengs RNA (dsRNA): twee RNA-strengen die met elkaar gepaard zijn, zoals DNA. Zijn sequentie komt overeen met het mRNA van dit gen. dsRNA is zeldzaam in een gezonde cel en wijst meestal op een virus dat zich vermenigvuldigt, daarom zien cellen het als een alarm. Een onderzoeker kan het ook met opzet inbrengen." },
+    { t: "3 · Dicer chops it into siRNAs",
+      en: "The enzyme Dicer, a nuclease (an enzyme that cuts nucleic acids), cuts the long dsRNA into pieces of about 21 nucleotides, still double-stranded: the small interfering RNAs, siRNAs. 'To dice' means to cut into small cubes.",
+      nl: "Het enzym Dicer, een nuclease (een enzym dat nucleïnezuren knipt), knipt het lange dsRNA in stukjes van ongeveer 21 nucleotiden, nog dubbelstrengs: de small interfering RNA's, siRNA's. 'To dice' betekent in blokjes snijden." },
+    { t: "4 · Argonaute picks up an siRNA",
+      en: "An siRNA attaches to a protein of the Argonaute family (named after a sea animal). Argonaute is a protein that can hold one RNA and cut another one.",
+      nl: "Een siRNA hecht zich aan een eiwit van de Argonaute-familie (genoemd naar een zeedier). Argonaute is een eiwit dat één RNA kan vasthouden en een ander kan knippen." },
+    { t: "5 · One strand is thrown away",
+      en: "Of the two strands of the siRNA one is removed. The remaining strand stays in Argonaute, and its letters are now free to pair with another RNA.",
+      nl: "Van de twee strengen van het siRNA wordt er één verwijderd. De overblijvende streng blijft in Argonaute, en haar letters zijn nu vrij om met een ander RNA te paren." },
+    { t: "6 · The siRNA strand finds the matching mRNA",
+      en: "Argonaute with its single strand meets the cell's mRNAs. Only the mRNA of our gene has the complementary sequence; the siRNA strand pairs with it (A with U, G with C) and so parks Argonaute exactly on that mRNA. This is the same base-pairing that miRNAs use (BIO01 chapter 6).",
+      nl: "Argonaute met zijn enkele streng komt de mRNA's van de cel tegen. Alleen het mRNA van ons gen heeft de complementaire sequentie; de siRNA-streng paart ermee (A met U, G met C) en zet Argonaute zo precies op dat mRNA. Dit is dezelfde basenparing die miRNA's gebruiken (BIO01 hoofdstuk 6)." },
+    { t: "7 · The mRNA is destroyed or blocked",
+      en: "Argonaute now either cuts the mRNA to pieces or blocks it so ribosomes cannot read it. Either way no protein is made from it: the gene is silenced. The gene is still in the DNA and is still transcribed, but its mRNA never becomes protein.",
+      nl: "Argonaute knipt het mRNA nu in stukken of blokkeert het zodat ribosomen het niet kunnen lezen. Hoe dan ook wordt er geen eiwit meer van gemaakt: het gen is gesilenced. Het gen zit nog in het DNA en wordt nog afgeschreven, maar zijn mRNA wordt nooit eiwit." },
+    { t: "8 · RNAi as a tool: a knock-down",
+      en: "A scientist orders synthetic siRNAs with the sequence of a chosen gene, already 21 nucleotides long so Dicer is not needed, and puts them into cells. They load into Argonaute and the gene's mRNA is destroyed. Expression goes down, not necessarily to zero, and only while the siRNAs last: a knock-down, not a knockout. The DNA is unchanged.",
+      nl: "Een onderzoeker bestelt synthetische siRNA's met de sequentie van een gekozen gen, al 21 nucleotiden lang zodat Dicer niet nodig is, en brengt ze in cellen. Ze laden in Argonaute en het mRNA van het gen wordt afgebroken. De expressie daalt, niet per se tot nul, en alleen zolang de siRNA's er zijn: een knock-down, geen knock-out. Het DNA is onveranderd." }
+  ];
+  Stepper.init('rnai-stepper', steps, 'rnai');
+})();
+</script>
 
 <h3>RNAi as a tool: knocking a gene down (4.5.2)</h3>
 <p>Instead of disrupting a gene in the DNA, a scientist can use this pathway to destroy a chosen mRNA. You order <strong>synthetic siRNAs</strong>: short double-stranded RNAs
@@ -205,6 +341,176 @@ plant, animal, human) whose DNA you want to change at one chosen place. Goal: ed
   <figcaption>CRISPR-Cas9 (syllabus Figure 4-19). Blue = genomic DNA, purple = guide RNA, green = a supplied repair template, red = a wrong joint or a misplaced piece. The scientist only designs the guide (and the template); the cutting and the repair are done by Cas9 and the cell.</figcaption>
 </figure>
 
+<h3>Build it up yourself: CRISPR-Cas9, from a designed guide to an edited gene</h3>
+<p>Press <strong>Next</strong> to follow the scissors with a GPS: how the guide finds the target, how Cas9 cuts, and how the cell's own repair makes the change.</p>
+
+<div class="stepper" id="crispr-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of CRISPR-Cas9 editing">
+    <defs>
+      <marker id="arCr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 the genome -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <path d="M60,150 L820,150" class="dna"/>
+      <path d="M60,162 L820,162" class="dna"/>
+      <rect x="400" y="142" width="100" height="28" rx="3" class="target"/>
+      <text x="450" y="188" class="lbl txt small muted">the target: one chosen place in one gene</text>
+      <text x="60" y="138" class="txt small left muted">genomic DNA of a eukaryotic cell (both strands)</text>
+      <text x="440" y="310" class="lbl txt small">begin state: the DNA of a plant, animal or human cell, with one place in one gene that we want to change</text>
+    </g>
+
+    <!-- 2 the guide RNA -->
+    <g data-step="2" data-until="3">
+      <path d="M80,70 L170,70" class="rna"/>
+    </g>
+    <g data-step="2">
+      <text x="125" y="56" class="txt small">guide RNA</text>
+      <text x="125" y="92" class="txt small muted">about 20 letters that match</text>
+      <text x="125" y="104" class="txt small muted">the target, designed by the scientist</text>
+      <text x="440" y="310" class="lbl txt small">the scientist designs a guide RNA: a short RNA whose letters are complementary to the chosen DNA sequence. This is the GPS</text>
+    </g>
+
+    <!-- 3 Cas9 loads the guide -->
+    <g data-step="3" data-until="5">
+      <ellipse cx="260" cy="78" rx="46" ry="30" class="prot cas"/>
+      <path d="M225,78 L300,78" class="rna"/>
+      <text x="260" y="46" class="txt small">Cas9</text>
+    </g>
+    <g data-step="3">
+      <path d="M176,70 L208,76" class="path accent" marker-end="url(#arCr)"/>
+      <text x="440" y="310" class="lbl txt small">Cas9, a nuclease (an enzyme that cuts DNA) from bacteria, takes the guide RNA inside: the scissors now carry the GPS</text>
+    </g>
+
+    <!-- 4 deliver into the cell -->
+    <g data-step="4">
+      <path d="M300,96 L380,136" class="path accent" marker-end="url(#arCr)"/>
+      <text x="440" y="310" class="lbl txt small">guide and Cas9 (or the genes for them) are brought into the cell and reach the DNA in the nucleus</text>
+    </g>
+
+    <!-- 5 pairing at the target -->
+    <g data-step="5" data-until="8">
+      <ellipse cx="450" cy="124" rx="56" ry="34" class="prot cas"/>
+      <path d="M405,150 L495,150" class="rna"/>
+      <path d="M408,146 l0,-6 M418,146 l0,-6 M428,146 l0,-6 M438,146 l0,-6 M448,146 l0,-6 M458,146 l0,-6 M468,146 l0,-6 M478,146 l0,-6 M488,146 l0,-6" class="pairline"/>
+      <text x="450" y="112" class="txt small">Cas9</text>
+    </g>
+    <g data-step="5">
+      <text x="640" y="120" class="lbl txt small left">Cas9 scans the DNA; only where the guide</text>
+      <text x="640" y="132" class="lbl txt small left">pairs letter for letter does it stay</text>
+      <text x="440" y="310" class="lbl txt small">at the target the guide RNA pairs with the matching DNA strand (A with T, G with C): Cas9 sits exactly where the scientist wanted it</text>
+    </g>
+
+    <!-- 6 the cut -->
+    <g data-step="6" data-until="8">
+      <rect x="446" y="144" width="8" height="24" class="gap"/>
+      <path d="M443,138 l14,-10 M443,128 l14,10" class="cutx"/>
+    </g>
+    <g data-step="6">
+      <text x="440" y="310" class="lbl txt small">Cas9 cuts both strands at that spot: a double-strand break, the most dangerous kind of DNA damage for a cell</text>
+    </g>
+
+    <!-- 7 Cas9 leaves, the cell must repair -->
+    <g data-step="7" data-until="8">
+      <text x="450" y="106" class="txt small" style="fill:var(--c-O)">a broken chromosome: the cell must repair this</text>
+    </g>
+    <g data-step="7">
+      <text x="440" y="310" class="lbl txt small">Cas9 leaves. The cell cannot live with a broken chromosome, so its own repair machinery steps in. Cas9 only cuts; the cell makes the change</text>
+    </g>
+
+    <!-- 8 route A: NHEJ -->
+    <g data-step="8">
+      <rect x="440" y="142" width="20" height="28" class="ct"/>
+      <path d="M60,150 L820,150 M60,162 L820,162" class="dna"/>
+      <path d="M444,150 L456,150 M444,162 L456,162" class="dna red"/>
+      <text x="450" y="188" class="txt small bold" style="fill:var(--c-O)">route A · NHEJ: ends glued straight back, with an error</text>
+      <text x="450" y="202" class="txt small muted">letters lost or added at the joint → reading frame broken → gene knocked out</text>
+      <text x="440" y="310" class="lbl txt small">route A, non-homologous end joining: the two ends are glued together without a model. Sloppy: letters go missing or are added, which usually wrecks the gene (knockout)</text>
+    </g>
+
+    <!-- 9 route B: template supplied -->
+    <g data-step="9">
+      <path d="M300,250 L620,250 M300,262 L620,262" class="dna"/>
+      <path d="M440,250 L480,250 M440,262 L480,262" class="dna green"/>
+      <text x="460" y="236" class="txt small">supplied fragment: matching ends (blue), new piece (green)</text>
+      <text x="440" y="310" class="lbl txt small">route B needs one extra ingredient: a DNA fragment whose ends match the DNA on both sides of the cut, with whatever you want to insert in the middle</text>
+    </g>
+
+    <!-- 10 route B: homologous recombination -->
+    <g data-step="10">
+      <path d="M460,270 L460,284" class="path accent" marker-end="url(#arCr)"/>
+      <text x="460" y="298" class="txt small bold" style="fill:var(--c-Cl)">route B · homologous recombination: template copied in → precise change</text>
+      <text x="440" y="310" class="lbl txt small">the cell uses the fragment as a model to repair the break (homologous recombination) and copies in the middle piece: a precise addition, removal or replacement</text>
+    </g>
+
+    <!-- 11 two guides -->
+    <g data-step="11">
+      <path d="M100,228 L240,228 M100,240 L240,240" class="dna"/>
+      <path d="M130,222 l8,-8 M130,214 l8,8 M206,222 l8,-8 M206,214 l8,8" class="cutx"/>
+      <path d="M140,228 L204,228 M140,240 L204,240" class="dna red"/>
+      <text x="170" y="262" class="txt small">two guides = two cuts:</text>
+      <text x="170" y="276" class="txt small muted">the red piece between them is lost</text>
+      <text x="170" y="290" class="txt small muted">(large deletion) or rejoined wrongly</text>
+      <text x="440" y="310" class="lbl txt small">with two guide RNAs aimed at two places, two cuts: the piece in between can be lost (a large deletion) or the pieces rejoined in the wrong order (a rearrangement)</text>
+    </g>
+
+    <!-- 12 wrap-up -->
+    <g data-step="12">
+      <text x="755" y="226" class="txt small bold">to remember</text>
+      <text x="755" y="242" class="txt small">guide RNA = GPS, Cas9 = scissors</text>
+      <text x="755" y="256" class="txt small">Cas9 cuts, the cell repairs</text>
+      <text x="755" y="270" class="txt small">NHEJ: sloppy → knockout</text>
+      <text x="755" y="284" class="txt small">template + recombination → precise</text>
+      <text x="755" y="298" class="txt small muted">no method is 100 % accurate</text>
+      <text x="440" y="310" class="lbl txt small">uses: correcting disease genes, CAR-T cells against cancer, resistant crops, malaria mosquitoes. Caution: off-target cuts happen, and edits in embryos are inherited</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: a cell's DNA and one chosen place",
+      en: "The genome of a eukaryotic cell (a cell with a nucleus: plant, animal, human), drawn as the two strands of one chromosome. Somewhere in one gene there is a place we want to change: switch the gene off, or correct a letter. The DNA is three billion letters long; the target is twenty of them.",
+      nl: "Het genoom van een eukaryote cel (een cel met een kern: plant, dier, mens), getekend als de twee strengen van één chromosoom. Ergens in één gen is een plaats die we willen veranderen: het gen uitschakelen, of een letter verbeteren. Het DNA is drie miljard letters lang; het doelwit is er twintig." },
+    { t: "2 · Design the guide RNA: the GPS",
+      en: "The scientist designs and orders a guide RNA (gRNA, also called sgRNA): a short RNA with about twenty letters that are complementary to the target sequence, so that it can pair with it. This is the only part that is specific to the target; everything else is the same for every experiment.",
+      nl: "De onderzoeker ontwerpt en bestelt een guide-RNA (gRNA, ook sgRNA): een kort RNA met ongeveer twintig letters die complementair zijn aan de doelsequentie, zodat het ermee kan paren. Dit is het enige deel dat specifiek is voor het doelwit; al de rest is voor elk experiment hetzelfde." },
+    { t: "3 · Cas9 takes the guide on board: the scissors",
+      en: "Cas9 is a nuclease, an enzyme that cuts DNA, taken from the immune system of bacteria (section 2). It holds the guide RNA inside it. Cas9 with its guide is the whole tool: scissors that carry a GPS.",
+      nl: "Cas9 is een nuclease, een enzym dat DNA knipt, afkomstig uit het immuunsysteem van bacteriën (deel 2). Het houdt het guide-RNA in zich vast. Cas9 met zijn guide is het hele werktuig: een schaar met een GPS." },
+    { t: "4 · Into the cell",
+      en: "Guide and Cas9, or the genes that encode them, are brought into the cell (by transformation, a virus, or injection). They reach the nucleus, where the DNA is.",
+      nl: "Guide en Cas9, of de genen die ervoor coderen, worden in de cel gebracht (via transformatie, een virus of injectie). Ze bereiken de kern, waar het DNA zit." },
+    { t: "5 · The guide finds the target",
+      en: "Cas9 slides along the DNA and briefly opens it to test whether the guide pairs with the strand. Almost everywhere it does not, and Cas9 moves on. At the target the twenty letters pair exactly (A with T, G with C), and Cas9 stays. The GPS has found the address.",
+      nl: "Cas9 schuift langs het DNA en opent het telkens even om te testen of de guide met de streng paart. Bijna overal lukt dat niet, en Cas9 gaat verder. Op het doelwit paren de twintig letters precies (A met T, G met C), en Cas9 blijft. De GPS heeft het adres gevonden." },
+    { t: "6 · Cas9 cuts both strands",
+      en: "Now the scissors work: Cas9 cuts both DNA strands at the target. This is a double-strand break, the most dangerous kind of DNA damage, because the chromosome is now in two pieces.",
+      nl: "Nu werkt de schaar: Cas9 knipt beide DNA-strengen op het doelwit. Dit is een dubbelstrengsbreuk, de gevaarlijkste soort DNA-schade, want het chromosoom ligt nu in twee stukken." },
+    { t: "7 · Cas9 leaves; the cell must repair",
+      en: "Cas9 lets go. The cell cannot tolerate a broken chromosome, so its own repair machinery takes over. This is the key idea: Cas9 only cuts, it does not edit. What the gene looks like afterwards depends on how the cell repairs the break, and the scientist can steer that.",
+      nl: "Cas9 laat los. De cel verdraagt geen gebroken chromosoom, dus haar eigen herstelmachinerie neemt het over. Dit is het kernidee: Cas9 knipt alleen, het bewerkt niet. Hoe het gen er nadien uitziet, hangt af van hoe de cel de breuk herstelt, en dat kan de onderzoeker sturen." },
+    { t: "8 · Route A: non-homologous end joining (NHEJ)",
+      en: "If nothing else is supplied, the cell glues the two ends straight back together without a model: non-homologous end joining. It is sloppy: a few letters are usually lost or added at the joint, which shifts the reading frame and wrecks the gene. That is exactly what you want for a knockout.",
+      nl: "Als er niets anders wordt aangeleverd, plakt de cel de twee uiteinden zonder model recht aan elkaar: non-homologous end joining. Dat is slordig: meestal gaan er enkele letters verloren of komen er bij op de las, wat het leesraam verschuift en het gen kapotmaakt. Precies wat je wil voor een knock-out." },
+    { t: "9 · Route B needs a template",
+      en: "For a precise change the scientist adds one extra ingredient: a DNA fragment whose two ends match the DNA on either side of the cut, with the wanted new piece in the middle (a corrected letter, an extra gene, or a missing piece).",
+      nl: "Voor een precieze verandering voegt de onderzoeker één extra ingrediënt toe: een DNA-fragment waarvan de twee uiteinden passen op het DNA aan weerszijden van de knip, met het gewenste nieuwe stuk in het midden (een verbeterde letter, een extra gen, of een ontbrekend stuk)." },
+    { t: "10 · Route B: homologous recombination",
+      en: "The cell's repair by homologous recombination uses a matching DNA molecule as a model to mend a break. It lines the fragment's matching ends up with the broken DNA and copies the middle in. Result: exactly the change that was designed, a precise addition, removal or replacement.",
+      nl: "Het herstel door homologe recombinatie gebruikt een passend DNA-molecuul als model om een breuk te dichten. De cel legt de passende uiteinden van het fragment tegen het gebroken DNA en kopieert het midden in. Resultaat: precies de ontworpen verandering, een nauwkeurige toevoeging, verwijdering of vervanging." },
+    { t: "11 · Two guides: two cuts",
+      en: "With two guide RNAs aimed at two places on the same chromosome, Cas9 makes two cuts. The piece in between can be lost, a large deletion, or the pieces can be rejoined in the wrong order, a chromosomal rearrangement (compare chapter 1).",
+      nl: "Met twee guide-RNA's gericht op twee plaatsen op hetzelfde chromosoom maakt Cas9 twee knippen. Het stuk ertussen kan verloren gaan, een grote deletie, of de stukken kunnen in de verkeerde volgorde weer aan elkaar komen, een chromosoomherschikking (vergelijk hoofdstuk 1)." },
+    { t: "12 · Uses, and the two warnings",
+      en: "CRISPR-Cas9 is faster, cheaper and more precise than older methods. Uses: correcting genes in cystic fibrosis, sickle cell anemia and some blindness; CAR-T cells that attack a tumour; crops resistant to pests and drought; mosquitoes that cannot carry malaria. Warnings: no method is 100 % accurate, Cas9 sometimes cuts elsewhere; and edits in embryos or germ cells are inherited by future generations, which raises ethical questions.",
+      nl: "CRISPR-Cas9 is sneller, goedkoper en preciezer dan oudere methoden. Toepassingen: genen verbeteren bij mucoviscidose, sikkelcelanemie en sommige vormen van blindheid; CAR-T-cellen die een tumor aanvallen; gewassen die bestand zijn tegen plagen en droogte; muggen die geen malaria kunnen dragen. Waarschuwingen: geen enkele methode is 100 % nauwkeurig, Cas9 knipt soms elders; en wijzigingen in embryo's of kiemcellen worden geërfd door volgende generaties, wat ethische vragen oproept." }
+  ];
+  Stepper.init('crispr-stepper', steps, 'crispr');
+})();
+</script>
+
 <table class="cmp">
   <tr><td>principle</td><td>a designed guide RNA aims the nuclease Cas9 at one DNA sequence; the cell's repair of the cut makes the change</td></tr>
   <tr><td>what you need</td><td>Cas9 protein (or its gene), a guide RNA matching the target, optionally a DNA template for precise repair</td></tr>
@@ -285,6 +591,164 @@ from a <strong>white</strong> mouse, growing in culture, and a <strong>targeting
   </svg>
   <figcaption>Making a knockout mouse (syllabus Figure 4-18). The two coat colours make it possible to see, by eye, which mice carry the engineered genome.</figcaption>
 </figure>
+
+<h3>Build it up yourself: a knockout mouse, from ES cells to a homozygous animal</h3>
+<p>Press <strong>Next</strong> to follow the eight steps of the syllabus one at a time, and see why two coat colours are needed.</p>
+
+<div class="stepper" id="ko-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of making a knockout mouse">
+    <defs>
+      <marker id="arKo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 ES cells from a white mouse -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <ellipse cx="90" cy="60" rx="22" ry="11" class="mouse white"/><circle cx="114" cy="56" r="7" class="mouse white"/><circle cx="118" cy="48" r="3" class="mouse white"/>
+      <text x="90" y="84" class="txt small muted">white mouse</text>
+      <rect x="50" y="100" width="90" height="56" rx="6" class="dish"/>
+      <circle cx="68" cy="118" r="6" class="escell"/><circle cx="86" cy="130" r="6" class="escell"/><circle cx="104" cy="116" r="6" class="escell"/><circle cx="122" cy="132" r="6" class="escell"/><circle cx="78" cy="144" r="6" class="escell"/><circle cx="112" cy="144" r="6" class="escell"/>
+      <text x="95" y="172" class="txt small">1 · ES cells in culture</text>
+      <text x="440" y="310" class="lbl txt small">begin state: embryonic stem (ES) cells from a white-coated mouse, growing in a dish; they can still become every cell type, including eggs and sperm</text>
+    </g>
+
+    <!-- 2 targeting vector -->
+    <g data-step="2">
+      <path d="M50,210 L80,210" class="dna"/><path d="M84,210 L116,210" class="dna green"/><path d="M120,210 L150,210" class="dna"/>
+      <text x="100" y="196" class="txt small">targeting vector</text>
+      <text x="160" y="222" class="txt small muted left">blue = matches the genome</text>
+      <text x="160" y="234" class="txt small muted left">green = G418-resistance gene</text>
+      <text x="440" y="310" class="lbl txt small">the targeting vector: a DNA piece in which the gene of interest is replaced by a marker, G418 resistance, flanked by DNA that matches the genome on both sides</text>
+    </g>
+
+    <!-- 3 homologous recombination -->
+    <g data-step="3">
+      <path d="M50,268 L80,268" class="dna"/><path d="M84,268 L116,268" class="dna red"/><path d="M120,268 L150,268" class="dna"/>
+      <text x="40" y="256" class="txt small muted left">genome of the ES cell: the gene (red)</text>
+      <path d="M100,214 L100,244" class="path accent" marker-end="url(#arKo)"/>
+      <path d="M84,268 L116,268" class="dna green"/>
+      <text x="40" y="286" class="txt small muted left">after recombination: gene → marker</text>
+      <text x="440" y="310" class="lbl txt small">the vector goes into the ES cells; in a few of them homologous recombination lines the matching ends up with the genome and swaps the gene for the marker</text>
+    </g>
+
+    <!-- 4 selection with G418 -->
+    <g data-step="4">
+      <rect x="190" y="100" width="90" height="56" rx="6" class="dish"/>
+      <circle cx="208" cy="118" r="6" class="escell dead"/><circle cx="226" cy="130" r="6" class="escell"/><circle cx="244" cy="116" r="6" class="escell dead"/><circle cx="262" cy="132" r="6" class="escell dead"/><circle cx="218" cy="144" r="6" class="escell dead"/><circle cx="252" cy="144" r="6" class="escell"/>
+      <path d="M150,128 L186,128" class="path accent" marker-end="url(#arKo)"/>
+      <text x="235" y="172" class="txt small">2–3 · + G418: select</text>
+      <text x="235" y="186" class="txt small muted">only cells with the marker survive</text>
+      <text x="440" y="310" class="lbl txt small">grow the cells in the drug G418, which kills mammalian cells: only cells that took up the marker correctly survive; grow them as a pure population</text>
+    </g>
+
+    <!-- 5 blastocyst of a black mouse, injection -->
+    <g data-step="5">
+      <ellipse cx="400" cy="60" rx="22" ry="11" class="mouse black"/><circle cx="424" cy="56" r="7" class="mouse black"/><circle cx="428" cy="48" r="3" class="mouse black"/>
+      <text x="400" y="84" class="txt small muted">black mouse</text>
+      <circle cx="400" cy="130" r="30" class="blast"/>
+      <circle cx="388" cy="122" r="4" class="mouse black"/><circle cx="398" cy="116" r="4" class="mouse black"/><circle cx="408" cy="122" r="4" class="mouse black"/>
+      <path d="M360,160 L384,138" class="needle"/>
+      <circle cx="392" cy="134" r="4" class="escell"/><circle cx="402" cy="138" r="4" class="escell"/>
+      <path d="M324,128 L366,128" class="path accent" marker-end="url(#arKo)"/>
+      <text x="400" y="192" class="txt small">4 · inject into a blastocyst</text>
+      <text x="400" y="206" class="txt small muted">early embryo, hollow ball of cells</text>
+      <text x="440" y="310" class="lbl txt small">inject the selected ES cells (white) into a blastocyst of a black mouse: a very early embryo, a hollow ball of a few hundred cells. The ES cells join the embryo's own cells</text>
+    </g>
+
+    <!-- 6 surrogate mother -->
+    <g data-step="6">
+      <ellipse cx="500" cy="130" rx="26" ry="13" class="mouse black"/><circle cx="528" cy="125" r="8" class="mouse black"/><circle cx="533" cy="116" r="3.5" class="mouse black"/>
+      <path d="M434,130 L470,130" class="path accent" marker-end="url(#arKo)"/>
+      <text x="500" y="160" class="txt small">5 · surrogate mother</text>
+      <text x="500" y="174" class="txt small muted">a black stand-in mother</text>
+      <text x="440" y="310" class="lbl txt small">implant the blastocyst in the uterus of a surrogate (stand-in) black female, where it develops into a pup</text>
+    </g>
+
+    <!-- 7 chimeric pups -->
+    <g data-step="7">
+      <ellipse cx="640" cy="130" rx="22" ry="11" class="mouse white"/><circle cx="664" cy="126" r="7" class="mouse white"/><circle cx="668" cy="118" r="3" class="mouse white"/>
+      <circle cx="632" cy="128" r="5" class="mouse patch"/><circle cx="650" cy="134" r="4" class="mouse patch"/><circle cx="664" cy="126" r="3" class="mouse patch"/>
+      <path d="M540,130 L612,130" class="path accent" marker-end="url(#arKo)"/>
+      <text x="645" y="160" class="txt small">6 · chimeric pup</text>
+      <text x="645" y="174" class="txt small muted">patchy coat (two origins)</text>
+      <text x="440" y="310" class="lbl txt small">a chimera is born: patches of black (from the host embryo) and white (from the engineered ES cells). The patches prove the ES cells became part of the body</text>
+    </g>
+
+    <!-- 8 backcross -->
+    <g data-step="8">
+      <text x="760" y="110" class="txt small">7 · backcross</text>
+      <ellipse cx="730" cy="130" rx="16" ry="8" class="mouse white"/><circle cx="747" cy="127" r="5" class="mouse white"/><circle cx="724" cy="128" r="4" class="mouse patch"/><circle cx="738" cy="133" r="3" class="mouse patch"/>
+      <text x="765" y="134" class="txt small">×</text>
+      <ellipse cx="800" cy="130" rx="16" ry="8" class="mouse black"/><circle cx="817" cy="127" r="5" class="mouse black"/>
+      <path d="M765,142 L765,160" class="path accent" marker-end="url(#arKo)"/>
+      <ellipse cx="720" cy="178" rx="12" ry="6" class="mouse black"/><ellipse cx="750" cy="178" rx="12" ry="6" class="mouse black"/><ellipse cx="780" cy="178" rx="12" ry="6" class="mouse black"/><ellipse cx="812" cy="178" rx="12" ry="6" class="mouse white"/>
+      <text x="812" y="198" class="txt small" style="fill:var(--c-Cl)">+/−</text>
+      <text x="440" y="310" class="lbl txt small">cross the chimera with a black mouse. If the ES cells also made its germ cells (eggs or sperm), some pups are white: they carry the ES-cell genome</text>
+    </g>
+
+    <!-- 9 heterozygous -->
+    <g data-step="9">
+      <text x="750" y="212" class="txt small muted">white pup = germ line hit:</text>
+      <text x="750" y="224" class="txt small muted">one copy knocked out (+/−)</text>
+      <text x="440" y="310" class="lbl txt small">a white pup has one knocked-out copy and one normal copy of the gene in every cell: heterozygous, written +/− (plus = normal copy, minus = knocked-out copy)</text>
+    </g>
+
+    <!-- 10 cross heterozygotes -->
+    <g data-step="10">
+      <text x="585" y="212" class="txt small">8 · +/− × +/−</text>
+      <ellipse cx="520" cy="236" rx="12" ry="6" class="mouse white"/><ellipse cx="552" cy="236" rx="12" ry="6" class="mouse white"/><ellipse cx="584" cy="236" rx="12" ry="6" class="mouse white"/><ellipse cx="616" cy="236" rx="12" ry="6" class="mouse white" style="stroke:var(--c-O);stroke-width:2.5"/>
+      <text x="520" y="256" class="txt small muted">+/+</text><text x="552" y="256" class="txt small muted">+/−</text><text x="584" y="256" class="txt small muted">+/−</text><text x="616" y="256" class="txt small" style="fill:var(--c-O)">−/−</text>
+      <text x="440" y="310" class="lbl txt small">cross two heterozygous mice with each other: one in four of their pups inherits a knocked-out copy from both parents</text>
+    </g>
+
+    <!-- 11 the knockout mouse -->
+    <g data-step="11">
+      <text x="585" y="276" class="txt small bold" style="fill:var(--c-O)">knockout mouse: −/− in every cell</text>
+      <text x="585" y="290" class="txt small muted">no working copy of the gene anywhere</text>
+      <text x="440" y="310" class="lbl txt small">the −/− pup is the knockout mouse: both copies gone in every cell, heritable. Now you can see what a mammal lacking this gene looks like</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: ES cells from a white mouse",
+      en: "Embryonic stem (ES) cells are taken from an early embryo of a white-coated mouse and grown in a dish (page 4.2). They can still become every cell type of a mouse, including the germ cells that make eggs and sperm. That last property is what the whole method relies on.",
+      nl: "Embryonale stamcellen (ES-cellen) worden uit een vroeg embryo van een witte muis gehaald en in een schaaltje gekweekt (pagina 4.2). Ze kunnen nog elk celtype van een muis worden, ook de kiemcellen die eicellen en zaadcellen maken. Op die laatste eigenschap steunt de hele methode." },
+    { t: "2 · The targeting vector",
+      en: "The scientist builds a piece of DNA, the targeting vector. In the middle sits a selectable marker: a gene for resistance to G418, a drug that kills mammalian cells. On both sides sit stretches of DNA that match the genome left and right of the gene of interest. The gene itself is not in the vector: the marker takes its place.",
+      nl: "De onderzoeker bouwt een stuk DNA, de targeting vector. In het midden zit een selecteerbare marker: een gen voor resistentie tegen G418, een geneesmiddel dat zoogdiercellen doodt. Aan weerszijden zitten stukken DNA die passen op het genoom links en rechts van het gen waar het om gaat. Het gen zelf zit niet in de vector: de marker neemt zijn plaats in." },
+    { t: "3 · Homologous recombination swaps the gene for the marker",
+      en: "The vector is put into the ES cells. In a few cells the cell's own homologous recombination lines the matching ends up with the same sequences in the genome and exchanges the middle: the gene is replaced by the resistance marker. In most cells nothing happens.",
+      nl: "De vector wordt in de ES-cellen gebracht. In enkele cellen legt de eigen homologe recombinatie van de cel de passende uiteinden tegen dezelfde sequenties in het genoom en wisselt het midden uit: het gen wordt vervangen door de resistentiemarker. In de meeste cellen gebeurt er niets." },
+    { t: "4 · Select with G418",
+      en: "The cells are grown in medium with G418. Cells without the marker die; only the cells in which the swap succeeded survive. These are grown on as a pure population of engineered ES cells, each with one knocked-out copy of the gene.",
+      nl: "De cellen worden gekweekt in medium met G418. Cellen zonder marker sterven; alleen de cellen waarin de ruil lukte, overleven. Die worden verder gekweekt als een zuivere populatie van bewerkte ES-cellen, elk met één uitgeschakelde kopie van het gen." },
+    { t: "5 · Inject into a black-mouse blastocyst",
+      en: "A blastocyst, a very early embryo that is a hollow ball of a few hundred cells, is taken from a black mouse. The engineered white ES cells are injected into it with a fine needle. They mix with the embryo's own cells and will contribute to the tissues of the animal that develops.",
+      nl: "Een blastocyst, een heel vroeg embryo dat een holle bal van enkele honderden cellen is, wordt uit een zwarte muis gehaald. De bewerkte witte ES-cellen worden er met een fijne naald in gespoten. Ze mengen zich met de eigen cellen van het embryo en zullen bijdragen aan de weefsels van het dier dat zich ontwikkelt." },
+    { t: "6 · A surrogate mother",
+      en: "The blastocyst is implanted in the uterus of a black female mouse, a surrogate: a stand-in mother who carries an embryo that is not genetically hers. The pregnancy proceeds normally.",
+      nl: "De blastocyst wordt ingeplant in de baarmoeder van een zwarte vrouwelijke muis, een draagmoeder: een plaatsvervangende moeder die een embryo draagt dat genetisch niet van haar is. De zwangerschap verloopt normaal." },
+    { t: "7 · Chimeric pups",
+      en: "The pup that is born is a chimera: an animal made of cells of two origins (the name comes from a monster of Greek mythology built from several animals). Its coat has black patches from the host embryo and white patches from the ES cells. The patches prove, by eye, that the engineered cells became part of the body.",
+      nl: "Het jong dat geboren wordt, is een chimeer: een dier uit cellen van twee oorsprongen (de naam komt van een monster uit de Griekse mythologie, samengesteld uit verschillende dieren). Zijn vacht heeft zwarte vlekken van het gastembryo en witte vlekken van de ES-cellen. De vlekken bewijzen, met het blote oog, dat de bewerkte cellen deel van het lichaam werden." },
+    { t: "8 · Backcross to a black mouse",
+      en: "A chimera is crossed with a normal black mouse. If the ES cells also contributed to the chimera's germ line (the cells that make its eggs or sperm), some of its gametes carry the ES-cell genome, and some pups are born white. A white pup inherited the engineered genome; black pups came from the host embryo's germ cells.",
+      nl: "Een chimeer wordt gekruist met een gewone zwarte muis. Als de ES-cellen ook bijdroegen aan de kiembaan van de chimeer (de cellen die eicellen of zaadcellen maken), dragen sommige gameten het ES-celgenoom, en worden sommige jongen wit geboren. Een wit jong erfde het bewerkte genoom; zwarte jongen komen van de kiemcellen van het gastembryo." },
+    { t: "9 · The white pups are heterozygous (+/−)",
+      en: "Every cell of a white pup has one knocked-out copy of the gene (from the ES cell) and one normal copy (from the black parent). This is written +/−: plus for the normal copy, minus for the knocked-out one. Heterozygous means the two copies differ. With one good copy the gene still works.",
+      nl: "Elke cel van een wit jong heeft één uitgeschakelde kopie van het gen (van de ES-cel) en één normale kopie (van de zwarte ouder). Dat schrijf je +/−: plus voor de normale kopie, min voor de uitgeschakelde. Heterozygoot betekent dat de twee kopieën verschillen. Met één goede kopie werkt het gen nog." },
+    { t: "10 · Cross two heterozygotes",
+      en: "Two +/− mice are crossed with each other. Each parent gives either its plus or its minus copy, so the pups are +/+, +/− or −/−, in the ratio 1 : 2 : 1. One in four pups receives a knocked-out copy from both parents.",
+      nl: "Twee +/−-muizen worden onderling gekruist. Elke ouder geeft ofwel zijn plus- ofwel zijn min-kopie door, dus de jongen zijn +/+, +/− of −/−, in de verhouding 1 : 2 : 1. Eén op vier jongen krijgt van beide ouders een uitgeschakelde kopie." },
+    { t: "11 · The knockout mouse",
+      en: "The −/− pup is the knockout mouse: no working copy of the gene in any cell of its body, and the change is heritable. Now the question of reverse genetics can be answered: what goes wrong in a mammal that lacks this gene? Chapter 2 uses such mice to test cancer genes.",
+      nl: "Het −/−-jong is de knock-out muis: geen werkende kopie van het gen in geen enkele cel van zijn lichaam, en de verandering is erfelijk. Nu kan de vraag van reverse genetics beantwoord worden: wat gaat er mis bij een zoogdier dat dit gen mist? Hoofdstuk 2 gebruikt zulke muizen om kankergenen te testen." }
+  ];
+  Stepper.init('ko-stepper', steps, 'ko');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Why two coat colours</span>
 <p>The ES cells come from a white mouse and the host blastocyst from a black mouse. A pup with <strong>patches of both colours</strong> proves that the engineered ES cells

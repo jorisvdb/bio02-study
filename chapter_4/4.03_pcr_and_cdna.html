@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.3 PCR and cDNA</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -15,6 +17,13 @@
   .pr.b { stroke: var(--c-P); }
   .pol { fill: var(--c-S); fill-opacity: .6; stroke: var(--c-S); stroke-width: 1; }
   .box2 { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .glass { fill: none; stroke: var(--muted); stroke-width: 2; }
+  .roi { fill: var(--c-S); fill-opacity: .15; stroke: none; }
+  .dntp { fill: var(--muted); stroke: none; }
+  .badge { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.2; }
+  .rt { fill: var(--c-Na); stroke: none; }
+  .rnase { fill: var(--c-P); stroke: none; }
+  .st.gone { stroke-dasharray: 4 6; opacity: .5; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -143,6 +152,143 @@ The temperatures and how long each step lasts decide how efficient and how speci
   <figcaption>Syllabus Figures 4-10 and 4-11: one PCR cycle (denature, anneal, extend) and the doubling over cycles.</figcaption>
 </figure>
 
+<h3>Build it up yourself: one PCR cycle, then the chain reaction</h3>
+<p>Press <strong>Next</strong>. First the tube is filled, then one cycle runs at its three temperatures, then the copies start doubling.</p>
+
+<div class="stepper" id="pcr-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: PCR">
+    <defs>
+      <marker id="arPc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <path d="M60,50 L60,210 Q60,240 115,240 Q170,240 170,210 L170,50" class="glass"/>
+      <text x="115" y="262" class="txt small muted">the tube</text>
+      <rect x="400" y="76" width="200" height="48" rx="6" class="roi"/>
+      <path d="M300,90 L700,90" class="st"/>
+      <text x="290" y="94" class="txt small">5′</text><text x="710" y="94" class="txt small">3′</text>
+      <text x="500" y="64" class="txt small muted">yellow box = the stretch we want to copy (between the primer sites)</text>
+    </g>
+    <g data-step="1" data-until="3">
+      <path d="M300,110 L700,110" class="st"/>
+      <text x="290" y="114" class="txt small">3′</text><text x="710" y="114" class="txt small">5′</text>
+      <text x="500" y="140" class="txt small muted">double-stranded template DNA (grey)</text>
+    </g>
+    <g data-step="1">
+      <text x="40" y="300" class="lbl txt small left">1 · begin state: a sample with very little DNA; we want millions of copies of one stretch of it (yellow); 5′ and 3′ (read "five prime", "three prime") name the two ends of a strand</text>
+    </g>
+    <g data-step="2">
+      <path d="M80,80 L100,80" class="pr"/><text x="112" y="84" class="txt small left">primer 1</text>
+      <path d="M80,100 L100,100" class="pr b"/><text x="112" y="104" class="txt small left">primer 2</text>
+      <circle cx="84" cy="122" r="3" class="dntp"/><circle cx="92" cy="126" r="3" class="dntp"/><circle cx="100" cy="121" r="3" class="dntp"/><circle cx="108" cy="127" r="3" class="dntp"/><text x="116" y="128" class="txt small left">dNTPs</text>
+      <circle cx="90" cy="150" r="7" class="pol"/><text x="104" y="154" class="txt small left">Taq</text>
+      <text x="115" y="180" class="txt small muted">+ buffer</text>
+      <text x="40" y="300" class="lbl txt small left">2 · add: two primers (short synthetic DNA, about 20 bases, in large excess), the four dNTPs (the nucleotides A, C, G, T), a heat-stable DNA polymerase (Taq) and buffer</text>
+    </g>
+    <g data-step="3" data-until="6">
+      <rect x="740" y="54" width="110" height="40" rx="8" class="badge"/>
+    </g>
+    <g data-step="3">
+      <path d="M300,190 L700,190" class="st"/>
+      <text x="290" y="194" class="txt small">3′</text><text x="710" y="194" class="txt small">5′</text>
+      <text x="795" y="70" class="lbl txt small bold">94–98 °C</text><text x="795" y="86" class="lbl txt small">denaturation</text>
+      <text x="500" y="150" class="lbl txt small">heat: the hydrogen bonds between the base pairs break, the two strands come apart</text>
+      <text x="40" y="300" class="lbl txt small left">3 · step 1 of the cycle, denaturation at 94 to 98 °C (°C = degrees Celsius): the double helix falls apart into two single strands</text>
+    </g>
+    <g data-step="4">
+      <path d="M580,104 L600,104" class="pr"/>
+      <path d="M400,176 L420,176" class="pr b"/>
+      <text x="795" y="70" class="lbl txt small bold">50–65 °C</text><text x="795" y="86" class="lbl txt small">annealing</text>
+      <text x="640" y="118" class="lbl txt small left">primer 1 binds the top strand</text>
+      <text x="260" y="164" class="lbl txt small left">primer 2 binds the bottom strand</text>
+      <text x="40" y="300" class="lbl txt small left">4 · step 2, annealing at 50 to 65 °C: each primer binds its complementary site at the 3′ end of its region; short, fast and in huge excess, the primers beat the old strands</text>
+    </g>
+    <g data-step="5">
+      <path d="M400,104 L580,104" class="st new"/><circle cx="398" cy="104" r="6" class="pol"/>
+      <path d="M420,176 L600,176" class="st new"/><circle cx="602" cy="176" r="6" class="pol"/>
+      <text x="795" y="70" class="lbl txt small bold">72 °C</text><text x="795" y="86" class="lbl txt small">extension</text>
+      <text x="500" y="150" class="lbl txt small">polymerase (yellow) adds nucleotides to each primer's 3′ end, building 5′ → 3′ towards the other primer</text>
+      <text x="40" y="300" class="lbl txt small left">5 · step 3, extension at 72 °C: DNA polymerase extends each primer along its template, so each new strand (blue) starts at a primer and runs towards the other primer</text>
+    </g>
+    <g data-step="6">
+      <text x="795" y="120" class="txt small bold">copies of the region</text>
+      <text x="795" y="140" class="txt small">cycle 1 → 2</text>
+      <text x="40" y="300" class="lbl txt small left">6 · end of cycle 1: two double-stranded copies of the stretch (each old strand paired with a new one); the cycle takes only minutes in the thermocycler</text>
+    </g>
+    <g data-step="7">
+      <text x="795" y="158" class="txt small">cycle 2 → 4</text>
+      <text x="500" y="230" class="lbl txt small">cycle 2: the same three temperatures again; every strand, old or new, is now a template</text>
+      <text x="40" y="300" class="lbl txt small left">7 · the thermocycler (a machine that switches between set temperatures automatically) repeats the cycle; each cycle doubles the number of copies: 4</text>
+    </g>
+    <g data-step="8">
+      <text x="795" y="176" class="txt small">cycle 3 → 8</text>
+      <text x="500" y="230" class="lbl txt small">from cycle 3 on, almost all products are exactly the stretch between the two primers</text>
+      <text x="40" y="300" class="lbl txt small left">8 · cycle 3 gives 8; the new strands end where a primer sat, so from now on nearly every molecule is exactly the region between the primers, nothing outside</text>
+    </g>
+    <g data-step="9">
+      <text x="795" y="194" class="txt small">cycle 20 → &gt; 1 000 000</text>
+      <text x="795" y="212" class="txt small">cycle 30 → ≈ 10⁹</text>
+      <text x="500" y="230" class="lbl txt small">2, 4, 8, 16, 32 ... a doubling every cycle: 2²⁰ ≈ 1 million (read "two to the twentieth")</text>
+      <text x="40" y="300" class="lbl txt small left">9 · the chain reaction: after 20 cycles one template has given more than a million copies, after 30 about a billion (10⁹, "ten to the ninth"); a run is 20 to 40 cycles</text>
+    </g>
+    <g data-step="10">
+      <text x="500" y="230" class="lbl txt small">every cycle heats the tube to about 95 °C, which would cook an ordinary enzyme</text>
+      <text x="40" y="300" class="lbl txt small left">10 · why Taq: the polymerase comes from Thermus aquaticus, a bacterium of hot springs, and survives the repeated heating; so the enzyme is added once and the machine cycles on its own</text>
+    </g>
+    <g data-step="11">
+      <text x="500" y="230" class="lbl txt small" style="fill:var(--c-O)">three caveats: a primer that binds the wrong site copies the wrong DNA; an early copying error is multiplied; above 4000–5000 bp it gets hard</text>
+      <text x="40" y="300" class="lbl txt small left">11 · caveats: design primers carefully; a wrong base inserted in an early cycle ends up in a large share of the product; long fragments need special polymerases (bp = base pairs)</text>
+    </g>
+    <g data-step="12">
+      <text x="500" y="230" class="lbl txt small bold">what you add to copy DNA by PCR: nucleotides, primers, polymerase (exam question 13)</text>
+      <text x="40" y="300" class="lbl txt small left">12 · not needed: ribosomes, tRNA, amino acids (those make proteins) and ligase (nothing is joined; the strand is built nucleotide by nucleotide)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin state: a little DNA, one stretch of interest",
+      en: "A sample contains very little DNA, maybe only a few molecules. We are interested in one stretch of it, for example one gene (the yellow box). Goal: millions of copies of exactly that stretch. Each DNA strand has two different ends, written 5′ and 3′ (read \"five prime\" and \"three prime\"); the two strands of the helix run in opposite directions.",
+      nl: "Een monster bevat heel weinig DNA, misschien maar enkele moleculen. We zijn geïnteresseerd in één stuk ervan, bijvoorbeeld één gen (het gele vak). Doel: miljoenen kopieën van precies dat stuk. Elke DNA-streng heeft twee verschillende uiteinden, geschreven 5′ en 3′ (lees \"vijf accent\" en \"drie accent\"); de twee strengen van de helix lopen in tegengestelde richting." },
+    { t: "2 · Fill the tube",
+      en: "Everything goes into one tube: the template DNA; two primers, short pieces of single-stranded DNA of about 20 bases made in a machine, in large excess; the four dNTPs, the building blocks A, C, G and T; a DNA polymerase, the enzyme that builds DNA, here the heat-stable Taq; and a buffer that keeps the acidity right. The primers decide where the copied piece starts and ends.",
+      nl: "Alles gaat in één buisje: het template-DNA; twee primers, korte stukjes enkelstrengs DNA van ongeveer 20 basen uit een machine, in grote overmaat; de vier dNTP's, de bouwstenen A, C, G en T; een DNA-polymerase, het enzym dat DNA bouwt, hier het hittebestendige Taq; en een buffer die de zuurtegraad juist houdt. De primers bepalen waar het gekopieerde stuk begint en eindigt." },
+    { t: "3 · Denaturation: strands apart (94–98 °C)",
+      en: "The tube goes into a thermocycler, a machine that switches between set temperatures automatically. First it heats to 94 to 98 °C (degrees Celsius). The heat breaks the hydrogen bonds between the base pairs, and the double helix falls apart into two single strands. This is denaturation.",
+      nl: "Het buisje gaat in een thermocycler, een machine die automatisch tussen ingestelde temperaturen wisselt. Eerst verwarmt hij tot 94 à 98 °C (graden Celsius). De hitte breekt de waterstofbruggen tussen de basenparen, en de dubbele helix valt uiteen in twee enkele strengen. Dit is denaturatie." },
+    { t: "4 · Annealing: the primers bind (50–65 °C)",
+      en: "The tube cools to 50 to 65 °C. Each primer finds and binds its complementary site: primer 1 at the 3′ end of the region on the top strand, primer 2 at the 3′ end of the region on the bottom strand. The two old strands could re-pair instead, but the primers are short, fast and present in huge excess, so they win. This binding is called annealing or hybridisation.",
+      nl: "Het buisje koelt af tot 50 à 65 °C. Elke primer vindt en bindt zijn complementaire plaats: primer 1 aan het 3′-uiteinde van het stuk op de bovenste streng, primer 2 aan het 3′-uiteinde van het stuk op de onderste streng. De twee oude strengen zouden ook weer kunnen paren, maar de primers zijn kort, snel en in grote overmaat, dus zij winnen. Dit binden heet annealing of hybridisatie." },
+    { t: "5 · Extension: the polymerase builds (72 °C)",
+      en: "At 72 °C the DNA polymerase uses each primer as a starting point: it adds dNTPs to the primer's 3′ end and builds a new strand 5′ → 3′ along the template, towards the other primer. The polymerase can only extend an existing 3′ end; that is why primers are needed. Everything between the primers gets copied, nothing outside.",
+      nl: "Bij 72 °C gebruikt het DNA-polymerase elke primer als startpunt: het hangt dNTP's aan het 3′-uiteinde van de primer en bouwt een nieuwe streng 5′ → 3′ langs het template, richting de andere primer. Het polymerase kan alleen een bestaand 3′-uiteinde verlengen; daarom zijn primers nodig. Alles tussen de primers wordt gekopieerd, niets erbuiten." },
+    { t: "6 · End of cycle 1: two copies",
+      en: "After the three temperatures there are two double-stranded copies of the chosen stretch, each made of one old strand and one new strand. One cycle takes only minutes.",
+      nl: "Na de drie temperaturen zijn er twee dubbelstrengs kopieën van het gekozen stuk, elk uit één oude en één nieuwe streng. Eén cyclus duurt maar enkele minuten." },
+    { t: "7 · Cycle 2: four copies",
+      en: "The thermocycler runs the same three temperatures again. Now every strand, old or new, serves as a template, so the number of copies doubles: four. That is the chain reaction: the products of one round are the templates of the next.",
+      nl: "De thermocycler draait dezelfde drie temperaturen opnieuw. Nu dient elke streng, oud of nieuw, als template, dus het aantal kopieën verdubbelt: vier. Dat is de kettingreactie: de producten van de ene ronde zijn de templates van de volgende." },
+    { t: "8 · Cycle 3: eight copies, all exactly the region",
+      en: "Cycle 3 gives eight. A new strand always ends where its primer sat, so from cycle 3 on almost all molecules are exactly the stretch between the two primers. The long original DNA is still there, but it is a vanishing minority.",
+      nl: "Cyclus 3 geeft acht. Een nieuwe streng eindigt altijd waar zijn primer zat, dus vanaf cyclus 3 zijn bijna alle moleculen precies het stuk tussen de twee primers. Het lange oorspronkelijke DNA is er nog, maar het is een verdwijnende minderheid." },
+    { t: "9 · Doubling: a million after 20 cycles",
+      en: "2, 4, 8, 16, 32 ... a doubling every cycle. After 20 cycles one double-stranded template has given more than a million copies (2²⁰, read \"two to the twentieth\", is about 1 million); after 30 cycles about a billion (10⁹, \"ten to the ninth\"). A run is usually 20 to 40 cycles. The temperatures and the time at each step decide how efficient and how specific the reaction is.",
+      nl: "2, 4, 8, 16, 32 ... een verdubbeling per cyclus. Na 20 cycli heeft één dubbelstrengs template meer dan een miljoen kopieën gegeven (2²⁰, lees \"twee tot de twintigste\", is ongeveer 1 miljoen); na 30 cycli ongeveer een miljard (10⁹, \"tien tot de negende\"). Een run is meestal 20 tot 40 cycli. De temperaturen en de tijd per stap bepalen hoe efficiënt en hoe specifiek de reactie is." },
+    { t: "10 · Why the polymerase must be heat-stable",
+      en: "Every cycle heats the tube to about 95 °C, which would destroy (\"cook\") an ordinary enzyme. PCR therefore uses the DNA polymerase of Thermus aquaticus, a bacterium that lives in hot springs: Taq polymerase survives the repeated heating. That is what made PCR automatic: add the enzyme once and let the machine cycle.",
+      nl: "Elke cyclus verwarmt het buisje tot ongeveer 95 °C, wat een gewoon enzym zou vernietigen (\"koken\"). PCR gebruikt daarom het DNA-polymerase van Thermus aquaticus, een bacterie uit hete bronnen: Taq-polymerase overleeft het herhaalde verhitten. Dat maakte PCR automatisch: het enzym één keer toevoegen en de machine laten draaien." },
+    { t: "11 · Three caveats",
+      en: "A primer can bind a site that only partly matches, and then the wrong DNA is amplified: design primers with care. The polymerase sometimes inserts a wrong base, and a mistake made in an early cycle is copied into a large share of the product. And fragments longer than about 4000 to 5000 base pairs (bp) need special polymerases and conditions.",
+      nl: "Een primer kan binden op een plaats die maar gedeeltelijk past, en dan wordt het verkeerde DNA vermeerderd: ontwerp primers zorgvuldig. Het polymerase bouwt soms een verkeerde base in, en een fout uit een vroege cyclus wordt gekopieerd in een groot deel van het product. En fragmenten langer dan ongeveer 4000 à 5000 basenparen (bp) vragen speciale polymerasen en condities." },
+    { t: "12 · What you add, and what you do not",
+      en: "Exam question 13: to copy a DNA fragment by PCR you add nucleotides, primers and polymerase. Not ligase, which joins pieces and builds nothing; not ribosomes, tRNA or amino acids, which are for making proteins. And exam question 12: PCR is the technique that increases the amount of DNA from a tiny old sample, such as dodo skin.",
+      nl: "Examenvraag 13: om een DNA-fragment met PCR te kopiëren voeg je nucleotiden, primers en polymerase toe. Geen ligase, dat stukken verbindt en niets bouwt; geen ribosomen, tRNA of aminozuren, die dienen om eiwitten te maken. En examenvraag 12: PCR is de techniek die de hoeveelheid DNA uit een piepklein oud monster vergroot, zoals dodohuid." }
+  ];
+  Stepper.init('pcr-stepper', steps, 'pcr');
+})();
+</script>
+
 <h3>Why the polymerase must be heat-stable</h3>
 <p>Every cycle heats the tube to about 95 °C, which would destroy ("cook") an ordinary enzyme. PCR therefore uses a DNA polymerase from a bacterium that
 lives in hot springs, <strong>Thermus aquaticus</strong>; its enzyme is called <strong>Taq polymerase</strong> and survives the repeated heating. That is what made
@@ -216,6 +362,84 @@ The solution is to first make a DNA copy of the RNA. Begin state: a sample of mR
   </svg>
   <figcaption>Syllabus Figure 4-12: making complementary DNA (cDNA) from mRNA. Only one mRNA is drawn; a real sample gives a cDNA for every mRNA in the cell.</figcaption>
 </figure>
+
+<h3>Build it up yourself: from mRNA to cDNA</h3>
+<p>Press <strong>Next</strong> to turn one mRNA into double-stranded DNA that PCR can copy.</p>
+
+<div class="stepper" id="cdna-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: reverse transcription to cDNA">
+    <defs>
+      <marker id="arCd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="440" y="48" class="txt small muted">red = RNA · blue = DNA</text>
+    </g>
+    <g data-step="1" data-until="3">
+      <path d="M240,120 L640,120" class="st rna"/>
+      <text x="230" y="124" class="txt small">5′</text><text x="650" y="124" class="txt small">3′</text>
+      <text x="440" y="104" class="txt small muted">mRNA: single-stranded, exons only (already spliced in the cell)</text>
+    </g>
+    <g data-step="1">
+      <text x="40" y="300" class="lbl txt small left">1 · begin state: a sample of mRNAs (one is drawn); PCR only works on DNA, so first a DNA copy must be made</text>
+    </g>
+    <g data-step="2">
+      <path d="M620,140 L640,140" class="pr"/>
+      <path d="M240,140 L620,140" class="st new"/>
+      <circle cx="236" cy="140" r="9" class="rt"/><text x="236" y="144" class="txt small" style="fill:#fff;font-weight:700">RT</text>
+      <text x="440" y="168" class="lbl txt small">RT = reverse transcriptase, the enzyme from a retrovirus (HIV uses it to copy its RNA genome into DNA, chapter 3)</text>
+      <text x="40" y="300" class="lbl txt small left">2 · a primer binds the 3′ end of the mRNA; reverse transcriptase reads the RNA as a template and builds a complementary DNA strand (cDNA): an RNA–DNA hybrid</text>
+    </g>
+    <g data-step="3">
+      <path d="M240,120 L290,120 M330,120 L370,120 M410,120 L440,120 M490,120 L520,120 M570,120 L600,120" class="st rna gone"/>
+      <circle cx="440" cy="92" r="9" class="rnase"/><text x="458" y="96" class="txt small left">RNA-degrading enzyme</text>
+      <text x="40" y="300" class="lbl txt small left">3 · an enzyme that breaks down RNA eats the mRNA strand away; only the single DNA strand is left</text>
+    </g>
+    <g data-step="4">
+      <path d="M240,200 L640,200" class="st new"/>
+      <path d="M240,220 L640,220" class="st new"/>
+      <circle cx="644" cy="200" r="7" class="pol"/>
+      <text x="440" y="246" class="txt small muted">double-stranded cDNA</text>
+      <path d="M440,150 L440,186" class="path accent" marker-end="url(#arCd)"/>
+      <text x="40" y="300" class="lbl txt small left">4 · a DNA polymerase builds the second DNA strand, complementary to the first: the result is double-stranded cDNA with the same sequence as the mRNA</text>
+    </g>
+    <g data-step="5">
+      <path d="M660,210 L720,210" class="path accent" marker-end="url(#arCd)"/>
+      <path d="M740,190 L840,190 M740,196 L840,196 M740,206 L840,206 M740,212 L840,212 M740,222 L840,222 M740,228 L840,228" class="st new"/>
+      <text x="790" y="250" class="txt small muted">PCR: millions of copies</text>
+      <text x="40" y="300" class="lbl txt small left">5 · the cDNA is amplified by PCR as usual (this combination is called RT-PCR); a real sample gives a cDNA for every mRNA the cell was making</text>
+    </g>
+    <g data-step="6">
+      <text x="440" y="276" class="lbl txt small bold">cDNA has no introns, so bacteria (which cannot splice) can make the right protein from it; and the set of cDNAs mirrors which genes the cell was using</text>
+      <text x="40" y="300" class="lbl txt small left">6 · trap: reverse transcriptase makes DNA from an RNA template; it does not make RNA, does not cut DNA and does not translate anything (exam questions 8 and 11)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin state: an mRNA",
+      en: "Sometimes the molecule you want to copy or sequence is an RNA, for example all the mRNAs a cell is making right now. PCR only works on DNA. So the first job is to make a DNA copy of the RNA. An mRNA is single-stranded and contains only exons, because the cell already spliced it.",
+      nl: "Soms is het molecuul dat je wil kopiëren of sequencen een RNA, bijvoorbeeld alle mRNA's die een cel op dit moment maakt. PCR werkt alleen op DNA. De eerste taak is dus een DNA-kopie van het RNA maken. Een mRNA is enkelstrengs en bevat alleen exonen, omdat de cel het al gesplitst heeft." },
+    { t: "2 · Reverse transcriptase builds the first DNA strand",
+      en: "A primer binds the 3′ end of the mRNA. The enzyme reverse transcriptase, taken from a retrovirus (chapter 3: it is the enzyme HIV uses to copy its RNA genome into DNA), reads the RNA as a template and builds a complementary DNA strand. This first strand is a reverse transcript; the DNA is called complementary DNA, cDNA. At this point each molecule is an RNA–DNA hybrid: one strand RNA, one strand DNA.",
+      nl: "Een primer bindt aan het 3′-uiteinde van het mRNA. Het enzym reverse transcriptase, afkomstig uit een retrovirus (hoofdstuk 3: het enzym waarmee HIV zijn RNA-genoom naar DNA kopieert), leest het RNA als template en bouwt een complementaire DNA-streng. Deze eerste streng is een reverse transcript; het DNA heet complementair DNA, cDNA. Op dit punt is elk molecuul een RNA–DNA-hybride: één streng RNA, één streng DNA." },
+    { t: "3 · The RNA is removed",
+      en: "A specific enzyme that breaks down RNA is added. It eats away the mRNA strand of the hybrid and leaves the single DNA strand.",
+      nl: "Een specifiek enzym dat RNA afbreekt wordt toegevoegd. Het vreet de mRNA-streng van de hybride weg en laat de enkele DNA-streng over." },
+    { t: "4 · DNA polymerase makes the second strand",
+      en: "A DNA polymerase builds the second DNA strand, complementary to the first. The result is double-stranded cDNA: ordinary DNA that carries the sequence of the mRNA.",
+      nl: "Een DNA-polymerase bouwt de tweede DNA-streng, complementair aan de eerste. Het resultaat is dubbelstrengs cDNA: gewoon DNA dat de sequentie van het mRNA draagt." },
+    { t: "5 · PCR on the cDNA",
+      en: "The cDNA is amplified by PCR as usual. Reverse transcription followed by PCR is called RT-PCR. Only one mRNA was drawn; a real sample gives a cDNA for every mRNA in the cell, so the collection of cDNAs is a snapshot of which genes the cell was expressing.",
+      nl: "Het cDNA wordt met PCR vermeerderd zoals gewoonlijk. Reverse transcriptie gevolgd door PCR heet RT-PCR. Er is maar één mRNA getekend; een echt monster geeft een cDNA voor elk mRNA in de cel, dus de verzameling cDNA's is een momentopname van welke genen de cel tot expressie bracht." },
+    { t: "6 · Why cDNA is useful, and the exam trap",
+      en: "cDNA has no introns, unlike the gene in the genome, so a cDNA of a human gene can be put into bacteria, which cannot splice, and still give the right protein. And cDNA reflects which genes the cell was using and how much (page 4.13). Trap for exam questions 8 and 11: reverse transcriptase uses RNA as a template to make DNA; it does not make RNA, does not cut DNA and does not translate anything.",
+      nl: "cDNA heeft geen intronen, anders dan het gen in het genoom, dus een cDNA van een menselijk gen kan in bacteriën, die niet kunnen splitsen, en geeft toch het juiste eiwit. En cDNA weerspiegelt welke genen de cel gebruikte en hoeveel (pagina 4.13). Valkuil voor examenvragen 8 en 11: reverse transcriptase gebruikt RNA als template om DNA te maken; het maakt geen RNA, knipt geen DNA en vertaalt niets." }
+  ];
+  Stepper.init('cdna-stepper', steps, 'cdna');
+})();
+</script>
 
 <div class="callout key"><span class="tag">cDNA has no introns</span>
 <p>The mRNA was already spliced in the cell, so it contains only exons. cDNA made from it therefore has <strong>no introns</strong>, unlike the gene in the genome.

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.5 DNA libraries and genome manipulation</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -16,6 +18,11 @@
   .ins { stroke: var(--c-O); stroke-width: 5; fill: none; stroke-linecap: round; }
   .cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
   .panel { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .plate { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.5; }
+  .col circle { fill: var(--muted); }
+  .col.bad circle { fill: var(--c-O); }
+  .col.good circle { fill: var(--c-Cl); }
+  .cell.bad { stroke: var(--c-O); stroke-width: 2.5; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -132,6 +139,162 @@ different fragment</strong>. Like a real library: thousands of books, each with 
 </ol>
 <p>Restoring a lost function by bringing in a good copy is called <strong>complementation</strong> (the good copy "complements", completes, the broken one).
 A cDNA library made from one tissue or one condition (for example, cells under heat stress) lets you find and study the genes that are expressed in exactly that situation.</p>
+
+<h3>Build it up yourself: making a genomic library and using it to find a gene</h3>
+<p>Press <strong>Next</strong> to add one step at a time. Steps 1 to 7 build the library; steps 8 to 12 use it to find the broken gene of a mutant (complementation).</p>
+
+<div class="stepper" id="lib-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of a genomic library and a complementation screen">
+    <defs>
+      <marker id="arLib" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 genome -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <path d="M40,56 L420,56" class="dna"/>
+      <text x="40" y="44" class="txt small left muted">genomic DNA of a normal yeast cell (one very long molecule, drawn as a line)</text>
+      <text x="440" y="310" class="lbl txt small">begin state: all the DNA of a healthy organism, with every gene somewhere on it</text>
+    </g>
+
+    <!-- 2 fragments -->
+    <g data-step="2">
+      <path d="M40,86 L112,86 M122,86 L172,86 M182,86 L276,86 M286,86 L334,86 M344,86 L420,86" class="dna frag"/>
+      <text x="440" y="310" class="lbl txt small">shear (tear by force) or cut with a restriction enzyme: random fragments of different lengths</text>
+    </g>
+
+    <!-- 3 plasmids, opened -->
+    <g data-step="3">
+      <path d="M86,118 A16,16 0 1 1 64,118" class="plas"/>
+      <path d="M156,118 A16,16 0 1 1 134,118" class="plas"/>
+      <path d="M236,118 A16,16 0 1 1 214,118" class="plas"/>
+      <path d="M316,118 A16,16 0 1 1 294,118" class="plas"/>
+      <path d="M396,118 A16,16 0 1 1 374,118" class="plas"/>
+      <text x="440" y="310" class="lbl txt small">plasmids (small circular DNA carriers) opened with the same restriction enzyme: one per fragment</text>
+    </g>
+
+    <!-- 4 ligation -->
+    <g data-step="4">
+      <path d="M64,118 A16,16 0 0 1 86,118" class="ins"/>
+      <path d="M134,118 A16,16 0 0 1 156,118" class="ins"/>
+      <path d="M214,118 A16,16 0 0 1 236,118" class="ins"/>
+      <path d="M294,118 A16,16 0 0 1 316,118" class="ins"/>
+      <path d="M374,118 A16,16 0 0 1 396,118" class="ins"/>
+      <text x="440" y="310" class="lbl txt small">ligase glues each fragment (red) into its own plasmid: thousands of different recombinant plasmids</text>
+    </g>
+
+    <!-- 5 transformation -->
+    <g data-step="5">
+      <ellipse cx="75" cy="182" rx="24" ry="12" class="cell"/><circle cx="75" cy="182" r="5" class="plas"/><path d="M71,178 A5,5 0 0 1 79,178" class="ins"/>
+      <ellipse cx="145" cy="182" rx="24" ry="12" class="cell"/><circle cx="145" cy="182" r="5" class="plas"/><path d="M141,178 A5,5 0 0 1 149,178" class="ins"/>
+      <ellipse cx="225" cy="182" rx="24" ry="12" class="cell"/><circle cx="225" cy="182" r="5" class="plas"/><path d="M221,178 A5,5 0 0 1 229,178" class="ins"/>
+      <ellipse cx="305" cy="182" rx="24" ry="12" class="cell"/><circle cx="305" cy="182" r="5" class="plas"/><path d="M301,178 A5,5 0 0 1 309,178" class="ins"/>
+      <ellipse cx="385" cy="182" rx="24" ry="12" class="cell"/><circle cx="385" cy="182" r="5" class="plas"/><path d="M381,178 A5,5 0 0 1 389,178" class="ins"/>
+      <text x="40" y="212" class="txt small left muted">bacteria, one plasmid each</text>
+      <text x="440" y="310" class="lbl txt small">transformation: each bacterium takes up one plasmid, so each bacterium carries one fragment</text>
+    </g>
+
+    <!-- 6 plate = library -->
+    <g data-step="6">
+      <circle cx="560" cy="120" r="70" class="plate"/>
+      <g class="col">
+        <circle cx="530" cy="80" r="3"/><circle cx="552" cy="72" r="3"/><circle cx="580" cy="78" r="3"/><circle cx="600" cy="96" r="3"/><circle cx="512" cy="104" r="3"/><circle cx="540" cy="100" r="3"/><circle cx="566" cy="96" r="3"/><circle cx="590" cy="116" r="3"/><circle cx="520" cy="128" r="3"/><circle cx="548" cy="122" r="3"/><circle cx="574" cy="130" r="3"/><circle cx="606" cy="134" r="3"/><circle cx="508" cy="148" r="3"/><circle cx="536" cy="146" r="3"/><circle cx="560" cy="152" r="3"/><circle cx="588" cy="154" r="3"/><circle cx="526" cy="166" r="3"/><circle cx="556" cy="172" r="3"/><circle cx="582" cy="170" r="3"/><circle cx="604" cy="160" r="3"/><circle cx="542" cy="84" r="3"/><circle cx="596" cy="78" r="3"/><circle cx="516" cy="90" r="3"/>
+      </g>
+      <text x="560" y="42" class="txt small">the library: one plate, thousands of colonies</text>
+      <text x="440" y="310" class="lbl txt small">grow on a plate: every colony is a clone of one fragment; all colonies together = the genomic library</text>
+    </g>
+
+    <!-- 7 coverage -->
+    <g data-step="7">
+      <path d="M40,66 L112,66 M100,72 L172,72 M160,66 L276,66 M250,72 L334,72 M320,66 L420,66" class="dna thin frag"/>
+      <text x="440" y="310" class="lbl txt small">the fragments overlap and together cover the whole genome: every gene is in at least one clone</text>
+    </g>
+
+    <!-- 8 the mutant -->
+    <g data-step="8">
+      <ellipse cx="560" cy="248" rx="30" ry="18" class="cell bad"/>
+      <text x="560" y="252" class="txt small" style="fill:var(--c-O)">mutant</text>
+      <text x="560" y="282" class="txt small muted">yeast strain with an interesting phenotype</text>
+      <text x="440" y="310" class="lbl txt small">the question: one gene of this mutant is broken, but which one? (forward genetics: phenotype → gene)</text>
+    </g>
+
+    <!-- 9 transform the mutant with the library -->
+    <g data-step="9">
+      <path d="M560,194 L560,224" class="path accent" marker-end="url(#arLib)"/>
+      <circle cx="548" cy="206" r="3" class="plas"/><circle cx="572" cy="214" r="3" class="plas"/>
+      <text x="440" y="310" class="lbl txt small">transform the mutant with the whole library: each yeast cell receives one random plasmid with one piece of normal DNA</text>
+    </g>
+
+    <!-- 10 complementation plate -->
+    <g data-step="10">
+      <circle cx="745" cy="170" r="58" class="plate"/>
+      <g class="col bad">
+        <circle cx="720" cy="135" r="3"/><circle cx="745" cy="128" r="3"/><circle cx="771" cy="138" r="3"/><circle cx="707" cy="158" r="3"/><circle cx="733" cy="154" r="3"/><circle cx="785" cy="162" r="3"/><circle cx="715" cy="182" r="3"/><circle cx="767" cy="184" r="3"/><circle cx="727" cy="206" r="3"/><circle cx="753" cy="210" r="3"/><circle cx="781" cy="200" r="3"/><circle cx="697" cy="180" r="3"/><circle cx="790" cy="182" r="3"/>
+      </g>
+      <g class="col good">
+        <circle cx="759" cy="160" r="4"/><circle cx="741" cy="186" r="4"/>
+      </g>
+      <text x="745" y="104" class="txt small muted">red = still mutant · green = normal again</text>
+      <text x="440" y="310" class="lbl txt small">most cells stay mutant; a few behave normally: a good copy of the broken gene came in = complementation</text>
+    </g>
+
+    <!-- 11 isolate the plasmid -->
+    <g data-step="11">
+      <path d="M730,216 L706,252" class="path accent" marker-end="url(#arLib)"/>
+      <circle cx="696" cy="270" r="14" class="plas"/><path d="M686,260 A14,14 0 0 1 706,260" class="ins"/>
+      <text x="440" y="310" class="lbl txt small">pick a green colony and isolate its plasmid: it carries the piece of normal DNA that repaired the phenotype</text>
+    </g>
+
+    <!-- 12 sequence the insert -->
+    <g data-step="12">
+      <text x="696" y="298" class="txt small" style="fill:var(--c-O)">ATG GCT TCA ...</text>
+      <text x="440" y="310" class="lbl txt small">sequence the insert (red): that is the gene that was mutated (a cDNA library works the same way, starting from mRNA)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: the genome of a normal yeast cell",
+      en: "Everything starts from the total genomic DNA of a healthy yeast cell: one very long molecule per chromosome, here drawn as one blue line. Somewhere on it lies every gene, including the one we will be looking for later.",
+      nl: "Alles begint bij het totale genomische DNA van een gezonde gistcel: één heel lang molecuul per chromosoom, hier als één blauwe lijn getekend. Ergens daarop ligt elk gen, ook het gen dat we later gaan zoeken." },
+    { t: "2 · Break the genome into fragments",
+      en: "The DNA is broken into pieces, either by shearing (tearing the long molecule by mechanical force) or by cutting with a restriction enzyme (page 4.4). The pieces have different lengths and break at random places, so they overlap.",
+      nl: "Het DNA wordt in stukken gebroken, door scheren (het lange molecuul met kracht uiteentrekken) of door knippen met een restrictie-enzym (pagina 4.4). De stukken hebben verschillende lengtes en breken op willekeurige plaatsen, dus ze overlappen." },
+    { t: "3 · A plasmid for every fragment",
+      en: "Plasmids are small circular DNA carriers that copy themselves in a bacterium. A batch of plasmids is opened with the same restriction enzyme, so their ends fit the ends of the fragments. One opened plasmid is drawn per fragment.",
+      nl: "Plasmiden zijn kleine cirkelvormige DNA-dragers die zichzelf kopiëren in een bacterie. Een partij plasmiden wordt geopend met hetzelfde restrictie-enzym, zodat hun uiteinden passen op de uiteinden van de fragmenten. Per fragment is één geopend plasmide getekend." },
+    { t: "4 · Ligation: each fragment into its own plasmid",
+      en: "The enzyme ligase glues DNA ends together. Each fragment (red) closes one plasmid. Because every fragment is different, every plasmid is now different: thousands of recombinant plasmids, each with one piece of the genome.",
+      nl: "Het enzym ligase plakt DNA-uiteinden aan elkaar. Elk fragment (rood) sluit één plasmide. Omdat elk fragment anders is, is nu elk plasmide anders: duizenden recombinante plasmiden, elk met één stuk van het genoom." },
+    { t: "5 · Transformation: into bacteria",
+      en: "The plasmids are put into bacteria (transformation, page 4.4). Each bacterium takes up one plasmid, so each bacterium now carries one fragment of the yeast genome, and will copy it every time it divides.",
+      nl: "De plasmiden worden in bacteriën gebracht (transformatie, pagina 4.4). Elke bacterie neemt één plasmide op, dus elke bacterie draagt nu één fragment van het gistgenoom, en kopieert dat bij elke deling." },
+    { t: "6 · The library: a plate full of clones",
+      en: "The bacteria are spread on a plate. Each one grows into a colony: millions of identical cells, all with the same plasmid, so the fragment is cloned. Thousands of colonies, each with a different fragment: this collection is the genomic library.",
+      nl: "De bacteriën worden op een plaat uitgespreid. Elke bacterie groeit uit tot een kolonie: miljoenen identieke cellen met hetzelfde plasmide, dus het fragment is gekloneerd. Duizenden kolonies, elk met een ander fragment: die verzameling is de genomische bibliotheek." },
+    { t: "7 · Together the clones cover the whole genome",
+      en: "Because the fragments were random and overlapping, the collection contains every part of the genome at least once: every gene, with its introns and the DNA between genes. One such library serves for an organism; every cell has the same genome.",
+      nl: "Omdat de fragmenten willekeurig en overlappend waren, bevat de verzameling elk deel van het genoom minstens één keer: elk gen, met introns en het DNA tussen de genen. Eén bibliotheek volstaat per organisme; elke cel heeft hetzelfde genoom." },
+    { t: "8 · The question: a mutant with an unknown broken gene",
+      en: "Now the use. You have a mutant yeast strain with an interesting phenotype (how it looks or behaves), but you do not know which gene is mutated. Starting from the phenotype and searching the gene is forward genetics.",
+      nl: "Nu het gebruik. Je hebt een mutante giststam met een interessant fenotype (hoe ze eruitziet of zich gedraagt), maar je weet niet welk gen gemuteerd is. Vertrekken van het fenotype en het gen zoeken is forward genetics." },
+    { t: "9 · Transform the mutant with the library",
+      en: "The whole library goes into the mutant yeast cells. Each cell receives one random plasmid, so each cell gets one piece of normal DNA. Most pieces are useless to it, but one piece in the library is the healthy version of the broken gene.",
+      nl: "De hele bibliotheek gaat in de mutante gistcellen. Elke cel krijgt één willekeurig plasmide, dus één stuk normaal DNA. De meeste stukken hebben geen nut voor die cel, maar één stuk in de bibliotheek is de gezonde versie van het kapotte gen." },
+    { t: "10 · Complementation: a few cells are normal again",
+      en: "Grow the transformed cells on a plate. Nearly all colonies still show the mutant phenotype (red). A few look normal (green): they received the plasmid with a good copy of the broken gene, which restored the lost function. This is complementation.",
+      nl: "Laat de getransformeerde cellen op een plaat groeien. Bijna alle kolonies tonen nog het mutante fenotype (rood). Enkele zien er normaal uit (groen): zij kregen het plasmide met een goede kopie van het kapotte gen, dat de verloren functie herstelde. Dat is complementatie." },
+    { t: "11 · Isolate the plasmid from a normal colony",
+      en: "Pick one of the green colonies and purify its plasmid. Its insert (red) must contain the gene that was mutated, because that piece of DNA is what repaired the phenotype.",
+      nl: "Neem één van de groene kolonies en zuiver het plasmide eruit. Het insert (rood) moet het gemuteerde gen bevatten, want dat stuk DNA heeft het fenotype hersteld." },
+    { t: "12 · Sequence the insert: that is the gene",
+      en: "Read the sequence of the insert (page 4.9): you now know which gene the mutant lacks. Side note: a cDNA library is built the same way, but it starts from the mRNAs of one tissue, copied into cDNA by reverse transcriptase, so it holds only the expressed genes and no introns.",
+      nl: "Lees de sequentie van het insert (pagina 4.9): je weet nu welk gen de mutant mist. Terzijde: een cDNA-bibliotheek wordt op dezelfde manier gebouwd, maar vertrekt van de mRNA's van één weefsel, gekopieerd tot cDNA door reverse transcriptase, en bevat dus alleen de genen die aan staan, zonder introns." }
+  ];
+  Stepper.init('lib-stepper', steps, 'lib');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Genomic versus cDNA</span>
 <p>Genomic library: <strong>all DNA</strong>, with introns and the DNA between genes; one library per organism. cDNA library: <strong>only expressed genes</strong>, no introns;

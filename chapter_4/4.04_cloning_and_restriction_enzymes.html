@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.4 Cloning and restriction enzymes</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -22,6 +24,8 @@
   .dish { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
   .colony { fill: var(--c-O); }
   .scis { stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 3 3; fill: none; }
+  .nick { fill: none; stroke: var(--c-S); stroke-width: 2; stroke-dasharray: 3 2; }
+  .joint { fill: var(--c-S); stroke: none; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -242,6 +246,151 @@ ends, so the PCR product has the site at both ends) and the circular vector. Goa
   </svg>
   <figcaption>Syllabus Figure 4-15: cloning by ligation, from cutting to selection on an antibiotic plate.</figcaption>
 </figure>
+
+<h3>Build it up yourself: cloning a DNA fragment, from vector to colonies</h3>
+<p>Press <strong>Next</strong>. First the vector is assembled part by part, then the insert is cut and pasted in, then bacteria do the copying.</p>
+
+<div class="stepper" id="clone-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: cloning by ligation">
+    <defs>
+      <marker id="arCl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="200" y="290" class="txt small muted">the vector (a plasmid)</text>
+    </g>
+    <g data-step="1" data-until="7">
+      <circle cx="200" cy="180" r="80" class="ring"/>
+    </g>
+    <g data-step="1">
+      <text x="40" y="312" class="lbl txt small left">1 · begin state: a plasmid, a small circular double-stranded DNA from bacteria, which bacteria copy independently of their chromosome; this will be the vector (carrier)</text>
+    </g>
+    <g data-step="2">
+      <path d="M124.8,152.6 A80,80 0 0 1 160,110.7" class="ori"/>
+      <text x="112" y="124" class="txt small" style="text-anchor:end">ori</text>
+      <text x="40" y="312" class="lbl txt small left">2 · part 1, an origin of replication (ori): the place where the host's copying machinery starts, so the plasmid is copied inside E. coli</text>
+    </g>
+    <g data-step="3">
+      <path d="M240,110.7 A80,80 0 0 1 275.2,152.6" class="amp"/>
+      <text x="288" y="124" class="txt small left">ampR</text>
+      <text x="40" y="312" class="lbl txt small left">3 · part 2, a selectable marker: a gene for resistance to the antibiotic ampicillin (ampR); later only cells with the plasmid will survive on ampicillin</text>
+    </g>
+    <g data-step="4" data-until="7">
+      <path d="M200,90 L200,110" class="site"/>
+      <text x="200" y="84" class="txt small muted">EcoRI site</text>
+    </g>
+    <g data-step="4">
+      <text x="40" y="312" class="lbl txt small left">4 · part 3, a unique restriction site: the sequence GAATTC, which the enzyme EcoRI cuts, occurs exactly once, so the circle can be opened at one known place</text>
+    </g>
+    <g data-step="5" data-until="6">
+      <path d="M430,64 L690,64 M430,76 L690,76" class="st ins"/>
+      <path d="M442,56 L442,84 M678,56 L678,84" class="site"/>
+    </g>
+    <g data-step="5" data-until="8">
+      <text x="560" y="46" class="txt small muted">the insert</text>
+    </g>
+    <g data-step="5">
+      <text x="40" y="312" class="lbl txt small left">5 · the insert: the DNA fragment we want to clone, usually made by PCR with primers that carry the EcoRI site, so the site sits at both ends</text>
+    </g>
+    <g data-step="6" data-until="8">
+      <path d="M452,64 L676,64 M460,76 L684,76" class="st ins"/>
+      <text x="446" y="94" class="txt small" style="fill:var(--c-O)">AATT</text><text x="690" y="94" class="txt small" style="fill:var(--c-O)">AATT</text>
+    </g>
+    <g data-step="6">
+      <text x="560" y="112" class="lbl txt small">EcoRI cuts both strands after the G: each end gets a single-stranded AATT tail, a sticky end</text>
+      <text x="40" y="312" class="lbl txt small left">6 · cut the insert with EcoRI; GAATTC is a palindrome (both strands read GAATTC 5′ → 3′), so the two tails are complementary to each other</text>
+    </g>
+    <g data-step="7">
+      <path d="M220.7,102.7 A80,80 0 1 1 179.3,102.7" class="ring"/>
+    </g>
+    <g data-step="7" data-until="8">
+      <text x="160" y="96" class="txt small" style="fill:var(--c-O);text-anchor:end">AATT</text><text x="240" y="96" class="txt small left" style="fill:var(--c-O)">AATT</text>
+      <text x="40" y="312" class="lbl txt small left">7 · cut the vector with the SAME enzyme: the circle opens at its one EcoRI site, and its sticky ends match those of the insert</text>
+    </g>
+    <g data-step="8">
+      <path d="M179.3,102.7 C168,56 232,56 220.7,102.7" class="st ins"/>
+    </g>
+    <g data-step="8" data-until="9">
+      <circle cx="179.3" cy="102.7" r="6" class="nick"/><circle cx="220.7" cy="102.7" r="6" class="nick"/>
+      <text x="200" y="40" class="lbl txt small">dashed circles = nicks: the backbone is not yet joined</text>
+      <text x="40" y="312" class="lbl txt small left">8 · anneal: mix insert and vector; the complementary sticky ends base-pair, which holds the insert in the opened vector, but the backbones still have gaps (nicks)</text>
+    </g>
+    <g data-step="9">
+      <circle cx="179.3" cy="102.7" r="5" class="joint"/><circle cx="220.7" cy="102.7" r="5" class="joint"/>
+      <text x="200" y="40" class="lbl txt small">yellow dots = sealed joints</text>
+      <text x="40" y="312" class="lbl txt small left">9 · ligate: DNA ligase covalently joins the 5′ and 3′ ends and seals the backbone: one closed circular recombinant plasmid (DNA from two sources)</text>
+    </g>
+    <g data-step="10">
+      <path d="M290,190 L450,222" class="path accent" marker-end="url(#arCl)"/>
+      <rect x="470" y="200" width="120" height="56" rx="26" class="cell"/>
+      <circle cx="530" cy="228" r="13" class="ring"/><path d="M522,217 C526,206 534,206 538,217" class="st ins"/>
+      <text x="530" y="276" class="txt small muted">E. coli</text>
+      <text x="40" y="312" class="lbl txt small left">10 · transform: bacteria are made competent (able to take up DNA) with salts or an electric field, and take the plasmid up; this uptake is called transformation</text>
+    </g>
+    <g data-step="11">
+      <path d="M596,228 L664,228" class="path accent" marker-end="url(#arCl)"/>
+      <ellipse cx="750" cy="228" rx="76" ry="42" class="dish"/>
+      <text x="700" y="214" class="txt small muted">×</text><text x="790" y="250" class="txt small muted">×</text><text x="760" y="204" class="txt small muted">×</text><text x="720" y="252" class="txt small muted">×</text>
+      <circle cx="730" cy="228" r="5" class="colony"/><circle cx="772" cy="218" r="5" class="colony"/><circle cx="750" cy="246" r="5" class="colony"/><circle cx="700" cy="240" r="5" class="colony"/>
+      <text x="750" y="286" class="txt small muted">plate with ampicillin</text>
+      <text x="40" y="312" class="lbl txt small left">11 · select: spread the cells on a plate with ampicillin; cells without the plasmid die (×), only cells with the plasmid and its ampR gene grow into colonies (red)</text>
+    </g>
+    <g data-step="12">
+      <text x="640" y="176" class="lbl txt small" style="fill:var(--c-O)">each colony = one clone: identical bacteria, all with the recombinant plasmid</text>
+      <text x="40" y="312" class="lbl txt small left">12 · each colony grew from one cell, so it is a clone carrying the recombinant plasmid; pick a colony, grow it, and purify as much of the plasmid as you need</text>
+    </g>
+    <g data-step="13">
+      <text x="580" y="150" class="lbl txt small bold">restriction enzymes cut, ligase joins (exam Q11 swaps them) · same enzyme for vector and insert</text>
+      <text x="40" y="312" class="lbl txt small left">13 · the route: cut insert → cut vector (same enzyme) → anneal → ligate → transform → select; a vector needs an origin, a marker and unique restriction sites</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin state: a plasmid",
+      en: "Cloning means isolating a DNA region and propagating it: making many copies by letting cells multiply. The carrier is a vector, here a plasmid: a small circular, double-stranded DNA from bacteria that the bacteria copy independently of their own chromosome. We build up what a useful plasmid vector must contain.",
+      nl: "Klonen betekent een DNA-stuk isoleren en vermeerderen: veel kopieën maken door cellen te laten vermenigvuldigen. De drager is een vector, hier een plasmide: een klein cirkelvormig, dubbelstrengs DNA uit bacteriën dat de bacteriën kopiëren onafhankelijk van hun eigen chromosoom. We bouwen op wat een bruikbare plasmidevector moet bevatten." },
+    { t: "2 · An origin of replication",
+      en: "First part: an origin of replication (ori), a sequence the host's copying machinery recognises as a starting point. With an E. coli origin the plasmid is copied in E. coli, so every daughter cell gets copies.",
+      nl: "Eerste onderdeel: een replicatie-oorsprong (ori), een sequentie die de kopieermachinerie van de gastheer herkent als startpunt. Met een E. coli-oorsprong wordt het plasmide in E. coli gekopieerd, zodat elke dochtercel kopieën krijgt." },
+    { t: "3 · A selectable marker",
+      en: "Second part: a selectable marker, a gene that lets only cells with the plasmid grow under chosen conditions. Usually an antibiotic resistance gene; the classic pBR322 even has two (ampicillin and tetracycline). Alternatively a gene for a metabolic enzyme that lets the cell grow on a medium that would otherwise not feed it.",
+      nl: "Tweede onderdeel: een selecteerbare merker, een gen waardoor alleen cellen met het plasmide groeien onder gekozen omstandigheden. Meestal een antibioticumresistentiegen; het klassieke pBR322 heeft er zelfs twee (ampicilline en tetracycline). Of een gen voor een stofwisselingsenzym waardoor de cel groeit op een medium dat haar anders niet zou voeden." },
+    { t: "4 · A unique restriction site",
+      en: "Third part: a restriction site that occurs exactly once, here GAATTC, the site of the enzyme EcoRI (from E. coli). A restriction enzyme is a bacterial protein that recognises a short DNA sequence and cuts the double strand there. Because the site is unique, the circle can be opened at one known place.",
+      nl: "Derde onderdeel: een restrictieplaats die precies één keer voorkomt, hier GAATTC, de plaats van het enzym EcoRI (uit E. coli). Een restrictie-enzym is een bacterieel eiwit dat een korte DNA-sequentie herkent en de dubbele streng daar knipt. Omdat de plaats uniek is, kan de cirkel op één bekende plek geopend worden." },
+    { t: "5 · The insert",
+      en: "The insert is the fragment we want to clone. It is usually made by PCR with primers that carry the restriction site built into their ends, so the PCR product has the EcoRI site at both ends (orange ticks). It can also be cut out of larger DNA with the enzyme.",
+      nl: "De insert is het fragment dat we willen klonen. Het wordt meestal gemaakt met PCR met primers die de restrictieplaats in hun uiteinden dragen, zodat het PCR-product de EcoRI-plaats aan beide uiteinden heeft (oranje streepjes). Het kan ook met het enzym uit groter DNA geknipt worden." },
+    { t: "6 · Cut the insert: sticky ends",
+      en: "EcoRI cuts GAATTC after the G on both strands. The site is a palindrome: the sequence reads the same 5′ → 3′ on both strands. So the cut leaves a short single-stranded tail, AATT, at each end: an overhang, nicknamed a sticky end, because two such tails are complementary and can base-pair.",
+      nl: "EcoRI knipt GAATTC na de G op beide strengen. De plaats is een palindroom: de sequentie leest hetzelfde 5′ → 3′ op beide strengen. De knip laat dus aan elk uiteinde een korte enkelstrengs staart achter, AATT: een overhang, bijgenaamd een plakkerig uiteinde, omdat twee zulke staarten complementair zijn en kunnen paren." },
+    { t: "7 · Cut the vector with the same enzyme",
+      en: "The vector is cut with the same enzyme, so its overhangs are complementary to those of the insert. The circle is now open. Trap: if vector and insert were cut with different enzymes, the ends would not match.",
+      nl: "De vector wordt met hetzelfde enzym geknipt, zodat zijn overhangen complementair zijn aan die van de insert. De cirkel is nu open. Valkuil: als vector en insert met verschillende enzymen geknipt waren, zouden de uiteinden niet passen." },
+    { t: "8 · Anneal: the sticky ends pair",
+      en: "Insert and opened vector are mixed. The compatible sticky ends base-pair with each other, which holds the insert in place. But base pairing is not a chemical bond in the backbone: at each junction the backbone still has a gap, a nick.",
+      nl: "Insert en geopende vector worden gemengd. De passende plakkerige uiteinden paren met elkaar, wat de insert op zijn plaats houdt. Maar basenparing is geen chemische binding in de ruggengraat: bij elke verbinding heeft de ruggengraat nog een gat, een nick." },
+    { t: "9 · Ligate: one recombinant plasmid",
+      en: "DNA ligase covalently joins the 5′ and 3′ ends at each nick and seals the backbone. Now there is one closed circular molecule that contains DNA from two sources: a recombinant plasmid. Remember: restriction enzymes cut, ligase joins.",
+      nl: "DNA-ligase verbindt covalent de 5′- en 3′-uiteinden bij elke nick en sluit de ruggengraat. Nu is er één gesloten cirkelvormig molecuul met DNA uit twee bronnen: een recombinant plasmide. Onthoud: restrictie-enzymen knippen, ligase plakt." },
+    { t: "10 · Transform: into bacteria",
+      en: "Cells do not take up DNA easily. The bacteria are first made competent (able to take up DNA) by treating them with salts or exposing them to an electric field. Then the plasmid is added and some cells take it up. This uptake is called transformation.",
+      nl: "Cellen nemen niet zomaar DNA op. De bacteriën worden eerst competent gemaakt (in staat DNA op te nemen) met zouten of een elektrisch veld. Dan wordt het plasmide toegevoegd en sommige cellen nemen het op. Die opname heet transformatie." },
+    { t: "11 · Select on antibiotic",
+      en: "The cells are spread on a plate with ampicillin. Cells that did not receive the plasmid have no resistance gene and die. Only cells that received the plasmid, and with it ampR, survive and grow into colonies. This is what the selectable marker was for.",
+      nl: "De cellen worden uitgespreid op een plaat met ampicilline. Cellen die het plasmide niet kregen hebben geen resistentiegen en sterven. Alleen cellen die het plasmide kregen, en daarmee ampR, overleven en groeien uit tot kolonies. Daarvoor diende de selecteerbare merker." },
+    { t: "12 · Each colony is a clone",
+      en: "Each colony grew from one cell, so all its bacteria are identical and each carries copies of the recombinant plasmid: the colony is a clone. Pick one colony, grow it in liquid, and purify as much of the plasmid as you need. The fragment has been cloned.",
+      nl: "Elke kolonie groeide uit één cel, dus al haar bacteriën zijn identiek en elke draagt kopieën van het recombinante plasmide: de kolonie is een kloon. Pik één kolonie, kweek ze in vloeistof, en zuiver zoveel plasmide als je nodig hebt. Het fragment is gekloneerd." },
+    { t: "13 · The whole route, and the traps",
+      en: "Cut insert → cut vector with the same enzyme → anneal → ligate → transform → select. A vector needs an origin, a selectable marker and unique restriction sites. Exam question 11 swaps the enzymes: \"DNA ligase – cutting DNA, creating sticky ends\" is the wrong pair; sticky ends come from restriction enzymes, ligase joins.",
+      nl: "Insert knippen → vector knippen met hetzelfde enzym → annealen → ligeren → transformeren → selecteren. Een vector heeft een oorsprong, een selecteerbare merker en unieke restrictieplaatsen nodig. Examenvraag 11 verwisselt de enzymen: \"DNA-ligase – DNA knippen, plakkerige uiteinden maken\" is het foute paar; plakkerige uiteinden komen van restrictie-enzymen, ligase plakt." }
+  ];
+  Stepper.init('clone-stepper', steps, 'clone');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Technique card: cloning by ligation</span>
 <table>

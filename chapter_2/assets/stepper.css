@@ -1,0 +1,22 @@
+/* Step-by-step build-up figures (see stepper.js) */
+.stepper { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin: 1em 0; background: var(--bg); }
+.stepper:focus { outline: 2px solid var(--accent); }
+.stepper .fresh { animation: stepin .5s ease-out; }
+@keyframes stepin { from { opacity: 0; } to { opacity: 1; } }
+.stepbar { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 6px 0; }
+.stepbtn { font: inherit; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--key-bg); color: var(--fg); cursor: pointer; }
+.stepbtn:disabled { opacity: .4; cursor: default; }
+.stepnum { color: var(--muted); font-size: .9rem; min-width: 7em; text-align: center; }
+.steptext { background: var(--panel); border-radius: 10px; padding: 8px 14px; }
+.steptext p { margin: .35em 0; }
+.steptitle { font-weight: 700; }
+.stepnl { color: var(--muted); font-style: italic; }
+/* drawing helpers shared by all steppers */
+.stepper .ct { fill: var(--panel); stroke: none; }
+.stepper .txt.small { font-size: 11px; }
+.stepper .txt.bold { font-weight: 700; }
+.stepper .sigT { stroke: var(--c-O); stroke-width: 2.4; fill: none; }
+.stepper .sigF { stroke: var(--c-S); stroke-width: 2.4; fill: none; }
+.stepper .ahT { fill: var(--c-O); }
+.stepper .ahF { fill: var(--c-S); }
+.stepper .ahN { fill: var(--accent); }

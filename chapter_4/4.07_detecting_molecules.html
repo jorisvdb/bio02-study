@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.7 Detecting molecules</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -20,6 +22,11 @@
   .bb { stroke: var(--c-N); stroke-width: 3; }
   .pair { fill: var(--c-N); fill-opacity: .25; stroke: var(--c-N); stroke-width: 1; }
   .etbr { fill: var(--c-P); fill-opacity: .6; stroke: var(--c-P); stroke-width: 1.5; }
+  .lamp { fill: var(--c-S); stroke: var(--c-P); stroke-width: 2; }
+  .mol circle { fill: var(--c-N); }
+  .readout { fill: var(--panel); stroke: var(--accent); stroke-width: 1.5; }
+  .readcover { fill: var(--panel); stroke: none; }
+  .txt.big { font-size: 18px; font-weight: 700; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -133,6 +140,169 @@ the <strong>cuvette</strong>, and placed in the instrument. A beam of light of t
   </svg>
   <figcaption>Absorption spectroscopy (syllabus Figure 4-21). The three things that decide how much is absorbed: the kind of molecule, its concentration, and the distance the light travels through the liquid.</figcaption>
 </figure>
+
+<h3>Build it up yourself: measuring DNA with light, from lamp to A260/A280</h3>
+<p>Press <strong>Next</strong> to build the measurement one piece at a time. Steps 1 to 6 build the instrument; steps 7 to 9 build the Beer–Lambert law from the three things that decide absorbance; steps 10 to 12 use it on a DNA sample.</p>
+
+<div class="stepper" id="abs-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of an absorbance measurement">
+    <defs>
+      <marker id="arAbs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 the sample -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="430" y="70" width="40" height="80" rx="4" class="cuv"/>
+      <text x="450" y="166" class="txt small">cuvette</text>
+      <text x="450" y="180" class="txt small muted">1 cm wide, clear walls</text>
+      <text x="440" y="310" class="lbl txt small">begin state: a clear liquid in a cuvette (a small vessel with flat transparent sides). Is there DNA in it? How much? Is it clean?</text>
+    </g>
+
+    <!-- 2 light source -->
+    <g data-step="2">
+      <circle cx="80" cy="110" r="22" class="lamp"/>
+      <text x="80" y="150" class="txt small">light source</text>
+      <text x="80" y="164" class="txt small muted">all wavelengths</text>
+      <text x="440" y="310" class="lbl txt small">a lamp that gives light of all wavelengths (all colours, and UV, which we cannot see)</text>
+    </g>
+
+    <!-- 3 choose one wavelength -->
+    <g data-step="3">
+      <rect x="200" y="80" width="60" height="60" rx="6" class="boxp"/>
+      <path d="M212,92 L248,128 M248,92 L212,128" class="grid"/>
+      <text x="230" y="158" class="txt small">wavelength selector</text>
+      <text x="230" y="172" class="txt small muted">lets one λ through</text>
+      <text x="230" y="60" class="txt small bold">λ = 260 nm</text>
+      <text x="440" y="310" class="lbl txt small">pick one wavelength λ (lambda): 260 nm, in the UV, because that is where the bases of DNA absorb most</text>
+    </g>
+
+    <!-- 4 beam in: I0 -->
+    <g data-step="4">
+      <path d="M104,110 L198,110" class="beam"/>
+      <path d="M262,110 L428,110" class="beam"/>
+      <text x="345" y="98" class="txt small">I₀ ("I zero"): light going in</text>
+      <text x="440" y="310" class="lbl txt small">the beam of one wavelength enters the cuvette with intensity I₀ (how bright it is before the sample)</text>
+    </g>
+
+    <!-- 5 absorbed, beam out: I -->
+    <g data-step="5">
+      <g class="mol"><circle cx="440" cy="90" r="3"/><circle cx="455" cy="120" r="3"/><circle cx="462" cy="98" r="3"/><circle cx="446" cy="138" r="3"/><circle cx="458" cy="80" r="3"/><circle cx="438" cy="115" r="3"/></g>
+      <path d="M472,110 L628,110" class="beam weak"/>
+      <text x="550" y="98" class="txt small">I: light coming out, weaker</text>
+      <text x="440" y="310" class="lbl txt small">the molecules in the liquid swallow (absorb) part of the light: the beam that comes out, I, is weaker than I₀</text>
+    </g>
+
+    <!-- 6 detector and absorbance -->
+    <g data-step="6">
+      <rect x="632" y="82" width="56" height="56" rx="6" class="boxp"/>
+      <text x="660" y="116" class="txt small">eye</text>
+      <text x="660" y="158" class="txt small">detector</text>
+      <text x="660" y="172" class="txt small muted">compares I with I₀</text>
+      <rect x="720" y="76" width="120" height="68" rx="8" class="readout"/>
+      <text x="780" y="98" class="txt small muted">absorbance</text>
+      <text x="780" y="126" class="txt big" id="abs-read">A₂₆₀ = ?</text>
+      <text x="440" y="310" class="lbl txt small">the detector compares I with I₀ and reports the absorbance A: a number without unit; more absorbed = higher A ("A two-sixty" = measured at 260 nm)</text>
+    </g>
+
+    <!-- 7 epsilon -->
+    <g data-step="7">
+      <text x="200" y="230" class="txt bold left" style="font-size:20px">A<tspan dy="6" style="font-size:12px">λ</tspan><tspan dy="-6"> = ε</tspan><tspan dy="6" style="font-size:12px">λ</tspan></text>
+      <text x="130" y="256" class="txt small">ε (epsilon): extinction coefficient</text>
+      <text x="130" y="270" class="txt small muted">a constant per molecule and wavelength</text>
+      <text x="440" y="310" class="lbl txt small">what decides A, part 1: the kind of molecule. Each molecule has its own constant ε at each wavelength: how strongly one unit of it absorbs</text>
+    </g>
+
+    <!-- 8 path length -->
+    <g data-step="8">
+      <text x="300" y="230" class="txt bold left" style="font-size:20px">· l</text>
+      <text x="330" y="256" class="txt small">l: path length</text>
+      <text x="330" y="270" class="txt small muted">cuvette width, usually 1 cm</text>
+      <path d="M430,64 L470,64" class="path accent" marker-start="url(#arAbs)" marker-end="url(#arAbs)"/>
+      <text x="450" y="54" class="txt small muted">l = 1 cm</text>
+      <text x="440" y="310" class="lbl txt small">part 2: how far the light travels through the liquid. Twice the width = twice as many molecules in the way = twice the absorbance</text>
+    </g>
+
+    <!-- 9 concentration -->
+    <g data-step="9">
+      <text x="345" y="230" class="txt bold left" style="font-size:20px">· c</text>
+      <text x="520" y="256" class="txt small">c: concentration</text>
+      <text x="520" y="270" class="txt small muted">molecule per litre (M = mol per litre)</text>
+      <text x="520" y="285" class="txt small bold">Beer–Lambert law: A = ε · l · c</text>
+      <text x="520" y="297" class="txt small muted">know ε and l: one reading of A gives c = A / (ε · l)</text>
+      <text x="440" y="310" class="lbl txt small">part 3: the concentration. Twice as much DNA = twice the absorbance. Together: A = ε · l · c, the only formula of the chapter</text>
+    </g>
+
+    <!-- 10 reading at 260 -->
+    <g data-step="10">
+      <rect x="722" y="106" width="116" height="30" class="readcover"/>
+      <text x="780" y="126" class="txt big">A₂₆₀ = 1.0</text>
+      <text x="780" y="164" class="txt small">≈ 50 µg/ml dsDNA</text>
+      <text x="780" y="178" class="txt small muted">(or 40 µg/ml RNA)</text>
+      <text x="440" y="310" class="lbl txt small">rule of thumb instead of ε: at 260 nm, A = 1.0 means about 50 µg/ml double-stranded DNA (µg/ml = millionths of a gram per millilitre)</text>
+    </g>
+
+    <!-- 11 reading at 280 -->
+    <g data-step="11">
+      <rect x="190" y="44" width="80" height="20" class="readcover"/>
+      <text x="230" y="60" class="txt small bold">λ = 280 nm</text>
+      <text x="780" y="200" class="txt small">A₂₈₀ = 0.5</text>
+      <text x="780" y="214" class="txt small muted">(proteins absorb most here)</text>
+      <text x="440" y="310" class="lbl txt small">now switch the selector to 280 nm, the peak of proteins (their aromatic amino acids), and read A again</text>
+    </g>
+
+    <!-- 12 ratio -->
+    <g data-step="12">
+      <text x="780" y="246" class="txt small bold">A₂₆₀/A₂₈₀ = 1.0/0.5 = 2.0</text>
+      <text x="780" y="262" class="txt small" style="fill:var(--c-Cl)">≈ 2: pure DNA</text>
+      <text x="780" y="276" class="txt small muted">clearly below 2: protein in the sample</text>
+      <text x="440" y="310" class="lbl txt small">purity check: the ratio A260/A280 is about 2 for clean DNA (about 0.6 for pure protein); a DNA sample well below 2 is contaminated with protein</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: a liquid in a cuvette",
+      en: "A clear liquid, for example DNA you just purified, is poured into a cuvette: a small vessel with flat, transparent walls, usually exactly 1 cm wide. Three questions: is there DNA in it at all, how much, and is it clean? Light will answer all three.",
+      nl: "Een heldere vloeistof, bijvoorbeeld DNA dat je net gezuiverd hebt, wordt in een cuvet gegoten: een klein vaatje met vlakke, doorzichtige wanden, meestal precies 1 cm breed. Drie vragen: zit er DNA in, hoeveel, en is het zuiver? Licht zal alle drie beantwoorden." },
+    { t: "2 · A light source",
+      en: "A lamp gives light of all wavelengths: all visible colours and also ultraviolet (UV), which our eyes cannot see. The wavelength is written in nanometres (nm, billionths of a metre); visible light runs from about 400 to 700 nm, UV is below 400 nm.",
+      nl: "Een lamp geeft licht van alle golflengten: alle zichtbare kleuren en ook ultraviolet (UV), dat onze ogen niet zien. De golflengte wordt in nanometer geschreven (nm, miljardsten van een meter); zichtbaar licht loopt van ongeveer 400 tot 700 nm, UV zit onder 400 nm." },
+    { t: "3 · Choose one wavelength: 260 nm",
+      en: "A selector lets only one wavelength through. The symbol for wavelength is λ, the Greek letter lambda. We choose 260 nm because the bases of DNA and RNA (A, C, G, T or U) absorb light most strongly there: 260 nm is the signature of nucleic acids.",
+      nl: "Een selector laat maar één golflengte door. Het symbool voor golflengte is λ, de Griekse letter lambda. We kiezen 260 nm omdat de basen van DNA en RNA (A, C, G, T of U) daar het sterkst licht absorberen: 260 nm is de handtekening van nucleïnezuren." },
+    { t: "4 · The beam goes in: I₀",
+      en: "The beam of 260 nm light reaches the cuvette. Its brightness before the sample is called I₀, read 'I zero' (I for intensity). The instrument measures I₀ by sending the same beam through a cuvette with only water or buffer.",
+      nl: "De bundel licht van 260 nm bereikt de cuvet. Zijn helderheid vóór het monster heet I₀, lees 'I nul' (I van intensiteit). Het toestel meet I₀ door dezelfde bundel door een cuvet met alleen water of buffer te sturen." },
+    { t: "5 · The molecules absorb part of the light: I",
+      en: "Inside the liquid, every DNA molecule that the beam meets swallows a bit of the light. The beam that comes out the other side, I, is weaker than I₀. The more molecules in the way, the weaker I.",
+      nl: "In de vloeistof slokt elk DNA-molecuul dat de bundel tegenkomt een beetje licht op. De bundel die er aan de andere kant uitkomt, I, is zwakker dan I₀. Hoe meer moleculen in de weg, hoe zwakker I." },
+    { t: "6 · The detector reports the absorbance A",
+      en: "A detector catches the outgoing beam and compares I with I₀. From that comparison it calculates the absorbance A: a number without a unit that says how much light was absorbed. Measured at 260 nm it is written A260, said 'A two-sixty'. Lamp, selector, cuvette and detector together are the spectrophotometer.",
+      nl: "Een detector vangt de uitgaande bundel en vergelijkt I met I₀. Daaruit berekent hij de absorbantie A: een getal zonder eenheid dat zegt hoeveel licht geabsorbeerd werd. Gemeten bij 260 nm schrijf je A260, 'A tweehonderdzestig'. Lamp, selector, cuvet en detector samen zijn de spectrofotometer." },
+    { t: "7 · What decides A, part 1: the kind of molecule (ε)",
+      en: "Three things decide how much is absorbed. First, which molecule it is: every kind of molecule has its own constant at each wavelength, the extinction coefficient ε (Greek letter epsilon). A big ε means the molecule absorbs strongly. For a protein at 280 nm, ε depends mainly on how many tryptophans and tyrosines it has.",
+      nl: "Drie dingen bepalen hoeveel er geabsorbeerd wordt. Ten eerste: welk molecuul het is. Elke soort molecuul heeft bij elke golflengte zijn eigen constante, de extinctiecoëfficiënt ε (Griekse letter epsilon). Een grote ε betekent dat het molecuul sterk absorbeert. Voor een eiwit bij 280 nm hangt ε vooral af van het aantal tryptofanen en tyrosines." },
+    { t: "8 · Part 2: the path length (l)",
+      en: "Second, how far the light travels through the liquid: the path length l, which is the width of the cuvette, usually 1 cm. A beam that crosses 2 cm of liquid meets twice as many molecules, so A doubles.",
+      nl: "Ten tweede: hoe ver het licht door de vloeistof reist: de weglengte l, de breedte van de cuvet, meestal 1 cm. Een bundel die 2 cm vloeistof doorkruist, komt dubbel zoveel moleculen tegen, dus A verdubbelt." },
+    { t: "9 · Part 3: the concentration (c), and the whole law",
+      en: "Third, the concentration c: how much molecule per litre (unit M, molar = mol per litre). Twice as much DNA, twice the absorbance. Put together: A = ε · l · c, the Beer–Lambert law. If you know ε for your molecule and l of your cuvette, one reading of A gives you the concentration: c = A / (ε · l).",
+      nl: "Ten derde: de concentratie c: hoeveel molecuul per liter (eenheid M, molair = mol per liter). Dubbel zoveel DNA, dubbele absorbantie. Samen: A = ε · l · c, de wet van Beer–Lambert. Ken je ε van je molecuul en l van je cuvet, dan geeft één meting van A de concentratie: c = A / (ε · l)." },
+    { t: "10 · Read A260: how much DNA",
+      en: "For DNA nobody looks up ε; there is a rule of thumb instead. At 260 nm an absorbance of 1.0 in a 1 cm cuvette means about 50 µg/ml of double-stranded DNA (µg/ml = millionths of a gram per millilitre), or 40 µg/ml of single-stranded RNA. Our sample reads 1.0, so it holds about 50 µg/ml DNA.",
+      nl: "Voor DNA zoekt niemand ε op; er is een vuistregel. Bij 260 nm betekent een absorbantie van 1,0 in een cuvet van 1 cm ongeveer 50 µg/ml dubbelstrengs DNA (µg/ml = miljoensten van een gram per milliliter), of 40 µg/ml enkelstrengs RNA. Ons monster geeft 1,0, dus ongeveer 50 µg/ml DNA." },
+    { t: "11 · Switch to 280 nm and read again",
+      en: "Now the selector is turned to 280 nm. That is the peak of proteins, caused by their aromatic amino acids (tryptophan, tyrosine, phenylalanine). Pure DNA absorbs only about half as much at 280 as at 260 nm. Our sample reads A280 = 0.5.",
+      nl: "Nu wordt de selector op 280 nm gezet. Dat is de piek van eiwitten, veroorzaakt door hun aromatische aminozuren (tryptofaan, tyrosine, fenylalanine). Zuiver DNA absorbeert bij 280 maar ongeveer half zoveel als bij 260 nm. Ons monster geeft A280 = 0,5." },
+    { t: "12 · The purity check: A260 / A280",
+      en: "Divide the two readings: 1.0 / 0.5 = 2.0. A ratio of about 2 is the signature of clean DNA (pure protein gives about 0.6). If a DNA sample gives a ratio clearly below 2, protein is present: it adds absorbance at 280 nm and pulls the ratio down. This check is done on every DNA sample before PCR or sequencing.",
+      nl: "Deel de twee metingen: 1,0 / 0,5 = 2,0. Een verhouding van ongeveer 2 is de handtekening van zuiver DNA (zuiver eiwit geeft ongeveer 0,6). Geeft een DNA-monster een verhouding duidelijk onder 2, dan zit er eiwit in: dat voegt absorbantie toe bij 280 nm en trekt de verhouding omlaag. Deze controle gebeurt op elk DNA-monster vóór PCR of sequencing." }
+  ];
+  Stepper.init('abs-stepper', steps, 'abs');
+})();
+</script>
 
 <h3>The Beer–Lambert law</h3>
 <p>The amount of light absorbed depends on exactly three things, and the law puts them in one line:</p>

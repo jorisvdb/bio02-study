@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.10 Genome sequencing</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -28,6 +30,19 @@
   .trace { fill: none; stroke: var(--accent); stroke-width: 2; }
   .ion { fill: var(--c-S); }
   table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+  .ovl { fill: var(--c-S); fill-opacity: .35; stroke: var(--c-S); stroke-width: 1.5; }
+  .gap { fill: var(--c-O); fill-opacity: .35; stroke: none; }
+  .cov { stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 4 3; }
+  .rep { fill: var(--c-Na); fill-opacity: .5; stroke: none; }
+  .longread { stroke: var(--c-Cl); stroke-width: 5; stroke-linecap: round; }
+  .dye.a { fill: var(--c-Cl); } .dye.c { fill: var(--c-N); } .dye.g { fill: var(--c-C); } .dye.t { fill: var(--c-O); } .dye.off { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .blk { fill: var(--fg); }
+  .cam { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.5; }
+  .chamber { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; }
+  .hole { fill: var(--bg); stroke: none; }
+  .flow { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 4 3; }
+  .tracebox { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; }
+  .txt.big { font-size: 20px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -139,6 +154,243 @@ de worm <em>C. elegans</em> en de plant <em>Arabidopsis</em>. Het <strong>Human 
   <figcaption>Left: syllabus Figure 4-31, shotgun sequencing. Right: Figure 4-32, depth of coverage: a base that lies under five reads has 5X coverage, a base under one read has 1X.
   The overlapping reads in step 4 are what makes assembly possible.</figcaption>
 </figure>
+
+<h3>Build it up yourself: shotgun sequencing, from genome to assembly</h3>
+<p>Press <strong>Next</strong> to cut a genome into pieces, read them and put them back together, and to see what coverage means.</p>
+
+<div class="stepper" id="shotgun-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of shotgun sequencing and coverage">
+    <g data-step="1" data-until="2">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="440" y="40" class="lbl txt small">begin state: the DNA of a whole genome, millions of letters long; no machine can read it from end to end</text>
+      <path d="M60,66 L820,66" class="gen"/>
+      <text x="440" y="90" class="txt small muted">genome</text>
+    </g>
+    <g data-step="2" data-until="3">
+      <text x="440" y="40" class="lbl txt small">we start from many copies of the genome (a sample holds millions of cells); four copies are drawn</text>
+      <path d="M60,66 L820,66" class="gen"/>
+      <path d="M60,82 L820,82" class="gen"/>
+      <path d="M60,98 L820,98" class="gen"/>
+      <path d="M60,114 L820,114" class="gen"/>
+      <text x="50" y="94" class="txt small muted" style="text-anchor:end">copies</text>
+    </g>
+    <g data-step="3">
+      <text x="440" y="40" class="lbl txt small">fragment at random (shearing by force, or a restriction enzyme): every copy breaks at different places, so the fragments overlap</text>
+      <path d="M60,66 L230,66" class="frag a"/>
+      <path d="M236,66 L420,66" class="frag b"/>
+      <path d="M426,66 L600,66" class="frag c"/>
+      <path d="M606,66 L634,66" class="frag d"/>
+      <path d="M644,66 L820,66" class="frag a"/>
+      <path d="M60,82 L150,82" class="frag b"/>
+      <path d="M156,82 L330,82" class="frag c"/>
+      <path d="M336,82 L520,82" class="frag d"/>
+      <path d="M526,82 L628,82" class="frag a"/>
+      <path d="M650,82 L700,82" class="frag b"/>
+      <path d="M706,82 L820,82" class="frag c"/>
+      <path d="M60,98 L300,98" class="frag c"/>
+      <path d="M306,98 L470,98" class="frag d"/>
+      <path d="M476,98 L636,98" class="frag a"/>
+      <path d="M646,98 L760,98" class="frag b"/>
+      <path d="M766,98 L820,98" class="frag c"/>
+      <path d="M60,114 L180,114" class="frag d"/>
+      <path d="M186,114 L380,114" class="frag a"/>
+      <path d="M386,114 L560,114" class="frag b"/>
+      <path d="M566,114 L632,114" class="frag c"/>
+      <path d="M648,114 L820,114" class="frag d"/>
+      <text x="50" y="94" class="txt small muted" style="text-anchor:end">copies</text>
+    </g>
+    <g data-step="4">
+      <text x="440" y="40" class="lbl txt small">attach linkers (adapters, orange): the same short synthetic DNA on every end, so one primer pair fits all fragments</text>
+      <path d="M56,66 L60,66" class="adap"/>
+      <path d="M230,66 L234,66" class="adap"/>
+      <path d="M232,66 L236,66" class="adap"/>
+      <path d="M420,66 L424,66" class="adap"/>
+      <path d="M422,66 L426,66" class="adap"/>
+      <path d="M600,66 L604,66" class="adap"/>
+      <path d="M602,66 L606,66" class="adap"/>
+      <path d="M634,66 L638,66" class="adap"/>
+      <path d="M640,66 L644,66" class="adap"/>
+      <path d="M820,66 L824,66" class="adap"/>
+      <path d="M56,82 L60,82" class="adap"/>
+      <path d="M150,82 L154,82" class="adap"/>
+      <path d="M152,82 L156,82" class="adap"/>
+      <path d="M330,82 L334,82" class="adap"/>
+      <path d="M332,82 L336,82" class="adap"/>
+      <path d="M520,82 L524,82" class="adap"/>
+      <path d="M522,82 L526,82" class="adap"/>
+      <path d="M628,82 L632,82" class="adap"/>
+      <path d="M646,82 L650,82" class="adap"/>
+      <path d="M700,82 L704,82" class="adap"/>
+      <path d="M702,82 L706,82" class="adap"/>
+      <path d="M820,82 L824,82" class="adap"/>
+      <path d="M56,98 L60,98" class="adap"/>
+      <path d="M300,98 L304,98" class="adap"/>
+      <path d="M302,98 L306,98" class="adap"/>
+      <path d="M470,98 L474,98" class="adap"/>
+      <path d="M472,98 L476,98" class="adap"/>
+      <path d="M636,98 L640,98" class="adap"/>
+      <path d="M642,98 L646,98" class="adap"/>
+      <path d="M760,98 L764,98" class="adap"/>
+      <path d="M762,98 L766,98" class="adap"/>
+      <path d="M820,98 L824,98" class="adap"/>
+      <path d="M56,114 L60,114" class="adap"/>
+      <path d="M180,114 L184,114" class="adap"/>
+      <path d="M182,114 L186,114" class="adap"/>
+      <path d="M380,114 L384,114" class="adap"/>
+      <path d="M382,114 L386,114" class="adap"/>
+      <path d="M560,114 L564,114" class="adap"/>
+      <path d="M562,114 L566,114" class="adap"/>
+      <path d="M632,114 L636,114" class="adap"/>
+      <path d="M644,114 L648,114" class="adap"/>
+      <path d="M820,114 L824,114" class="adap"/>
+    </g>
+    <g data-step="5">
+      <text x="440" y="40" class="lbl txt small">amplify every fragment by PCR with primers that match the linkers (page 4.3): enough material to sequence</text>
+      <text x="440" y="150" class="lbl txt small muted">×1000 copies of each fragment</text>
+    </g>
+    <g data-step="6" data-until="8">
+      <text x="440" y="40" class="lbl txt small">sequence all the fragments: millions of reads, each a stretch of letters; nobody knows where in the genome a read came from</text>
+      <path d="M100,150 L270,150" class="read"/>
+      <path d="M330,150 L514,150" class="read"/>
+      <path d="M560,150 L654,150" class="read"/>
+      <path d="M700,150 L814,150" class="read"/>
+      <path d="M200,170 L360,170" class="read"/>
+      <path d="M430,170 L604,170" class="read"/>
+      <path d="M650,170 L800,170" class="read"/>
+      <text x="50" y="164" class="txt small muted" style="text-anchor:end">reads</text>
+    </g>
+    <g data-step="7" data-until="8">
+      <text x="440" y="40" class="lbl txt small">the computer looks for reads whose ends share the same letters: an overlap</text>
+      <text x="300" y="212" class="mono" style="font-size:12px">…GGATC</text>
+      <text x="300" y="228" class="mono" style="font-size:12px">   GGATC…</text>
+      <rect x="318" y="200" width="62" height="32" rx="4" class="ovl"/>
+      <text x="400" y="222" class="lbl txt small left">= the same 5 letters: these two reads touch</text>
+    </g>
+    <g data-step="8">
+      <text x="440" y="40" class="lbl txt small">assembly: overlapping reads are chained into longer and longer pieces (contigs) until the genome is reconstructed in order</text>
+      <path d="M60,210 L820,210" class="ref"/>
+      <text x="50" y="213" class="txt small muted" style="text-anchor:end">result</text>
+      <path d="M60,226 L230,226" class="read"/>
+      <path d="M236,226 L420,226" class="read"/>
+      <path d="M426,226 L600,226" class="read"/>
+      <path d="M606,226 L634,226" class="read"/>
+      <path d="M644,226 L820,226" class="read"/>
+      <path d="M60,240 L150,240" class="read"/>
+      <path d="M156,240 L330,240" class="read"/>
+      <path d="M336,240 L520,240" class="read"/>
+      <path d="M526,240 L628,240" class="read"/>
+      <path d="M650,240 L700,240" class="read"/>
+      <path d="M706,240 L820,240" class="read"/>
+      <path d="M60,254 L300,254" class="read"/>
+      <path d="M306,254 L470,254" class="read"/>
+      <path d="M476,254 L636,254" class="read"/>
+      <path d="M646,254 L760,254" class="read"/>
+      <path d="M766,254 L820,254" class="read"/>
+      <path d="M60,268 L180,268" class="read"/>
+      <path d="M186,268 L380,268" class="read"/>
+      <path d="M386,268 L560,268" class="read"/>
+      <path d="M566,268 L632,268" class="read"/>
+      <path d="M648,268 L820,268" class="read"/>
+      <text x="50" y="254" class="txt small muted" style="text-anchor:end">reads</text>
+      <text x="50" y="268" class="txt small muted" style="text-anchor:end">placed</text>
+    </g>
+    <g data-step="9">
+      <text x="440" y="40" class="lbl txt small">where no read happens to fall, the result has a gap; random fragments never cover everything evenly</text>
+      <rect x="636" y="220" width="8" height="60" class="gap"/>
+      <text x="640" y="300" class="lbl txt small" style="fill:var(--c-O)">gap: no read fell here</text>
+    </g>
+    <g data-step="10" data-until="12">
+      <text x="440" y="40" class="lbl txt small">depth of coverage: how many reads contain a given base; here 4X (read 'four times') at one place, 1X at another</text>
+      <path d="M440,216 L440,284" class="cov"/>
+      <text x="440" y="300" class="lbl txt small bold">4X</text>
+      <path d="M645,216 L645,284" class="cov"/>
+      <text x="660" y="300" class="lbl txt small bold">1X</text>
+    </g>
+    <g data-step="11">
+      <text x="440" y="40" class="lbl txt small">that is why you read far more than the genome: 8 genome equivalents to cover 99.9 % at least once (E. coli 4.6 Mbp → 37 Mbp), and more for accuracy</text>
+      <text x="60" y="120" class="lbl txt small left">three reasons: errors are corrected by independent reads · random fragments must cover everything · assembly needs many overlaps</text>
+    </g>
+    <g data-step="12">
+      <text x="440" y="40" class="lbl txt small">the hard part: repeats. A read that lies entirely inside a repeated sequence matches several places; if the repeat is longer than the reads, nobody can bridge it</text>
+      <rect x="300" y="206" width="110" height="8" class="rep"/>
+      <rect x="600" y="206" width="110" height="8" class="rep"/>
+      <text x="355" y="200" class="txt small" style="fill:var(--c-Na)">repeat</text>
+      <text x="655" y="200" class="txt small" style="fill:var(--c-Na)">same repeat</text>
+      <path d="M320,300 L395,300" class="read"/>
+      <text x="357" y="316" class="lbl txt small" style="fill:var(--c-O)">fits here or there?</text>
+      <path d="M560,300 L760,300" class="longread"/>
+      <text x="660" y="316" class="lbl txt small">a long read (Nanopore) spans the repeat and settles it</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · A genome too long to read",
+  en: "Begin state: the DNA of a whole genome, from 4.6 million letters (E. coli) to 3000 million (a human). A Sanger reaction reads about 900 letters and an Illumina read 150. No machine reads a chromosome from end to end, so we need a strategy.",
+  nl: "Beginsituatie: het DNA van een heel genoom, van 4,6 miljoen letters (E. coli) tot 3000 miljoen (een mens). Eén Sanger-reactie leest ongeveer 900 letters en een Illumina-read 150. Geen enkele machine leest een chromosoom van begin tot einde, dus we hebben een strategie nodig."
+  },
+  {
+  t: "2 · Many copies",
+  en: "A sample contains millions of cells, so we have millions of copies of the genome. That matters for the next step: each copy will break in different places.",
+  nl: "Een staal bevat miljoenen cellen, dus we hebben miljoenen kopieën van het genoom. Dat is belangrijk voor de volgende stap: elke kopie zal op andere plaatsen breken."
+  },
+  {
+  t: "3 · Random fragmentation",
+  en: "The DNA is broken at random, by mechanical shearing (force) or with a restriction enzyme. Because every copy breaks elsewhere, the fragments of different copies overlap. Nobody knows yet where each fragment came from, and that is fine. The randomness is why the method is called 'shotgun' (hagelgeweer).",
+  nl: "Het DNA wordt willekeurig gebroken, door mechanisch schudden (kracht) of met een restrictie-enzym. Omdat elke kopie elders breekt, overlappen de fragmenten van verschillende kopieën. Niemand weet nog waar elk fragment vandaan komt, en dat is prima. Die willekeur verklaart de naam 'shotgun' (hagelgeweer)."
+  },
+  {
+  t: "4 · Linkers on every end",
+  en: "Short synthetic DNA pieces, the linkers or adapters, are glued to both ends of every fragment. Now all fragments have the same ends, so one pair of primers fits them all.",
+  nl: "Korte stukjes synthetisch DNA, de linkers of adapters, worden aan beide uiteinden van elk fragment geplakt. Nu hebben alle fragmenten dezelfde uiteinden, zodat één paar primers op allemaal past."
+  },
+  {
+  t: "5 · Amplify",
+  en: "Every fragment is multiplied by PCR (page 4.3) with primers that match the linkers. For the first human genome the fragments were cloned in E. coli as a library instead (page 4.4); today PCR does the job.",
+  nl: "Elk fragment wordt vermenigvuldigd met PCR (pagina 4.3) met primers die op de linkers passen. Voor het eerste menselijke genoom werden de fragmenten in plaats daarvan als bibliotheek in E. coli gekloneerd (pagina 4.4); vandaag doet PCR het werk."
+  },
+  {
+  t: "6 · Sequence everything",
+  en: "All fragments are sequenced. Each result is a read: one stretch of letters. We now have millions of reads in a pile, in no particular order, and the linker sequences are removed from them.",
+  nl: "Alle fragmenten worden gesequencet. Elk resultaat is een read: één stuk letters. We hebben nu miljoenen reads op een hoop, zonder volgorde, en de linkersequenties worden eruit gehaald."
+  },
+  {
+  t: "7 · Find the overlaps",
+  en: "The computer compares the ends of the reads. If the end of one read has the same letters as the beginning of another, the two reads overlap: they come from the same place in the genome, shifted a little.",
+  nl: "De computer vergelijkt de uiteinden van de reads. Als het einde van de ene read dezelfde letters heeft als het begin van een andere, overlappen de twee: ze komen van dezelfde plaats in het genoom, een beetje verschoven."
+  },
+  {
+  t: "8 · Assemble",
+  en: "Overlapping reads are chained together into longer and longer pieces, called contigs (contiguous sequences). In the end the whole genome is reconstructed in the right order. This is assembly (assembleren), done entirely by computer.",
+  nl: "Overlappende reads worden aaneengeketend tot steeds langere stukken, contigs genoemd (aaneengesloten sequenties). Uiteindelijk is het hele genoom in de juiste volgorde gereconstrueerd. Dit is assemblage (assembleren), volledig door de computer."
+  },
+  {
+  t: "9 · Gaps",
+  en: "Because the fragments are random, some regions are read many times by chance and others not at all. Where no read fell, the result has a gap. The first genome sequences, including the human one, had many gaps.",
+  nl: "Omdat de fragmenten willekeurig zijn, worden sommige regio's toevallig vele keren gelezen en andere helemaal niet. Waar geen read viel, zit een gat in het resultaat. De eerste genoomsequenties, ook de menselijke, hadden veel gaten."
+  },
+  {
+  t: "10 · Depth of coverage",
+  en: "The depth of coverage of a base is the number of reads that contain it, written as a multiple: 4X (read 'four times', 'four-fold') means four independent reads cover that base, 1X means only one. More depth gives more confidence that a difference from the reference is real and not a sequencing error.",
+  nl: "De dekkingsdiepte van een base is het aantal reads dat die base bevat, geschreven als een veelvoud: 4X (lees 'vier keer', 'viervoudig') betekent dat vier onafhankelijke reads die base dekken, 1X slechts één. Meer diepte geeft meer zekerheid dat een verschil met de referentie echt is en geen sequencingfout."
+  },
+  {
+  t: "11 · Over-sequencing",
+  en: "So you must read far more than the genome contains. Three reasons: errors in one read are corrected by the other reads; random fragments must hit everything, and in theory you need 8 genome equivalents (8 times the genome length in reads) to cover 99.9 % at least once, for E. coli 37 Mbp of reads for a 4.6 Mbp genome; and assembly needs many overlaps. In practice even more is read.",
+  nl: "Je moet dus veel meer lezen dan het genoom bevat. Drie redenen: fouten in één read worden gecorrigeerd door de andere reads; willekeurige fragmenten moeten alles raken, en in theorie heb je 8 genoomequivalenten nodig (8 keer de genoomlengte aan reads) om 99,9 % minstens één keer te dekken, voor E. coli 37 Mbp aan reads voor een genoom van 4,6 Mbp; en assemblage heeft veel overlappen nodig. In de praktijk wordt nog meer gelezen."
+  },
+  {
+  t: "12 · Repeats, the hard part",
+  en: "Repetitive DNA occurs in many places. A read that lies entirely inside a repeat matches all those places, so the computer cannot tell where it belongs. If the repeat is longer than the reads, no read reaches the unique sequence on either side: that is where the first genomes had gaps. Long reads that span the whole repeat (Nanopore, section 6) solve it.",
+  nl: "Repetitief DNA komt op veel plaatsen voor. Een read die volledig binnen een repeat ligt, past op al die plaatsen, dus de computer weet niet waar hij hoort. Als de repeat langer is dan de reads, bereikt geen enkele read de unieke sequentie aan weerszijden: daar hadden de eerste genomen gaten. Lange reads die de hele repeat overspannen (Nanopore, deel 6) lossen het op."
+  }
+];
+Stepper.init('shotgun-stepper', steps, 'shotgun');
+})();
+</script>
 
 <div class="callout nl"><span class="tag">Samenvatting</span>
 <p><strong>Shotgun</strong>: knip het genoom in <strong>willekeurige, overlappende fragmenten</strong> (schudden of restrictie-enzym), plak <strong>linkers</strong> aan de uiteinden,
@@ -258,6 +510,218 @@ Unlike the ddNTP, the block is a chemical group that can be <strong>removed</str
   <figcaption>Syllabus Figure 4-37. Blue = the fragment, orange = adapters, dashed red = the new copy. One sequencing cycle reads one base in every cluster at once; the read length is the number of cycles.</figcaption>
 </figure>
 
+<h3>Build it up yourself: Illumina sequencing, one coloured base per cycle</h3>
+<p>Press <strong>Next</strong> to follow one fragment from the library to a read of 150 bases.</p>
+
+<div class="stepper" id="illumina-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of Illumina sequencing">
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="60" y="250" width="760" height="12" class="surf"/>
+      <path d="M70,250 L70,232" class="lawn"/>
+      <path d="M86,250 L86,232" class="lawn"/>
+      <path d="M102,250 L102,232" class="lawn"/>
+      <path d="M118,250 L118,232" class="lawn"/>
+      <path d="M134,250 L134,232" class="lawn"/>
+      <path d="M150,250 L150,232" class="lawn"/>
+      <path d="M166,250 L166,232" class="lawn"/>
+      <path d="M182,250 L182,232" class="lawn"/>
+      <path d="M198,250 L198,232" class="lawn"/>
+      <path d="M214,250 L214,232" class="lawn"/>
+      <path d="M230,250 L230,232" class="lawn"/>
+      <path d="M246,250 L246,232" class="lawn"/>
+      <path d="M262,250 L262,232" class="lawn"/>
+      <path d="M278,250 L278,232" class="lawn"/>
+      <path d="M294,250 L294,232" class="lawn"/>
+      <path d="M310,250 L310,232" class="lawn"/>
+      <path d="M326,250 L326,232" class="lawn"/>
+      <path d="M342,250 L342,232" class="lawn"/>
+      <path d="M358,250 L358,232" class="lawn"/>
+      <path d="M374,250 L374,232" class="lawn"/>
+      <path d="M390,250 L390,232" class="lawn"/>
+      <path d="M406,250 L406,232" class="lawn"/>
+      <path d="M422,250 L422,232" class="lawn"/>
+      <path d="M438,250 L438,232" class="lawn"/>
+      <path d="M454,250 L454,232" class="lawn"/>
+      <path d="M470,250 L470,232" class="lawn"/>
+      <path d="M486,250 L486,232" class="lawn"/>
+      <path d="M502,250 L502,232" class="lawn"/>
+      <path d="M518,250 L518,232" class="lawn"/>
+      <path d="M534,250 L534,232" class="lawn"/>
+      <path d="M550,250 L550,232" class="lawn"/>
+      <path d="M566,250 L566,232" class="lawn"/>
+      <path d="M582,250 L582,232" class="lawn"/>
+      <path d="M598,250 L598,232" class="lawn"/>
+      <path d="M614,250 L614,232" class="lawn"/>
+      <path d="M630,250 L630,232" class="lawn"/>
+      <path d="M646,250 L646,232" class="lawn"/>
+      <path d="M662,250 L662,232" class="lawn"/>
+      <path d="M678,250 L678,232" class="lawn"/>
+      <path d="M694,250 L694,232" class="lawn"/>
+      <path d="M710,250 L710,232" class="lawn"/>
+      <path d="M726,250 L726,232" class="lawn"/>
+      <path d="M742,250 L742,232" class="lawn"/>
+      <path d="M758,250 L758,232" class="lawn"/>
+      <path d="M774,250 L774,232" class="lawn"/>
+      <path d="M790,250 L790,232" class="lawn"/>
+      <path d="M806,250 L806,232" class="lawn"/>
+      <text x="440" y="40" class="lbl txt small">the flow cell: a glass surface carrying a dense lawn of short DNA pieces (primers) that match the adapters</text>
+      <text x="440" y="284" class="txt small muted">glass surface with primer lawn</text>
+    </g>
+    <g data-step="2" data-until="3">
+      <text x="440" y="40" class="lbl txt small">the library: genomic DNA broken into fragments, adapters (orange) on both ends, denatured to single strands</text>
+      <path d="M120,90 L120,170" class="strand"/>
+      <path d="M120,84 L120,90" class="adap"/>
+      <path d="M120,170 L120,176" class="adap"/>
+      <path d="M160,100 L160,180" class="strand"/>
+      <path d="M160,94 L160,100" class="adap"/>
+      <path d="M160,180 L160,186" class="adap"/>
+      <text x="190" y="140" class="lbl txt small left">single-stranded fragments with adapters</text>
+    </g>
+    <g data-step="3" data-until="4">
+      <text x="440" y="40" class="lbl txt small">capture: the adapter at one end pairs with a primer of the lawn; each fragment now stands on the surface by one end</text>
+      <path d="M198,232 L198,130" class="strand"/>
+      <path d="M198,130 L198,124" class="adap"/>
+      <path d="M198,232 L198,238" class="adap"/>
+    </g>
+    <g data-step="4" data-until="5">
+      <text x="440" y="40" class="lbl txt small">bridge amplification: the free end bends over and pairs with a neighbouring primer, forming a bridge; the polymerase copies it (red, dashed)</text>
+      <path d="M198,232 C198,120 246,120 246,232" class="strand"/>
+      <path d="M204,232 C204,128 240,128 240,232" class="strand new"/>
+      <text x="222" y="110" class="lbl txt small">bridge</text>
+    </g>
+    <g data-step="5" data-until="6">
+      <text x="440" y="40" class="lbl txt small">the strands are separated: two upright copies. Bend, copy, separate again … each round doubles the number</text>
+      <path d="M198,232 L198,130" class="strand"/>
+      <path d="M246,232 L246,130" class="strand new"/>
+    </g>
+    <g data-step="6">
+      <text x="440" y="40" class="lbl txt small">after many rounds every spot holds a cluster of thousands of identical copies: one molecule gives too little light, a cluster gives a strong signal</text>
+      <path d="M192,232 L192,150" class="strand"/>
+      <path d="M202,232 L202,156" class="strand new"/>
+      <path d="M212,232 L212,150" class="strand"/>
+      <path d="M222,232 L222,156" class="strand new"/>
+      <path d="M232,232 L232,150" class="strand"/>
+      <path d="M242,232 L242,156" class="strand new"/>
+      <path d="M252,232 L252,150" class="strand"/>
+      <path d="M410,232 L410,150" class="strand"/>
+      <path d="M420,232 L420,156" class="strand new"/>
+      <path d="M430,232 L430,150" class="strand"/>
+      <path d="M440,232 L440,156" class="strand new"/>
+      <path d="M450,232 L450,150" class="strand"/>
+      <path d="M460,232 L460,156" class="strand new"/>
+      <path d="M470,232 L470,150" class="strand"/>
+      <path d="M630,232 L630,150" class="strand"/>
+      <path d="M640,232 L640,156" class="strand new"/>
+      <path d="M650,232 L650,150" class="strand"/>
+      <path d="M660,232 L660,156" class="strand new"/>
+      <path d="M670,232 L670,150" class="strand"/>
+      <path d="M680,232 L680,156" class="strand new"/>
+      <path d="M690,232 L690,150" class="strand"/>
+      <text x="222" y="300" class="txt small muted">cluster 1</text>
+      <text x="440" y="300" class="txt small muted">cluster 2</text>
+      <text x="660" y="300" class="txt small muted">cluster 3</text>
+      <text x="440" y="320" class="lbl txt small muted">millions of clusters on one flow cell, each from one original fragment</text>
+    </g>
+    <g data-step="7" data-until="9">
+      <text x="440" y="40" class="lbl txt small">one cycle: add primer, polymerase and the four reversible terminators (3′ blocked, each its own colour); exactly ONE base goes onto every strand; wash</text>
+      <circle cx="222" cy="138" r="7" class="dye a"/>
+      <circle cx="440" cy="138" r="7" class="dye t"/>
+      <circle cx="660" cy="138" r="7" class="dye c"/>
+      <rect x="216" y="124" width="12" height="5" class="blk"/>
+      <rect x="434" y="124" width="12" height="5" class="blk"/>
+      <rect x="654" y="124" width="12" height="5" class="blk"/>
+      <text x="760" y="130" class="lbl txt small left muted">3′ block: no second base</text>
+    </g>
+    <g data-step="8" data-until="9">
+      <text x="440" y="40" class="lbl txt small">image: a laser lights the dyes, a camera photographs the whole surface; the colour of each cluster = the base that was just added</text>
+      <rect x="400" y="60" width="80" height="26" rx="5" class="cam"/>
+      <text x="440" y="77" class="txt small bold">camera</text>
+      <text x="222" y="112" class="txt small" style="fill:var(--c-Cl)">green = A</text>
+      <text x="440" y="112" class="txt small" style="fill:var(--c-O)">red = T</text>
+      <text x="660" y="112" class="txt small" style="fill:var(--c-N)">blue = C</text>
+    </g>
+    <g data-step="9">
+      <text x="440" y="40" class="lbl txt small">reset: chemicals remove the dye and the 3′ block; the 3′ OH is free again and the next base can be added</text>
+      <circle cx="222" cy="138" r="7" class="dye off"/>
+      <circle cx="440" cy="138" r="7" class="dye off"/>
+      <circle cx="660" cy="138" r="7" class="dye off"/>
+      <text x="440" y="112" class="lbl txt small muted">dyes and blocks removed</text>
+    </g>
+    <g data-step="10">
+      <text x="440" y="40" class="lbl txt small">repeat add-image-reset for 75 to 150 cycles: every cycle gives one base for millions of clusters at once; the read length = the number of cycles</text>
+      <circle cx="222" cy="126" r="6" class="dye c"/>
+      <circle cx="222" cy="114" r="6" class="dye g"/>
+      <circle cx="440" cy="126" r="6" class="dye a"/>
+      <circle cx="440" cy="114" r="6" class="dye a"/>
+      <circle cx="660" cy="126" r="6" class="dye t"/>
+      <circle cx="660" cy="114" r="6" class="dye g"/>
+      <text x="222" y="100" class="txt small">A C G …</text>
+      <text x="440" y="100" class="txt small">T A A …</text>
+      <text x="660" y="100" class="txt small">C T G …</text>
+      <text x="440" y="320" class="lbl txt small muted">limitation: short reads (75 to 150 bp), so repeats are a problem and more depth is needed; mostly used with a reference genome</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · The flow cell",
+  en: "Begin state: a glass surface, the flow cell, densely coated with short DNA pieces: a lawn of primers. Their sequence matches the adapters that will be on the fragments. Everything that follows happens on this surface, for millions of fragments at the same time.",
+  nl: "Beginsituatie: een glazen oppervlak, de flow cell, dicht bezet met korte DNA-stukjes: een grasveld van primers. Hun sequentie past op de adapters die op de fragmenten zullen zitten. Alles wat volgt gebeurt op dit oppervlak, voor miljoenen fragmenten tegelijk."
+  },
+  {
+  t: "2 · The library",
+  en: "The genomic DNA is broken into fragments and adapters (short synthetic DNA, orange) are ligated to both ends. The double strands are denatured (separated with heat) into single strands. This collection is the library.",
+  nl: "Het genomische DNA wordt in fragmenten gebroken en aan beide uiteinden worden adapters (kort synthetisch DNA, oranje) geligeerd. De dubbele strengen worden gedenatureerd (met warmte gescheiden) tot enkele strengen. Deze verzameling is de bibliotheek."
+  },
+  {
+  t: "3 · Capture",
+  en: "A fragment's adapter pairs (hybridises) with a primer of the lawn. Each fragment now stands on the glass, attached by one end, at its own spot.",
+  nl: "De adapter van een fragment paart (hybridiseert) met een primer van het grasveld. Elk fragment staat nu op het glas, vastgemaakt met één uiteinde, op zijn eigen plek."
+  },
+  {
+  t: "4 · The bridge",
+  en: "The free end of the fragment bends over and pairs with a neighbouring primer of the lawn: a bridge. DNA polymerase uses the neighbouring primer as a start and copies the fragment (the new strand in red).",
+  nl: "Het vrije uiteinde van het fragment buigt om en paart met een naburige primer van het grasveld: een brug. DNA-polymerase gebruikt de naburige primer als start en kopieert het fragment (de nieuwe streng in rood)."
+  },
+  {
+  t: "5 · Separate and repeat",
+  en: "The two strands are separated: now two copies stand next to each other. Each bends over again, is copied again, and so on. Every round doubles the number of copies at that spot.",
+  nl: "De twee strengen worden gescheiden: nu staan er twee kopieën naast elkaar. Elk buigt opnieuw om, wordt opnieuw gekopieerd, enzovoort. Elke ronde verdubbelt het aantal kopieën op die plek."
+  },
+  {
+  t: "6 · Clusters",
+  en: "After many rounds every spot holds a cluster of thousands of identical copies of one original fragment. This is needed because one molecule gives far too little light to see; a cluster gives a strong signal. The flow cell carries millions of clusters.",
+  nl: "Na vele rondes bevat elke plek een cluster van duizenden identieke kopieën van één oorspronkelijk fragment. Dat is nodig omdat één molecuul veel te weinig licht geeft om te zien; een cluster geeft een sterk signaal. De flow cell draagt miljoenen clusters."
+  },
+  {
+  t: "7 · One cycle: one base",
+  en: "Sequencing by synthesis. Add a primer, DNA polymerase and the four reversible terminators: nucleotides with a removable block on the 3′ end and a different fluorescent colour per base. Because of the block the polymerase can add exactly one base to every strand and then must stop. Unused nucleotides are washed away.",
+  nl: "Sequencing door synthese. Voeg een primer, DNA-polymerase en de vier omkeerbare terminatoren toe: nucleotiden met een verwijderbare blokkering op het 3′-uiteinde en een andere fluorescente kleur per base. Door de blokkering kan het polymerase precies één base aan elke streng toevoegen en moet het dan stoppen. Ongebruikte nucleotiden worden weggewassen."
+  },
+  {
+  t: "8 · Image",
+  en: "A laser excites the dyes and a camera photographs the whole surface. The colour of each cluster tells which base was just added there: green A, red T, blue C, and so on. One photo reads one base for millions of clusters.",
+  nl: "Een laser exciteert de kleurstoffen en een camera fotografeert het hele oppervlak. De kleur van elke cluster zegt welke base daar net is toegevoegd: groen A, rood T, blauw C, enzovoort. Eén foto leest één base voor miljoenen clusters."
+  },
+  {
+  t: "9 · Reset",
+  en: "Chemicals remove the dye and the 3′ block from the base that was just added. The 3′ OH is free again, so the chain can grow one more base in the next cycle. This is the difference with a Sanger ddNTP, whose stop is permanent.",
+  nl: "Chemicaliën verwijderen de kleurstof en de 3′-blokkering van de base die net is toegevoegd. De 3′ OH is weer vrij, zodat de keten in de volgende cyclus één base verder kan groeien. Dit is het verschil met een Sanger-ddNTP, waarvan de stop definitief is."
+  },
+  {
+  t: "10 · Repeat, 75 to 150 times",
+  en: "Add, image, reset, again and again. Each cycle gives one more letter for every cluster at the same time, so the read length equals the number of cycles: 75 to 150 bases. The price of this massive parallelism is short reads: they overlap less, cannot span repeats and need more depth of coverage, so Illumina is mostly used to place reads on a reference genome (page 4.11).",
+  nl: "Toevoegen, fotograferen, resetten, keer op keer. Elke cyclus geeft voor elke cluster tegelijk één letter meer, dus de readlengte is het aantal cycli: 75 tot 150 basen. De prijs van dit massaal parallelle werk is korte reads: ze overlappen minder, overspannen geen repeats en hebben meer dekkingsdiepte nodig, dus Illumina wordt vooral gebruikt om reads op een referentiegenoom te plaatsen (pagina 4.11)."
+  }
+];
+Stepper.init('illumina-stepper', steps, 'illumina');
+})();
+</script>
+
 <p><strong>Limitation:</strong> Illumina reads are short, <strong>75 to 150 bp</strong>. Short reads overlap less and cannot span repeats, so assembly needs <strong>more depth of coverage</strong>.
 That is why Illumina is mostly used with a reference genome (page 4.11), where reads only need to be placed, not assembled from scratch.</p>
 
@@ -315,6 +779,134 @@ No copying, no colours, no amplification.</p>
   </svg>
   <figcaption>Syllabus Figure 4-38, the MinION principle. The pore sits in a membrane; a voltage drives ions through it; a strand passing through changes the current step by step. The levels in the trace are illustrative.</figcaption>
 </figure>
+
+<h3>Build it up yourself: Nanopore sequencing, reading the current</h3>
+<p>Press <strong>Next</strong> to build the sensor and pull one strand through it.</p>
+
+<div class="stepper" id="nanopore-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of Nanopore sequencing">
+    <defs><marker id="arNP" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker></defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="40" y="60" width="520" height="250" rx="10" class="chamber"/>
+      <rect x="40" y="178" width="520" height="16" class="mem"/>
+      <text x="440" y="40" class="lbl txt small">begin state: a membrane divides a cell into two chambers filled with a salt solution, which conducts electricity</text>
+      <text x="110" y="90" class="txt small muted">upper chamber</text>
+      <text x="300" y="290" class="txt small muted">lower chamber</text>
+      <circle cx="200" cy="165" r="4" class="ion"/>
+      <circle cx="420" cy="160" r="4" class="ion"/>
+      <circle cx="300" cy="150" r="4" class="ion"/>
+      <circle cx="400" cy="130" r="4" class="ion"/>
+      <circle cx="480" cy="110" r="4" class="ion"/>
+      <circle cx="110" cy="250" r="4" class="ion"/>
+      <circle cx="260" cy="270" r="4" class="ion"/>
+      <circle cx="420" cy="240" r="4" class="ion"/>
+      <circle cx="500" cy="265" r="4" class="ion"/>
+      <text x="520" y="120" class="txt small muted left">ions</text>
+      <text x="540" y="140" class="lbl txt small muted left">(charged salt particles)</text>
+    </g>
+    <g data-step="2">
+      <text x="440" y="40" class="lbl txt small">a protein with a hole through it, the nanopore, sits in the membrane: the hole is a few nanometres wide (a nanometre is a millionth of a millimetre)</text>
+      <rect x="300" y="168" width="60" height="36" rx="8" class="pore"/>
+      <rect x="322" y="168" width="16" height="36" class="hole"/>
+      <text x="330" y="222" class="txt small bold">nanopore</text>
+    </g>
+    <g data-step="3">
+      <text x="440" y="40" class="lbl txt small">a voltage across the membrane (+ above, − below) makes the ions flow through the pore: a steady current, shown as a flat line in the trace</text>
+      <text x="60" y="80" class="txt big">+</text>
+      <text x="60" y="300" class="txt big">−</text>
+      <path d="M330,120 L330,250" class="flow" marker-end="url(#arNP)"/>
+      <rect x="600" y="80" width="240" height="220" rx="8" class="tracebox"/>
+      <text x="720" y="100" class="txt small muted">current through the pore</text>
+      <path d="M615,200 L825,200" class="trace"/>
+      <text x="720" y="290" class="txt small muted">time →</text>
+    </g>
+    <g data-step="4" data-until="5">
+      <text x="440" y="40" class="lbl txt small">a motor protein (green) sits on top of the pore; a DNA double helix is caught by it</text>
+      <circle cx="330" cy="150" r="16" class="motor"/>
+      <text x="372" y="150" class="txt small left">motor protein</text>
+      <path d="M180,70 C200,80 220,60 240,70 C260,80 280,60 300,70 C310,74 318,78 324,86" class="dna"/>
+      <path d="M180,84 C200,94 220,74 240,84 C260,94 280,74 300,84 C310,88 318,92 324,100" class="dna"/>
+    </g>
+    <g data-step="5">
+      <text x="440" y="40" class="lbl txt small">the motor unwinds the helix and feeds ONE strand through the pore at a controlled speed, letter by letter</text>
+      <circle cx="330" cy="150" r="16" class="motor"/>
+      <text x="372" y="150" class="txt small left">motor protein</text>
+      <path d="M180,70 C200,80 220,60 240,70 C260,80 280,60 300,70 C310,74 318,78 324,120" class="dna"/>
+      <path d="M180,84 C200,94 220,74 240,84 C260,94 280,74 300,84 C310,88 318,92 324,100" class="dna" style="opacity:.35"/>
+      <path d="M330,134 L330,258" class="dna"/>
+      <text x="330" y="272" class="txt small muted">single strand</text>
+    </g>
+    <g data-step="6" data-until="7">
+      <text x="440" y="40" class="lbl txt small">while a base is inside the pore it partly blocks the ions, and the current dips; the trace shows the dip</text>
+      <path d="M615,200 L660,200 L660,230 L700,230 L700,200 L825,200" class="trace"/>
+      <text x="680" y="250" class="lbl txt small" style="fill:var(--accent)">dip</text>
+    </g>
+    <g data-step="7">
+      <text x="440" y="40" class="lbl txt small">each base has its own size and chemistry, so each blocks the current differently: A, T, C and G give four levels, and a methylated C a fifth</text>
+      <path d="M615,200 L640,200 L640,230 L670,230 L670,215 L700,215 L700,245 L730,245 L730,205 L760,205 L760,235 L790,235 L790,200 L825,200" class="trace"/>
+      <text x="655" y="262" class="txt small">A</text>
+      <text x="685" y="262" class="txt small">T</text>
+      <text x="715" y="262" class="txt small">C</text>
+      <text x="745" y="262" class="txt small">G</text>
+      <text x="775" y="262" class="txt small">mC</text>
+    </g>
+    <g data-step="8">
+      <text x="440" y="40" class="lbl txt small">the computer translates the trace into letters in real time; the read is as long as the DNA molecule, no copying, no colours, no PCR</text>
+      <text x="60" y="112" class="lbl txt small left">very long reads: repeats, structural variants</text>
+      <text x="60" y="126" class="lbl txt small left">portable (MinION), RNA read directly,</text>
+      <text x="60" y="140" class="lbl txt small left">methylation seen directly</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · Two chambers of salt water",
+  en: "Begin state: a thin membrane divides a small cell into an upper and a lower chamber, both filled with a salt solution. Salt in water splits into ions, charged particles, and ions can carry an electric current. Nothing can pass the membrane itself.",
+  nl: "Beginsituatie: een dun membraan verdeelt een kleine cel in een bovenste en een onderste kamer, beide gevuld met een zoutoplossing. Zout in water splitst in ionen, geladen deeltjes, en ionen kunnen een elektrische stroom dragen. Door het membraan zelf kan niets."
+  },
+  {
+  t: "2 · The nanopore",
+  en: "A protein with a hole through its middle sits in the membrane: the nanopore. The hole is a few nanometres wide, a nanometre being a millionth of a millimetre, just wide enough for one DNA strand.",
+  nl: "Een eiwit met een gat in het midden zit in het membraan: de nanoporie. Het gat is enkele nanometer breed, een nanometer is een miljoenste van een millimeter, net breed genoeg voor één DNA-streng."
+  },
+  {
+  t: "3 · A steady current",
+  en: "A voltage is applied across the membrane, plus above and minus below. The ions are pulled through the only opening, the pore, and that flow of ions is a current. As long as the pore is empty the current is steady: a flat line in the recording on the right.",
+  nl: "Over het membraan wordt een spanning gezet, plus boven en min onder. De ionen worden door de enige opening getrokken, de porie, en die stroom van ionen is een elektrische stroom. Zolang de porie leeg is, is de stroom constant: een vlakke lijn in de opname rechts."
+  },
+  {
+  t: "4 · The motor protein catches the DNA",
+  en: "A motor protein is attached to the top of the pore. It grabs a DNA double helix from the solution. The motor is an enzyme that can unwind DNA and move along it, using energy.",
+  nl: "Op de bovenkant van de porie zit een motoreiwit. Het grijpt een DNA-dubbele helix uit de oplossing. De motor is een enzym dat DNA kan ontwinden en erlangs kan bewegen, met energie."
+  },
+  {
+  t: "5 · Translocation",
+  en: "The motor unwinds the helix and feeds one single strand through the pore at a controlled speed, letter by letter. This is called translocation (moving across). The speed control matters: too fast and the bases cannot be told apart.",
+  nl: "De motor ontwindt de helix en voert één enkele streng door de porie aan een gecontroleerde snelheid, letter per letter. Dit heet translocatie (overbrengen). De snelheidscontrole is belangrijk: te snel en de basen zijn niet uit elkaar te houden."
+  },
+  {
+  t: "6 · A base blocks the current",
+  en: "While a base sits inside the pore it partly blocks the way for the ions, so the current drops. The recording shows a dip for as long as that base is in the pore.",
+  nl: "Terwijl een base in de porie zit, verspert ze gedeeltelijk de weg voor de ionen, dus de stroom daalt. De opname toont een dip zolang die base in de porie zit."
+  },
+  {
+  t: "7 · Each base its own level",
+  en: "A, T, C and G differ in size and chemistry, so each one blocks the current by a different amount: four levels. A chemically modified base, such as a methylated C, gives yet another level, so methylation is read directly, without the bisulfite treatment of page 4.11.",
+  nl: "A, T, C en G verschillen in grootte en chemie, dus elk blokkeert de stroom in een andere mate: vier niveaus. Een chemisch gewijzigde base, zoals een gemethyleerde C, geeft nog een ander niveau, zodat methylering rechtstreeks gelezen wordt, zonder de bisulfietbehandeling van pagina 4.11."
+  },
+  {
+  t: "8 · Real time, long reads",
+  en: "The computer translates the trace into letters while the strand is still passing, so analysis starts immediately. The read is as long as the molecule, even a whole chromosome, which solves repeats and reveals structural variants. There is no copying, no colours and no PCR, so no PCR errors. The MinION device fits in a hand; RNA can be read directly too.",
+  nl: "De computer vertaalt het signaal in letters terwijl de streng nog passeert, dus de analyse begint meteen. De read is zo lang als het molecuul, zelfs een heel chromosoom, wat repeats oplost en structurele varianten blootlegt. Er is geen kopiëren, geen kleuren en geen PCR, dus geen PCR-fouten. Het MinION-toestel past in een hand; ook RNA kan rechtstreeks gelezen worden."
+  }
+];
+Stepper.init('nanopore-stepper', steps, 'nanopore');
+})();
+</script>
 
 <h3>Advantages and uses</h3>
 <ul>

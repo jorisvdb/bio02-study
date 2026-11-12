@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.2 Stem cells and virus culture</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -17,6 +19,18 @@
   .dish { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
   .lawn { fill: var(--c-Na); fill-opacity: .35; stroke: none; }
   .plaque { fill: var(--bg); stroke: var(--muted); stroke-width: 1; }
+  .blast { fill: none; stroke: var(--muted); stroke-width: 2; }
+  .neurite { stroke: var(--c-O); stroke-width: 2; fill: none; stroke-linecap: round; }
+  .tera { fill: var(--c-O); fill-opacity: .15; stroke: var(--c-O); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .virus { fill: var(--c-Cl); fill-opacity: .35; stroke: var(--c-Cl); stroke-width: 1.5; }
+  .person { fill: none; stroke: var(--fg); stroke-width: 2.2; stroke-linecap: round; }
+  .lawnpre { fill: var(--muted); fill-opacity: .15; stroke: none; }
+  .tip { fill: var(--muted); fill-opacity: .6; stroke: none; }
+  .drop { fill: var(--c-N); stroke: none; }
+  .infected { fill: none; stroke: var(--c-O); stroke-width: 1.5; }
+  .vir { fill: var(--c-O); stroke: none; }
+  .zone { fill: var(--bg); fill-opacity: .7; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 3; }
+  .tube { fill: var(--key-bg); stroke: var(--muted); stroke-width: 1.5; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -188,6 +202,139 @@ ES cells and of most adult stem cells respectively.</p></div>
 groeien door tot een tumor; ES-cellen in een muis geven een <strong>teratoom</strong> (mengsel van vele weefsels). <strong>iPS-cellen</strong>: vier transcriptiefactoren (via
 virale vectoren) herprogrammeren huidcellen tot stamcellen. Voordelen: <strong>autologe</strong> transplantatie (eigen cellen, weinig afstoting) en geen embryo's nodig.</p></div>
 
+<h3>Build it up yourself: ES cells and iPS cells, two roads to a stem cell</h3>
+<p>Press <strong>Next</strong>. The top row follows the embryo road to ES cells; the bottom row follows the skin-cell road to iPS cells.</p>
+
+<div class="stepper" id="ips-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: ES cells from an embryo, iPS cells from a skin cell">
+    <defs>
+      <marker id="arIp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="30" y="40" class="txt small muted left">road 1: from an embryo (ES cells)</text>
+      <circle cx="90" cy="100" r="22" class="stem"/>
+      <text x="90" y="140" class="txt small muted">fertilized egg</text>
+      <text x="40" y="312" class="lbl txt small left">1 · begin state: one fertilized egg; this single cell can give rise to every cell type of the body</text>
+    </g>
+    <g data-step="2">
+      <path d="M118,100 L184,100" class="path accent" marker-end="url(#arIp)"/>
+      <circle cx="230" cy="100" r="40" class="blast"/>
+      <circle cx="207" cy="92" r="7" class="stem"/><circle cx="219" cy="81" r="7" class="stem"/><circle cx="233" cy="87" r="7" class="stem"/><circle cx="213" cy="106" r="7" class="stem"/><circle cx="227" cy="102" r="7" class="stem"/>
+      <text x="230" y="156" class="txt small muted">early embryo</text>
+      <text x="276" y="70" class="lbl txt small left">inner cell mass</text>
+      <text x="40" y="312" class="lbl txt small left">2 · after a few days the embryo is a hollow ball with a clump of cells inside, the inner cell mass; those cells are the embryonic stem cells</text>
+    </g>
+    <g data-step="3">
+      <path d="M274,100 L344,100" class="path accent" marker-end="url(#arIp)"/>
+      <ellipse cx="410" cy="100" rx="58" ry="22" class="dish"/>
+      <circle cx="385" cy="100" r="7" class="stem"/><circle cx="400" cy="94" r="7" class="stem"/><circle cx="415" cy="104" r="7" class="stem"/><circle cx="430" cy="96" r="7" class="stem"/><circle cx="445" cy="102" r="7" class="stem"/>
+      <text x="410" y="140" class="txt small muted">ES cells in culture</text>
+      <text x="40" y="312" class="lbl txt small left">3 · the inner cell mass cells are taken out and grown in a dish: embryonic stem (ES) cells; they divide without limit and, in the syllabus wording, are totipotent</text>
+    </g>
+    <g data-step="4">
+      <path d="M472,100 L536,100" class="path accent" marker-end="url(#arIp)"/>
+      <text x="504" y="92" class="lbl txt small">growth factors</text>
+      <circle cx="600" cy="100" r="12" class="diff"/><path d="M590,91 L572,76 M610,91 L628,76 M600,112 L600,132" class="neurite"/>
+      <text x="600" y="148" class="txt small muted">neurons</text>
+      <text x="40" y="312" class="lbl txt small left">4 · treated with the right growth factors, more than 99 % of the ES cells turn into one chosen cell type, for example neurons (hope for Parkinson's disease)</text>
+    </g>
+    <g data-step="5">
+      <path d="M640,100 L716,100" class="sigT" marker-end="url(#arIp)"/>
+      <ellipse cx="770" cy="100" rx="40" ry="28" class="tera"/>
+      <circle cx="755" cy="92" r="6" class="diff"/><circle cx="772" cy="86" r="6" class="stem"/><circle cx="786" cy="98" r="6" class="prog"/><circle cx="760" cy="110" r="6" class="prog"/><circle cx="778" cy="112" r="6" class="diff"/>
+      <text x="770" y="148" class="txt small muted">teratoma</text>
+      <text x="672" y="70" class="lbl txt small" style="fill:var(--c-O)">the &lt; 1 % that stayed ES</text>
+      <text x="40" y="312" class="lbl txt small left">5 · the danger: cells that did not differentiate keep growing as ES cells and may later differentiate at random into a teratoma, a lump of mixed tissues</text>
+    </g>
+    <g data-step="6">
+      <text x="440" y="176" class="lbl txt small bold" style="fill:var(--c-O)">two more problems with ES cells: a human embryo is needed (ethical objections), and the cells come from someone else (rejection)</text>
+      <text x="40" y="312" class="lbl txt small left">6 · ES cells are made from human embryos, which raises ethical objections; and a transplant of someone else's cells is attacked by the immune system</text>
+    </g>
+    <g data-step="7">
+      <text x="30" y="206" class="txt small muted left">road 2: from a skin cell (iPS cells)</text>
+      <ellipse cx="90" cy="250" rx="26" ry="10" class="diff" transform="rotate(-15 90 250)"/>
+      <text x="90" y="282" class="txt small muted">skin cell of the patient</text>
+      <text x="40" y="312" class="lbl txt small left">7 · another start: a fully differentiated skin cell taken from the patient; on its own it would divide a few times and stop</text>
+    </g>
+    <g data-step="8">
+      <path d="M122,250 L186,250" class="path accent" marker-end="url(#arIp)"/>
+      <polygon points="230,232 246,241 246,259 230,268 214,259 214,241" class="virus"/>
+      <text x="230" y="254" class="txt small bold">4 TF</text>
+      <text x="230" y="286" class="txt small muted">viral vector</text>
+      <text x="40" y="312" class="lbl txt small left">8 · four specific transcription factors (TF: proteins that switch genes on) are brought into the skin cell, usually by a virus used as a delivery vehicle, a viral vector</text>
+    </g>
+    <g data-step="9">
+      <path d="M252,250 L344,250" class="path accent" marker-end="url(#arIp)"/>
+      <text x="298" y="242" class="lbl txt small">reprogramming</text>
+      <ellipse cx="410" cy="250" rx="58" ry="22" class="dish"/>
+      <circle cx="385" cy="250" r="7" class="stem"/><circle cx="400" cy="244" r="7" class="stem"/><circle cx="415" cy="254" r="7" class="stem"/><circle cx="430" cy="246" r="7" class="stem"/><circle cx="445" cy="252" r="7" class="stem"/>
+      <text x="410" y="290" class="txt small muted">iPS cells</text>
+      <text x="40" y="312" class="lbl txt small left">9 · the factors switch on the genes of the early embryo: the skin cell is reprogrammed into a stem cell, an induced pluripotent stem (iPS) cell</text>
+    </g>
+    <g data-step="10">
+      <path d="M472,250 L536,250" class="path accent" marker-end="url(#arIp)"/>
+      <text x="504" y="242" class="lbl txt small">growth factors</text>
+      <circle cx="600" cy="250" r="12" class="diff"/><path d="M590,241 L572,226 M610,241 L628,226 M600,262 L600,282" class="neurite"/>
+      <text x="600" y="298" class="txt small muted">the needed cell type</text>
+      <text x="40" y="312" class="lbl txt small left">10 · iPS cells seem equivalent to ES cells in most ways: with growth factors they can be steered into the cell type the patient needs</text>
+    </g>
+    <g data-step="11">
+      <path d="M640,250 L720,250" class="path accent" marker-end="url(#arIp)"/>
+      <circle cx="770" cy="226" r="9" class="person"/><path d="M770,235 L770,262 M770,242 L754,254 M770,242 L786,254 M770,262 L758,284 M770,262 L782,284" class="person"/>
+      <text x="770" y="300" class="txt small muted">the same patient</text>
+      <text x="40" y="312" class="lbl txt small left">11 · the cells go back into the person they came from: an autologous transplant (auto = self), much less likely to be rejected, and no embryo was needed</text>
+    </g>
+    <g data-step="12">
+      <text x="440" y="176" class="lbl txt small bold">exam wording: totipotent = any cell type (ES cells); pluripotent = a subset of cell types (most adult stem cells); the syllabus calls iPS cells both</text>
+      <text x="40" y="312" class="lbl txt small left">12 · the two roads side by side: ES cells from an embryo, iPS cells from the patient's own skin; both divide without limit and can be steered into any cell type</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin state: a fertilized egg",
+      en: "Road 1 starts where every body starts: one fertilized egg. This single cell can give rise to every cell type of the body. The question of this build-up is how to get cells with that power into a culture dish, and later how to get them without an embryo.",
+      nl: "Weg 1 begint waar elk lichaam begint: één bevruchte eicel. Die ene cel kan elk celtype van het lichaam voortbrengen. De vraag van deze opbouw is hoe je cellen met die kracht in een kweekschaal krijgt, en later hoe je ze krijgt zonder embryo." },
+    { t: "2 · The early embryo and its inner cell mass",
+      en: "After a few days of division the embryo is a hollow ball of cells with a small clump inside: the inner cell mass. Those inner cells will build the whole body; the outer cells only make the placenta. The inner cells are the embryonic stem cells.",
+      nl: "Na enkele dagen delen is het embryo een holle bal cellen met een klein klompje binnenin: de binnenste celmassa. Die binnenste cellen bouwen het hele lichaam; de buitenste maken alleen de placenta. De binnenste cellen zijn de embryonale stamcellen." },
+    { t: "3 · ES cells in a dish",
+      en: "The inner cell mass cells are taken out of the embryo and grown in a dish. They are embryonic stem (ES) cells. Two stem-cell properties: they divide without limit, and they can give rise to every cell type; the syllabus calls this totipotent (toti = all).",
+      nl: "De cellen van de binnenste celmassa worden uit het embryo gehaald en in een schaal gekweekt. Het zijn embryonale stamcellen (ES-cellen). Twee stamceleigenschappen: ze delen onbeperkt, en ze kunnen elk celtype voortbrengen; de syllabus noemt dat totipotent (toti = alles)." },
+    { t: "4 · Steering them into one cell type",
+      en: "In culture, ES cells treated with certain growth factors (signal proteins that tell cells to grow or differentiate) can be made to differentiate: more than 99 % of the cells turn into neurons, for example. The hope is to transplant such neurons into patients with Parkinson's disease, in which one group of neurons dies.",
+      nl: "In kweek kunnen ES-cellen met bepaalde groeifactoren (signaaleiwitten die cellen zeggen te groeien of te differentiëren) tot differentiatie gebracht worden: meer dan 99 % van de cellen wordt bijvoorbeeld neuron. De hoop is zulke neuronen te transplanteren bij patiënten met de ziekte van Parkinson, waarbij één groep neuronen afsterft." },
+    { t: "5 · The danger: a teratoma",
+      en: "If less than 100 % of the cells differentiate, the remaining undifferentiated cells keep growing as ES cells and may later differentiate at random into a tumour. Injecting mouse ES cells directly into mice gives a teratoma: a lump with hair, teeth, muscle and gut tissue jumbled together.",
+      nl: "Als minder dan 100 % van de cellen differentieert, blijven de overblijvende ongedifferentieerde cellen groeien als ES-cellen en kunnen ze later willekeurig differentiëren tot een tumor. Muis-ES-cellen rechtstreeks in muizen spuiten geeft een teratoom: een klomp met haar, tanden, spier en darmweefsel door elkaar." },
+    { t: "6 · Two more problems",
+      en: "ES cells require human embryos, which many people object to on ethical grounds. And a transplant of cells from another person is foreign to the patient's immune system (the body's defence, which attacks foreign cells), so it may be rejected. Road 2 solves both.",
+      nl: "ES-cellen vereisen menselijke embryo's, waar velen ethische bezwaren tegen hebben. En een transplantaat van cellen van een andere persoon is vreemd voor het immuunsysteem van de patiënt (de afweer, die vreemde cellen aanvalt), dus het kan afgestoten worden. Weg 2 lost beide op." },
+    { t: "7 · Another start: a skin cell of the patient",
+      en: "Road 2 begins with a fully differentiated cell, for example a skin cell taken from the patient. By itself such a cell is the opposite of a stem cell: it is specialised, and it divides only a limited number of times (page 4.1).",
+      nl: "Weg 2 begint met een volledig gedifferentieerde cel, bijvoorbeeld een huidcel van de patiënt. Op zichzelf is zo'n cel het tegendeel van een stamcel: ze is gespecialiseerd en deelt maar een beperkt aantal keren (pagina 4.1)." },
+    { t: "8 · Four transcription factors go in",
+      en: "Researchers put four specific transcription factors into the skin cells. A transcription factor is a protein that switches genes on. The genes for the four factors are usually brought in with viral vectors: viruses used as delivery vehicles for genes (section 4 and page 4.4).",
+      nl: "Onderzoekers brengen vier specifieke transcriptiefactoren in de huidcellen. Een transcriptiefactor is een eiwit dat genen aanzet. De genen voor de vier factoren worden meestal binnengebracht met virale vectoren: virussen die als transportmiddel voor genen dienen (deel 4 en pagina 4.4)." },
+    { t: "9 · Reprogramming: an iPS cell",
+      en: "The four factors switch on the set of genes that is normally active early in embryonic development, and the skin cell turns back into a stem cell. Induced means made to happen; the result is an induced pluripotent stem cell, iPS cell. The syllabus calls these cells both totipotent and pluripotent.",
+      nl: "De vier factoren zetten de genen aan die normaal vroeg in de embryonale ontwikkeling actief zijn, en de huidcel verandert terug in een stamcel. Induced betekent opgewekt; het resultaat is een geïnduceerde pluripotente stamcel, iPS-cel. De syllabus noemt deze cellen zowel totipotent als pluripotent." },
+    { t: "10 · Steering them, as with ES cells",
+      en: "iPS cells seem to be equivalent to ES cells in most ways. With growth factors they can be differentiated into the cell type the patient needs, just as on road 1.",
+      nl: "iPS-cellen lijken in de meeste opzichten gelijkwaardig aan ES-cellen. Met groeifactoren kunnen ze gedifferentieerd worden tot het celtype dat de patiënt nodig heeft, net als op weg 1." },
+    { t: "11 · Back into the same patient",
+      en: "The new cells come from the patient's own tissue, so a transplant of them is an autologous transplant (auto = self). It is much less likely to be rejected by the immune system. And no human embryo was needed, which bypasses the ethical objections.",
+      nl: "De nieuwe cellen komen uit het eigen weefsel van de patiënt, dus een transplantaat ervan is een autologe transplantatie (auto = zelf). Het wordt veel minder snel afgestoten door het immuunsysteem. En er was geen menselijk embryo nodig, wat de ethische bezwaren omzeilt." },
+    { t: "12 · The two roads, and the exam words",
+      en: "Road 1: embryo, inner cell mass, ES cells. Road 2: patient's skin cell, four transcription factors, iPS cells. For the exam use the syllabus wording: totipotent = can give rise to any type of cell (ES cells); pluripotent = can give rise to a subset of cell types (most adult stem cells). Example exam question 10 asks exactly these two words.",
+      nl: "Weg 1: embryo, binnenste celmassa, ES-cellen. Weg 2: huidcel van de patiënt, vier transcriptiefactoren, iPS-cellen. Gebruik op het examen de syllabusbewoording: totipotent = kan elk celtype voortbrengen (ES-cellen); pluripotent = kan een deel van de celtypes voortbrengen (de meeste volwassen stamcellen). Voorbeeldexamenvraag 10 vraagt precies deze twee woorden." }
+  ];
+  Stepper.init('ips-stepper', steps, 'ips');
+})();
+</script>
+
 <!-- ============================================================ -->
 <h2>4. Viruses must be grown in living cells (4.2.6)</h2>
 <p>Viruses are useful twice over: studying them has revealed basic cell mechanisms, and they are a valuable way to <strong>bring genes into cells</strong> (viral vectors;
@@ -230,6 +377,100 @@ The syllabus gives the historical example: the most important step towards a vac
   </svg>
   <figcaption>Syllabus Figure 4-9. One live virus particle makes one plaque, so counting plaques counts live viruses.</figcaption>
 </figure>
+
+<h3>Build it up yourself: the plaque assay</h3>
+<p>Press <strong>Next</strong> to see how one live virus particle becomes one countable clear spot.</p>
+
+<div class="stepper" id="plaque-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: plaque assay">
+    <defs>
+      <marker id="arPq" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <circle cx="260" cy="175" r="122" class="dish"/>
+    </g>
+    <g data-step="1" data-until="6">
+      <circle cx="260" cy="175" r="114" class="lawnpre"/>
+    </g>
+    <g data-step="1">
+      <text x="260" y="312" class="txt small muted">a plate with a lawn of cells</text>
+      <text x="440" y="60" class="lbl txt small left">1 · grow a continuous layer of suitable cells on a plate: a "lawn"</text>
+      <text x="440" y="74" class="lbl txt small left muted">(cells the virus can infect; unstained, so they look pale)</text>
+    </g>
+    <g data-step="2">
+      <polygon points="250,30 270,30 264,52 256,52" class="tip"/>
+      <circle cx="260" cy="62" r="5" class="drop"/>
+      <text x="440" y="60" class="lbl txt small left">2 · add the sample that may contain the virus</text>
+      <text x="440" y="74" class="lbl txt small left muted">(a drop spread over the lawn)</text>
+    </g>
+    <g data-step="3" data-until="5">
+      <circle cx="230" cy="140" r="6" class="infected"/>
+    </g>
+    <g data-step="3">
+      <circle cx="230" cy="140" r="2" class="vir"/>
+      <text x="440" y="60" class="lbl txt small left">3 · each virus particle infects ONE cell (the red dot in the ring)</text>
+      <text x="440" y="74" class="lbl txt small left muted">(a virus can only multiply inside a cell, chapter 3)</text>
+    </g>
+    <g data-step="4" data-until="5">
+      <circle cx="230" cy="140" r="14" class="zone"/>
+      <path d="M230,126 L230,116 M244,140 L254,140 M230,154 L230,164 M216,140 L206,140" class="path" style="stroke:var(--c-O)"/>
+    </g>
+    <g data-step="4">
+      <text x="440" y="60" class="lbl txt small left">4 · the cell makes many copies and bursts; the copies infect the neighbours</text>
+      <text x="440" y="74" class="lbl txt small left muted">(a growing zone of dead cells forms around the starting point)</text>
+    </g>
+    <g data-step="5" data-until="6">
+      <circle cx="230" cy="140" r="18" class="zone"/><circle cx="305" cy="112" r="18" class="zone"/><circle cx="322" cy="200" r="18" class="zone"/><circle cx="200" cy="215" r="18" class="zone"/><circle cx="272" cy="240" r="18" class="zone"/><circle cx="186" cy="118" r="18" class="zone"/>
+    </g>
+    <g data-step="5">
+      <text x="440" y="60" class="lbl txt small left">5 · a few days later: every live particle in the sample has made its own zone</text>
+      <text x="440" y="74" class="lbl txt small left muted">(six particles landed on this plate; the zones are hard to see on unstained cells)</text>
+    </g>
+    <g data-step="6">
+      <circle cx="260" cy="175" r="114" class="lawn"/>
+      <circle cx="230" cy="140" r="18" class="plaque"/><circle cx="305" cy="112" r="18" class="plaque"/><circle cx="322" cy="200" r="18" class="plaque"/><circle cx="200" cy="215" r="18" class="plaque"/><circle cx="272" cy="240" r="18" class="plaque"/><circle cx="186" cy="118" r="18" class="plaque"/>
+      <text x="440" y="60" class="lbl txt small left">6 · stain the plate: living cells take up the dye (purple), the zones of dead cells stay clear</text>
+      <text x="440" y="74" class="lbl txt small left muted">(each clear circle is a plaque)</text>
+    </g>
+    <g data-step="7">
+      <text x="230" y="144" class="txt small bold">1</text><text x="305" y="116" class="txt small bold">2</text><text x="322" y="204" class="txt small bold">3</text><text x="200" y="219" class="txt small bold">4</text><text x="272" y="244" class="txt small bold">5</text><text x="186" y="122" class="txt small bold">6</text>
+      <path d="M323,112 L560,112" class="path accent" marker-end="url(#arPq)"/>
+      <rect x="570" y="92" width="22" height="50" rx="6" class="tube"/>
+      <text x="581" y="160" class="txt small muted">pure strain</text>
+      <text x="440" y="60" class="lbl txt small left">7 · count: 6 plaques = 6 live virus particles in the sample added</text>
+      <text x="440" y="74" class="lbl txt small left muted">(diluted 10× → about 10× fewer plaques; one plaque picked → a pure strain)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · A lawn of cells",
+      en: "An assay is a test that measures how much of something is present. To count live virus you first grow a continuous layer of suitable cells on a plate: a lawn. The cells must be a type this virus can infect (its host range, chapter 3). Unstained cells are almost transparent.",
+      nl: "Een assay is een test die meet hoeveel van iets aanwezig is. Om levend virus te tellen kweek je eerst een aaneengesloten laag geschikte cellen op een plaat: een 'grasmat'. De cellen moeten van een type zijn dat dit virus kan infecteren (zijn gastheerbereik, hoofdstuk 3). Ongekleurde cellen zijn bijna doorzichtig." },
+    { t: "2 · Add the sample",
+      en: "A drop of the sample that may contain the virus is spread over the lawn. We do not know yet how many live particles are in it; that is what the assay will tell.",
+      nl: "Een druppel van het monster dat het virus kan bevatten wordt over de grasmat verspreid. We weten nog niet hoeveel levende deeltjes erin zitten; dat gaat de assay vertellen." },
+    { t: "3 · One particle, one cell",
+      en: "Each live virus particle infects one cell. A virus cannot multiply on its own, only inside a cell, so a particle that lands between cells or that cannot infect this cell type does nothing.",
+      nl: "Elk levend virusdeeltje infecteert één cel. Een virus kan niet op zichzelf vermenigvuldigen, alleen in een cel, dus een deeltje dat tussen de cellen belandt of dat dit celtype niet kan infecteren doet niets." },
+    { t: "4 · Burst and spread",
+      en: "The infected cell makes many copies of the virus and bursts (lysis). The copies infect the neighbouring cells, which burst in turn. A growing zone of dead cells forms around the starting point.",
+      nl: "De geïnfecteerde cel maakt veel kopieën van het virus en barst (lysis). De kopieën infecteren de buurcellen, die op hun beurt barsten. Rond het startpunt vormt zich een groeiende zone van dode cellen." },
+    { t: "5 · A few days later",
+      en: "Every live particle that landed on the plate has produced its own zone of dead cells. On this plate six particles landed, so there are six zones. On unstained cells the zones are hard to see, so one more step is needed.",
+      nl: "Elk levend deeltje dat op de plaat landde heeft zijn eigen zone dode cellen gemaakt. Op deze plaat landden zes deeltjes, dus er zijn zes zones. Op ongekleurde cellen zijn de zones moeilijk te zien, dus is nog één stap nodig." },
+    { t: "6 · Stain: the plaques appear",
+      en: "The plate is stained. Living cells take up the dye (purple in the syllabus example); the zones of dead cells stay clear. Each clear circle is a plaque.",
+      nl: "De plaat wordt gekleurd. Levende cellen nemen de kleurstof op (paars in het syllabusvoorbeeld); de zones dode cellen blijven helder. Elke heldere cirkel is een plaque." },
+    { t: "7 · Count, and pick",
+      en: "The number of plaques is proportional to the number of live viruses in the sample: 6 plaques, 6 live particles. A sample diluted ten times gives about ten times fewer plaques. And the virus in one plaque descends from a single particle, so picking it up gives a pure strain. Trap: the assay only counts virus that is alive and can infect these cells.",
+      nl: "Het aantal plaques is evenredig met het aantal levende virussen in het monster: 6 plaques, 6 levende deeltjes. Een tienmaal verdund monster geeft ongeveer tienmaal minder plaques. En het virus in één plaque stamt af van één deeltje, dus het oppikken geeft een zuivere stam. Valkuil: de assay telt alleen virus dat leeft en deze cellen kan infecteren." }
+  ];
+  Stepper.init('plaque-stepper', steps, 'plaque');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Technique card: plaque assay</span>
 <table>

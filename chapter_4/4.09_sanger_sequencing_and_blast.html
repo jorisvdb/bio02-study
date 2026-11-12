@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.9 Sanger sequencing and BLAST</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -22,6 +24,21 @@
   .mono.hl { fill: var(--c-O); font-weight: 700; }
   .mono.sim { fill: var(--accent); font-weight: 700; }
   table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+  .tbox { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; }
+  .pri { fill: var(--c-S); fill-opacity: .55; stroke: var(--c-S); stroke-width: 1.2; }
+  .newn { fill: var(--key-bg); stroke: var(--c-N); stroke-width: 1.2; }
+  .term.a { fill: var(--c-Cl); } .term.c { fill: var(--c-N); } .term.g { fill: var(--c-C); } .term.t { fill: var(--c-O); }
+  .ring { fill: none; stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 3 2; }
+  .pol { fill: var(--c-Cl); fill-opacity: .8; }
+  .tube { fill: var(--bg); stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 3; }
+  .dn { fill: var(--panel); stroke: var(--muted); stroke-width: 1.2; }
+  .frg { stroke: var(--muted); stroke-width: 4; stroke-linecap: round; }
+  .cap { fill: var(--bg); stroke: var(--muted); stroke-width: 1.5; }
+  .laser { stroke: var(--c-O); stroke-width: 3; }
+  .axis { stroke: var(--muted); stroke-width: 1.5; }
+  .dbseq { stroke: var(--muted); stroke-width: 5; stroke-linecap: round; }
+  .seedbox { fill: var(--c-O); fill-opacity: .25; stroke: var(--c-O); stroke-width: 1.5; }
+  .extbox { fill: var(--c-O); fill-opacity: .12; stroke: var(--c-O); stroke-width: 1.5; stroke-dasharray: 4 3; }
 </style>
 </head>
 <body>
@@ -172,6 +189,264 @@ de kopieën in de hele populatie op <strong>elke</strong> plek waar die base hoo
   all four ddNTPs are in one tube, each with its own fluorescent colour; a capillary gel sorts the fragments by length and a detector reads the colour of each one as it passes.</figcaption>
 </figure>
 
+<h3>Build it up yourself: Sanger sequencing from template to chromatogram</h3>
+<p>Press <strong>Next</strong> to follow one sequencing reaction from the bare template to the chromatogram, one idea per step.</p>
+
+<div class="stepper" id="sanger-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of Sanger sequencing">
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="440" y="40" class="lbl txt small">the template: one strand of the DNA to read, written 3′ → 5′ from left to right</text>
+      <rect x="60" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="78" y="76" class="mono">G</text>
+      <rect x="100" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="118" y="76" class="mono">C</text>
+      <rect x="140" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="158" y="76" class="mono">A</text>
+      <rect x="180" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="198" y="76" class="mono">T</text>
+      <rect x="220" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="238" y="76" class="mono">C</text>
+      <rect x="260" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="278" y="76" class="mono">T</text>
+      <rect x="300" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="318" y="76" class="mono">A</text>
+      <rect x="340" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="358" y="76" class="mono">G</text>
+      <rect x="380" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="398" y="76" class="mono">G</text>
+      <rect x="420" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="438" y="76" class="mono">T</text>
+      <rect x="460" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="478" y="76" class="mono">C</text>
+      <rect x="500" y="58" width="36" height="26" rx="4" class="tbox"/>
+      <text x="518" y="76" class="mono">A</text>
+      <text x="50" y="76" class="txt small muted" style="text-anchor:end">3′</text>
+      <text x="548" y="76" class="txt small muted left">5′</text>
+      <text x="440" y="110" class="lbl txt small muted">the new strand will be written under it, 5′ → 3′, A opposite T and C opposite G</text>
+    </g>
+    <g data-step="2">
+      <text x="440" y="40" class="lbl txt small">a primer (short DNA, about 20 letters) pairs with the start of the template; it gives the 3′ OH to build on</text>
+      <rect x="60" y="90" width="36" height="26" rx="4" class="pri"/>
+      <text x="78" y="108" class="mono">C</text>
+      <rect x="100" y="90" width="36" height="26" rx="4" class="pri"/>
+      <text x="118" y="108" class="mono">G</text>
+      <rect x="140" y="90" width="36" height="26" rx="4" class="pri"/>
+      <text x="158" y="108" class="mono">T</text>
+      <rect x="180" y="90" width="36" height="26" rx="4" class="pri"/>
+      <text x="198" y="108" class="mono">A</text>
+      <text x="50" y="108" class="txt small muted" style="text-anchor:end">5′</text>
+      <text x="220" y="136" class="lbl txt small muted">3′ OH: the only place the polymerase can add to</text>
+    </g>
+    <g data-step="3" data-until="5">
+      <circle cx="238" cy="104" r="14" class="pol"/>
+      <text x="238" y="108" class="txt small bold">pol</text>
+      <text x="440" y="40" class="lbl txt small">DNA polymerase sits at the 3′ end; the tube holds plenty of all four normal building blocks (dNTPs)</text>
+      <rect x="620" y="125" width="160" height="80" rx="10" class="tube"/>
+      <text x="700" y="216" class="txt small muted">normal dNTPs: A C G T</text>
+      <circle cx="640" cy="150" r="7" class="dn"/>
+      <text x="640" y="154" class="txt small" style="font-size:9px">A</text>
+      <circle cx="670" cy="140" r="7" class="dn"/>
+      <text x="670" y="144" class="txt small" style="font-size:9px">C</text>
+      <circle cx="700" cy="155" r="7" class="dn"/>
+      <text x="700" y="159" class="txt small" style="font-size:9px">G</text>
+      <circle cx="730" cy="143" r="7" class="dn"/>
+      <text x="730" y="147" class="txt small" style="font-size:9px">T</text>
+      <circle cx="655" cy="180" r="7" class="dn"/>
+      <text x="655" y="184" class="txt small" style="font-size:9px">G</text>
+      <circle cx="690" cy="185" r="7" class="dn"/>
+      <text x="690" y="189" class="txt small" style="font-size:9px">A</text>
+      <circle cx="720" cy="178" r="7" class="dn"/>
+      <text x="720" y="182" class="txt small" style="font-size:9px">C</text>
+      <circle cx="750" cy="175" r="7" class="dn"/>
+      <text x="750" y="179" class="txt small" style="font-size:9px">T</text>
+    </g>
+    <g data-step="4" data-until="9">
+      <text x="440" y="40" class="lbl txt small">plus a small amount of stoppers: ddNTPs, one for each base, each carrying its own fluorescent colour</text>
+      <rect x="640" y="236" width="130" height="42" rx="10" class="tube"/>
+      <text x="705" y="231" class="txt small muted">few ddNTPs: no 3′ OH, coloured</text>
+      <circle cx="660" cy="260" r="7" class="term a"/>
+      <circle cx="660" cy="260" r="10" class="ring"/>
+      <circle cx="690" cy="250" r="7" class="term c"/>
+      <circle cx="690" cy="250" r="10" class="ring"/>
+      <circle cx="720" cy="262" r="7" class="term g"/>
+      <circle cx="720" cy="262" r="10" class="ring"/>
+      <circle cx="750" cy="252" r="7" class="term t"/>
+      <circle cx="750" cy="252" r="10" class="ring"/>
+      <text x="440" y="300" class="lbl txt small muted">colours: green = A, blue = C, grey = G, red = T (the same colours as in the gel figure above)</text>
+    </g>
+    <g data-step="5" data-until="7">
+      <text x="440" y="40" class="lbl txt small">the polymerase adds normal dNTPs one by one, each the complement of the template letter above it</text>
+      <rect x="220" y="90" width="36" height="26" rx="4" class="newn"/>
+      <text x="238" y="108" class="mono">G</text>
+      <rect x="260" y="90" width="36" height="26" rx="4" class="newn"/>
+      <text x="278" y="108" class="mono">A</text>
+      <rect x="300" y="90" width="36" height="26" rx="4" class="newn"/>
+      <text x="318" y="108" class="mono">T</text>
+      <circle cx="358" cy="104" r="14" class="pol"/>
+      <text x="358" y="108" class="txt small bold">pol</text>
+    </g>
+    <g data-step="6" data-until="7">
+      <text x="440" y="40" class="lbl txt small">at position 8 a ddC happened to be picked: it is built in, but it has no 3′ OH, so nothing can follow. The chain stops here, for good</text>
+      <rect x="340" y="90" width="36" height="26" rx="4" class="term c"/>
+      <text x="358" y="108" class="mono" style="fill:#fff">C</text>
+      <circle cx="358" cy="103" r="20" class="ring"/>
+      <text x="358" y="136" class="lbl txt small bold" style="fill:var(--c-O)">no 3′ OH: stop</text>
+    </g>
+    <g data-step="7" data-until="9">
+      <text x="440" y="40" class="lbl txt small">the tube holds millions of template copies; each copy stops at a random position, so together they stop at every position</text>
+      <path d="M220,150 L318,150" class="frg"/>
+      <circle cx="318" cy="150" r="6" class="term t"/>
+      <path d="M220,168 L238,168" class="frg"/>
+      <circle cx="238" cy="168" r="6" class="term g"/>
+      <path d="M220,186 L438,186" class="frg"/>
+      <circle cx="438" cy="186" r="6" class="term a"/>
+      <path d="M220,204 L278,204" class="frg"/>
+      <circle cx="278" cy="204" r="6" class="term a"/>
+      <path d="M220,222 L518,222" class="frg"/>
+      <circle cx="518" cy="222" r="6" class="term t"/>
+      <path d="M220,240 L358,240" class="frg"/>
+      <circle cx="358" cy="240" r="6" class="term c"/>
+      <path d="M220,258 L478,258" class="frg"/>
+      <circle cx="478" cy="258" r="6" class="term g"/>
+      <path d="M220,276 L398,276" class="frg"/>
+      <circle cx="398" cy="276" r="6" class="term c"/>
+      <text x="50" y="220" class="txt small muted" style="text-anchor:end">copies</text>
+      <text x="220" y="300" class="txt small muted left">each line = one stopped copy; the coloured dot = the ddNTP it ended with</text>
+    </g>
+    <g data-step="8">
+      <text x="440" y="40" class="lbl txt small">sort them in your head by length: there is a copy of every length from 1 to 8 extra letters, and the colour of its last base says which letter sits there</text>
+      <text x="620" y="220" class="lbl txt small left">length 1 → first letter after the primer</text>
+      <text x="620" y="234" class="lbl txt small left">length 2 → second letter, and so on</text>
+    </g>
+    <g data-step="9">
+      <text x="440" y="40" class="lbl txt small">capillary gel electrophoresis: the fragments run through a thin gel-filled tube; the shortest moves fastest and reaches the laser first</text>
+      <rect x="690" y="60" width="22" height="230" rx="8" class="cap"/>
+      <path d="M680,296 L722,296" class="laser"/>
+      <text x="701" y="312" class="txt small muted">laser + detector</text>
+      <text x="740" y="90" class="txt small muted left">longest</text>
+      <text x="740" y="280" class="txt small muted left">shortest</text>
+      <circle cx="701" cy="272" r="7" class="term g"/>
+      <circle cx="701" cy="246" r="7" class="term a"/>
+      <circle cx="701" cy="220" r="7" class="term t"/>
+      <circle cx="701" cy="194" r="7" class="term c"/>
+      <circle cx="701" cy="168" r="7" class="term c"/>
+      <circle cx="701" cy="142" r="7" class="term a"/>
+      <circle cx="701" cy="116" r="7" class="term g"/>
+      <circle cx="701" cy="90" r="7" class="term t"/>
+    </g>
+    <g data-step="10">
+      <text x="440" y="40" class="lbl txt small">as each fragment passes, the detector records its colour: first the shortest (letter 1), then letter 2 … the colours in order are the sequence</text>
+      <text x="60" y="160" class="txt small bold left">read:</text>
+      <text x="120" y="162" class="mono" style="fill:var(--c-C);font-weight:700">G</text>
+      <text x="154" y="162" class="mono" style="fill:var(--c-Cl);font-weight:700">A</text>
+      <text x="188" y="162" class="mono" style="fill:var(--c-O);font-weight:700">T</text>
+      <text x="222" y="162" class="mono" style="fill:var(--c-N);font-weight:700">C</text>
+      <text x="256" y="162" class="mono" style="fill:var(--c-N);font-weight:700">C</text>
+      <text x="290" y="162" class="mono" style="fill:var(--c-Cl);font-weight:700">A</text>
+      <text x="324" y="162" class="mono" style="fill:var(--c-C);font-weight:700">G</text>
+      <text x="358" y="162" class="mono" style="fill:var(--c-O);font-weight:700">T</text>
+      <text x="60" y="182" class="lbl txt small muted left">(check it against the template above: each letter is the complement of the letter in the box above it)</text>
+    </g>
+    <g data-step="11">
+      <text x="440" y="40" class="lbl txt small">the computer draws a chromatogram: one coloured peak per fragment, in order of arrival, and writes the letter above each peak</text>
+      <path d="M60,290 L420,290" class="axis"/>
+      <path d="M67,290 C79,240 91,240 103,290" class="peak g"/>
+      <text x="85" y="232" class="mono" style="font-size:12px">G</text>
+      <path d="M111,290 C123,240 135,240 147,290" class="peak a"/>
+      <text x="129" y="232" class="mono" style="font-size:12px">A</text>
+      <path d="M155,290 C167,240 179,240 191,290" class="peak t"/>
+      <text x="173" y="232" class="mono" style="font-size:12px">T</text>
+      <path d="M199,290 C211,240 223,240 235,290" class="peak c"/>
+      <text x="217" y="232" class="mono" style="font-size:12px">C</text>
+      <path d="M243,290 C255,240 267,240 279,290" class="peak c"/>
+      <text x="261" y="232" class="mono" style="font-size:12px">C</text>
+      <path d="M287,290 C299,240 311,240 323,290" class="peak a"/>
+      <text x="305" y="232" class="mono" style="font-size:12px">A</text>
+      <path d="M331,290 C343,240 355,240 367,290" class="peak g"/>
+      <text x="349" y="232" class="mono" style="font-size:12px">G</text>
+      <path d="M375,290 C387,240 399,240 411,290" class="peak t"/>
+      <text x="393" y="232" class="mono" style="font-size:12px">T</text>
+      <text x="240" y="310" class="txt small muted">chromatogram: peaks = bases, left to right = 5′ → 3′</text>
+    </g>
+    <g data-step="12">
+      <text x="440" y="40" class="lbl txt small">one reaction reads up to about 900 bases; Sanger is still the standard for one gene or one PCR product, far too slow for a genome (page 4.10)</text>
+      <text x="620" y="150" class="lbl txt small left">what you need: template, primer, polymerase,</text>
+      <text x="620" y="164" class="lbl txt small left">four dNTPs, a little ddNTP, a label, a capillary</text>
+      <text x="620" y="184" class="lbl txt small left">one ddNTP = one stop; the length of the</text>
+      <text x="620" y="198" class="lbl txt small left">stopped copy = the position of that base</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · The template",
+  en: "Begin state: many identical copies of a DNA fragment, made single-stranded. We want the order of its letters. The template is drawn 3′ → 5′ (read: three prime to five prime, the two ends of a strand), because the new strand will be built the other way, 5′ → 3′.",
+  nl: "Beginsituatie: veel identieke kopieën van een DNA-fragment, enkelstrengig gemaakt. We willen de volgorde van de letters. De template staat 3′ → 5′ (lees: drie-prime naar vijf-prime, de twee uiteinden van een streng), want de nieuwe streng wordt in de andere richting gebouwd, 5′ → 3′."
+  },
+  {
+  t: "2 · The primer",
+  en: "A primer is a short piece of DNA, about 20 letters, that pairs with the start of the template. DNA polymerase cannot start on its own: it can only add a nucleotide to a free 3′ OH, the hydroxyl group on carbon 3 of the last sugar. The primer provides that 3′ OH.",
+  nl: "Een primer is een kort stuk DNA, ongeveer 20 letters, dat paart met het begin van de template. DNA-polymerase kan niet zelf beginnen: het kan alleen een nucleotide vastmaken aan een vrije 3′ OH, de hydroxylgroep op koolstof 3 van de laatste suiker. De primer levert die 3′ OH."
+  },
+  {
+  t: "3 · The polymerase and the normal building blocks",
+  en: "DNA polymerase sits down at the 3′ end of the primer. The tube contains all four normal nucleotides, the dNTPs (read: d-N-T-P), in large amounts. With only these, the polymerase would copy the whole template and we would learn nothing about the order.",
+  nl: "DNA-polymerase gaat op het 3′-uiteinde van de primer zitten. In het buisje zitten de vier normale nucleotiden, de dNTP's (lees: d-N-T-P), in grote hoeveelheid. Met alleen die zou het polymerase de hele template kopiëren en zouden we niets over de volgorde leren."
+  },
+  {
+  t: "4 · The stoppers: ddNTPs",
+  en: "Now add a small amount of dideoxynucleotides, ddNTPs (read: d-d-N-T-P): one for each base. A ddNTP has an H instead of the OH on carbon 3. The polymerase can build it in, but nothing can be attached after it. In the modern method each of the four ddNTPs carries its own fluorescent colour: green A, blue C, grey G, red T.",
+  nl: "Voeg nu een kleine hoeveelheid dideoxynucleotiden toe, ddNTP's (lees: d-d-N-T-P): één per base. Een ddNTP heeft een H in plaats van de OH op koolstof 3. Het polymerase kan hem inbouwen, maar erna kan er niets meer aan vast. In de moderne methode draagt elk van de vier ddNTP's zijn eigen fluorescente kleur: groen A, blauw C, grijs G, rood T."
+  },
+  {
+  t: "5 · Extension",
+  en: "The polymerase adds nucleotides one by one, always the complement of the template letter above: A opposite T, C opposite G. At every position it picks a normal dNTP or a ddNTP by chance. Because there are many more dNTPs, it usually picks a normal one and the chain grows.",
+  nl: "Het polymerase voegt nucleotiden één voor één toe, altijd het complement van de templateletter erboven: A tegenover T, C tegenover G. Op elke positie kiest het toevallig een normale dNTP of een ddNTP. Omdat er veel meer dNTP's zijn, kiest het meestal een normale en groeit de keten."
+  },
+  {
+  t: "6 · A stop",
+  en: "At the eighth position the polymerase happened to pick a ddC. It is built in (it still has its 5′ phosphates), but it has no 3′ OH, so the next nucleotide has nowhere to attach. This copy is finished, and its last letter is a blue C.",
+  nl: "Op de achtste positie koos het polymerase toevallig een ddC. Die wordt ingebouwd (hij heeft nog zijn 5′-fosfaten), maar heeft geen 3′ OH, dus de volgende nucleotide kan nergens aan vast. Deze kopie is klaar, en haar laatste letter is een blauwe C."
+  },
+  {
+  t: "7 · Millions of copies, millions of random stops",
+  en: "The tube holds millions of template copies, each with its own primer and polymerase. Every copy stops at a random position. One copy stops after 3 letters, another after 1, another after 6. Together the copies stop at every single position.",
+  nl: "Het buisje bevat miljoenen templatekopieën, elk met een eigen primer en polymerase. Elke kopie stopt op een toevallige positie. De ene stopt na 3 letters, een andere na 1, nog een andere na 6. Samen stoppen de kopieën op elke positie."
+  },
+  {
+  t: "8 · Every length, each with a coloured end",
+  en: "Think of the copies sorted by length: there is a fragment with 1 extra letter, one with 2, one with 3, and so on. The colour of a fragment's last base tells which letter sits at that position. Length = position, colour = letter. That is the whole trick.",
+  nl: "Denk de kopieën gesorteerd op lengte: er is een fragment met 1 extra letter, één met 2, één met 3, enzovoort. De kleur van de laatste base van een fragment zegt welke letter op die positie staat. Lengte = positie, kleur = letter. Dat is de hele truc."
+  },
+  {
+  t: "9 · Sorting by length in a capillary",
+  en: "The fragments are sorted by capillary gel electrophoresis: an electric field pulls the negatively charged DNA through a gel inside a thin glass tube. Short fragments move faster than long ones, so the shortest reaches the end first. A laser and a detector wait at the end.",
+  nl: "De fragmenten worden gesorteerd met capillaire gelelektroforese: een elektrisch veld trekt het negatief geladen DNA door een gel in een dun glazen buisje. Korte fragmenten bewegen sneller dan lange, dus het kortste bereikt het einde eerst. Aan het einde wachten een laser en een detector."
+  },
+  {
+  t: "10 · Reading the colours",
+  en: "As each fragment passes the laser, its dye lights up and the detector records the colour. The first fragment to pass is the shortest, so its colour is letter 1; the next is letter 2; and so on. The sequence of colours is the sequence of the DNA.",
+  nl: "Als een fragment de laser passeert, licht zijn kleurstof op en registreert de detector de kleur. Het eerste fragment dat passeert is het kortste, dus zijn kleur is letter 1; het volgende is letter 2; enzovoort. De volgorde van de kleuren is de sequentie van het DNA."
+  },
+  {
+  t: "11 · The chromatogram",
+  en: "The computer draws the detector signal as a chromatogram: a row of coloured peaks, one per fragment, in order of arrival, and writes the letter above each peak. Reading left to right gives the new strand 5′ → 3′.",
+  nl: "De computer tekent het detectorsignaal als een chromatogram: een rij gekleurde pieken, één per fragment, in volgorde van aankomst, en schrijft de letter boven elke piek. Van links naar rechts lezen geeft de nieuwe streng 5′ → 3′."
+  },
+  {
+  t: "12 · What it is good for",
+  en: "One reaction reads up to about 900 bases, accurately and simply. So Sanger sequencing is still the standard for one gene, one PCR product or checking a cloned fragment. For a whole genome of three thousand million bases it is far too slow; page 4.10 shows what replaced it.",
+  nl: "Eén reactie leest tot ongeveer 900 basen, nauwkeurig en eenvoudig. Daarom is Sanger-sequencing nog altijd de standaard voor één gen, één PCR-product of het controleren van een gekloneerd fragment. Voor een heel genoom van drie miljard basen is het veel te traag; pagina 4.10 toont wat het verving."
+  }
+];
+Stepper.init('sanger-stepper', steps, 'sanger');
+})();
+</script>
+
 <h3>Automated version: one reaction, four colours</h3>
 <p>The modern form uses <strong>fluorescently labelled ddNTPs</strong>: each of the four stoppers carries a dye of a different colour (a <strong>fluorophore</strong>, a molecule that
 glows in a chosen colour when a laser shines on it). Now all four ddNTPs can go into <strong>one</strong> tube, because the colour of a fragment says at which base it stopped.
@@ -225,6 +500,234 @@ The computer then gives the alignment a <strong>score</strong>: points for ident
   </svg>
   <figcaption>How to read a BLASTP output (syllabus Figure 4-29). Query = your sequence, Sbjct (subject) = the database hit. The real Hermes–Hobo alignment is many lines long; this is a short made-up example in the same layout.</figcaption>
 </figure>
+
+<h3>Build it up yourself: a BLAST search in eight steps</h3>
+<p>Press <strong>Next</strong> to follow one query from an unknown sequence to a list of hits.</p>
+
+<div class="stepper" id="blast-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of a BLAST search">
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="440" y="40" class="lbl txt small">your query: a sequence (here a protein, 29 amino acids shown) whose function you do not know</text>
+      <text x="60" y="78" class="txt small bold left">Query</text>
+      <text x="120" y="78" class="mono" style="font-size:12px">M</text>
+      <text x="134" y="78" class="mono" style="font-size:12px">K</text>
+      <text x="148" y="78" class="mono" style="font-size:12px">T</text>
+      <text x="162" y="78" class="mono" style="font-size:12px">A</text>
+      <text x="176" y="78" class="mono" style="font-size:12px">Y</text>
+      <text x="190" y="78" class="mono" style="font-size:12px">I</text>
+      <text x="204" y="78" class="mono" style="font-size:12px">A</text>
+      <text x="218" y="78" class="mono" style="font-size:12px">K</text>
+      <text x="232" y="78" class="mono" style="font-size:12px">Q</text>
+      <text x="246" y="78" class="mono" style="font-size:12px">R</text>
+      <text x="260" y="78" class="mono" style="font-size:12px">Q</text>
+      <text x="274" y="78" class="mono" style="font-size:12px">I</text>
+      <text x="288" y="78" class="mono" style="font-size:12px">S</text>
+      <text x="302" y="78" class="mono" style="font-size:12px">F</text>
+      <text x="316" y="78" class="mono" style="font-size:12px">V</text>
+      <text x="330" y="78" class="mono" style="font-size:12px">K</text>
+      <text x="344" y="78" class="mono" style="font-size:12px">S</text>
+      <text x="358" y="78" class="mono" style="font-size:12px">H</text>
+      <text x="372" y="78" class="mono" style="font-size:12px">F</text>
+      <text x="386" y="78" class="mono" style="font-size:12px">S</text>
+      <text x="400" y="78" class="mono" style="font-size:12px">R</text>
+      <text x="414" y="78" class="mono" style="font-size:12px">Q</text>
+      <text x="428" y="78" class="mono" style="font-size:12px">L</text>
+      <text x="442" y="78" class="mono" style="font-size:12px">L</text>
+      <text x="456" y="78" class="mono" style="font-size:12px">E</text>
+      <text x="470" y="78" class="mono" style="font-size:12px">E</text>
+      <text x="484" y="78" class="mono" style="font-size:12px">R</text>
+      <text x="498" y="78" class="mono" style="font-size:12px">L</text>
+      <text x="512" y="78" class="mono" style="font-size:12px">G</text>
+    </g>
+    <g data-step="2">
+      <text x="440" y="40" class="lbl txt small">the database: millions of sequences with a known or guessed function (NCBI, the US sequence database)</text>
+      <text x="560" y="110" class="txt small bold left">database</text>
+      <path d="M560,124 L780,124" class="dbseq"/>
+      <path d="M560,138 L740,138" class="dbseq"/>
+      <path d="M560,152 L800,152" class="dbseq"/>
+      <path d="M560,166 L720,166" class="dbseq"/>
+      <path d="M560,180 L760,180" class="dbseq"/>
+      <path d="M560,194 L790,194" class="dbseq"/>
+      <path d="M560,208 L750,208" class="dbseq"/>
+    </g>
+    <g data-step="3" data-until="5">
+      <text x="440" y="40" class="lbl txt small">BLASTP starts small: it looks for 3 amino acids in a row that match exactly between the query and a database sequence (BLASTN: 11 nucleotides)</text>
+      <rect x="198" y="66" width="42" height="16" rx="3" class="seedbox"/>
+      <rect x="620" y="173" width="42" height="14" rx="3" class="seedbox"/>
+      <text x="650" y="215" class="lbl txt small left" style="fill:var(--c-O)">3 letters in a row match: a seed</text>
+    </g>
+    <g data-step="4" data-until="5">
+      <text x="440" y="40" class="lbl txt small">then it extends the match outwards in both directions as long as the similarity stays good ('local' = a well-matching piece, not the whole length)</text>
+      <rect x="114" y="66" width="410" height="16" rx="3" class="extbox"/>
+      <rect x="580" y="173" width="150" height="14" rx="3" class="extbox"/>
+      <text x="650" y="215" class="lbl txt small left" style="fill:var(--c-O)">extended both ways</text>
+    </g>
+    <g data-step="5">
+      <text x="440" y="40" class="lbl txt small">the result is an alignment: the two sequences written under each other so that matching positions line up; a gap (−) keeps the rest aligned</text>
+      <text x="60" y="180" class="txt small bold left">Query</text>
+      <text x="60" y="198" class="txt small"></text>
+      <text x="60" y="216" class="txt small bold left">Sbjct</text>
+      <text x="120" y="180" class="mono" style="font-size:12px">M</text>
+      <text x="134" y="180" class="mono" style="font-size:12px">K</text>
+      <text x="148" y="180" class="mono" style="font-size:12px">T</text>
+      <text x="162" y="180" class="mono" style="font-size:12px">A</text>
+      <text x="176" y="180" class="mono" style="font-size:12px">Y</text>
+      <text x="190" y="180" class="mono" style="font-size:12px">I</text>
+      <text x="204" y="180" class="mono" style="font-size:12px">A</text>
+      <text x="218" y="180" class="mono" style="font-size:12px">K</text>
+      <text x="232" y="180" class="mono" style="font-size:12px">Q</text>
+      <text x="246" y="180" class="mono" style="font-size:12px">R</text>
+      <text x="260" y="180" class="mono" style="font-size:12px">Q</text>
+      <text x="274" y="180" class="mono" style="font-size:12px">I</text>
+      <text x="288" y="180" class="mono" style="font-size:12px">S</text>
+      <text x="302" y="180" class="mono" style="font-size:12px">F</text>
+      <text x="316" y="180" class="mono" style="font-size:12px">V</text>
+      <text x="330" y="180" class="mono" style="font-size:12px">K</text>
+      <text x="344" y="180" class="mono" style="font-size:12px">S</text>
+      <text x="358" y="180" class="mono" style="font-size:12px">H</text>
+      <text x="372" y="180" class="mono" style="font-size:12px">F</text>
+      <text x="386" y="180" class="mono" style="font-size:12px">S</text>
+      <text x="400" y="180" class="mono" style="font-size:12px">R</text>
+      <text x="414" y="180" class="mono" style="font-size:12px">Q</text>
+      <text x="428" y="180" class="mono" style="font-size:12px">-</text>
+      <text x="442" y="180" class="mono" style="font-size:12px">L</text>
+      <text x="456" y="180" class="mono" style="font-size:12px">E</text>
+      <text x="470" y="180" class="mono" style="font-size:12px">E</text>
+      <text x="484" y="180" class="mono" style="font-size:12px">R</text>
+      <text x="498" y="180" class="mono" style="font-size:12px">L</text>
+      <text x="512" y="180" class="mono" style="font-size:12px">G</text>
+      <text x="120" y="198" class="mono" style="font-size:12px">M</text>
+      <text x="134" y="198" class="mono" style="font-size:12px">K</text>
+      <text x="148" y="198" class="mono" style="font-size:12px">T</text>
+      <text x="162" y="198" class="mono" style="font-size:12px">+</text>
+      <text x="176" y="198" class="mono" style="font-size:12px">Y</text>
+      <text x="190" y="198" class="mono" style="font-size:12px">I</text>
+      <text x="204" y="198" class="mono" style="font-size:12px">A</text>
+      <text x="218" y="198" class="mono" style="font-size:12px">K</text>
+      <text x="232" y="198" class="mono" style="font-size:12px">Q</text>
+      <text x="246" y="198" class="mono" style="font-size:12px">R</text>
+      <text x="260" y="198" class="mono" style="font-size:12px">Q</text>
+      <text x="274" y="198" class="mono" style="font-size:12px">I</text>
+      <text x="288" y="198" class="mono" style="font-size:12px">S</text>
+      <text x="302" y="198" class="mono" style="font-size:12px">F</text>
+      <text x="316" y="198" class="mono" style="font-size:12px">V</text>
+      <text x="330" y="198" class="mono" style="font-size:12px">K</text>
+      <text x="344" y="198" class="mono" style="font-size:12px"> </text>
+      <text x="358" y="198" class="mono" style="font-size:12px">H</text>
+      <text x="372" y="198" class="mono" style="font-size:12px">F</text>
+      <text x="386" y="198" class="mono" style="font-size:12px"> </text>
+      <text x="400" y="198" class="mono" style="font-size:12px">R</text>
+      <text x="414" y="198" class="mono" style="font-size:12px">Q</text>
+      <text x="428" y="198" class="mono" style="font-size:12px"> </text>
+      <text x="442" y="198" class="mono" style="font-size:12px">L</text>
+      <text x="456" y="198" class="mono" style="font-size:12px">+</text>
+      <text x="470" y="198" class="mono" style="font-size:12px">+</text>
+      <text x="484" y="198" class="mono" style="font-size:12px">+</text>
+      <text x="498" y="198" class="mono" style="font-size:12px">L</text>
+      <text x="512" y="198" class="mono" style="font-size:12px">G</text>
+      <text x="120" y="216" class="mono" style="font-size:12px">M</text>
+      <text x="134" y="216" class="mono" style="font-size:12px">K</text>
+      <text x="148" y="216" class="mono" style="font-size:12px">T</text>
+      <text x="162" y="216" class="mono" style="font-size:12px">S</text>
+      <text x="176" y="216" class="mono" style="font-size:12px">Y</text>
+      <text x="190" y="216" class="mono" style="font-size:12px">I</text>
+      <text x="204" y="216" class="mono" style="font-size:12px">A</text>
+      <text x="218" y="216" class="mono" style="font-size:12px">K</text>
+      <text x="232" y="216" class="mono" style="font-size:12px">Q</text>
+      <text x="246" y="216" class="mono" style="font-size:12px">R</text>
+      <text x="260" y="216" class="mono" style="font-size:12px">Q</text>
+      <text x="274" y="216" class="mono" style="font-size:12px">I</text>
+      <text x="288" y="216" class="mono" style="font-size:12px">S</text>
+      <text x="302" y="216" class="mono" style="font-size:12px">F</text>
+      <text x="316" y="216" class="mono" style="font-size:12px">V</text>
+      <text x="330" y="216" class="mono" style="font-size:12px">K</text>
+      <text x="344" y="216" class="mono" style="font-size:12px">D</text>
+      <text x="358" y="216" class="mono" style="font-size:12px">H</text>
+      <text x="372" y="216" class="mono" style="font-size:12px">F</text>
+      <text x="386" y="216" class="mono" style="font-size:12px">G</text>
+      <text x="400" y="216" class="mono" style="font-size:12px">R</text>
+      <text x="414" y="216" class="mono" style="font-size:12px">Q</text>
+      <text x="428" y="216" class="mono" style="font-size:12px">S</text>
+      <text x="442" y="216" class="mono" style="font-size:12px">L</text>
+      <text x="456" y="216" class="mono" style="font-size:12px">D</text>
+      <text x="470" y="216" class="mono" style="font-size:12px">D</text>
+      <text x="484" y="216" class="mono" style="font-size:12px">R</text>
+      <text x="498" y="216" class="mono" style="font-size:12px">L</text>
+      <text x="512" y="216" class="mono" style="font-size:12px">G</text>
+      <text x="60" y="250" class="txt small muted left">letter = identical · + = similar amino acid · blank = different · − = gap</text>
+    </g>
+    <g data-step="6">
+      <text x="440" y="40" class="lbl txt small">the alignment gets a score: points for identical letters, fewer for similar ones, minus a penalty for every gap</text>
+      <text x="560" y="228" class="lbl txt small bold left">score = 112</text>
+      <text x="560" y="242" class="lbl txt small bold left">E value = 1e-50</text>
+      <text x="560" y="258" class="lbl txt small left">E value: the chance that an alignment</text>
+      <text x="560" y="270" class="lbl txt small left">this good appears by accident.</text>
+      <text x="560" y="284" class="lbl txt small left">1e-50 = 10⁻⁵⁰, read 'ten to the minus fifty':</text>
+      <text x="560" y="296" class="lbl txt small left bold">practically impossible by chance. LOWER = BETTER</text>
+    </g>
+    <g data-step="7">
+      <text x="440" y="40" class="lbl txt small">BLAST does this for every sequence in the database and lists the hits, best (lowest E value) first</text>
+      <text x="560" y="228" class="txt small bold left">hits, best first:</text>
+      <text x="560" y="244" class="txt small left">1. Hobo transposase (fruit fly), E = 1e-50</text>
+      <text x="560" y="258" class="txt small left">2. another transposase, E = 3e-20</text>
+      <text x="560" y="272" class="txt small muted left">3. unrelated protein, E = 2</text>
+      <text x="560" y="290" class="lbl txt small muted left">E value near 1 = expected by chance: ignore</text>
+    </g>
+    <g data-step="8">
+      <text x="440" y="40" class="lbl txt small">a good hit means the two are probably homologs (one ancestor gene), so they probably do similar things; often one shared domain gives the clue</text>
+      <text x="60" y="290" class="lbl txt small bold left">but: similar is not the same. One changed amino acid in the active site can kill the activity. BLAST gives a hypothesis to test, not a conclusion.</text>
+    </g>
+  </svg>
+</div>
+
+<script>
+(function () {
+var steps = [
+  {
+  t: "1 · The query",
+  en: "Begin state: you have a sequence, DNA or protein, and no idea what it does. In BLAST this sequence is called the query (the question). The example is a protein, written as a row of amino-acid letters.",
+  nl: "Beginsituatie: je hebt een sequentie, DNA of eiwit, en geen idee wat ze doet. In BLAST heet die sequentie de query (de vraag). Het voorbeeld is een eiwit, geschreven als een rij aminozuurletters."
+  },
+  {
+  t: "2 · The database",
+  en: "The other side is a database with millions of sequences from all organisms, most with a known or guessed function. BLAST (Basic Local Alignment Search Tool) runs free on the NCBI website and compares your query with every one of them, one pair at a time (pairwise).",
+  nl: "De andere kant is een databank met miljoenen sequenties van alle organismen, de meeste met een bekende of vermoede functie. BLAST (Basic Local Alignment Search Tool) draait gratis op de NCBI-website en vergelijkt je query met elk ervan, paar per paar (pairwise)."
+  },
+  {
+  t: "3 · The seed",
+  en: "Comparing every letter with every letter would take forever, so BLAST starts with a seed: a short stretch that matches exactly. BLASTP (proteins) uses 3 amino acids in a row; BLASTN (DNA, N for nucleotide) uses 11 nucleotides.",
+  nl: "Elke letter met elke letter vergelijken zou eindeloos duren, dus BLAST begint met een kiem (seed): een kort stuk dat exact overeenkomt. BLASTP (eiwitten) gebruikt 3 aminozuren na elkaar; BLASTN (DNA, N van nucleotide) gebruikt 11 nucleotiden."
+  },
+  {
+  t: "4 · Extend",
+  en: "From the seed BLAST extends the match outwards in both directions, as long as the similarity stays good. 'Local' in the name means it is happy with a well-matching piece; the two sequences do not have to match over their whole length.",
+  nl: "Vanuit de kiem breidt BLAST de match naar beide kanten uit, zolang de gelijkenis goed blijft. 'Local' in de naam betekent dat een goed passend stuk volstaat; de twee sequenties hoeven niet over hun hele lengte overeen te komen."
+  },
+  {
+  t: "5 · The alignment",
+  en: "The result is an alignment (uitlijning): the query and the database sequence (Sbjct, subject) written under each other so that matching positions line up. The middle line shows the letter where they are identical, a + where the amino acids are similar, and nothing where they differ. A − is a gap that had to be inserted to keep the rest aligned.",
+  nl: "Het resultaat is een alignment (uitlijning): de query en de databanksequentie (Sbjct, subject) onder elkaar, zo dat overeenkomende posities op één lijn staan. De middelste lijn toont de letter waar ze identiek zijn, een + waar de aminozuren gelijkaardig zijn, en niets waar ze verschillen. Een − is een gap die ingevoegd moest worden om de rest uitgelijnd te houden."
+  },
+  {
+  t: "6 · Score and E value",
+  en: "The alignment gets a score: points for identical letters, fewer points for similar ones, and a penalty for every gap. From the score BLAST computes the E value: the probability that an alignment this good would turn up by chance in a database this size. 1e-50 means 10 to the minus 50, practically impossible by chance. The lower the E value, the better the match.",
+  nl: "De alignment krijgt een score: punten voor identieke letters, minder punten voor gelijkaardige, en strafpunten voor elke gap. Uit de score berekent BLAST de E-waarde: de kans dat zo'n goede alignment toevallig opduikt in een databank van deze grootte. 1e-50 betekent 10 tot de min 50, praktisch onmogelijk door toeval. Hoe lager de E-waarde, hoe beter de match."
+  },
+  {
+  t: "7 · The list of hits",
+  en: "BLAST repeats this for every database sequence and lists the hits, best first. In the syllabus example a search with the Hermes transposase of the housefly finds the Hobo transposase of the fruit fly as the top hit: an ortholog, the same gene in another species. A hit with an E value around 1 is what you would expect by chance: ignore it.",
+  nl: "BLAST herhaalt dit voor elke databanksequentie en toont de treffers, beste eerst. In het syllabusvoorbeeld vindt een zoekopdracht met het Hermes-transposase van de huisvlieg het Hobo-transposase van de fruitvlieg als beste treffer: een ortholoog, hetzelfde gen in een andere soort. Een treffer met een E-waarde rond 1 is wat je door toeval verwacht: negeren."
+  },
+  {
+  t: "8 · From match to function, carefully",
+  en: "A good hit means the two sequences are probably homologs: they descend from one ancestor gene and so probably do similar things. Often the similarity is one domain, like a kinase domain or a zinc-finger DNA-binding domain, and that domain is the first clue to the job. But similar is not the same: one substituted amino acid in the active site can leave a protein with the right shape and no activity. BLAST gives a hypothesis to test.",
+  nl: "Een goede treffer betekent dat de twee sequenties waarschijnlijk homologen zijn: ze stammen af van één voorouder-gen en doen dus waarschijnlijk iets gelijkaardigs. Vaak zit de gelijkenis in één domein, zoals een kinasedomein of een zinkvinger-DNA-bindend domein, en dat domein is de eerste aanwijzing voor de functie. Maar gelijkaardig is niet hetzelfde: één vervangen aminozuur in de actieve plaats kan een eiwit met de juiste vorm en zonder activiteit achterlaten. BLAST geeft een hypothese om te testen."
+  }
+];
+Stepper.init('blast-stepper', steps, 'blast');
+})();
+</script>
 
 <h3>From a match to a function</h3>
 <p>A good hit tells you the two sequences are probably homologs, so they probably do similar things. The similarity may cover the whole protein or only one <strong>domain</strong>,

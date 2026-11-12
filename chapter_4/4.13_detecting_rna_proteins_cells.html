@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.13 Detecting RNA, proteins and cells</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -33,6 +35,26 @@
   .cellf { fill: var(--c-Cl); opacity: .8; } .celln { fill: var(--c-H); opacity: .8; }
   table.tech td:first-child { white-space: nowrap; font-weight: 700; }
   table.pick td:first-child { font-weight: 700; }
+  .ab1, .ab2, .s-abf { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+  .ab1 { stroke: var(--c-N); } .ab2 { stroke: var(--c-P); } .s-abf { stroke: var(--c-Cl); }
+  .s-tube { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .s-rna { fill: none; stroke: var(--c-P); stroke-width: 2.5; }
+  .s-dna { stroke: var(--c-N); stroke-width: 2.5; }
+  .s-primer { stroke: var(--c-O); stroke-width: 2.5; fill: none; }
+  .s-glow { fill: var(--c-Cl); opacity: .35; }
+  .s-drop { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
+  .s-prot { fill: var(--c-Na); opacity: .8; }
+  .s-gel { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .s-faint { fill: var(--c-C); opacity: .3; }
+  .s-bsa { fill: var(--muted); opacity: .4; }
+  .s-film { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .s-nothing { fill: none; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 2; }
+  .s-ab1, .s-ab2, .s-abf { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+  .s-ab1 { stroke: var(--c-N); } .s-ab2 { stroke: var(--c-P); } .s-abf { stroke: var(--c-Cl); }
+  .s-dish { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .s-scatter { stroke: var(--c-P); stroke-width: 2; stroke-dasharray: 4 3; }
+  .s-fluo { stroke: var(--c-Cl); stroke-width: 2; stroke-dasharray: 4 3; }
+  .s-dotn { fill: var(--c-H); opacity: .8; } .s-dotf { fill: var(--c-Cl); opacity: .8; }
 </style>
 </head>
 <body>
@@ -128,6 +150,163 @@ of cycles is proportional to the amount of RNA you started with. The machine dra
   <figcaption>Syllabus Figure 4-46. Every curve rises exponentially and then flattens. The sample with the most RNA crosses the threshold first (cycle 18); a thousand times less
   RNA needs about ten cycles more (2¹⁰ ≈ 1000). Compare samples only while they are still in the exponential phase.</figcaption>
 </figure>
+
+<h3>Build it up yourself: qRT-PCR, from RNA to a threshold cycle</h3>
+<p>Press <strong>Next</strong> to build the reaction and then the graph, one step at a time.</p>
+
+<div class="stepper" id="qpcr-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of qRT-PCR">
+    <defs>
+      <marker id="ar-q" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arT-q" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="50" y="60" width="40" height="80" rx="8" class="s-tube"/>
+      <path d="M58,100 c6,-8 10,8 16,0 c6,-8 10,8 16,0" class="s-rna"/>
+      <path d="M58,120 c6,-8 10,8 16,0 c6,-8 10,8 16,0" class="s-rna"/>
+      <text x="70" y="158" class="txt small" style="text-anchor:middle">RNA</text>
+      <text x="70" y="48" class="lbl txt small bold">RNA from the cells</text>
+      <text x="440" y="300" class="lbl txt small">question: how much mRNA of gene X did these cells contain? The answer must be a number.</text>
+    </g>
+    <g data-step="2">
+      <path d="M100,100 L135,100" class="path" marker-end="url(#ar-q)"/>
+      <text x="117" y="92" class="txt small muted" style="text-anchor:middle">RT</text>
+      <rect x="140" y="60" width="40" height="80" rx="8" class="s-tube"/>
+      <path d="M148,96 L172,96 M148,104 L172,104" class="s-dna"/>
+      <text x="160" y="158" class="txt small" style="text-anchor:middle">cDNA</text>
+      <text x="160" y="48" class="lbl txt small bold">reverse transcriptase makes a DNA copy</text>
+    </g>
+    <g data-step="3">
+      <path d="M148,92 L158,92" class="s-primer" marker-end="url(#arT-q)"/>
+      <path d="M172,108 L162,108" class="s-primer" marker-end="url(#arT-q)"/>
+      <text x="160" y="48" class="lbl txt small bold">two primers, one at each end of the stretch to copy</text>
+    </g>
+    <g data-step="4">
+      <path d="M190,100 L225,100" class="path" marker-end="url(#ar-q)"/>
+      <text x="207" y="92" class="txt small muted" style="text-anchor:middle">PCR</text>
+      <rect x="230" y="60" width="40" height="80" rx="8" class="s-tube"/>
+      <path d="M236,84 L264,84 M236,90 L264,90 M236,100 L264,100 M236,106 L264,106 M236,116 L264,116 M236,122 L264,122" class="s-dna"/>
+      <text x="250" y="158" class="txt small" style="text-anchor:middle">1 → 2 → 4 → 8 …</text>
+      <text x="250" y="48" class="lbl txt small bold">each cycle doubles the product</text>
+    </g>
+    <g data-step="5">
+      <rect x="232" y="78" width="36" height="50" rx="6" class="s-glow"/>
+      <text x="250" y="48" class="lbl txt small bold">a dye glows only when bound to double-stranded DNA</text>
+      <text x="250" y="176" class="lbl txt small muted">the machine reads the glow after every cycle: "real time"</text>
+    </g>
+    <g data-step="6">
+      <path d="M340,80 L340,290 M340,290 L830,290" class="ax"/>
+      <text x="580.0" y="312" class="txt small" style="text-anchor:middle">cycle number</text>
+      <text x="348" y="98" class="txt small muted" style="text-anchor:start">fluorescence (= amount of product)</text>
+      <text x="340" y="302" class="txt small muted" style="text-anchor:middle">0</text>
+      <text x="460" y="302" class="txt small muted" style="text-anchor:middle">10</text>
+      <text x="580" y="302" class="txt small muted" style="text-anchor:middle">20</text>
+      <text x="700" y="302" class="txt small muted" style="text-anchor:middle">30</text>
+      <text x="820" y="302" class="txt small muted" style="text-anchor:middle">40</text>
+      <text x="580" y="70" class="lbl txt small bold">the plot: cycle number against fluorescence</text>
+    </g>
+    <g data-step="7">
+      <polyline points="340,289 352,289 364,289 376,289 388,289 400,289 412,289 424,289 436,289 448,289 460,289 472,288 484,287 496,286 508,283 520,279 532,272 544,261 556,245 568,224 580,200 592,175 604,154 616,138 628,127 640,120 652,116 664,113 676,112 688,111 700,110 712,110 724,110 736,110 748,110 760,110 772,110 784,110 796,110 808,110 820,110" class="curve a"/>
+      <text x="580" y="70" class="lbl txt small bold">sample A: the glow rises exponentially, then flattens when the reagents run out</text>
+    </g>
+    <g data-step="8">
+      <path d="M340,263 L820,263" class="thr"/>
+      <text x="824" y="267.0" class="txt small muted" style="text-anchor:start">threshold</text>
+      <text x="580" y="70" class="lbl txt small bold">the threshold: a fixed glow level, chosen in the exponential part of the curves</text>
+    </g>
+    <g data-step="9">
+      <path d="M556,263 L556,290" class="s-drop"/>
+      <text x="556" y="302" class="txt small bold" style="text-anchor:middle">18</text>
+      <text x="580" y="70" class="lbl txt small bold">sample A (100 ng of RNA) crosses the threshold at cycle 18</text>
+    </g>
+    <g data-step="10">
+      <polyline points="340,289 352,289 364,289 376,289 388,289 400,289 412,289 424,289 436,289 448,289 460,289 472,289 484,289 496,289 508,289 520,289 532,289 544,289 556,288 568,287 580,286 592,283 604,279 616,272 628,261 640,245 652,224 664,200 676,175 688,154 700,138 712,127 724,120 736,116 748,113 760,112 772,111 784,110 796,110 808,110 820,110" class="curve b"/>
+      <polyline points="340,289 352,289 364,289 376,289 388,289 400,289 412,289 424,289 436,289 448,289 460,289 472,289 484,289 496,289 508,289 520,289 532,289 544,289 556,289 568,289 580,289 592,289 604,289 616,289 628,289 640,289 652,289 664,289 676,288 688,287 700,286 712,283 724,279 736,272 748,261 760,245 772,224 784,200 796,175 808,154 820,138" class="curve c"/>
+      <path d="M640,263 L640,290 M760,263 L760,290" class="s-drop"/>
+      <text x="640" y="302" class="txt small bold" style="text-anchor:middle">25</text>
+      <text x="760" y="302" class="txt small bold" style="text-anchor:middle">35</text>
+      <text x="592" y="150" class="txt small bold" style="text-anchor:middle" style="fill:var(--c-O)">A</text>
+      <text x="676" y="150" class="txt small bold" style="text-anchor:middle" style="fill:var(--c-N)">B</text>
+      <text x="796" y="150" class="txt small bold" style="text-anchor:middle" style="fill:var(--c-Cl)">C</text>
+      <text x="580" y="70" class="lbl txt small bold">sample B (1 ng) crosses at 25, sample C (1 pg) at 35: less RNA at the start = more cycles needed</text>
+    </g>
+    <g data-step="11">
+      <text x="580" y="70" class="lbl txt small bold">reading the number: 10 cycles later = 2¹⁰ ≈ 1000 times less RNA (100 ng → 1 ng → 1 pg)</text>
+      <text x="580" y="84" class="lbl txt small muted">ng = nanogram = 10⁻⁹ g; pg = picogram = 10⁻¹² g, a thousand times less</text>
+    </g>
+    <g data-step="12">
+      <text x="580" y="70" class="lbl txt small bold">traps: compare only in the exponential phase; run controls; only the stretch between the primers is measured</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+ {
+  "t": "1 · Start: RNA from the cells",
+  "en": "qRT-PCR = quantitative reverse transcription PCR. Quantitative means it gives a number. Begin state: the RNA extracted from a sample of cells. Question: how much mRNA of gene X was in there? PCR only works on DNA, so the RNA must be copied first.",
+  "nl": "qRT-PCR = kwantitatieve reverse-transcriptie-PCR. Kwantitatief betekent dat het een getal geeft. Beginstand: het RNA geïsoleerd uit een celmonster. Vraag: hoeveel mRNA van gen X zat erin? PCR werkt alleen op DNA, dus het RNA moet eerst gekopieerd worden."
+ },
+ {
+  "t": "2 · Reverse transcription: cDNA",
+  "en": "Reverse transcriptase (RT), the enzyme of retroviruses (chapter 3, page 4.3), reads the RNA and makes a DNA copy of it: cDNA (complementary DNA). The amount of cDNA mirrors the amount of RNA.",
+  "nl": "Reverse transcriptase (RT), het enzym van retrovirussen (hoofdstuk 3, pagina 4.3), leest het RNA af en maakt er een DNA-kopie van: cDNA (complementair DNA). De hoeveelheid cDNA weerspiegelt de hoeveelheid RNA."
+ },
+ {
+  "t": "3 · Two primers inside the transcript",
+  "en": "Two primers (short DNA pieces that give the polymerase a starting point) are chosen inside the sequence of gene X, so that PCR copies only a conveniently short stretch of it. Only that stretch will be seen.",
+  "nl": "Twee primers (korte DNA-stukjes die het polymerase een startpunt geven) worden gekozen binnen de sequentie van gen X, zodat PCR alleen een handig kort stuk ervan kopieert. Alleen dat stuk wordt gezien."
+ },
+ {
+  "t": "4 · PCR: doubling every cycle",
+  "en": "Each PCR cycle (page 4.3: melt, anneal, extend) copies every molecule once, so the amount of product doubles: 1, 2, 4, 8 ... This is the exponential phase. If you start with twice as much cDNA, you have twice as much product after every cycle.",
+  "nl": "Elke PCR-cyclus (pagina 4.3: smelten, aanhechten, verlengen) kopieert elke molecule één keer, dus de hoeveelheid product verdubbelt: 1, 2, 4, 8 ... Dit is de exponentiële fase. Start je met twee keer zoveel cDNA, dan heb je na elke cyclus twee keer zoveel product."
+ },
+ {
+  "t": "5 · A dye reports the amount, in real time",
+  "en": "A dye is added that glows only when it sits in double-stranded DNA. More product = more glow. The PCR machine measures the glow after every cycle, while the reaction runs: that is what 'real time' means. No gel needed.",
+  "nl": "Er wordt een kleurstof toegevoegd die alleen gloeit als ze in dubbelstrengs DNA zit. Meer product = meer gloed. De PCR-machine meet de gloed na elke cyclus, terwijl de reactie loopt: dat betekent 'real time'. Geen gel nodig."
+ },
+ {
+  "t": "6 · The plot",
+  "en": "The machine draws a graph: cycle number from left to right, glow (the amount of product) from bottom to top. Every sample becomes one curve on this graph.",
+  "nl": "De machine tekent een grafiek: cyclusnummer van links naar rechts, gloed (de hoeveelheid product) van onder naar boven. Elk monster wordt één curve op deze grafiek."
+ },
+ {
+  "t": "7 · One sample's curve",
+  "en": "At first the glow is too weak to see. Then it rises steeply, doubling every cycle (the exponential phase). Finally it flattens: primers and nucleotides run out, so the amount of product stops growing. The flat end tells you nothing about the start amount; the steep part does.",
+  "nl": "Eerst is de gloed te zwak om te zien. Dan stijgt ze steil, elke cyclus verdubbelend (de exponentiële fase). Ten slotte vlakt ze af: primers en nucleotiden raken op, dus de hoeveelheid product groeit niet meer. Het vlakke einde zegt niets over de startgoeveelheid; het steile stuk wel."
+ },
+ {
+  "t": "8 · The threshold",
+  "en": "The machine draws a horizontal line at a fixed glow level, inside the exponential part of the curves: the threshold. For every sample it notes the cycle at which the curve crosses this line.",
+  "nl": "De machine trekt een horizontale lijn op een vast gloedniveau, in het exponentiële deel van de curves: de drempel. Voor elk monster noteert ze de cyclus waarbij de curve deze lijn kruist."
+ },
+ {
+  "t": "9 · Sample A crosses at cycle 18",
+  "en": "The syllabus example: a sample that started with 100 ng of RNA (ng = nanogram = a billionth of a gram) reaches the threshold at about cycle 18.",
+  "nl": "Het syllabusvoorbeeld: een monster dat met 100 ng RNA begon (ng = nanogram = een miljardste gram) bereikt de drempel rond cyclus 18."
+ },
+ {
+  "t": "10 · Less RNA = later crossing",
+  "en": "A sample with 1 ng of RNA needs about 25 cycles, and a sample with 1 pg (picogram, a thousand times less than 1 ng) about 35 cycles. The curves have the same shape; they are only shifted to the right. More RNA at the start = fewer cycles needed.",
+  "nl": "Een monster met 1 ng RNA heeft ongeveer 25 cycli nodig, en een monster met 1 pg (picogram, duizend keer minder dan 1 ng) ongeveer 35 cycli. De curves hebben dezelfde vorm; ze zijn alleen naar rechts verschoven. Meer RNA bij de start = minder cycli nodig."
+ },
+ {
+  "t": "11 · Turning cycles into an amount",
+  "en": "Every cycle doubles the product, so 10 cycles later means 2¹⁰ ≈ 1000 times less to begin with. That is exactly the step from 100 ng to 1 ng to 1 pg in the example. With a dilution series of known amounts as a ruler, the threshold cycle of an unknown sample gives its RNA amount: that is the 'quantitative' part.",
+  "nl": "Elke cyclus verdubbelt het product, dus 10 cycli later betekent 2¹⁰ ≈ 1000 keer minder bij de start. Dat is precies de stap van 100 ng naar 1 ng naar 1 pg in het voorbeeld. Met een verdunningsreeks van bekende hoeveelheden als meetlat geeft de drempelcyclus van een onbekend monster zijn RNA-hoeveelheid: dat is het 'kwantitatieve' deel."
+ },
+ {
+  "t": "12 · Traps",
+  "en": "Compare samples only in the exponential phase; the flat part is meaningless. Run proper controls (a gene whose expression does not change). And only the stretch between the two primers is measured, so other forms of the same RNA, for example differently spliced versions, are missed. Strength: extremely sensitive, a few molecules are enough.",
+  "nl": "Vergelijk monsters alleen in de exponentiële fase; het vlakke deel zegt niets. Gebruik goede controles (een gen waarvan de expressie niet verandert). En alleen het stuk tussen de twee primers wordt gemeten, dus andere vormen van hetzelfde RNA, bijvoorbeeld anders gesplicete versies, worden gemist. Sterkte: uiterst gevoelig, enkele moleculen volstaan."
+ }
+];
+Stepper.init('qpcr-stepper', steps, 'qpcr');
+})();
+</script>
 
 <table class="tech">
   <tr><th>qRT-PCR</th><th></th></tr>
@@ -352,6 +531,214 @@ a mouse, rabbit, goat or chicken with the purified protein, or with a short <str
   The marker lane tells you the size of the band.</figcaption>
 </figure>
 
+<h3>Build it up yourself: a Western blot, from extract to one band</h3>
+<p>Press <strong>Next</strong> to separate, transfer, block, probe and detect, one step at a time.</p>
+
+<div class="stepper" id="west-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of a Western blot">
+    <defs>
+      <marker id="ar-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arT-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="50" y="60" width="40" height="80" rx="8" class="s-tube"/>
+      <circle cx="62" cy="108" r="4" class="s-prot"/><circle cx="74" cy="118" r="3" class="s-prot"/><circle cx="66" cy="128" r="5" class="s-prot"/><circle cx="80" cy="104" r="3" class="s-prot"/><circle cx="58" cy="120" r="3" class="s-prot"/><circle cx="76" cy="132" r="4" class="s-prot"/>
+      <text x="70" y="158" class="txt small" style="text-anchor:middle">extract</text>
+      <text x="70" y="48" class="lbl txt small bold">a cell extract: thousands of proteins</text>
+      <text x="440" y="300" class="lbl txt small">question: is protein X in these cells, how much, and what size is it?</text>
+    </g>
+    <g data-step="2">
+      <rect x="110" y="60" width="130" height="180" rx="4" class="s-gel"/>
+      <text x="135" y="54" class="txt small muted" style="text-anchor:middle">marker</text>
+      <text x="175" y="54" class="txt small muted" style="text-anchor:middle">sample</text>
+      <text x="215" y="54" class="txt small muted" style="text-anchor:middle">control</text>
+      <rect x="124" y="80" width="22" height="4" class="band"/>
+      <text x="119" y="84" class="txt small muted" style="text-anchor:end">100</text>
+      <rect x="124" y="110" width="22" height="4" class="band"/>
+      <text x="119" y="114" class="txt small muted" style="text-anchor:end">70</text>
+      <rect x="124" y="140" width="22" height="4" class="band"/>
+      <text x="119" y="144" class="txt small muted" style="text-anchor:end">50</text>
+      <rect x="124" y="175" width="22" height="4" class="band"/>
+      <text x="119" y="179" class="txt small muted" style="text-anchor:end">30</text>
+      <rect x="124" y="210" width="22" height="4" class="band"/>
+      <text x="119" y="214" class="txt small muted" style="text-anchor:end">15</text>
+      <rect x="164" y="78" width="22" height="3" class="band"/>
+      <rect x="164" y="92" width="22" height="3" class="band"/>
+      <rect x="164" y="104" width="22" height="3" class="band"/>
+      <rect x="164" y="118" width="22" height="3" class="band"/>
+      <rect x="164" y="128" width="22" height="3" class="band"/>
+      <rect x="164" y="140" width="22" height="3" class="band"/>
+      <rect x="164" y="152" width="22" height="3" class="band"/>
+      <rect x="164" y="166" width="22" height="3" class="band"/>
+      <rect x="164" y="184" width="22" height="3" class="band"/>
+      <rect x="164" y="200" width="22" height="3" class="band"/>
+      <rect x="164" y="222" width="22" height="3" class="band"/>
+      <rect x="204" y="78" width="22" height="3" class="band"/>
+      <rect x="204" y="92" width="22" height="3" class="band"/>
+      <rect x="204" y="104" width="22" height="3" class="band"/>
+      <rect x="204" y="118" width="22" height="3" class="band"/>
+      <rect x="204" y="128" width="22" height="3" class="band"/>
+      <rect x="204" y="152" width="22" height="3" class="band"/>
+      <rect x="204" y="166" width="22" height="3" class="band"/>
+      <rect x="204" y="184" width="22" height="3" class="band"/>
+      <rect x="204" y="200" width="22" height="3" class="band"/>
+      <rect x="204" y="222" width="22" height="3" class="band"/>
+      <path d="M95,100 L108,100" class="path" marker-end="url(#ar-w)"/>
+      <text x="175" y="258" class="txt small muted" style="text-anchor:middle">SDS-PAGE: small proteins run far</text>
+      <text x="175" y="276" class="lbl txt small muted">kDa = kilodalton, the unit of protein mass; the marker lane has proteins of known size</text>
+      <text x="175" y="290" class="lbl txt small bold">the gel separates all proteins by size; protein X is somewhere among them</text>
+    </g>
+    <g data-step="3">
+      <rect x="300" y="60" width="130" height="180" rx="4" class="memb"/>
+      <path d="M248,150 L292,150" class="path" marker-end="url(#ar-w)"/>
+      <text x="270" y="142" class="txt small muted" style="text-anchor:middle">transfer</text>
+      <rect x="354" y="78" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="92" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="104" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="118" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="128" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="140" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="152" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="166" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="184" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="200" width="22" height="3" class="s-faint"/>
+      <rect x="354" y="222" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="78" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="92" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="104" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="118" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="128" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="152" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="166" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="184" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="200" width="22" height="3" class="s-faint"/>
+      <rect x="394" y="222" width="22" height="3" class="s-faint"/>
+      <rect x="314" y="80" width="22" height="4" class="s-faint"/>
+      <rect x="314" y="110" width="22" height="4" class="s-faint"/>
+      <rect x="314" y="140" width="22" height="4" class="s-faint"/>
+      <rect x="314" y="175" width="22" height="4" class="s-faint"/>
+      <rect x="314" y="210" width="22" height="4" class="s-faint"/>
+      <text x="365" y="258" class="txt small muted" style="text-anchor:middle">membrane</text>
+      <text x="365" y="290" class="lbl txt small bold">an electric field moves the proteins out of the gel onto a membrane, in the same positions</text>
+    </g>
+    <g data-step="4">
+      <circle cx="306" cy="66" r="1.5" class="s-bsa"/><circle cx="306" cy="75" r="1.5" class="s-bsa"/><circle cx="306" cy="84" r="1.5" class="s-bsa"/><circle cx="306" cy="93" r="1.5" class="s-bsa"/><circle cx="306" cy="102" r="1.5" class="s-bsa"/><circle cx="306" cy="111" r="1.5" class="s-bsa"/><circle cx="306" cy="120" r="1.5" class="s-bsa"/><circle cx="306" cy="129" r="1.5" class="s-bsa"/><circle cx="306" cy="138" r="1.5" class="s-bsa"/><circle cx="306" cy="147" r="1.5" class="s-bsa"/><circle cx="306" cy="156" r="1.5" class="s-bsa"/><circle cx="306" cy="165" r="1.5" class="s-bsa"/><circle cx="306" cy="174" r="1.5" class="s-bsa"/><circle cx="306" cy="183" r="1.5" class="s-bsa"/><circle cx="306" cy="192" r="1.5" class="s-bsa"/><circle cx="306" cy="201" r="1.5" class="s-bsa"/><circle cx="306" cy="210" r="1.5" class="s-bsa"/><circle cx="306" cy="219" r="1.5" class="s-bsa"/><circle cx="306" cy="228" r="1.5" class="s-bsa"/><circle cx="306" cy="237" r="1.5" class="s-bsa"/><circle cx="315" cy="66" r="1.5" class="s-bsa"/><circle cx="315" cy="75" r="1.5" class="s-bsa"/><circle cx="315" cy="84" r="1.5" class="s-bsa"/><circle cx="315" cy="93" r="1.5" class="s-bsa"/><circle cx="315" cy="102" r="1.5" class="s-bsa"/><circle cx="315" cy="111" r="1.5" class="s-bsa"/><circle cx="315" cy="120" r="1.5" class="s-bsa"/><circle cx="315" cy="129" r="1.5" class="s-bsa"/><circle cx="315" cy="138" r="1.5" class="s-bsa"/><circle cx="315" cy="147" r="1.5" class="s-bsa"/><circle cx="315" cy="156" r="1.5" class="s-bsa"/><circle cx="315" cy="165" r="1.5" class="s-bsa"/><circle cx="315" cy="174" r="1.5" class="s-bsa"/><circle cx="315" cy="183" r="1.5" class="s-bsa"/><circle cx="315" cy="192" r="1.5" class="s-bsa"/><circle cx="315" cy="201" r="1.5" class="s-bsa"/><circle cx="315" cy="210" r="1.5" class="s-bsa"/><circle cx="315" cy="219" r="1.5" class="s-bsa"/><circle cx="315" cy="228" r="1.5" class="s-bsa"/><circle cx="315" cy="237" r="1.5" class="s-bsa"/><circle cx="324" cy="66" r="1.5" class="s-bsa"/><circle cx="324" cy="75" r="1.5" class="s-bsa"/><circle cx="324" cy="84" r="1.5" class="s-bsa"/><circle cx="324" cy="93" r="1.5" class="s-bsa"/><circle cx="324" cy="102" r="1.5" class="s-bsa"/><circle cx="324" cy="111" r="1.5" class="s-bsa"/><circle cx="324" cy="120" r="1.5" class="s-bsa"/><circle cx="324" cy="129" r="1.5" class="s-bsa"/><circle cx="324" cy="138" r="1.5" class="s-bsa"/><circle cx="324" cy="147" r="1.5" class="s-bsa"/><circle cx="324" cy="156" r="1.5" class="s-bsa"/><circle cx="324" cy="165" r="1.5" class="s-bsa"/><circle cx="324" cy="174" r="1.5" class="s-bsa"/><circle cx="324" cy="183" r="1.5" class="s-bsa"/><circle cx="324" cy="192" r="1.5" class="s-bsa"/><circle cx="324" cy="201" r="1.5" class="s-bsa"/><circle cx="324" cy="210" r="1.5" class="s-bsa"/><circle cx="324" cy="219" r="1.5" class="s-bsa"/><circle cx="324" cy="228" r="1.5" class="s-bsa"/><circle cx="324" cy="237" r="1.5" class="s-bsa"/><circle cx="333" cy="66" r="1.5" class="s-bsa"/><circle cx="333" cy="75" r="1.5" class="s-bsa"/><circle cx="333" cy="84" r="1.5" class="s-bsa"/><circle cx="333" cy="93" r="1.5" class="s-bsa"/><circle cx="333" cy="102" r="1.5" class="s-bsa"/><circle cx="333" cy="111" r="1.5" class="s-bsa"/><circle cx="333" cy="120" r="1.5" class="s-bsa"/><circle cx="333" cy="129" r="1.5" class="s-bsa"/><circle cx="333" cy="138" r="1.5" class="s-bsa"/><circle cx="333" cy="147" r="1.5" class="s-bsa"/><circle cx="333" cy="156" r="1.5" class="s-bsa"/><circle cx="333" cy="165" r="1.5" class="s-bsa"/><circle cx="333" cy="174" r="1.5" class="s-bsa"/><circle cx="333" cy="183" r="1.5" class="s-bsa"/><circle cx="333" cy="192" r="1.5" class="s-bsa"/><circle cx="333" cy="201" r="1.5" class="s-bsa"/><circle cx="333" cy="210" r="1.5" class="s-bsa"/><circle cx="333" cy="219" r="1.5" class="s-bsa"/><circle cx="333" cy="228" r="1.5" class="s-bsa"/><circle cx="333" cy="237" r="1.5" class="s-bsa"/><circle cx="342" cy="66" r="1.5" class="s-bsa"/><circle cx="342" cy="75" r="1.5" class="s-bsa"/><circle cx="342" cy="84" r="1.5" class="s-bsa"/><circle cx="342" cy="93" r="1.5" class="s-bsa"/><circle cx="342" cy="102" r="1.5" class="s-bsa"/><circle cx="342" cy="111" r="1.5" class="s-bsa"/><circle cx="342" cy="120" r="1.5" class="s-bsa"/><circle cx="342" cy="129" r="1.5" class="s-bsa"/><circle cx="342" cy="138" r="1.5" class="s-bsa"/><circle cx="342" cy="147" r="1.5" class="s-bsa"/><circle cx="342" cy="156" r="1.5" class="s-bsa"/><circle cx="342" cy="165" r="1.5" class="s-bsa"/><circle cx="342" cy="174" r="1.5" class="s-bsa"/><circle cx="342" cy="183" r="1.5" class="s-bsa"/><circle cx="342" cy="192" r="1.5" class="s-bsa"/><circle cx="342" cy="201" r="1.5" class="s-bsa"/><circle cx="342" cy="210" r="1.5" class="s-bsa"/><circle cx="342" cy="219" r="1.5" class="s-bsa"/><circle cx="342" cy="228" r="1.5" class="s-bsa"/><circle cx="342" cy="237" r="1.5" class="s-bsa"/><circle cx="351" cy="66" r="1.5" class="s-bsa"/><circle cx="351" cy="75" r="1.5" class="s-bsa"/><circle cx="351" cy="84" r="1.5" class="s-bsa"/><circle cx="351" cy="93" r="1.5" class="s-bsa"/><circle cx="351" cy="102" r="1.5" class="s-bsa"/><circle cx="351" cy="111" r="1.5" class="s-bsa"/><circle cx="351" cy="120" r="1.5" class="s-bsa"/><circle cx="351" cy="129" r="1.5" class="s-bsa"/><circle cx="351" cy="138" r="1.5" class="s-bsa"/><circle cx="351" cy="147" r="1.5" class="s-bsa"/><circle cx="351" cy="156" r="1.5" class="s-bsa"/><circle cx="351" cy="165" r="1.5" class="s-bsa"/><circle cx="351" cy="174" r="1.5" class="s-bsa"/><circle cx="351" cy="183" r="1.5" class="s-bsa"/><circle cx="351" cy="192" r="1.5" class="s-bsa"/><circle cx="351" cy="201" r="1.5" class="s-bsa"/><circle cx="351" cy="210" r="1.5" class="s-bsa"/><circle cx="351" cy="219" r="1.5" class="s-bsa"/><circle cx="351" cy="228" r="1.5" class="s-bsa"/><circle cx="351" cy="237" r="1.5" class="s-bsa"/><circle cx="360" cy="66" r="1.5" class="s-bsa"/><circle cx="360" cy="75" r="1.5" class="s-bsa"/><circle cx="360" cy="84" r="1.5" class="s-bsa"/><circle cx="360" cy="93" r="1.5" class="s-bsa"/><circle cx="360" cy="102" r="1.5" class="s-bsa"/><circle cx="360" cy="111" r="1.5" class="s-bsa"/><circle cx="360" cy="120" r="1.5" class="s-bsa"/><circle cx="360" cy="129" r="1.5" class="s-bsa"/><circle cx="360" cy="138" r="1.5" class="s-bsa"/><circle cx="360" cy="147" r="1.5" class="s-bsa"/><circle cx="360" cy="156" r="1.5" class="s-bsa"/><circle cx="360" cy="165" r="1.5" class="s-bsa"/><circle cx="360" cy="174" r="1.5" class="s-bsa"/><circle cx="360" cy="183" r="1.5" class="s-bsa"/><circle cx="360" cy="192" r="1.5" class="s-bsa"/><circle cx="360" cy="201" r="1.5" class="s-bsa"/><circle cx="360" cy="210" r="1.5" class="s-bsa"/><circle cx="360" cy="219" r="1.5" class="s-bsa"/><circle cx="360" cy="228" r="1.5" class="s-bsa"/><circle cx="360" cy="237" r="1.5" class="s-bsa"/><circle cx="369" cy="66" r="1.5" class="s-bsa"/><circle cx="369" cy="75" r="1.5" class="s-bsa"/><circle cx="369" cy="84" r="1.5" class="s-bsa"/><circle cx="369" cy="93" r="1.5" class="s-bsa"/><circle cx="369" cy="102" r="1.5" class="s-bsa"/><circle cx="369" cy="111" r="1.5" class="s-bsa"/><circle cx="369" cy="120" r="1.5" class="s-bsa"/><circle cx="369" cy="129" r="1.5" class="s-bsa"/><circle cx="369" cy="138" r="1.5" class="s-bsa"/><circle cx="369" cy="147" r="1.5" class="s-bsa"/><circle cx="369" cy="156" r="1.5" class="s-bsa"/><circle cx="369" cy="165" r="1.5" class="s-bsa"/><circle cx="369" cy="174" r="1.5" class="s-bsa"/><circle cx="369" cy="183" r="1.5" class="s-bsa"/><circle cx="369" cy="192" r="1.5" class="s-bsa"/><circle cx="369" cy="201" r="1.5" class="s-bsa"/><circle cx="369" cy="210" r="1.5" class="s-bsa"/><circle cx="369" cy="219" r="1.5" class="s-bsa"/><circle cx="369" cy="228" r="1.5" class="s-bsa"/><circle cx="369" cy="237" r="1.5" class="s-bsa"/><circle cx="378" cy="66" r="1.5" class="s-bsa"/><circle cx="378" cy="75" r="1.5" class="s-bsa"/><circle cx="378" cy="84" r="1.5" class="s-bsa"/><circle cx="378" cy="93" r="1.5" class="s-bsa"/><circle cx="378" cy="102" r="1.5" class="s-bsa"/><circle cx="378" cy="111" r="1.5" class="s-bsa"/><circle cx="378" cy="120" r="1.5" class="s-bsa"/><circle cx="378" cy="129" r="1.5" class="s-bsa"/><circle cx="378" cy="138" r="1.5" class="s-bsa"/><circle cx="378" cy="147" r="1.5" class="s-bsa"/><circle cx="378" cy="156" r="1.5" class="s-bsa"/><circle cx="378" cy="165" r="1.5" class="s-bsa"/><circle cx="378" cy="174" r="1.5" class="s-bsa"/><circle cx="378" cy="183" r="1.5" class="s-bsa"/><circle cx="378" cy="192" r="1.5" class="s-bsa"/><circle cx="378" cy="201" r="1.5" class="s-bsa"/><circle cx="378" cy="210" r="1.5" class="s-bsa"/><circle cx="378" cy="219" r="1.5" class="s-bsa"/><circle cx="378" cy="228" r="1.5" class="s-bsa"/><circle cx="378" cy="237" r="1.5" class="s-bsa"/><circle cx="387" cy="66" r="1.5" class="s-bsa"/><circle cx="387" cy="75" r="1.5" class="s-bsa"/><circle cx="387" cy="84" r="1.5" class="s-bsa"/><circle cx="387" cy="93" r="1.5" class="s-bsa"/><circle cx="387" cy="102" r="1.5" class="s-bsa"/><circle cx="387" cy="111" r="1.5" class="s-bsa"/><circle cx="387" cy="120" r="1.5" class="s-bsa"/><circle cx="387" cy="129" r="1.5" class="s-bsa"/><circle cx="387" cy="138" r="1.5" class="s-bsa"/><circle cx="387" cy="147" r="1.5" class="s-bsa"/><circle cx="387" cy="156" r="1.5" class="s-bsa"/><circle cx="387" cy="165" r="1.5" class="s-bsa"/><circle cx="387" cy="174" r="1.5" class="s-bsa"/><circle cx="387" cy="183" r="1.5" class="s-bsa"/><circle cx="387" cy="192" r="1.5" class="s-bsa"/><circle cx="387" cy="201" r="1.5" class="s-bsa"/><circle cx="387" cy="210" r="1.5" class="s-bsa"/><circle cx="387" cy="219" r="1.5" class="s-bsa"/><circle cx="387" cy="228" r="1.5" class="s-bsa"/><circle cx="387" cy="237" r="1.5" class="s-bsa"/><circle cx="396" cy="66" r="1.5" class="s-bsa"/><circle cx="396" cy="75" r="1.5" class="s-bsa"/><circle cx="396" cy="84" r="1.5" class="s-bsa"/><circle cx="396" cy="93" r="1.5" class="s-bsa"/><circle cx="396" cy="102" r="1.5" class="s-bsa"/><circle cx="396" cy="111" r="1.5" class="s-bsa"/><circle cx="396" cy="120" r="1.5" class="s-bsa"/><circle cx="396" cy="129" r="1.5" class="s-bsa"/><circle cx="396" cy="138" r="1.5" class="s-bsa"/><circle cx="396" cy="147" r="1.5" class="s-bsa"/><circle cx="396" cy="156" r="1.5" class="s-bsa"/><circle cx="396" cy="165" r="1.5" class="s-bsa"/><circle cx="396" cy="174" r="1.5" class="s-bsa"/><circle cx="396" cy="183" r="1.5" class="s-bsa"/><circle cx="396" cy="192" r="1.5" class="s-bsa"/><circle cx="396" cy="201" r="1.5" class="s-bsa"/><circle cx="396" cy="210" r="1.5" class="s-bsa"/><circle cx="396" cy="219" r="1.5" class="s-bsa"/><circle cx="396" cy="228" r="1.5" class="s-bsa"/><circle cx="396" cy="237" r="1.5" class="s-bsa"/><circle cx="405" cy="66" r="1.5" class="s-bsa"/><circle cx="405" cy="75" r="1.5" class="s-bsa"/><circle cx="405" cy="84" r="1.5" class="s-bsa"/><circle cx="405" cy="93" r="1.5" class="s-bsa"/><circle cx="405" cy="102" r="1.5" class="s-bsa"/><circle cx="405" cy="111" r="1.5" class="s-bsa"/><circle cx="405" cy="120" r="1.5" class="s-bsa"/><circle cx="405" cy="129" r="1.5" class="s-bsa"/><circle cx="405" cy="138" r="1.5" class="s-bsa"/><circle cx="405" cy="147" r="1.5" class="s-bsa"/><circle cx="405" cy="156" r="1.5" class="s-bsa"/><circle cx="405" cy="165" r="1.5" class="s-bsa"/><circle cx="405" cy="174" r="1.5" class="s-bsa"/><circle cx="405" cy="183" r="1.5" class="s-bsa"/><circle cx="405" cy="192" r="1.5" class="s-bsa"/><circle cx="405" cy="201" r="1.5" class="s-bsa"/><circle cx="405" cy="210" r="1.5" class="s-bsa"/><circle cx="405" cy="219" r="1.5" class="s-bsa"/><circle cx="405" cy="228" r="1.5" class="s-bsa"/><circle cx="405" cy="237" r="1.5" class="s-bsa"/><circle cx="414" cy="66" r="1.5" class="s-bsa"/><circle cx="414" cy="75" r="1.5" class="s-bsa"/><circle cx="414" cy="84" r="1.5" class="s-bsa"/><circle cx="414" cy="93" r="1.5" class="s-bsa"/><circle cx="414" cy="102" r="1.5" class="s-bsa"/><circle cx="414" cy="111" r="1.5" class="s-bsa"/><circle cx="414" cy="120" r="1.5" class="s-bsa"/><circle cx="414" cy="129" r="1.5" class="s-bsa"/><circle cx="414" cy="138" r="1.5" class="s-bsa"/><circle cx="414" cy="147" r="1.5" class="s-bsa"/><circle cx="414" cy="156" r="1.5" class="s-bsa"/><circle cx="414" cy="165" r="1.5" class="s-bsa"/><circle cx="414" cy="174" r="1.5" class="s-bsa"/><circle cx="414" cy="183" r="1.5" class="s-bsa"/><circle cx="414" cy="192" r="1.5" class="s-bsa"/><circle cx="414" cy="201" r="1.5" class="s-bsa"/><circle cx="414" cy="210" r="1.5" class="s-bsa"/><circle cx="414" cy="219" r="1.5" class="s-bsa"/><circle cx="414" cy="228" r="1.5" class="s-bsa"/><circle cx="414" cy="237" r="1.5" class="s-bsa"/><circle cx="423" cy="66" r="1.5" class="s-bsa"/><circle cx="423" cy="75" r="1.5" class="s-bsa"/><circle cx="423" cy="84" r="1.5" class="s-bsa"/><circle cx="423" cy="93" r="1.5" class="s-bsa"/><circle cx="423" cy="102" r="1.5" class="s-bsa"/><circle cx="423" cy="111" r="1.5" class="s-bsa"/><circle cx="423" cy="120" r="1.5" class="s-bsa"/><circle cx="423" cy="129" r="1.5" class="s-bsa"/><circle cx="423" cy="138" r="1.5" class="s-bsa"/><circle cx="423" cy="147" r="1.5" class="s-bsa"/><circle cx="423" cy="156" r="1.5" class="s-bsa"/><circle cx="423" cy="165" r="1.5" class="s-bsa"/><circle cx="423" cy="174" r="1.5" class="s-bsa"/><circle cx="423" cy="183" r="1.5" class="s-bsa"/><circle cx="423" cy="192" r="1.5" class="s-bsa"/><circle cx="423" cy="201" r="1.5" class="s-bsa"/><circle cx="423" cy="210" r="1.5" class="s-bsa"/><circle cx="423" cy="219" r="1.5" class="s-bsa"/><circle cx="423" cy="228" r="1.5" class="s-bsa"/><circle cx="423" cy="237" r="1.5" class="s-bsa"/>
+      <text x="365" y="290" class="lbl txt small bold">blocking: the membrane is soaked in BSA, a cheap protein that covers every empty spot</text>
+      <text x="365" y="304" class="lbl txt small muted">so that the antibody cannot stick to the membrane itself (non-specific binding)</text>
+    </g>
+    <g data-step="5" data-until="6">
+      <path d="M470,90 l0,-10 m0,0 l6,-7 m-6,--7 l-6,-7" class="s-ab1"/><path d="M490,130 l0,-10 m0,0 l6,-7 m-6,--7 l-6,-7" class="s-ab1"/><path d="M470,170 l0,-10 m0,0 l6,-7 m-6,--7 l-6,-7" class="s-ab1"/><path d="M495,210 l0,-10 m0,0 l6,-7 m-6,--7 l-6,-7" class="s-ab1"/>
+      <text x="600" y="40" class="lbl txt small bold">primary antibody: a Y-shaped protein from an immunised animal (mouse, rabbit, goat, chicken)</text>
+      <text x="600" y="54" class="lbl txt small muted">it binds protein X and almost nothing else (specificity), with high affinity (strength)</text>
+    </g>
+    <g data-step="6">
+      <path d="M365,138 l0,-10 m0,0 l6,-7 m-6,--7 l-6,-7" class="s-ab1"/>
+      <text x="600" y="40" class="lbl txt small bold">the primary antibody finds its band on the membrane (sample lane) and binds it</text>
+    </g>
+    <g data-step="7">
+      <text x="600" y="40" class="lbl txt small bold">wash: antibody that did not bind is rinsed away</text>
+    </g>
+    <g data-step="8">
+      <path d="M365,126 l0,-10 m0,0 l6,-7 m-6,--7 l-6,-7" class="s-ab2"/>
+      <circle cx="365" cy="114" r="4" class="enz"/>
+      <text x="600" y="40" class="lbl txt small bold">secondary antibody: binds the primary antibody and carries the label</text>
+      <text x="600" y="54" class="lbl txt small muted">label = radioactivity, a fluorophore, or an enzyme such as horseradish peroxidase (yellow dot)</text>
+    </g>
+    <g data-step="9">
+      <text x="600" y="40" class="lbl txt small bold">wash again: only the antibody sandwich on protein X stays</text>
+    </g>
+    <g data-step="10">
+      <rect x="560" y="120" width="160" height="180" rx="4" class="s-film"/>
+      <rect x="590" y="138" width="22" height="5" class="band hi"/>
+      <path d="M436,150 L552,150" class="path" marker-end="url(#ar-w)"/>
+      <text x="494" y="142" class="txt small muted" style="text-anchor:middle">detect</text>
+      <text x="601" y="114" class="txt small muted" style="text-anchor:middle">sample</text>
+      <text x="681" y="114" class="txt small muted" style="text-anchor:middle">control</text>
+      <text x="601" y="162" class="txt small" style="text-anchor:middle">one band</text>
+      <text x="600" y="40" class="lbl txt small bold">detection: the enzyme makes a coloured or light-emitting product; a camera or film shows one band</text>
+    </g>
+    <g data-step="11">
+      <path d="M325,142 L560,142" class="s-drop"/>
+      <text x="548" y="130" class="txt small bold" style="text-anchor:end">≈ 50 kDa</text>
+      <text x="600" y="40" class="lbl txt small bold">read the size: compare the band with the marker lane: protein X is about 50 kDa</text>
+    </g>
+    <g data-step="12">
+      <rect x="670" y="138" width="22" height="5" class="s-nothing"/>
+      <text x="681" y="162" class="txt small muted" style="text-anchor:middle">no band</text>
+      <text x="600" y="40" class="lbl txt small bold">control lane: an extract from cells without protein X gives no band, so the antibody is specific</text>
+      <text x="600" y="54" class="lbl txt small muted">if a band appeared there, the antibody also reacts with other proteins (cross-reactivity)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+ {
+  "t": "1 · Start: a cell extract",
+  "en": "Begin state: an extract, the mixture of thousands of proteins from a sample of cells. Question: is protein X in it, how much, and how big is it? One protein in thousands cannot be seen directly; it must be picked out.",
+  "nl": "Beginstand: een extract, het mengsel van duizenden eiwitten uit een celmonster. Vraag: zit eiwit X erin, hoeveel, en hoe groot is het? Eén eiwit tussen duizenden kan je niet rechtstreeks zien; het moet eruit gepikt worden."
+ },
+ {
+  "t": "2 · SDS-PAGE: sort by size",
+  "en": "The extract is run on a polyacrylamide gel with SDS (page 4.8): every protein is coated with negative charge and pulled through the gel, small ones faster than big ones. A marker lane with proteins of known size runs alongside. Size is given in kDa, kilodalton (a dalton is about the mass of one hydrogen atom). A control extract from cells without protein X runs in a third lane.",
+  "nl": "Het extract loopt op een polyacrylamidegel met SDS (pagina 4.8): elk eiwit wordt bedekt met negatieve lading en door de gel getrokken, kleine sneller dan grote. Een markerbaan met eiwitten van bekende grootte loopt mee. Grootte wordt gegeven in kDa, kilodalton (een dalton is ongeveer de massa van één waterstofatoom). Een controle-extract van cellen zonder eiwit X loopt in een derde baan."
+ },
+ {
+  "t": "3 · Transfer to a membrane",
+  "en": "Antibodies cannot get into a gel. So an electric field is applied across the gel and the proteins move out of it onto a thin membrane that proteins stick to, keeping exactly their positions. A dye such as Ponceau S can show all proteins on the membrane.",
+  "nl": "Antistoffen kunnen niet in een gel. Daarom wordt een elektrisch veld over de gel gezet en verhuizen de eiwitten eruit naar een dun membraan waar eiwitten aan plakken, precies op hun plaats. Een kleurstof zoals Ponceau S kan alle eiwitten op het membraan tonen."
+ },
+ {
+  "t": "4 · Blocking",
+  "en": "An antibody is itself a protein and would stick to any empty place on the membrane. So the membrane is first soaked in a solution of a cheap, harmless protein (BSA, bovine serum albumin, from cow blood) that covers all empty spots. This reduces non-specific binding.",
+  "nl": "Een antistof is zelf een eiwit en zou aan elke lege plek op het membraan plakken. Daarom wordt het membraan eerst gedrenkt in een oplossing van een goedkoop, onschadelijk eiwit (BSA, runderserumalbumine, uit koeienbloed) dat alle lege plekken bedekt. Dit vermindert niet-specifieke binding."
+ },
+ {
+  "t": "5 · The primary antibody",
+  "en": "An antibody is a Y-shaped protein made by the immune system of an animal. To get antibodies against protein X, a mouse, rabbit, goat or chicken is injected with purified protein X (or a peptide, a piece of it) and the antibodies are collected from its blood. They bind protein X with high affinity (strongly) and specificity (almost nothing else).",
+  "nl": "Een antistof is een Y-vormig eiwit dat het immuunsysteem van een dier maakt. Om antistoffen tegen eiwit X te krijgen wordt een muis, konijn, geit of kip ingespoten met gezuiverd eiwit X (of een peptide, een stukje ervan) en worden de antistoffen uit zijn bloed gehaald. Ze binden eiwit X met hoge affiniteit (sterk) en specificiteit (bijna niets anders)."
+ },
+ {
+  "t": "6 · It binds its band",
+  "en": "The primary antibody solution is poured over the membrane. Among all the bands it binds only the one that contains protein X, in the sample lane.",
+  "nl": "De oplossing met de primaire antistof wordt over het membraan gegoten. Van alle banden bindt ze alleen die met eiwit X, in de monsterbaan."
+ },
+ {
+  "t": "7 · Wash",
+  "en": "Antibody that did not find its target is rinsed off. Only the antibodies bound to protein X remain.",
+  "nl": "Antistof die haar doelwit niet vond wordt afgespoeld. Alleen de antistoffen gebonden aan eiwit X blijven over."
+ },
+ {
+  "t": "8 · The secondary antibody carries the label",
+  "en": "The primary antibody is invisible. A second antibody is added that recognises the primary antibody (for example a goat antibody against rabbit antibodies) and carries the label: radioactivity, a fluorophore, or an enzyme such as horseradish peroxidase, which makes a coloured or light-emitting product. One primary antibody can bind several secondary ones, which amplifies the signal.",
+  "nl": "De primaire antistof is onzichtbaar. Een tweede antistof wordt toegevoegd die de primaire herkent (bijvoorbeeld een geitenantistof tegen konijnenantistoffen) en het label draagt: radioactiviteit, een fluorofoor, of een enzym zoals mierikswortelperoxidase, dat een gekleurd of lichtgevend product maakt. Eén primaire antistof kan meerdere secundaire binden, wat het signaal versterkt."
+ },
+ {
+  "t": "9 · Wash again",
+  "en": "Unbound secondary antibody is rinsed away. What remains on the membrane is a sandwich: protein X, the primary antibody on it, the labelled secondary antibody on that.",
+  "nl": "Ongebonden secundaire antistof wordt weggespoeld. Wat op het membraan blijft is een sandwich: eiwit X, daarop de primaire antistof, daarop de gelabelde secundaire antistof."
+ },
+ {
+  "t": "10 · Detection",
+  "en": "The label is made visible: autoradiography (a film) for radioactivity, a camera or phosphorimager for fluorescence or light. One band appears, at the position of protein X. The darkness of the band says how much protein X there was.",
+  "nl": "Het label wordt zichtbaar gemaakt: autoradiografie (een film) voor radioactiviteit, een camera of phosphorimager voor fluorescentie of licht. Eén band verschijnt, op de plaats van eiwit X. De donkerte van de band zegt hoeveel eiwit X er was."
+ },
+ {
+  "t": "11 · Read the size",
+  "en": "Compare the band with the marker lane: it runs level with the 50 kDa marker, so protein X is about 50 kDa. If the band is at the wrong size, something is off: a different protein, a cut or modified version of X.",
+  "nl": "Vergelijk de band met de markerbaan: ze loopt gelijk met de 50 kDa-marker, dus eiwit X is ongeveer 50 kDa. Zit de band op de verkeerde grootte, dan klopt er iets niet: een ander eiwit, een geknipte of gewijzigde versie van X."
+ },
+ {
+  "t": "12 · The control",
+  "en": "The result is only as good as the specificity of the primary antibody. Polyclonal antibodies (a mixture of antibodies from the animal, recognising several spots on the protein) sometimes also bind other proteins. So a control lane with an extract from cells that lack protein X must stay empty. A band there means cross-reactivity, and the result cannot be trusted.",
+  "nl": "Het resultaat is maar zo goed als de specificiteit van de primaire antistof. Polyklonale antistoffen (een mengsel van antistoffen uit het dier, die verschillende plekken op het eiwit herkennen) binden soms ook andere eiwitten. Daarom moet een controlebaan met een extract van cellen zonder eiwit X leeg blijven. Een band daar betekent kruisreactiviteit, en het resultaat is niet te vertrouwen."
+ }
+];
+Stepper.init('west-stepper', steps, 'west');
+})();
+</script>
+
 <div class="callout key"><span class="tag">Controls</span>
 <p>The result is only as good as the <strong>specificity of the primary antibody</strong>. Some antibodies, especially <strong>polyclonal</strong> ones (a mixture of antibodies
 from the animal, recognising several spots, or <em>epitopes</em>, on the protein), also react with other proteins. So always include controls, for example an extract from
@@ -413,6 +800,222 @@ different cell types (for example kinds of immune cells) and reveals changes in 
   <figcaption>Flow cytometry. Each cell crosses the laser alone; the scattered light reports size and shape, the fluorescence reports whether the cell carries the tagged marker.
   Plotting thousands of cells gives populations, here untagged (grey cells) and tagged (green cells).</figcaption>
 </figure>
+
+<h3>Build it up yourself: flow cytometry, from a cell suspension to a dot plot</h3>
+<p>Press <strong>Next</strong> to tag the cells, send them past the laser and read the plot, one step at a time.</p>
+
+<div class="stepper" id="flow-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of flow cytometry">
+    <defs>
+      <marker id="ar-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arT-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="50" y="55" width="150" height="170" rx="10" class="s-dish"/>
+      <circle cx="70" cy="80" r="11" class="celln"/><circle cx="110" cy="70" r="11" class="celln"/><circle cx="150" cy="90" r="11" class="celln"/><circle cx="90" cy="120" r="11" class="celln"/><circle cx="130" cy="130" r="11" class="celln"/><circle cx="170" cy="120" r="11" class="celln"/><circle cx="75" cy="160" r="11" class="celln"/><circle cx="115" cy="170" r="11" class="celln"/><circle cx="155" cy="160" r="11" class="celln"/><circle cx="95" cy="200" r="11" class="celln"/><circle cx="135" cy="205" r="11" class="celln"/><circle cx="175" cy="195" r="11" class="celln"/>
+      <text x="440" y="40" class="lbl txt small bold">cells in suspension (floating, single)</text>
+      <text x="440" y="300" class="lbl txt small">question: how many of these cells carry marker protein M on their surface, for example a certain kind of white blood cell?</text>
+    </g>
+    <g data-step="2">
+      <circle cx="155" cy="160" r="11" class="cellf"/><circle cx="110" cy="70" r="11" class="cellf"/><circle cx="135" cy="205" r="11" class="cellf"/><circle cx="130" cy="130" r="11" class="cellf"/>
+      <path d="M167,154 l0,-7 m0,0 l4,-5 m-4,--5 l-4,-5" class="s-abf"/><path d="M122,64 l0,-7 m0,0 l4,-5 m-4,--5 l-4,-5" class="s-abf"/><path d="M147,199 l0,-7 m0,0 l4,-5 m-4,--5 l-4,-5" class="s-abf"/><path d="M142,124 l0,-7 m0,0 l4,-5 m-4,--5 l-4,-5" class="s-abf"/>
+      <text x="440" y="40" class="lbl txt small bold">tag: a fluorescent antibody binds marker M; only cells with M light up green</text>
+    </g>
+    <g data-step="3">
+      <path d="M230,70 L300,70 L275,140 L275,290 M255,290 L255,140 L230,70" class="stream"/>
+      <path d="M200,120 L228,100" class="path" marker-end="url(#ar-c)"/>
+      <circle cx="265" cy="160" r="7" class="celln"/><circle cx="265" cy="190" r="7" class="cellf"/><circle cx="265" cy="220" r="7" class="celln"/><circle cx="265" cy="250" r="7" class="celln"/><circle cx="265" cy="280" r="7" class="cellf"/>
+      <text x="440" y="40" class="lbl txt small bold">single file: the fluid narrows so the cells pass one at a time</text>
+    </g>
+    <g data-step="4">
+      <path d="M330,220 L282,220" class="laser"/>
+      <rect x="330" y="208" width="40" height="24" rx="4" class="det"/>
+      <text x="350" y="224" class="txt small" style="text-anchor:middle">laser</text>
+      <text x="440" y="40" class="lbl txt small bold">a laser beam crosses the stream</text>
+    </g>
+    <g data-step="5">
+      <path d="M248,220 L205,220" class="s-scatter"/>
+      <rect x="150" y="238" width="60" height="24" rx="4" class="det"/>
+      <text x="180" y="254" class="txt small" style="text-anchor:middle">scatter</text>
+      <text x="440" y="40" class="lbl txt small bold">scattered light: a detector reads the size and shape of the cell</text>
+    </g>
+    <g data-step="6">
+      <path d="M272,214 L332,170" class="s-fluo"/>
+      <rect x="332" y="150" width="60" height="24" rx="4" class="det"/>
+      <text x="362" y="166" class="txt small" style="text-anchor:middle">fluor.</text>
+      <text x="440" y="40" class="lbl txt small bold">a tagged cell glows: the fluorescence detector records it</text>
+    </g>
+    <g data-step="7">
+      <path d="M440,90 L440,290 M440,290 L820,290" class="ax"/>
+      <text x="630.0" y="312" class="txt small" style="text-anchor:middle">scatter (size) →</text>
+      <text x="434" y="94" class="txt small" style="text-anchor:end">fluorescence ↑</text>
+      <circle cx="560" cy="250" r="4" class="s-dotn"/>
+      <text x="440" y="40" class="lbl txt small bold">every cell becomes one dot: its size on the x-axis, its glow on the y-axis</text>
+    </g>
+    <g data-step="8">
+      <circle cx="561" cy="256" r="3" class="s-dotn"/>
+      <circle cx="546" cy="254" r="3" class="s-dotn"/>
+      <circle cx="587" cy="255" r="3" class="s-dotn"/>
+      <circle cx="606" cy="237" r="3" class="s-dotn"/>
+      <circle cx="562" cy="240" r="3" class="s-dotn"/>
+      <circle cx="536" cy="247" r="3" class="s-dotn"/>
+      <circle cx="566" cy="255" r="3" class="s-dotn"/>
+      <circle cx="575" cy="281" r="3" class="s-dotn"/>
+      <circle cx="585" cy="227" r="3" class="s-dotn"/>
+      <circle cx="566" cy="241" r="3" class="s-dotn"/>
+      <circle cx="544" cy="268" r="3" class="s-dotn"/>
+      <circle cx="553" cy="222" r="3" class="s-dotn"/>
+      <circle cx="569" cy="245" r="3" class="s-dotn"/>
+      <circle cx="524" cy="237" r="3" class="s-dotn"/>
+      <circle cx="541" cy="249" r="3" class="s-dotn"/>
+      <circle cx="547" cy="251" r="3" class="s-dotn"/>
+      <circle cx="615" cy="238" r="3" class="s-dotn"/>
+      <circle cx="535" cy="246" r="3" class="s-dotn"/>
+      <circle cx="592" cy="240" r="3" class="s-dotn"/>
+      <circle cx="603" cy="231" r="3" class="s-dotn"/>
+      <circle cx="529" cy="249" r="3" class="s-dotn"/>
+      <circle cx="534" cy="241" r="3" class="s-dotn"/>
+      <circle cx="573" cy="260" r="3" class="s-dotn"/>
+      <circle cx="563" cy="246" r="3" class="s-dotn"/>
+      <circle cx="600" cy="255" r="3" class="s-dotn"/>
+      <circle cx="552" cy="267" r="3" class="s-dotn"/>
+      <circle cx="532" cy="252" r="3" class="s-dotn"/>
+      <circle cx="579" cy="249" r="3" class="s-dotn"/>
+      <circle cx="542" cy="254" r="3" class="s-dotn"/>
+      <circle cx="543" cy="241" r="3" class="s-dotn"/>
+      <circle cx="529" cy="268" r="3" class="s-dotn"/>
+      <circle cx="543" cy="266" r="3" class="s-dotn"/>
+      <circle cx="571" cy="246" r="3" class="s-dotn"/>
+      <circle cx="580" cy="253" r="3" class="s-dotn"/>
+      <circle cx="563" cy="230" r="3" class="s-dotn"/>
+      <circle cx="562" cy="262" r="3" class="s-dotn"/>
+      <circle cx="574" cy="263" r="3" class="s-dotn"/>
+      <circle cx="604" cy="255" r="3" class="s-dotn"/>
+      <circle cx="619" cy="228" r="3" class="s-dotn"/>
+      <circle cx="552" cy="214" r="3" class="s-dotn"/>
+      <circle cx="584" cy="251" r="3" class="s-dotn"/>
+      <circle cx="610" cy="244" r="3" class="s-dotn"/>
+      <circle cx="499" cy="267" r="3" class="s-dotn"/>
+      <circle cx="519" cy="232" r="3" class="s-dotn"/>
+      <circle cx="554" cy="258" r="3" class="s-dotn"/>
+      <circle cx="544" cy="252" r="3" class="s-dotn"/>
+      <circle cx="503" cy="274" r="3" class="s-dotn"/>
+      <circle cx="557" cy="251" r="3" class="s-dotn"/>
+      <circle cx="577" cy="252" r="3" class="s-dotn"/>
+      <circle cx="565" cy="237" r="3" class="s-dotn"/>
+      <circle cx="556" cy="256" r="3" class="s-dotn"/>
+      <circle cx="591" cy="248" r="3" class="s-dotn"/>
+      <circle cx="562" cy="254" r="3" class="s-dotn"/>
+      <circle cx="577" cy="252" r="3" class="s-dotn"/>
+      <circle cx="552" cy="242" r="3" class="s-dotn"/>
+      <circle cx="593" cy="254" r="3" class="s-dotn"/>
+      <circle cx="560" cy="298" r="3" class="s-dotn"/>
+      <circle cx="586" cy="261" r="3" class="s-dotn"/>
+      <circle cx="564" cy="235" r="3" class="s-dotn"/>
+      <circle cx="594" cy="248" r="3" class="s-dotn"/>
+      <circle cx="561" cy="264" r="3" class="s-dotn"/>
+      <circle cx="590" cy="253" r="3" class="s-dotn"/>
+      <circle cx="560" cy="279" r="3" class="s-dotn"/>
+      <circle cx="577" cy="235" r="3" class="s-dotn"/>
+      <circle cx="582" cy="252" r="3" class="s-dotn"/>
+      <circle cx="560" cy="259" r="3" class="s-dotn"/>
+      <circle cx="567" cy="278" r="3" class="s-dotn"/>
+      <circle cx="566" cy="253" r="3" class="s-dotn"/>
+      <circle cx="594" cy="242" r="3" class="s-dotn"/>
+      <circle cx="590" cy="249" r="3" class="s-dotn"/>
+      <circle cx="675" cy="126" r="3" class="s-dotf"/>
+      <circle cx="652" cy="114" r="3" class="s-dotf"/>
+      <circle cx="626" cy="140" r="3" class="s-dotf"/>
+      <circle cx="654" cy="171" r="3" class="s-dotf"/>
+      <circle cx="695" cy="118" r="3" class="s-dotf"/>
+      <circle cx="617" cy="160" r="3" class="s-dotf"/>
+      <circle cx="653" cy="118" r="3" class="s-dotf"/>
+      <circle cx="654" cy="121" r="3" class="s-dotf"/>
+      <circle cx="614" cy="119" r="3" class="s-dotf"/>
+      <circle cx="632" cy="175" r="3" class="s-dotf"/>
+      <circle cx="651" cy="138" r="3" class="s-dotf"/>
+      <circle cx="715" cy="132" r="3" class="s-dotf"/>
+      <circle cx="635" cy="135" r="3" class="s-dotf"/>
+      <circle cx="652" cy="135" r="3" class="s-dotf"/>
+      <circle cx="683" cy="135" r="3" class="s-dotf"/>
+      <circle cx="656" cy="143" r="3" class="s-dotf"/>
+      <circle cx="614" cy="124" r="3" class="s-dotf"/>
+      <circle cx="638" cy="103" r="3" class="s-dotf"/>
+      <circle cx="640" cy="141" r="3" class="s-dotf"/>
+      <circle cx="644" cy="138" r="3" class="s-dotf"/>
+      <circle cx="650" cy="134" r="3" class="s-dotf"/>
+      <circle cx="659" cy="113" r="3" class="s-dotf"/>
+      <circle cx="667" cy="125" r="3" class="s-dotf"/>
+      <circle cx="654" cy="132" r="3" class="s-dotf"/>
+      <circle cx="627" cy="127" r="3" class="s-dotf"/>
+      <circle cx="680" cy="122" r="3" class="s-dotf"/>
+      <circle cx="603" cy="143" r="3" class="s-dotf"/>
+      <circle cx="647" cy="140" r="3" class="s-dotf"/>
+      <circle cx="611" cy="129" r="3" class="s-dotf"/>
+      <circle cx="667" cy="123" r="3" class="s-dotf"/>
+      <text x="560" y="222" class="txt small muted" style="text-anchor:middle">untagged</text>
+      <text x="640" y="112" class="txt small muted" style="text-anchor:middle">tagged (M+)</text>
+      <text x="440" y="40" class="lbl txt small bold">thousands of cells in minutes: two clouds, two populations</text>
+    </g>
+    <g data-step="9">
+      <text x="440" y="40" class="lbl txt small bold">count: here about 30 % of the cells carry marker M</text>
+      <text x="440" y="54" class="lbl txt small muted">uses: identify cell types; diagnose leukemia; follow immune cells in HIV; see growth, division and death</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+ {
+  "t": "1 · Start: cells in suspension",
+  "en": "Flow cytometry (cyto = cell, metry = measuring) works on cells floating freely in a liquid, one by one, not stuck together. Begin state: a suspension of mixed cells, for example from a blood sample. Question: how many of them carry a certain marker protein M on their surface?",
+  "nl": "Flowcytometrie (cyto = cel, metrie = meten) werkt op cellen die vrij in een vloeistof zweven, één voor één, niet aan elkaar vast. Beginstand: een suspensie van gemengde cellen, bijvoorbeeld uit een bloedstaal. Vraag: hoeveel ervan dragen een bepaald merker-eiwit M op hun oppervlak?"
+ },
+ {
+  "t": "2 · Tag the feature of interest",
+  "en": "An antibody against M, carrying a fluorescent dye, is mixed with the cells. It binds only cells that have M on their surface, so those cells will glow (green) when a laser hits them. Other markers can be tagged too: DNA content with a DNA dye, another protein with an antibody in another colour.",
+  "nl": "Een antistof tegen M, met een fluorescente kleurstof eraan, wordt bij de cellen gemengd. Ze bindt alleen cellen die M op hun oppervlak hebben, dus die cellen zullen (groen) gloeien als een laser ze raakt. Andere kenmerken kunnen ook gelabeld worden: DNA-gehalte met een DNA-kleurstof, een ander eiwit met een antistof in een andere kleur."
+ },
+ {
+  "t": "3 · Single file",
+  "en": "The suspension is pushed into a narrowing stream of fluid, so narrow that the cells line up and pass one at a time, like cars through a toll booth.",
+  "nl": "De suspensie wordt in een vernauwende vloeistofstroom geduwd, zo smal dat de cellen op een rij gaan staan en één voor één passeren, als auto's door een tolhuisje."
+ },
+ {
+  "t": "4 · The laser",
+  "en": "A laser beam crosses the stream at one point. Every cell passes through the beam alone, for a fraction of a second.",
+  "nl": "Een laserstraal kruist de stroom op één punt. Elke cel passeert alleen door de straal, een fractie van een seconde."
+ },
+ {
+  "t": "5 · Scattered light: size and shape",
+  "en": "A cell in the beam scatters the light. A detector measures that scattered light; how much and in which directions tells the size and the internal complexity of the cell. This works for every cell, tagged or not.",
+  "nl": "Een cel in de straal verstrooit het licht. Een detector meet dat verstrooide licht; hoeveel en in welke richtingen zegt iets over de grootte en de inwendige complexiteit van de cel. Dit werkt voor elke cel, gelabeld of niet."
+ },
+ {
+  "t": "6 · Fluorescence: tagged or not",
+  "en": "If the cell carries the fluorescent antibody, the dye lights up in the laser and a second detector records the colour and its brightness. An untagged cell gives no fluorescence.",
+  "nl": "Draagt de cel de fluorescente antistof, dan licht de kleurstof op in de laser en registreert een tweede detector de kleur en de helderheid. Een niet-gelabelde cel geeft geen fluorescentie."
+ },
+ {
+  "t": "7 · One cell, one dot",
+  "en": "The instrument stores the measurements of every cell and plots each one as a dot: scattered light (size) on the horizontal axis, fluorescence on the vertical axis.",
+  "nl": "Het toestel slaat de metingen van elke cel op en zet elke cel uit als een stip: verstrooid licht (grootte) op de horizontale as, fluorescentie op de verticale as."
+ },
+ {
+  "t": "8 · Thousands of cells: populations",
+  "en": "Thousands of cells are measured in a few minutes. Cells of the same kind land in the same place, so the plot shows clouds: here an untagged population low on the fluorescence axis and a tagged population high up.",
+  "nl": "Duizenden cellen worden in enkele minuten gemeten. Cellen van dezelfde soort landen op dezelfde plaats, dus de grafiek toont wolken: hier een niet-gelabelde populatie laag op de fluorescentie-as en een gelabelde populatie hoog."
+ },
+ {
+  "t": "9 · Count, and uses",
+  "en": "Counting the dots in each cloud gives the answer: here about 30 % of the cells carry M. Uses: telling cell types apart (for example kinds of immune cells), diagnosing leukemia by finding abnormal cells in the blood, monitoring the immune system in HIV (the virus kills particular immune cells, chapter 3) or during cancer treatment, and seeing whether cells grow, divide or die. Note: it measures whole cells in suspension; for 'is protein X in the extract' you use a Western blot.",
+  "nl": "De stippen in elke wolk tellen geeft het antwoord: hier draagt ongeveer 30 % van de cellen M. Gebruik: celtypes onderscheiden (bijvoorbeeld soorten immuuncellen), leukemie diagnosticeren door abnormale cellen in het bloed te vinden, het immuunsysteem volgen bij hiv (het virus doodt bepaalde immuuncellen, hoofdstuk 3) of tijdens kankerbehandeling, en zien of cellen groeien, delen of sterven. Let op: het meet hele cellen in suspensie; voor 'zit eiwit X in het extract' gebruik je een western blot."
+ }
+];
+Stepper.init('flow-stepper', steps, 'flow');
+})();
+</script>
 
 <p><strong>Uses:</strong> in medicine, flow cytometry diagnoses diseases such as <strong>leukemia</strong> by finding abnormal cells in the blood, and monitors the immune system in people
 with <strong>HIV</strong> (chapter 3: the virus kills particular immune cells, so counting them tracks the disease) or during cancer treatment. In research it shows how cells

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.8 Gels and mass spectrometry</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -20,6 +22,22 @@
   .peak { stroke: var(--c-N); stroke-width: 3; stroke-linecap: round; }
   .peak.hi { stroke: var(--c-O); }
   .ion { fill: var(--c-Cl); }
+  .tube { fill: var(--key-bg); stroke: var(--muted); stroke-width: 1.5; }
+  .dna { stroke: var(--c-N); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .dna.frag { stroke: var(--c-O); }
+  .pore circle { fill: var(--accent); opacity: .5; }
+  .tank { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .band.faint { opacity: .35; }
+  .txt.pole.left { text-anchor: start; }
+  .stepper .mem { fill: var(--key-bg); stroke: var(--muted); stroke-width: 1.5; }
+  .sdsdot { fill: var(--c-N); }
+  .chain { fill: none; stroke: var(--c-O); stroke-width: 3; stroke-linecap: round; }
+  .ss { stroke: var(--c-S); stroke-width: 3; }
+  .laser { stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 4 3; }
+  .vac { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .stack { fill: var(--panel); stroke: var(--accent); stroke-width: 1; opacity: .8; }
+  .cutmark { stroke: var(--c-O); stroke-width: 2; fill: none; }
+  .cutbox { fill: none; stroke: var(--c-O); stroke-width: 1.5; stroke-dasharray: 3 2; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -113,6 +131,149 @@ Put together: in a given time, short fragments travel far and long fragments sta
   <figcaption>An agarose gel seen from above, after staining (syllabus Figure 4-24). Orange bands = DNA glowing with ethidium bromide under UV. Small fragments have travelled farthest toward the plus pole; a ladder of known sizes is the ruler.</figcaption>
 </figure>
 
+<h3>Build it up yourself: a DNA gel from empty tray to glowing bands</h3>
+<p>Press <strong>Next</strong> to build the experiment one step at a time: the mixture, the gel, the electric field, the run, and the read-out.</p>
+
+<div class="stepper" id="gel-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of DNA gel electrophoresis">
+    <defs>
+      <marker id="arGel" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 the mixture -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <path d="M80,100 L80,200 Q80,214 94,214 L106,214 Q120,214 120,200 L120,100" class="tube"/>
+      <path d="M86,130 L114,130 M86,150 L104,150 M90,170 L110,170 M86,190 L96,190" class="dna frag"/>
+      <text x="100" y="236" class="txt small">a tube with DNA</text>
+      <text x="100" y="250" class="txt small muted">fragments of 3 sizes</text>
+      <text x="440" y="310" class="lbl txt small">begin state: a mixture of DNA fragments of different lengths (for example after a PCR or a restriction digest); which sizes are in it?</text>
+    </g>
+
+    <!-- 2 negative charge -->
+    <g data-step="2">
+      <text x="128" y="134" class="txt small left" style="fill:var(--c-N)">−</text><text x="128" y="154" class="txt small left" style="fill:var(--c-N)">−</text><text x="128" y="174" class="txt small left" style="fill:var(--c-N)">−</text><text x="128" y="194" class="txt small left" style="fill:var(--c-N)">−</text>
+      <text x="440" y="310" class="lbl txt small">every phosphate in the DNA backbone carries a negative charge, so every fragment is negative, the same amount per unit of length</text>
+    </g>
+
+    <!-- 3 the gel slab -->
+    <g data-step="3">
+      <rect x="300" y="60" width="280" height="230" rx="4" class="gel"/>
+      <g class="pore"><circle cx="330" cy="120" r="1.5"/><circle cx="360" cy="140" r="1.5"/><circle cx="400" cy="110" r="1.5"/><circle cx="450" cy="150" r="1.5"/><circle cx="500" cy="125" r="1.5"/><circle cx="540" cy="160" r="1.5"/><circle cx="340" cy="200" r="1.5"/><circle cx="390" cy="230" r="1.5"/><circle cx="430" cy="190" r="1.5"/><circle cx="480" cy="250" r="1.5"/><circle cx="520" cy="210" r="1.5"/><circle cx="560" cy="270" r="1.5"/><circle cx="370" cy="270" r="1.5"/><circle cx="470" cy="100" r="1.5"/><circle cx="420" cy="260" r="1.5"/></g>
+      <text x="440" y="310" class="lbl txt small">pour a slab of gel (agarose, a sugar polymer from seaweed, or polyacrylamide): a jelly full of tiny pores, seen here from above</text>
+    </g>
+
+    <!-- 4 wells -->
+    <g data-step="4">
+      <rect x="330" y="68" width="30" height="12" class="well"/><rect x="390" y="68" width="30" height="12" class="well"/><rect x="450" y="68" width="30" height="12" class="well"/><rect x="510" y="68" width="30" height="12" class="well"/>
+      <text x="270" y="92" class="txt small muted" style="text-anchor:end">wells →</text>
+      <text x="440" y="310" class="lbl txt small">a comb left small slots at one end: the wells, where the samples will go</text>
+    </g>
+
+    <!-- 5 buffer tank and poles -->
+    <g data-step="5">
+      <rect x="280" y="48" width="320" height="248" rx="8" class="tank"/>
+      <text x="270" y="60" class="txt pole" style="text-anchor:end;fill:var(--c-N)">−</text>
+      <text x="270" y="74" class="txt small muted" style="text-anchor:end">negative pole</text>
+      <text x="270" y="282" class="txt pole" style="text-anchor:end;fill:var(--c-O)">+</text>
+      <text x="270" y="296" class="txt small muted" style="text-anchor:end">positive pole</text>
+      <text x="440" y="310" class="lbl txt small">put the gel in a tank of buffer (salt water) and connect a power supply: minus at the end with the wells, plus at the far end</text>
+    </g>
+
+    <!-- 6 load samples -->
+    <g data-step="6">
+      <rect x="333" y="70" width="24" height="8" class="band blue"/><rect x="393" y="70" width="24" height="8" class="band"/><rect x="453" y="70" width="24" height="8" class="band"/>
+      <path d="M130,150 L326,76" class="path accent" marker-end="url(#arGel)"/>
+      <text x="345" y="58" class="txt small muted">ladder</text>
+      <text x="435" y="58" class="txt small muted">samples</text>
+      <text x="440" y="310" class="lbl txt small">pipette the samples into the wells, at the minus end; one well gets a ladder: a mixture of fragments of known sizes</text>
+    </g>
+
+    <!-- 7 switch on -->
+    <g data-step="7">
+      <path d="M590,100 L590,250" class="path accent" marker-end="url(#arGel)"/>
+      <text x="606" y="170" class="txt small left">DNA moves</text><text x="606" y="184" class="txt small left">toward +</text>
+      <text x="440" y="310" class="lbl txt small">switch on the voltage: all the negative DNA is pulled toward the positive pole ("electrophoresis" = carried by electricity)</text>
+    </g>
+
+    <!-- 8 size separation -->
+    <g data-step="8" data-until="9">
+      <rect x="393" y="128" width="24" height="6" class="band faint"/><rect x="393" y="186" width="24" height="6" class="band faint"/><rect x="393" y="250" width="24" height="6" class="band faint"/>
+      <rect x="453" y="128" width="24" height="6" class="band faint"/><rect x="453" y="250" width="24" height="6" class="band faint"/>
+      <rect x="333" y="110" width="24" height="5" class="band blue faint"/><rect x="333" y="150" width="24" height="5" class="band blue faint"/><rect x="333" y="186" width="24" height="5" class="band blue faint"/><rect x="333" y="222" width="24" height="5" class="band blue faint"/><rect x="333" y="250" width="24" height="5" class="band blue faint"/>
+    </g>
+    <g data-step="8">
+      <text x="440" y="310" class="lbl txt small">the pores slow big fragments more than small ones: in the same time, short fragments travel far, long ones stay near the wells</text>
+    </g>
+
+    <!-- 9 stain and UV -->
+    <g data-step="9">
+      <rect x="393" y="128" width="24" height="6" class="band"/><rect x="393" y="186" width="24" height="6" class="band"/><rect x="393" y="250" width="24" height="6" class="band"/>
+      <rect x="453" y="128" width="24" height="6" class="band"/><rect x="453" y="250" width="24" height="6" class="band"/>
+      <rect x="333" y="110" width="24" height="5" class="band blue"/><rect x="333" y="150" width="24" height="5" class="band blue"/><rect x="333" y="186" width="24" height="5" class="band blue"/><rect x="333" y="222" width="24" height="5" class="band blue"/><rect x="333" y="250" width="24" height="5" class="band blue"/>
+      <text x="700" y="110" class="txt small">switch off, soak in</text><text x="700" y="124" class="txt small">ethidium bromide,</text><text x="700" y="138" class="txt small">look under UV light</text>
+      <text x="440" y="310" class="lbl txt small">switch off; the dye ethidium bromide slips between the base pairs and glows under UV: every size appears as a glowing band</text>
+    </g>
+
+    <!-- 10 ladder read-out -->
+    <g data-step="10">
+      <text x="276" y="116" class="txt small muted" style="text-anchor:end">10 000 bp</text>
+      <text x="276" y="191" class="txt small muted" style="text-anchor:end">1 000 bp</text>
+      <text x="276" y="256" class="txt small muted" style="text-anchor:end">100 bp</text>
+      <text x="440" y="310" class="lbl txt small">the ladder lane is the ruler: its bands have known sizes in base pairs (bp), so each sample band can be read off against it</text>
+    </g>
+
+    <!-- 11 wrap-up -->
+    <g data-step="11">
+      <text x="700" y="190" class="txt small bold">to remember</text>
+      <text x="700" y="206" class="txt small">band = all fragments of one size</text>
+      <text x="700" y="220" class="txt small">small = far, big = near the wells</text>
+      <text x="700" y="234" class="txt small">wells at −, DNA runs to +</text>
+      <text x="440" y="310" class="lbl txt small">result: sample 1 contains fragments of three sizes, sample 2 of two; the same gel is the read-out of Sanger sequencing (4.9) and of blots (4.12, 4.13)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: a tube with a mixture of DNA fragments",
+      en: "You have a tube with DNA fragments of different lengths, for example the product of a PCR (page 4.3) or of a restriction digest (page 4.4). You cannot see them. The question: which sizes are in the tube, and how much of each?",
+      nl: "Je hebt een buisje met DNA-fragmenten van verschillende lengte, bijvoorbeeld het product van een PCR (pagina 4.3) of van een restrictiedigest (pagina 4.4). Je kan ze niet zien. De vraag: welke groottes zitten erin, en hoeveel van elk?" },
+    { t: "2 · DNA is negatively charged",
+      en: "The first fact the method rests on: every phosphate in the sugar-phosphate backbone carries a negative charge. So every DNA fragment is negative, and the charge is the same per unit of length. A charged molecule can be pulled by an electric field.",
+      nl: "Het eerste feit waarop de methode steunt: elk fosfaat in de suiker-fosfaatruggengraat draagt een negatieve lading. Elk DNA-fragment is dus negatief, en de lading is dezelfde per eenheid lengte. Een geladen molecuul kan door een elektrisch veld getrokken worden." },
+    { t: "3 · Pour the gel",
+      en: "A slab of gel is poured in a tray and sets like jelly: agarose (a sugar polymer from seaweed) for most DNA work, or polyacrylamide for fine separations. A gel is a network with tiny pores (holes) that molecules must squeeze through. We look at it from above.",
+      nl: "Een plak gel wordt in een bakje gegoten en stolt als gelei: agarose (een suikerpolymeer uit zeewier) voor het meeste DNA-werk, of polyacrylamide voor fijne scheidingen. Een gel is een netwerk met piepkleine poriën (gaatjes) waar moleculen zich door moeten wringen. We kijken er van boven op." },
+    { t: "4 · The wells",
+      en: "While the gel sets, a comb stands in it. Pulling the comb out leaves small slots at one end: the wells. Each well will hold one sample; the column below a well is called a lane.",
+      nl: "Terwijl de gel stolt, staat er een kam in. De kam eruit trekken laat kleine gleufjes achter aan één kant: de putjes (wells). Elk putje krijgt één monster; de kolom onder een putje heet een baan (lane)." },
+    { t: "5 · Buffer and the two poles",
+      en: "The gel goes into a tank filled with buffer, a salt solution that conducts electricity. A power supply is connected: the negative pole (−) at the end with the wells, the positive pole (+) at the far end. Now there is an electric field across the gel.",
+      nl: "De gel gaat in een bak met buffer, een zoutoplossing die stroom geleidt. Een voeding wordt aangesloten: de negatieve pool (−) aan de kant met de putjes, de positieve pool (+) aan de andere kant. Nu staat er een elektrisch veld over de gel." },
+    { t: "6 · Load the samples",
+      en: "With a pipette the samples are put into the wells, at the negative end. One well gets a ladder: a ready-made mixture of fragments of known sizes. A little dense, coloured loading dye is mixed in so the sample sinks into the well and the run can be followed by eye.",
+      nl: "Met een pipet worden de monsters in de putjes gebracht, aan de negatieve kant. Eén putje krijgt een ladder: een kant-en-klaar mengsel van fragmenten met bekende groottes. Er wordt wat zware, gekleurde laadkleurstof bijgemengd zodat het monster in het putje zakt en de run met het oog te volgen is." },
+    { t: "7 · Switch on: everything moves toward +",
+      en: "The voltage is switched on. Every DNA fragment, being negative, is pulled away from the minus pole toward the plus pole. That is the word electrophoresis: carried by electricity. All fragments feel the same pull per unit of length, so charge alone would not sort them.",
+      nl: "De spanning gaat aan. Elk DNA-fragment, negatief, wordt van de minpool weg naar de pluspool getrokken. Dat is het woord elektroforese: gedragen door elektriciteit. Alle fragmenten voelen dezelfde trek per eenheid lengte, dus lading alleen zou ze niet sorteren." },
+    { t: "8 · The pores sort by size",
+      en: "The second fact: a small fragment slips through the pores easily, a long one keeps getting tangled and is held back. So in the same time a short fragment travels far from the well and a long one stays close to it. The mixture spreads out into separate groups by length.",
+      nl: "Het tweede feit: een klein fragment glipt makkelijk door de poriën, een lang blijft haken en wordt tegengehouden. In dezelfde tijd reist een kort fragment dus ver van het putje en blijft een lang er dichtbij. Het mengsel waaiert uit in aparte groepen per lengte." },
+    { t: "9 · Stain and look under UV",
+      en: "The voltage is switched off before the smallest fragments run out of the gel. The gel is soaked in ethidium bromide (page 4.7), a flat dye that slips between the base pairs and glows under UV light. Every group of fragments of one size now shows as a glowing band.",
+      nl: "De spanning gaat uit vóór de kleinste fragmenten uit de gel lopen. De gel wordt geweekt in ethidiumbromide (pagina 4.7), een vlakke kleurstof die tussen de basenparen schuift en gloeit onder UV-licht. Elke groep fragmenten van één grootte is nu een gloeiende band." },
+    { t: "10 · Read the sizes against the ladder",
+      en: "The ladder lane is the ruler. Its bands have known lengths in base pairs (bp), from large near the wells to small far away. A sample band at the same height as a ladder band has the same size.",
+      nl: "De ladderbaan is de meetlat. Haar banden hebben bekende lengtes in basenparen (bp), van groot bij de putjes tot klein ver weg. Een monsterband op dezelfde hoogte als een ladderband heeft dezelfde grootte." },
+    { t: "11 · The result, and where the gel comes back",
+      en: "Sample 1 contains fragments of three sizes, sample 2 of two. To remember: a band is all the fragments of one size; small runs far, big stays near the wells; the wells are at the minus end and DNA runs to plus. The same gel is the read-out of Sanger sequencing (page 4.9) and the first step of Southern and Western blots (pages 4.12 and 4.13).",
+      nl: "Monster 1 bevat fragmenten van drie groottes, monster 2 van twee. Onthoud: een band is alle fragmenten van één grootte; klein loopt ver, groot blijft bij de putjes; de putjes zitten aan de minkant en DNA loopt naar plus. Dezelfde gel is de uitlezing van Sanger-sequencing (pagina 4.9) en de eerste stap van Southern- en Western-blots (pagina's 4.12 en 4.13)." }
+  ];
+  Stepper.init('gel-stepper', steps, 'gel');
+})();
+</script>
+
 <table class="cmp">
   <tr><td>principle</td><td>DNA/RNA is negative → moves to +; the gel's pores slow big molecules more than small ones → sorted by size</td></tr>
   <tr><td>what you need</td><td>agarose or polyacrylamide gel with wells, buffer tank, power supply, DNA dye (ethidium bromide or a safer one), UV light, a size ladder</td></tr>
@@ -180,6 +341,126 @@ some round, some long), so they would not move in a predictable way. The trick: 
   <figcaption>SDS-PAGE (syllabus Figure 4-25). Left: SDS (blue dots) unfolds the protein and gives it a uniform negative coat. Right: the gel after Coomassie staining; the marker lane gives sizes in kDa, and sample 1 contains one protein of about 60 kDa.</figcaption>
 </figure>
 
+<h3>Build it up yourself: SDS-PAGE, from folded proteins to bands by size</h3>
+<p>Press <strong>Next</strong> to see why proteins need SDS before a gel, and how the gel then sorts them by molecular weight.</p>
+
+<div class="stepper" id="sds-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of SDS-PAGE">
+    <defs>
+      <marker id="arSds" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 three folded proteins -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <path d="M60,110 C80,80 110,80 120,105 C130,130 100,140 85,125 C70,112 95,98 110,112" class="chain"/>
+      <path d="M160,100 C200,70 230,100 220,130 C212,152 180,150 170,130" class="chain"/>
+      <path d="M250,120 C260,95 285,95 290,115 C295,132 270,138 262,125" class="chain"/>
+      <text x="90" y="160" class="txt small">big, +</text><text x="195" y="170" class="txt small">big, −</text><text x="272" y="156" class="txt small">small, −</text>
+      <text x="170" y="60" class="txt small muted">three proteins, folded, each with its own shape and charge</text>
+      <text x="440" y="310" class="lbl txt small">begin state: a mixture of proteins; unlike DNA they differ in shape and in charge (some positive, some negative)</text>
+    </g>
+
+    <!-- 2 the problem -->
+    <g data-step="2" data-until="3">
+      <path d="M90,185 L90,215" class="path accent" marker-end="url(#arSds)"/>
+      <path d="M232,182 L232,152" class="path accent" marker-end="url(#arSds)"/>
+      <path d="M272,180 L300,200" class="path accent" marker-end="url(#arSds)"/>
+      <text x="300" y="236" class="txt small" style="fill:var(--c-O)">in a gel: different directions, speeds set by shape, not by size</text>
+    </g>
+    <g data-step="2">
+      <text x="440" y="310" class="lbl txt small">the problem: an electric field would pull them in different directions and at speeds that depend on shape, so the gel could not sort them by size</text>
+    </g>
+
+    <!-- 3 SDS + heat -->
+    <g data-step="3">
+      <text x="170" y="196" class="txt small bold">+ SDS and heat</text>
+      <text x="170" y="210" class="txt small muted">SDS = a negatively charged detergent (soap)</text>
+      <path d="M170,218 L170,240" class="path accent" marker-end="url(#arSds)"/>
+      <path d="M60,270 L300,270" class="chain"/>
+      <path d="M330,270 L480,270" class="chain"/>
+      <path d="M510,270 L580,270" class="chain"/>
+      <text x="440" y="310" class="lbl txt small">add SDS, a soap-like molecule with a negative charge, and heat the sample: the proteins unfold into straight chains</text>
+    </g>
+
+    <!-- 4 reducing agent -->
+    <g data-step="4">
+      <path d="M118,120 L128,120" class="ss"/>
+      <text x="123" y="140" class="txt small muted">S–S</text>
+      <path d="M350,262 l8,8 M350,270 l8,-8" class="cutmark"/>
+      <text x="440" y="310" class="lbl txt small">a reducing agent breaks the disulfide bonds (S–S bridges between two cysteines), so nothing holds a chain folded or two chains together</text>
+    </g>
+
+    <!-- 5 SDS coat -->
+    <g data-step="5">
+      <g class="sdsdot"><circle cx="70" cy="262" r="3"/><circle cx="90" cy="278" r="3"/><circle cx="110" cy="262" r="3"/><circle cx="130" cy="278" r="3"/><circle cx="150" cy="262" r="3"/><circle cx="170" cy="278" r="3"/><circle cx="190" cy="262" r="3"/><circle cx="210" cy="278" r="3"/><circle cx="230" cy="262" r="3"/><circle cx="250" cy="278" r="3"/><circle cx="270" cy="262" r="3"/><circle cx="290" cy="278" r="3"/><circle cx="340" cy="262" r="3"/><circle cx="360" cy="278" r="3"/><circle cx="380" cy="262" r="3"/><circle cx="400" cy="278" r="3"/><circle cx="420" cy="262" r="3"/><circle cx="440" cy="278" r="3"/><circle cx="460" cy="262" r="3"/><circle cx="520" cy="262" r="3"/><circle cx="540" cy="278" r="3"/><circle cx="560" cy="262" r="3"/></g>
+      <text x="180" y="294" class="txt small" style="fill:var(--c-N)">− − − − − − − − − − − −</text>
+      <text x="405" y="294" class="txt small" style="fill:var(--c-N)">− − − − − − −</text>
+      <text x="545" y="294" class="txt small" style="fill:var(--c-N)">− − −</text>
+      <text x="440" y="310" class="lbl txt small">SDS molecules (blue) coat every chain: all proteins are now the same shape and all negative, with a charge in proportion to their length</text>
+    </g>
+
+    <!-- 6 load on the gel: stacking -->
+    <g data-step="6">
+      <rect x="640" y="50" width="200" height="250" rx="4" class="gel"/>
+      <rect x="640" y="50" width="200" height="40" class="stack"/>
+      <rect x="690" y="56" width="26" height="10" class="well"/><rect x="750" y="56" width="26" height="10" class="well"/>
+      <text x="740" y="46" class="txt small muted">− pole</text>
+      <text x="632" y="76" class="txt small muted" style="text-anchor:end">stacking gel</text>
+      <text x="632" y="110" class="txt small muted" style="text-anchor:end">resolving gel</text>
+      <path d="M585,262 L585,44 L703,44 L703,52" class="path accent" marker-end="url(#arSds)"/>
+      <rect x="752" y="84" width="22" height="4" class="band blue"/>
+      <text x="440" y="310" class="lbl txt small">load on a polyacrylamide gel: the loose top part, the stacking gel, squeezes each sample into one tight band before the real separation</text>
+    </g>
+
+    <!-- 7 resolving gel -->
+    <g data-step="7">
+      <rect x="752" y="150" width="22" height="4" class="band blue"/><rect x="752" y="170" width="22" height="4" class="band blue"/><rect x="752" y="250" width="22" height="4" class="band blue"/>
+      <text x="740" y="296" class="txt small muted">+ pole</text>
+      <text x="440" y="310" class="lbl txt small">in the denser resolving gel the chains run toward + and the pores sort them by length only: the short chain runs farthest, the two big ones stay higher</text>
+    </g>
+
+    <!-- 8 stain and marker -->
+    <g data-step="8">
+      <rect x="692" y="120" width="22" height="4" class="band blue"/><rect x="692" y="148" width="22" height="4" class="band blue"/><rect x="692" y="178" width="22" height="4" class="band blue"/><rect x="692" y="214" width="22" height="4" class="band blue"/><rect x="692" y="250" width="22" height="4" class="band blue"/>
+      <text x="688" y="124" class="txt small muted" style="text-anchor:end">100 kDa</text><text x="688" y="152" class="txt small muted" style="text-anchor:end">70</text><text x="688" y="182" class="txt small muted" style="text-anchor:end">50</text><text x="688" y="218" class="txt small muted" style="text-anchor:end">30</text><text x="688" y="254" class="txt small muted" style="text-anchor:end">20</text>
+      <text x="703" y="282" class="txt small">marker</text><text x="763" y="282" class="txt small">sample</text>
+      <text x="440" y="310" class="lbl txt small">stain with Coomassie Brilliant Blue; the marker lane holds proteins of known mass in kilodaltons (kDa), so each band's size can be read off</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: proteins come in all shapes and charges",
+      en: "A mixture of three proteins. Each is folded into its own shape, and each has its own overall charge: one is positive, two are negative, and one is much smaller than the others. DNA always has the same charge per length; proteins do not.",
+      nl: "Een mengsel van drie eiwitten. Elk is opgevouwen in zijn eigen vorm, en elk heeft zijn eigen totale lading: één positief, twee negatief, en één is veel kleiner dan de andere. DNA heeft altijd dezelfde lading per lengte; eiwitten niet." },
+    { t: "2 · The problem",
+      en: "If you put them in a gel as they are, the electric field would pull the positive one the wrong way, and the speed of the others would depend on their shape as much as on their size. The gel could not sort them by size. Everything must first be made the same, except size.",
+      nl: "Zet je ze zo in een gel, dan trekt het elektrische veld het positieve eiwit de verkeerde kant op, en de snelheid van de andere hangt evenveel van hun vorm af als van hun grootte. De gel kan ze niet op grootte sorteren. Alles moet eerst gelijk gemaakt worden, behalve de grootte." },
+    { t: "3 · Add SDS and heat: unfold",
+      en: "SDS (sodium dodecyl sulfate) is a strong detergent, a soap-like molecule with a negative charge. Together with heat it denatures the proteins: they unfold into straight chains. This is the same word as on page 4.8's word list: denature = lose the shape.",
+      nl: "SDS (natriumdodecylsulfaat) is een sterk detergent, een zeepachtig molecuul met een negatieve lading. Samen met warmte denatureert het de eiwitten: ze ontvouwen tot rechte ketens. Zelfde woord als in de woordenlijst: denatureren = de vorm verliezen." },
+    { t: "4 · Add a reducing agent: cut the S–S bridges",
+      en: "Some proteins are held folded, or held together as two chains, by disulfide bonds: sulfur–sulfur bridges between two cysteines. A reducing agent breaks these bridges. Now every polypeptide is a separate, fully unfolded chain.",
+      nl: "Sommige eiwitten worden gevouwen gehouden, of als twee ketens samengehouden, door disulfidebruggen: zwavel–zwavelbruggen tussen twee cysteïnes. Een reducerend middel breekt die bruggen. Nu is elk polypeptide een aparte, volledig ontvouwen keten." },
+    { t: "5 · An SDS coat: same shape, negative charge in proportion to length",
+      en: "SDS molecules bind all along the hydrophobic (fat-loving) parts of each chain. Every protein is now a straight chain covered in negative charges, and a longer chain carries more SDS and so more charge. Shape and own charge no longer matter; only length does.",
+      nl: "SDS-moleculen binden over de hele lengte aan de hydrofobe (vetminnende) delen van elke keten. Elk eiwit is nu een rechte keten bedekt met negatieve ladingen, en een langere keten draagt meer SDS en dus meer lading. Vorm en eigen lading tellen niet meer; alleen lengte." },
+    { t: "6 · Load on the gel: the stacking gel",
+      en: "The samples go into wells at the minus end of a polyacrylamide gel. The top part is the stacking gel, loose and wide-pored: it squeezes each sample into one tight band, so that all the proteins of a sample start the real race at the same line.",
+      nl: "De monsters gaan in putjes aan de minkant van een polyacrylamidegel. Het bovenste deel is de stapelgel, los en met wijde poriën: ze perst elk monster samen tot één strakke band, zodat alle eiwitten van een monster de echte race op dezelfde lijn beginnen." },
+    { t: "7 · The resolving gel sorts by size",
+      en: "Below lies the resolving gel, denser, with small pores. All chains run toward the plus pole; a short chain slips through easily and runs far, a long chain is held back. So the proteins separate by molecular weight only. This whole method is SDS-PAGE: SDS polyacrylamide gel electrophoresis.",
+      nl: "Daaronder ligt de scheidingsgel, dichter, met kleine poriën. Alle ketens lopen naar de pluspool; een korte keten glipt er makkelijk door en loopt ver, een lange wordt tegengehouden. De eiwitten scheiden dus alleen op molecuulgewicht. Deze hele methode is SDS-PAGE: SDS-polyacrylamide-gelelektroforese." },
+    { t: "8 · Stain and read the size",
+      en: "Proteins are colourless, so the gel is stained with the dye Coomassie Brilliant Blue. A marker lane runs alongside with proteins of known mass, in kilodaltons (1 kDa = 1,000 daltons, a dalton being about the mass of one hydrogen atom). The sample's small protein lies near 20 kDa, its two big ones near 60 to 70 kDa. This gel is also the first step of a Western blot (page 4.13).",
+      nl: "Eiwitten zijn kleurloos, dus de gel wordt gekleurd met de kleurstof Coomassie Brilliant Blue. Een markerbaan loopt mee met eiwitten van bekende massa, in kilodalton (1 kDa = 1000 dalton, een dalton is ongeveer de massa van één waterstofatoom). Het kleine eiwit van het monster ligt bij 20 kDa, de twee grote bij 60 tot 70 kDa. Deze gel is ook de eerste stap van een Western-blot (pagina 4.13)." }
+  ];
+  Stepper.init('sds-stepper', steps, 'sds');
+})();
+</script>
+
 <table class="cmp">
   <tr><td>principle</td><td>SDS makes every protein an unfolded, negatively charged chain, so the polyacrylamide gel sorts them by molecular weight only</td></tr>
   <tr><td>what you need</td><td>SDS, heat, (reducing agent), a polyacrylamide gel with stacking and resolving part, Coomassie Brilliant Blue, a marker of known kDa</td></tr>
@@ -230,6 +511,122 @@ even in small amounts: proteins first of all, but also carbohydrates, nucleic ac
   </svg>
   <figcaption>A mass spectrometer in four steps and the spectrum it produces (after syllabus Figure 4-26). Each peak is one kind of ion; the position on the x axis is its mass-to-charge ratio, which gives its mass to within about one dalton.</figcaption>
 </figure>
+
+<h3>Build it up yourself: identifying a protein by mass spectrometry</h3>
+<p>Press <strong>Next</strong> to follow one unknown protein from a gel band to its name.</p>
+
+<div class="stepper" id="ms-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of protein identification by mass spectrometry">
+    <defs>
+      <marker id="arMs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+    </defs>
+
+    <!-- 1 the band -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="50" y="60" width="50" height="120" rx="3" class="gel"/>
+      <rect x="58" y="110" width="34" height="5" class="band blue"/>
+      <path d="M52,106 L98,106 L98,119 L52,119 Z" class="cutbox"/>
+      <text x="75" y="198" class="txt small">a band cut</text><text x="75" y="212" class="txt small">from a gel</text>
+      <text x="440" y="310" class="lbl txt small">begin state: one protein band cut out of an SDS-PAGE gel. Which protein is it? We know only its size</text>
+    </g>
+
+    <!-- 2 trypsin -->
+    <g data-step="2">
+      <path d="M110,112 L150,112" class="path accent" marker-end="url(#arMs)"/>
+      <text x="130" y="100" class="txt small muted">trypsin</text>
+      <path d="M160,100 L200,100 M210,100 L236,100 M246,100 L300,100 M160,124 L190,124 M200,124 L250,124" class="chain"/>
+      <text x="230" y="146" class="txt small">peptides: short pieces</text>
+      <text x="230" y="160" class="txt small muted">cut after every lysine and arginine</text>
+      <text x="440" y="310" class="lbl txt small">the protease trypsin cuts the protein at predictable places (after the amino acids lysine and arginine) into peptides: short chains</text>
+    </g>
+
+    <!-- 3 ionisation -->
+    <g data-step="3">
+      <rect x="330" y="70" width="90" height="90" rx="8" class="boxp"/>
+      <text x="375" y="100" class="txt small">ionization</text>
+      <text x="375" y="116" class="txt small muted">MALDI: laser</text>
+      <text x="375" y="130" class="txt small muted">on a matrix, or</text>
+      <text x="375" y="144" class="txt small muted">ESI: fine spray</text>
+      <path d="M310,112 L326,112" class="path accent" marker-end="url(#arMs)"/>
+      <text x="440" y="310" class="lbl txt small">the peptides are turned into ions, charged particles flying in gas: by MALDI (a laser hits the sample in a matrix) or ESI (a spray in a strong electric field)</text>
+    </g>
+
+    <!-- 4 flight tube, separation by m/z -->
+    <g data-step="4">
+      <rect x="440" y="80" width="230" height="70" rx="6" class="vac"/>
+      <text x="555" y="72" class="txt small muted">vacuum: separation by m/z</text>
+      <g class="ion"><circle cx="465" cy="115" r="3"/><circle cx="500" cy="112" r="4"/><circle cx="540" cy="118" r="5"/><circle cx="590" cy="113" r="6"/><circle cx="640" cy="117" r="7"/></g>
+      <text x="505" y="140" class="txt small muted">light ions arrive first</text>
+      <text x="625" y="140" class="txt small muted">heavy ions later</text>
+      <path d="M426,115 L436,115" class="path accent" marker-end="url(#arMs)"/>
+      <text x="440" y="310" class="lbl txt small">in the instrument the ions fly through a vacuum and are sorted by their mass-to-charge ratio m/z ("m over z"): light ions behave differently from heavy ones</text>
+    </g>
+
+    <!-- 5 detector and spectrum -->
+    <g data-step="5">
+      <rect x="690" y="86" width="40" height="58" rx="4" class="boxp"/>
+      <text x="710" y="119" class="txt small">det.</text>
+      <path d="M676,115 L686,115" class="path accent" marker-end="url(#arMs)"/>
+      <path d="M330,290 L330,190 M330,290 L640,290" class="axis"/>
+      <text x="326" y="200" class="txt small muted" style="text-anchor:end">signal</text>
+      <text x="648" y="294" class="txt small muted left">m/z →</text>
+      <path d="M370,290 L370,240 M420,290 L420,210 M470,290 L470,262 M530,290 L530,225 M600,290 L600,250" class="peak"/>
+      <text x="485" y="182" class="txt small bold" style="fill:var(--c-N)">one peak per peptide: its m/z gives its mass to about one dalton</text>
+      <text x="440" y="310" class="lbl txt small">a detector counts the ions as they arrive; the result is a spectrum: one peak per kind of ion, at the m/z that tells its mass</text>
+    </g>
+
+    <!-- 6 match to the genome -->
+    <g data-step="6">
+      <rect x="690" y="180" width="150" height="100" rx="8" class="boxp"/>
+      <text x="765" y="200" class="txt small bold">computer</text>
+      <text x="765" y="216" class="txt small muted">for every protein the</text>
+      <text x="765" y="229" class="txt small muted">genome can encode:</text>
+      <text x="765" y="242" class="txt small muted">predicted peptide masses</text>
+      <text x="765" y="262" class="txt small" style="fill:var(--c-Cl)">match found: protein X</text>
+      <path d="M645,250 L686,250" class="path accent" marker-end="url(#arMs)"/>
+      <text x="440" y="310" class="lbl txt small">because trypsin cuts predictably, a computer knows which peptide masses every protein of the genome should give; the measured masses match one protein: identified</text>
+    </g>
+
+    <!-- 7 MS/MS and modifications -->
+    <g data-step="7">
+      <text x="140" y="236" class="txt small bold">MS/MS (tandem MS)</text>
+      <text x="140" y="250" class="txt small">weigh a peptide, break it into</text>
+      <text x="140" y="263" class="txt small">amino acids, weigh those too:</text>
+      <text x="140" y="276" class="txt small">the peptide's sequence</text>
+      <text x="140" y="294" class="txt small muted">a phosphate adds a known mass</text>
+      <text x="440" y="310" class="lbl txt small">if needed: tandem MS breaks a peptide further and weighs the pieces, which gives its amino acid sequence; a modification such as a phosphate shows up as extra mass</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin: an unknown protein band",
+      en: "A band has been cut out of an SDS-PAGE gel. It holds one kind of protein, and all you know is its approximate size. The question: which protein is it? Mass spectrometry answers by weighing it with extreme precision.",
+      nl: "Een band is uit een SDS-PAGE-gel gesneden. Hij bevat één soort eiwit, en je weet alleen ongeveer hoe groot het is. De vraag: welk eiwit is het? Massaspectrometrie antwoordt door het uiterst precies te wegen." },
+    { t: "2 · Cut it into peptides with trypsin",
+      en: "A big molecule is weighed less accurately than a small one, so the protein is first digested with trypsin, a protease that cuts after the amino acids lysine and arginine. Because those places are predictable, the resulting peptides (short chains of amino acids) are predictable too.",
+      nl: "Een groot molecuul wordt minder nauwkeurig gewogen dan een klein, dus het eiwit wordt eerst verteerd met trypsine, een protease die knipt na de aminozuren lysine en arginine. Omdat die plaatsen voorspelbaar zijn, zijn de peptiden (korte ketens aminozuren) die ontstaan ook voorspelbaar." },
+    { t: "3 · Make ions",
+      en: "A mass spectrometer can only handle charged particles flying through a gas: ions. Two ways to make them: MALDI, where the sample is embedded in a chemical matrix and hit with a laser that kicks charged peptides loose, or ESI, electrospray, where a fine spray of the sample passes through a strong electric field.",
+      nl: "Een massaspectrometer kan alleen geladen deeltjes aan die door een gas vliegen: ionen. Twee manieren om ze te maken: MALDI, waarbij het monster in een chemische matrix zit en met een laser beschoten wordt die geladen peptiden losslaat, of ESI, elektrospray, waarbij een fijne nevel van het monster door een sterk elektrisch veld gaat." },
+    { t: "4 · Separate by mass-to-charge ratio",
+      en: "The ions fly through a vacuum inside the instrument. Electric or magnetic fields affect light ions differently from heavy ones, so the ions are sorted by their mass-to-charge ratio, written m/z and read 'm over z' (m = mass, z = charge).",
+      nl: "De ionen vliegen door een vacuüm in het toestel. Elektrische of magnetische velden beïnvloeden lichte ionen anders dan zware, dus de ionen worden gesorteerd op hun massa/lading-verhouding, geschreven m/z en gelezen 'm over z' (m = massa, z = lading)." },
+    { t: "5 · Detect: the spectrum",
+      en: "A detector registers each ion as it arrives. The result is a spectrum: a plot of signal against m/z with one peak per kind of ion. From the m/z of a peak follows the mass of that peptide, for small molecules to within a single dalton.",
+      nl: "Een detector registreert elk ion bij aankomst. Het resultaat is een spectrum: een grafiek van signaal tegen m/z met één piek per soort ion. Uit de m/z van een piek volgt de massa van dat peptide, voor kleine moleculen tot op één dalton." },
+    { t: "6 · Match the masses to the genome",
+      en: "For an organism whose genome is known, a computer can calculate for every protein that genome can encode which peptides trypsin would produce and what each would weigh. The measured masses are compared with all those predictions. Usually they fit exactly one protein: the band is identified.",
+      nl: "Voor een organisme waarvan het genoom bekend is, kan een computer voor elk eiwit dat dat genoom kan coderen berekenen welke peptiden trypsine zou maken en hoeveel elk weegt. De gemeten massa's worden met al die voorspellingen vergeleken. Meestal passen ze bij precies één eiwit: de band is geïdentificeerd." },
+    { t: "7 · If needed: MS/MS, and modifications",
+      en: "When the masses alone are not enough, tandem mass spectrometry (MS/MS) weighs a peptide, then breaks it further into its amino acids and weighs those: this gives the exact composition and sequence of the peptide. A modified amino acid, for example one carrying a phosphate group, shows up as a known extra mass. The method also works on complex mixtures of hundreds of proteins.",
+      nl: "Als de massa's alleen niet volstaan, weegt tandem-massaspectrometrie (MS/MS) een peptide, breekt het verder in zijn aminozuren en weegt die ook: dat geeft de exacte samenstelling en volgorde van het peptide. Een gewijzigd aminozuur, bijvoorbeeld met een fosfaatgroep, verschijnt als een bekende extra massa. De methode werkt ook op complexe mengsels van honderden eiwitten." }
+  ];
+  Stepper.init('ms-stepper', steps, 'ms');
+})();
+</script>
 
 <h3>Identifying a protein</h3>
 <ol>

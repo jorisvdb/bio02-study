@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>3.2 How viruses replicate</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -19,6 +21,10 @@
   .mem { fill: none; stroke: var(--muted); stroke-width: 3; }
   .num { font-size: 12px; font-weight: 700; fill: var(--bg); text-anchor: middle; }
   .numbg { fill: var(--accent); }
+  .stepper .cellb { fill: var(--bg); }
+  .er { stroke: var(--c-Na); stroke-width: 1.6; fill: none; }
+  .golgi { stroke: var(--c-Cl); stroke-width: 1.6; fill: none; }
+  .broken { stroke: var(--muted); stroke-width: 3; fill: none; stroke-dasharray: 5 6; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -150,6 +156,210 @@ The syllabus describes the simplest case: a DNA virus with a capsid of a single 
   </svg>
   <figcaption>Syllabus Figure 3-2, the simplified replicative cycle of a DNA virus with a one-protein capsid. Red = viral genome, blue = capsid proteins, purple = a host ribosome. The dark blue bar on the cell edge is the receptor the virus needs.</figcaption>
 </figure>
+
+<h3>Build it up yourself: one virus goes in, hundreds come out</h3>
+<p>Press <strong>Next</strong> to follow one virus particle through a host cell: the six steps of the general cycle, then the two ways out (bursting the cell, or budding with an envelope).</p>
+
+<div class="stepper" id="cycle-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of the viral replicative cycle">
+    <defs>
+      <marker id="arCy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+    </defs>
+
+    <!-- 1 host cell -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="220" y="60" width="560" height="250" rx="40" class="cellb"/>
+      <rect x="214" y="118" width="12" height="24" class="prot"/>
+      <rect x="214" y="178" width="12" height="24" class="prot"/>
+      <circle cx="420" cy="262" r="6" class="rib"/><circle cx="470" cy="280" r="6" class="rib"/><circle cx="520" cy="258" r="6" class="rib"/>
+      <text x="500" y="46" class="txt small muted">host cell</text>
+      <text x="40" y="46" class="txt small muted left">outside</text>
+      <text x="470" y="300" class="txt small muted">ribosomes, nucleotides, amino acids, tRNA, ATP, enzymes</text>
+      <text x="245" y="112" class="lbl txt small left">receptor proteins on the surface</text>
+      <text x="245" y="124" class="lbl txt small left muted">(they do a normal job for the cell)</text>
+    </g>
+
+    <!-- 2 virus outside (until 3) -->
+    <g data-step="2" data-until="3">
+      <polygon points="90,100 116,115 116,145 90,160 64,145 64,115" class="cap"/>
+      <path d="M78,130 C84,122 90,138 96,130 S106,120 104,140" class="gen"/>
+    </g>
+    <g data-step="2">
+      <text x="110" y="190" class="lbl txt small">a virus particle:</text>
+      <text x="110" y="202" class="lbl txt small">genome in a capsid</text>
+      <text x="110" y="222" class="lbl txt small muted">host range = does its surface</text>
+      <text x="110" y="234" class="lbl txt small muted">fit this cell's receptor?</text>
+    </g>
+
+    <!-- 3 binding (until 4) -->
+    <g data-step="3" data-until="4">
+      <polygon points="186,100 212,115 212,145 186,160 160,145 160,115" class="cap"/>
+      <path d="M174,130 C180,122 186,138 192,130 S202,120 200,140" class="gen"/>
+    </g>
+    <g data-step="3">
+      <text x="110" y="190" class="lbl txt small">1 · binding: the "handshake"</text>
+      <text x="110" y="202" class="lbl txt small muted">viral surface protein fits the receptor</text>
+    </g>
+
+    <!-- 4 genome in -->
+    <g data-step="4" data-until="9">
+      <polygon points="186,100 212,115 212,145 186,160 160,145 160,115" class="cap" style="opacity:.5"/>
+    </g>
+    <g data-step="4">
+      <path d="M268,130 C274,122 280,138 286,130 S296,120 294,140" class="gen"/>
+      <path d="M212,130 L256,130" class="path accent" marker-end="url(#arCy)"/>
+      <text x="110" y="190" class="lbl txt small">1 · entry: the genome goes in</text>
+      <text x="110" y="202" class="lbl txt small muted">phage: injected, coat stays outside</text>
+      <text x="110" y="214" class="lbl txt small muted">animal virus: whole particle taken</text>
+      <text x="110" y="226" class="lbl txt small muted">up (endocytosis) or envelope fuses;</text>
+      <text x="110" y="238" class="lbl txt small muted">the coat is then taken apart</text>
+    </g>
+
+    <!-- 5 taking over -->
+    <g data-step="5">
+      <circle cx="320" cy="112" r="5" class="prot"/><circle cx="332" cy="146" r="5" class="prot"/>
+      <text x="400" y="92" class="lbl txt small bold">2 · taking over</text>
+      <text x="400" y="106" class="lbl txt small muted">the first viral proteins reprogram the cell:</text>
+      <text x="400" y="118" class="lbl txt small muted">copy my genome, make my proteins</text>
+    </g>
+
+    <!-- 6 copying the genome -->
+    <g data-step="6">
+      <path d="M268,170 C274,162 280,178 286,170 S296,160 294,180 M268,200 C274,192 280,208 286,200 S296,190 294,210 M310,185 C316,177 322,193 328,185 S338,175 336,195" class="gen"/>
+      <text x="400" y="160" class="lbl txt small bold">3 · copying the genome</text>
+      <text x="400" y="174" class="lbl txt small muted">host nucleotides; DNA virus: host DNA polymerase</text>
+      <text x="400" y="186" class="lbl txt small muted">RNA virus: its own RNA-copying polymerase</text>
+    </g>
+
+    <!-- 7 viral proteins -->
+    <g data-step="7">
+      <polygon points="430,232 438,237 438,247 430,252 422,247 422,237" class="cap"/>
+      <polygon points="452,218 460,223 460,233 452,238 444,233 444,223" class="cap"/>
+      <polygon points="490,236 498,241 498,251 490,256 482,251 482,241" class="cap"/>
+      <polygon points="540,228 548,233 548,243 540,248 532,243 532,233" class="cap"/>
+      <polygon points="470,205 478,210 478,220 470,225 462,220 462,210" class="cap"/>
+      <text x="600" y="210" class="lbl txt small bold">4 · making viral proteins</text>
+      <text x="600" y="224" class="lbl txt small muted">host ribosomes, tRNAs, amino acids and ATP</text>
+      <text x="600" y="236" class="lbl txt small muted">build the capsomeres (coat subunits)</text>
+    </g>
+
+    <!-- 8 self-assembly -->
+    <g data-step="8">
+      <polygon points="600,110 620,122 620,146 600,158 580,146 580,122" class="cap"/><path d="M590,134 C595,128 600,140 605,134 S612,126 610,142" class="gen"/>
+      <polygon points="660,140 680,152 680,176 660,188 640,176 640,152" class="cap"/><path d="M650,164 C655,158 660,170 665,164 S672,156 670,172" class="gen"/>
+      <polygon points="610,180 630,192 630,216 610,228 590,216 590,192" class="cap"/><path d="M600,204 C605,198 610,210 615,204 S622,196 620,212" class="gen"/>
+      <polygon points="700,90 720,102 720,126 700,138 680,126 680,102" class="cap"/><path d="M690,114 C695,108 700,120 705,114 S712,106 710,122" class="gen"/>
+      <text x="400" y="92" class="lbl txt small bold">5 · self-assembly</text>
+      <text x="400" y="106" class="lbl txt small muted">genomes and capsomeres click together by themselves:</text>
+      <text x="400" y="118" class="lbl txt small muted">no extra machinery, hundreds of new particles</text>
+    </g>
+
+    <!-- 9 exit A: lysis -->
+    <g data-step="9">
+      <rect x="214" y="200" width="12" height="80" class="ct"/>
+      <path d="M220,200 L220,280" class="broken"/>
+      <polygon points="150,230 166,239 166,257 150,266 134,257 134,239" class="cap"/><path d="M143,248 C147,243 151,253 155,248 S160,242 159,255" class="gen"/>
+      <polygon points="100,262 116,271 116,289 100,298 84,289 84,271" class="cap"/><path d="M93,280 C97,275 101,285 105,280 S110,274 109,287" class="gen"/>
+      <polygon points="70,210 86,219 86,237 70,246 54,237 54,219" class="cap"/><path d="M63,228 C67,223 71,233 75,228 S80,222 79,235" class="gen"/>
+      <polygon points="170,290 186,299 186,317 170,326 154,317 154,299" class="cap"/><path d="M163,308 C167,303 171,313 175,308 S180,302 179,315" class="gen"/>
+      <text x="110" y="190" class="lbl txt small bold">6 · exit A: bursting out</text>
+      <text x="490" y="160" class="lbl txt small muted">the cell is damaged or destroyed (lysis):</text>
+      <text x="490" y="172" class="lbl txt small muted">this damage causes many of the symptoms</text>
+    </g>
+
+    <!-- 10 ER and Golgi make spikes -->
+    <g data-step="10">
+      <path d="M560,248 C590,240 610,256 640,248 S690,240 720,248 M560,264 C590,256 610,272 640,264 S690,256 720,264 M560,280 C590,272 610,288 640,280 S690,272 720,280" class="er"/>
+      <circle cx="580" cy="244" r="4" class="rib"/><circle cx="630" cy="262" r="4" class="rib"/><circle cx="690" cy="244" r="4" class="rib"/>
+      <path d="M600,252 L600,242 M660,268 L660,258" class="spike"/>
+      <path d="M740,250 C755,240 770,250 775,264 M744,264 C759,254 774,264 779,278 M748,278 C763,268 778,278 783,292" class="golgi"/>
+      <text x="665" y="298" class="txt small muted">ER (ribosomes on it)</text>
+      <text x="762" y="306" class="txt small muted">Golgi</text>
+      <text x="400" y="92" class="lbl txt small bold">6 · exit B, for enveloped viruses: first the spikes</text>
+      <text x="400" y="106" class="lbl txt small muted">ribosomes on the ER make the spike proteins;</text>
+      <text x="400" y="118" class="lbl txt small muted">enzymes in ER and Golgi add the sugar chains</text>
+    </g>
+
+    <!-- 11 spikes to the surface -->
+    <g data-step="11">
+      <path d="M780,110 L792,104 M780,130 L793,130 M780,150 L792,156 M770,66 L778,56 M740,60 L742,48" class="spike"/>
+      <text x="400" y="92" class="lbl txt small bold">6 · the spikes travel to the cell surface</text>
+      <text x="400" y="106" class="lbl txt small muted">in a patch of host membrane; they now sit</text>
+      <text x="400" y="118" class="lbl txt small muted">in the plasma membrane, pointing outward</text>
+    </g>
+
+    <!-- 12 budding -->
+    <g data-step="12">
+      <rect x="774" y="186" width="12" height="70" class="cellb" style="stroke:none"/>
+      <path d="M780,186 C816,186 816,256 780,256" class="mem"/>
+      <path d="M806,200 L816,194 M814,221 L826,221 M806,242 L816,248" class="spike"/>
+      <polygon points="794,206 808,214 808,230 794,238 780,230 780,214" class="cap"/><path d="M787,222 C791,217 795,227 799,222 S804,216 803,229" class="gen"/>
+      <circle cx="836" cy="294" r="18" class="env"/>
+      <polygon points="836,284 845,289 845,299 836,304 827,299 827,289" class="cap"/>
+      <path d="M836,276 L836,270 M852,284 L857,279 M854,304 L859,309 M818,304 L813,309 M820,284 L815,279" class="spike"/>
+      <text x="400" y="92" class="lbl txt small bold">6 · budding: a new envelope for free</text>
+      <text x="400" y="106" class="lbl txt small muted">a capsid pushes out through the spiked patch and</text>
+      <text x="400" y="118" class="lbl txt small muted">pinches off, wrapped in host membrane (like exocytosis)</text>
+      <text x="490" y="160" class="lbl txt small muted">the cell is not necessarily killed</text>
+    </g>
+
+    <!-- 13 wrap-up -->
+    <g data-step="13">
+      <text x="400" y="92" class="lbl txt small bold">who provided what?</text>
+      <text x="400" y="106" class="lbl txt small muted">host: nucleotides, enzymes, ribosomes, tRNA, amino acids, ATP</text>
+      <text x="400" y="118" class="lbl txt small muted">virus: the plan (genome), sometimes one enzyme the host lacks</text>
+      <text x="110" y="190" class="lbl txt small bold">new particles infect</text>
+      <text x="110" y="202" class="lbl txt small bold">the next cells</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Start: a host cell with receptors",
+      en: "A cell, full of what a virus lacks: ribosomes (purple), nucleotides, amino acids, tRNAs, ATP and enzymes. On its surface sit receptor proteins (dark blue) that do a normal job for the cell. The virus will use one of them as a door.",
+      nl: "Een cel, vol met wat een virus mist: ribosomen (paars), nucleotiden, aminozuren, tRNA's, ATP en enzymen. Op haar oppervlak zitten receptoreiwitten (donkerblauw) die een normale taak voor de cel vervullen. Het virus zal er een als deur gebruiken." },
+    { t: "2 · A virus particle arrives",
+      en: "Outside floats a virus: a genome (red) in a capsid (blue). The syllabus takes the simplest case, a DNA virus with a one-protein coat. Whether anything happens depends on the host range: only if a viral surface protein fits this cell's receptor can the virus enter. No fitting receptor, no infection.",
+      nl: "Buiten drijft een virus: een genoom (rood) in een capside (blauw). De syllabus neemt het eenvoudigste geval, een DNA-virus met een jas van één eiwit. Of er iets gebeurt hangt af van het gastheerbereik: alleen als een viraal oppervlakte-eiwit op de receptor van deze cel past, kan het virus binnen. Geen passende receptor, geen infectie." },
+    { t: "3 · Step 1a: binding, the handshake",
+      en: "The viral surface protein fits the receptor like a hand in a glove. The virus is now stuck to the cell. This fit is what decides which species and which cell types a virus can infect: measles only human cells, cold viruses only the lining of the upper airways.",
+      nl: "Het virale oppervlakte-eiwit past op de receptor als een hand in een handschoen. Het virus zit nu vast aan de cel. Deze passing bepaalt welke soorten en welke celtypes een virus kan infecteren: mazelen alleen menselijke cellen, verkoudheidsvirussen alleen de bekleding van de bovenste luchtwegen." },
+    { t: "4 · Step 1b: entry, the genome goes in",
+      en: "What matters is that the genome gets inside; how it gets in differs. A phage injects its DNA through its tail and its empty coat stays outside (drawn faintly). An animal virus is taken up whole by endocytosis (the cell swallows it in a membrane pocket), or, if it has an envelope, the envelope fuses with the cell membrane; the coat is then taken apart inside.",
+      nl: "Wat telt is dat het genoom binnen raakt; hoe verschilt. Een faag injecteert zijn DNA door zijn staart en de lege jas blijft buiten (vaag getekend). Een dierlijk virus wordt in zijn geheel opgenomen door endocytose (de cel slikt het in een membraanzakje), of, als het een envelop heeft, fuseert de envelop met het celmembraan; de jas wordt daarna binnen uit elkaar gehaald." },
+    { t: "5 · Step 2: taking over the cell",
+      en: "The host's machinery reads the viral genome and makes the first viral proteins (small blue dots). Those proteins commandeer the cell: they take command and reprogram it to do two things, copy the viral genome and make viral proteins. The cell's own program is pushed aside.",
+      nl: "De machinerie van de gastheer leest het virale genoom en maakt de eerste virale eiwitten (kleine blauwe stippen). Die eiwitten nemen de cel over: ze herprogrammeren haar om twee dingen te doen, het virale genoom kopiëren en virale eiwitten maken. Het eigen programma van de cel wordt opzijgeschoven." },
+    { t: "6 · Step 3: copying the genome",
+      en: "The host provides the nucleotides. Many DNA viruses even use the host's DNA polymerase, with the viral DNA as template. RNA viruses cannot: a cell has no enzyme that copies RNA into RNA, so they use a polymerase encoded by their own genome that uses RNA as a template (page 3.3). Either way the copies pile up.",
+      nl: "De gastheer levert de nucleotiden. Veel DNA-virussen gebruiken zelfs het DNA-polymerase van de gastheer, met het virale DNA als mal. RNA-virussen kunnen dat niet: een cel heeft geen enzym dat RNA naar RNA kopieert, dus gebruiken ze een polymerase uit hun eigen genoom dat RNA als mal gebruikt (pagina 3.3). Hoe dan ook stapelen de kopieën zich op." },
+    { t: "7 · Step 4: making viral proteins",
+      en: "The viral genes are transcribed and translated with the host's enzymes, ribosomes, tRNAs, amino acids and ATP, exactly as the cell would make its own proteins. The product that piles up most is the coat protein: capsomeres (small blue hexagons), hundreds of them.",
+      nl: "De virale genen worden overgeschreven en vertaald met de enzymen, ribosomen, tRNA's, aminozuren en ATP van de gastheer, precies zoals de cel haar eigen eiwitten zou maken. Het product dat zich het meest opstapelt is het jas-eiwit: capsomeren (kleine blauwe zeshoeken), honderden." },
+    { t: "8 · Step 5: self-assembly",
+      en: "New genomes and capsomeres spontaneously assemble into new virus particles. No extra machinery is needed: the parts fit only one way, so they click together by themselves. From one particle that came in, hundreds to thousands are now ready.",
+      nl: "Nieuwe genomen en capsomeren assembleren spontaan tot nieuwe virusdeeltjes. Er is geen extra machinerie nodig: de delen passen maar op één manier, dus klikken ze vanzelf in elkaar. Van het ene deeltje dat binnenkwam zijn er nu honderden tot duizenden klaar." },
+    { t: "9 · Step 6, exit A: bursting out (lysis)",
+      en: "The new viruses leave. In the simplest case they break the cell open: lysis (splitting open). The cell is damaged or destroyed, and this damage, plus the body's reaction to it, causes many of the symptoms of a viral infection. This is the lytic cycle of phages. The freed particles infect further cells.",
+      nl: "De nieuwe virussen vertrekken. In het eenvoudigste geval breken ze de cel open: lysis (openbarsten). De cel wordt beschadigd of vernietigd, en die schade, plus de reactie van het lichaam erop, veroorzaakt veel van de symptomen van een virale infectie. Dit is de lytische cyclus van fagen. De vrijgekomen deeltjes infecteren verdere cellen." },
+    { t: "10 · Exit B for enveloped viruses: the spikes are made first",
+      en: "An enveloped animal virus leaves differently, and first it needs its spikes. Ribosomes bound to the ER (the endoplasmic reticulum, the membrane network where a cell makes its own membrane proteins) make the protein part of the viral glycoproteins. Cellular enzymes in the ER and the Golgi apparatus then add the sugar chains.",
+      nl: "Een dierlijk virus met envelop vertrekt anders, en eerst heeft het zijn stekels nodig. Ribosomen gebonden aan het ER (het endoplasmatisch reticulum, het membraannetwerk waar een cel haar eigen membraaneiwitten maakt) maken het eiwitdeel van de virale glycoproteïnen. Enzymen van de cel in het ER en het Golgi-apparaat hangen er dan de suikerketens aan." },
+    { t: "11 · The spikes reach the cell surface",
+      en: "The viral glycoproteins, embedded in membrane derived from the host cell, are transported to the surface and end up in the plasma membrane, pointing outward (orange). This is the same route the cell uses for its own membrane proteins. A patch of the cell's own membrane is now decorated with viral keys.",
+      nl: "De virale glycoproteïnen, ingebed in membraan afkomstig van de gastheercel, worden naar het oppervlak gebracht en komen in het plasmamembraan terecht, naar buiten wijzend (oranje). Dit is dezelfde route die de cel voor haar eigen membraaneiwitten gebruikt. Een stuk van het celmembraan is nu versierd met virale sleutels." },
+    { t: "12 · Budding: wrapped in host membrane",
+      en: "A new capsid pushes out through that spiked patch of membrane and pinches off, much like exocytosis. It leaves wrapped in a piece of the host's plasma membrane that carries the viral glycoproteins: its envelope, made of host lipids but with proteins specified by viral genes. This exit does not necessarily kill the cell, unlike lysis.",
+      nl: "Een nieuwe capside duwt zich door dat stuk membraan met stekels naar buiten en snoert af, zoals bij exocytose. Ze vertrekt gewikkeld in een stuk van het plasmamembraan van de gastheer dat de virale glycoproteïnen draagt: haar envelop, gemaakt van lipiden van de gastheer maar met eiwitten van virale genen. Deze uitweg doodt de cel niet noodzakelijk, anders dan lysis." },
+    { t: "13 · Who provided what?",
+      en: "Look back over the cycle. The host provided everything except the plan: nucleotides, enzymes (for DNA viruses even the DNA polymerase), ribosomes, tRNAs, amino acids and ATP. The virus provided the genome and, in some cases, one enzyme the host does not have. The new particles now go on to the next cells.",
+      nl: "Kijk terug op de cyclus. De gastheer leverde alles behalve het plan: nucleotiden, enzymen (bij DNA-virussen zelfs het DNA-polymerase), ribosomen, tRNA's, aminozuren en ATP. Het virus leverde het genoom en, in sommige gevallen, één enzym dat de gastheer niet heeft. De nieuwe deeltjes gaan nu naar de volgende cellen." }
+  ];
+  Stepper.init('cycle-stepper', steps, 'cycle');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Who provides what</span>
 <p><strong>The host provides everything except the plan</strong>: nucleotides, enzymes (for DNA viruses even the DNA polymerase), ribosomes, tRNAs, amino acids and ATP. The virus provides

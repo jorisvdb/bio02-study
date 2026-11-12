@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4.12 Detecting DNA sequences</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -23,6 +25,28 @@
   .lane { fill: var(--panel); stroke: var(--line); }
   .gb { stroke: var(--c-C); stroke-width: 5; stroke-linecap: round; }
   table.tech td:first-child { white-space: nowrap; font-weight: 700; }
+  .s-cell { fill: var(--panel); stroke: var(--muted); stroke-width: 1.5; }
+  .s-nuc { fill: var(--muted); opacity: .5; }
+  .s-dish { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .s-slide { fill: var(--key-bg); stroke: var(--key-border); stroke-width: 1.2; }
+  .s-mark { fill: none; stroke: var(--c-O); stroke-width: 2; stroke-dasharray: 5 3; }
+  .s-fixbox { fill: none; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 4; }
+  .s-holes { fill: none; stroke: var(--fg); stroke-width: 2; stroke-dasharray: 3 7; }
+  .s-dna4 { fill: none; stroke: var(--c-Cl); stroke-width: 3; opacity: .7; }
+  .s-dna11 { fill: none; stroke: var(--c-O); stroke-width: 3; opacity: .7; }
+  .s-probeg { fill: none; stroke: var(--c-Cl); stroke-width: 3; }
+  .s-prober { fill: none; stroke: var(--c-O); stroke-width: 3; }
+  .s-dapi { fill: #2b3f8a; opacity: .35; }
+  .s-cover { fill: var(--panel); }
+  .s-tube { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+  .s-liq-k { fill: var(--muted); opacity: .4; }
+  .s-liq-g { fill: var(--c-Cl); opacity: .6; }
+  .s-liq-r { fill: var(--c-O); opacity: .6; }
+  .s-liq-mix { fill: var(--c-S); opacity: .7; }
+  .s-chip { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+  .s-base { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .s-ax { stroke: var(--fg); stroke-width: 1.5; }
+  .spot.k { fill: var(--line); }
 </style>
 </head>
 <body>
@@ -135,6 +159,162 @@ stipjes bekend DNA. <strong>Kopieaantal</strong> = hoeveel kopieën van een regi
   <figcaption>A karyotype strip in the style of syllabus Figure 4-43 (only some chromosomes drawn): metaphase chromosomes stained with Giemsa, recognised by size and band pattern, sorted in pairs. Here chromosome 12 is present three times.</figcaption>
 </figure>
 
+<h3>Build it up yourself: a karyotype, from a blood sample to the sorted picture</h3>
+<p>Press <strong>Next</strong> to follow the cells from the dish to the sorted chromosome picture, one step at a time.</p>
+
+<div class="stepper" id="karyo-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of a karyotype">
+    <defs>
+      <marker id="ar-k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arT-k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="40" y="70" width="160" height="200" rx="10" class="s-dish"/>
+      <circle cx="70" cy="110" r="14" class="s-cell"/><circle cx="70" cy="110" r="6" class="s-nuc"/><circle cx="110" cy="150" r="14" class="s-cell"/><circle cx="110" cy="150" r="6" class="s-nuc"/><circle cx="80" cy="190" r="14" class="s-cell"/><circle cx="80" cy="190" r="6" class="s-nuc"/><circle cx="140" cy="100" r="14" class="s-cell"/><circle cx="140" cy="100" r="6" class="s-nuc"/><circle cx="160" cy="180" r="14" class="s-cell"/><circle cx="160" cy="180" r="6" class="s-nuc"/><circle cx="120" cy="230" r="14" class="s-cell"/><circle cx="120" cy="230" r="6" class="s-nuc"/>
+      <text x="120" y="60" class="lbl txt small bold">dividing cells in a dish</text>
+      <text x="440" y="300" class="lbl txt small">for example white blood cells from a blood sample, grown in culture for a few days</text>
+    </g>
+    <g data-step="2" data-until="6">
+      <path d="M156,100 L250,80" class="path" stroke-dasharray="4 3"/>
+      <path d="M156,100 L250,200" class="path" stroke-dasharray="4 3"/>
+      <circle cx="315" cy="140" r="62" class="s-cell"/>
+      <rect x="290" y="110" width="10" height="30" rx="4" class="chr"/><circle cx="295" cy="123" r="3" class="cen"/>
+      <rect x="322" y="105" width="10" height="36" rx="4" class="chr"/><circle cx="327" cy="121" r="3" class="cen"/>
+      <rect x="300" y="150" width="10" height="22" rx="4" class="chr"/><circle cx="305" cy="159" r="3" class="cen"/>
+      <rect x="330" y="148" width="10" height="26" rx="4" class="chr"/><circle cx="335" cy="159" r="3" class="cen"/>
+      <text x="315" y="225" class="lbl txt small bold">one cell caught in metaphase</text>
+      <text x="315" y="238" class="lbl txt small">chromosomes condensed into visible rods</text>
+    </g>
+    <g data-step="3" data-until="4">
+      <rect x="420" y="40" width="420" height="190" rx="4" class="s-slide"/>
+      <rect x="460" y="70" width="10" height="44" rx="4" class="chr"/><circle cx="465" cy="89" r="3" class="cen"/>
+      <rect x="520" y="60" width="10" height="38" rx="4" class="chr"/><circle cx="525" cy="77" r="3" class="cen"/>
+      <rect x="600" y="90" width="10" height="30" rx="4" class="chr"/><circle cx="605" cy="103" r="3" class="cen"/>
+      <rect x="700" y="60" width="10" height="44" rx="4" class="chr"/><circle cx="705" cy="79" r="3" class="cen"/>
+      <rect x="780" y="80" width="10" height="38" rx="4" class="chr"/><circle cx="785" cy="97" r="3" class="cen"/>
+      <rect x="480" y="140" width="10" height="22" rx="4" class="chr"/><circle cx="485" cy="149" r="3" class="cen"/>
+      <rect x="560" y="150" width="10" height="26" rx="4" class="chr"/><circle cx="565" cy="161" r="3" class="cen"/>
+      <rect x="640" y="160" width="10" height="30" rx="4" class="chr"/><circle cx="645" cy="173" r="3" class="cen"/>
+      <rect x="720" y="140" width="10" height="22" rx="4" class="chr"/><circle cx="725" cy="149" r="3" class="cen"/>
+      <rect x="800" y="150" width="10" height="14" rx="4" class="chr"/><circle cx="805" cy="156" r="3" class="cen"/>
+      <rect x="680" y="190" width="10" height="14" rx="4" class="chr"/><circle cx="685" cy="196" r="3" class="cen"/>
+      <rect x="590" y="195" width="10" height="20" rx="4" class="chr"/><circle cx="595" cy="204" r="3" class="cen"/>
+      <text x="630" y="250" class="lbl txt small bold">the cell is burst open on a glass slide: a metaphase spread</text>
+    </g>
+    <g data-step="4" data-until="6">
+      <rect x="420" y="40" width="420" height="190" rx="4" class="s-slide"/>
+      <rect x="460" y="70" width="10" height="44" rx="4" class="chr"/><rect x="460" y="74" width="10" height="6" class="bandd"/><rect x="460" y="84" width="10" height="8" class="bandd"/><rect x="460" y="100" width="10" height="6" class="bandd"/><circle cx="465" cy="89" r="3" class="cen"/>
+      <rect x="520" y="60" width="10" height="38" rx="4" class="chr"/><rect x="520" y="64" width="10" height="6" class="bandd"/><rect x="520" y="74" width="10" height="8" class="bandd"/><rect x="520" y="84" width="10" height="6" class="bandd"/><circle cx="525" cy="77" r="3" class="cen"/>
+      <rect x="600" y="90" width="10" height="30" rx="4" class="chr"/><rect x="600" y="94" width="10" height="6" class="bandd"/><rect x="600" y="108" width="10" height="6" class="bandd"/><circle cx="605" cy="103" r="3" class="cen"/>
+      <rect x="700" y="60" width="10" height="44" rx="4" class="chr"/><rect x="700" y="64" width="10" height="6" class="bandd"/><rect x="700" y="74" width="10" height="8" class="bandd"/><rect x="700" y="90" width="10" height="6" class="bandd"/><circle cx="705" cy="79" r="3" class="cen"/>
+      <rect x="780" y="80" width="10" height="38" rx="4" class="chr"/><rect x="780" y="84" width="10" height="6" class="bandd"/><rect x="780" y="94" width="10" height="8" class="bandd"/><rect x="780" y="104" width="10" height="6" class="bandd"/><circle cx="785" cy="97" r="3" class="cen"/>
+      <rect x="480" y="140" width="10" height="22" rx="4" class="chr"/><rect x="480" y="144" width="10" height="5" class="bandd"/><circle cx="485" cy="149" r="3" class="cen"/>
+      <rect x="560" y="150" width="10" height="26" rx="4" class="chr"/><rect x="560" y="154" width="10" height="6" class="bandd"/><rect x="560" y="164" width="10" height="6" class="bandd"/><circle cx="565" cy="161" r="3" class="cen"/>
+      <rect x="640" y="160" width="10" height="30" rx="4" class="chr"/><rect x="640" y="164" width="10" height="6" class="bandd"/><rect x="640" y="178" width="10" height="6" class="bandd"/><circle cx="645" cy="173" r="3" class="cen"/>
+      <rect x="720" y="140" width="10" height="22" rx="4" class="chr"/><rect x="720" y="144" width="10" height="5" class="bandd"/><circle cx="725" cy="149" r="3" class="cen"/>
+      <rect x="800" y="150" width="10" height="14" rx="4" class="chr"/><rect x="800" y="154" width="10" height="5" class="bandd"/><circle cx="805" cy="156" r="3" class="cen"/>
+      <rect x="680" y="190" width="10" height="14" rx="4" class="chr"/><rect x="680" y="194" width="10" height="5" class="bandd"/><circle cx="685" cy="196" r="3" class="cen"/>
+      <rect x="590" y="195" width="10" height="20" rx="4" class="chr"/><rect x="590" y="199" width="10" height="5" class="bandd"/><circle cx="595" cy="204" r="3" class="cen"/>
+      <text x="630" y="250" class="lbl txt small bold">Giemsa stain: dark bands on gene-poor, A/T-rich regions</text>
+    </g>
+    <g data-step="5" data-until="6">
+      <text x="465" y="126" class="txt small muted">1</text>
+      <text x="525" y="110" class="txt small muted">2</text>
+      <text x="605" y="132" class="txt small muted">12</text>
+      <text x="705" y="116" class="txt small muted">1</text>
+      <text x="785" y="130" class="txt small muted">2</text>
+      <text x="485" y="174" class="txt small muted">21</text>
+      <text x="565" y="188" class="txt small muted">12</text>
+      <text x="645" y="202" class="txt small muted">12</text>
+      <text x="725" y="174" class="txt small muted">2</text>
+      <text x="805" y="176" class="txt small muted">Y</text>
+      <text x="685" y="216" class="txt small muted">Y</text>
+      <text x="595" y="227" class="txt small muted">21</text>
+      <text x="630" y="250" class="lbl txt small bold">photograph, and recognise each chromosome by its size and band pattern</text>
+    </g>
+    <g data-step="6">
+      <rect x="420" y="40" width="420" height="190" rx="4" class="s-slide"/>
+      <rect x="450" y="106" width="10" height="44" rx="4" class="chr"/><rect x="450" y="110" width="10" height="6" class="bandd"/><rect x="450" y="120" width="10" height="8" class="bandd"/><rect x="450" y="136" width="10" height="6" class="bandd"/><circle cx="455" cy="125" r="3" class="cen"/>
+      <rect x="466" y="106" width="10" height="44" rx="4" class="chr"/><rect x="466" y="110" width="10" height="6" class="bandd"/><rect x="466" y="120" width="10" height="8" class="bandd"/><rect x="466" y="136" width="10" height="6" class="bandd"/><circle cx="471" cy="125" r="3" class="cen"/>
+      <text x="466" y="168" class="txt small muted">1</text>
+      <rect x="508" y="112" width="10" height="38" rx="4" class="chr"/><rect x="508" y="116" width="10" height="6" class="bandd"/><rect x="508" y="126" width="10" height="8" class="bandd"/><rect x="508" y="136" width="10" height="6" class="bandd"/><circle cx="513" cy="129" r="3" class="cen"/>
+      <rect x="524" y="112" width="10" height="38" rx="4" class="chr"/><rect x="524" y="116" width="10" height="6" class="bandd"/><rect x="524" y="126" width="10" height="8" class="bandd"/><rect x="524" y="136" width="10" height="6" class="bandd"/><circle cx="529" cy="129" r="3" class="cen"/>
+      <text x="524" y="168" class="txt small muted">2</text>
+      <rect x="566" y="120" width="10" height="30" rx="4" class="chr"/><rect x="566" y="124" width="10" height="6" class="bandd"/><rect x="566" y="138" width="10" height="6" class="bandd"/><circle cx="571" cy="133" r="3" class="cen"/>
+      <rect x="582" y="120" width="10" height="30" rx="4" class="chr"/><rect x="582" y="124" width="10" height="6" class="bandd"/><rect x="582" y="138" width="10" height="6" class="bandd"/><circle cx="587" cy="133" r="3" class="cen"/>
+      <rect x="598" y="120" width="10" height="30" rx="4" class="chr"/><rect x="598" y="124" width="10" height="6" class="bandd"/><rect x="598" y="138" width="10" height="6" class="bandd"/><circle cx="603" cy="133" r="3" class="cen"/>
+      <text x="590" y="168" class="txt small muted">12</text>
+      <rect x="640" y="136" width="10" height="14" rx="4" class="chr"/><rect x="640" y="140" width="10" height="5" class="bandd"/><circle cx="645" cy="142" r="3" class="cen"/>
+      <rect x="656" y="136" width="10" height="14" rx="4" class="chr"/><rect x="656" y="140" width="10" height="5" class="bandd"/><circle cx="661" cy="142" r="3" class="cen"/>
+      <text x="656" y="168" class="txt small muted">21</text>
+      <rect x="698" y="114" width="10" height="36" rx="4" class="chr"/><rect x="698" y="118" width="10" height="6" class="bandd"/><rect x="698" y="138" width="10" height="6" class="bandd"/><circle cx="703" cy="130" r="3" class="cen"/>
+      <text x="706" y="168" class="txt small muted">X</text>
+      <rect x="740" y="136" width="10" height="14" rx="4" class="chr"/><rect x="740" y="140" width="10" height="5" class="bandd"/><circle cx="745" cy="142" r="3" class="cen"/>
+      <text x="748" y="168" class="txt small muted">Y</text>
+      <text x="630" y="60" class="txt small muted">… only some of the 23 pairs drawn …</text>
+      <text x="630" y="250" class="lbl txt small bold">sort in pairs, by size and band pattern: this picture is the karyotype</text>
+    </g>
+    <g data-step="7">
+      <rect x="546" y="112" width="52" height="44" rx="6" class="s-mark"/>
+      <text x="630" y="196" class="lbl txt small">chromosome 12 is present three times: trisomy 12 (syllabus Figure 4-43, a cultured stem cell)</text>
+      <text x="630" y="250" class="lbl txt small bold">inspect: count the chromosomes, look for missing or extra ones and for rearrangements</text>
+    </g>
+    <g data-step="8">
+      <text x="630" y="250" class="lbl txt small bold">what it shows: aneuploidy, big deletions, translocations (Philadelphia chromosome)</text>
+      <text x="630" y="264" class="lbl txt small muted">what it cannot show: a single gene, a point mutation: too small to see in a stained rod</text>
+      <text x="440" y="300" class="lbl txt small">uses: diagnosis of syndromes, prenatal screening after amniocentesis, cancers with rearrangements</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+ {
+  "t": "1 · Start: dividing cells",
+  "en": "You need cells that are dividing, because chromosomes are only visible as separate rods during cell division. White blood cells from a blood sample, or cells cultured from a tissue, are grown in a dish for a few days.",
+  "nl": "Je hebt delende cellen nodig, want chromosomen zijn alleen tijdens de celdeling zichtbaar als aparte staafjes. Witte bloedcellen uit een bloedstaal, of cellen gekweekt uit een weefsel, worden enkele dagen in een schaaltje gekweekt."
+ },
+ {
+  "t": "2 · Catch a cell in metaphase",
+  "en": "Metaphase is the stage of mitosis (BIO01 chapter 7) in which the chromosomes are maximally condensed, each one a compact rod. Cells are caught at that moment, so every chromosome can be seen as its own rod.",
+  "nl": "Metafase is het stadium van de mitose (BIO01 hoofdstuk 7) waarin de chromosomen maximaal gecondenseerd zijn, elk een compact staafje. De cellen worden op dat moment gevangen, zodat elk chromosoom als een eigen staafje te zien is."
+ },
+ {
+  "t": "3 · A metaphase spread on a slide",
+  "en": "The cell is burst open on a glass slide so that its chromosomes lie spread out, apart from each other. Without stain they are pale rods of different lengths; you cannot yet tell which is which.",
+  "nl": "De cel wordt opengebroken op een glaasje zodat de chromosomen uitgespreid liggen, los van elkaar. Zonder kleuring zijn het bleke staafjes van verschillende lengte; je kan nog niet zien welk welk is."
+ },
+ {
+  "t": "4 · Giemsa stain: bands appear",
+  "en": "Giemsa is a dye that binds more strongly to gene-poor, A/T-rich regions of the DNA. Those regions become dark bands, the rest stays light. Every chromosome has its own fixed pattern of bands.",
+  "nl": "Giemsa is een kleurstof die sterker bindt aan genarme, A/T-rijke stukken DNA. Die stukken worden donkere banden, de rest blijft licht. Elk chromosoom heeft zijn eigen vast bandenpatroon."
+ },
+ {
+  "t": "5 · Photograph and recognise",
+  "en": "The spread is photographed under the microscope. From its size, the position of its centromere (the orange constriction) and its band pattern, every rod can be named: this is chromosome 1, this is 12, this is a Y.",
+  "nl": "De spreiding wordt gefotografeerd onder de microscoop. Aan de grootte, de plaats van het centromeer (de oranje insnoering) en het bandenpatroon kan elk staafje een naam krijgen: dit is chromosoom 1, dit is 12, dit is een Y."
+ },
+ {
+  "t": "6 · Sort in pairs: the karyotype",
+  "en": "The photographed chromosomes are cut out and arranged in pairs, from the largest (1) to the smallest (21, 22), with the sex chromosomes last. This ordered picture is the karyotype, the same thing chapter 1 writes as 46,XY or 47,XXY.",
+  "nl": "De gefotografeerde chromosomen worden uitgeknipt en in paren gerangschikt, van het grootste (1) tot het kleinste (21, 22), met de geslachtschromosomen laatst. Dit geordende beeld is het karyotype, hetzelfde wat hoofdstuk 1 schrijft als 46,XY of 47,XXY."
+ },
+ {
+  "t": "7 · Inspect: count and compare",
+  "en": "Now you count: two of each? Here chromosome 12 appears three times: a trisomy, as in syllabus Figure 4-43 (a cultured stem cell that picked up extra copies of 12 and 17). A missing chromosome, a visibly shortened one (a big deletion) or a piece moved to another chromosome (a translocation) can be seen in the same way.",
+  "nl": "Nu tel je: van elk twee? Hier komt chromosoom 12 drie keer voor: een trisomie, zoals in syllabusfiguur 4-43 (een gekweekte stamcel die extra kopieën van 12 en 17 opliep). Een ontbrekend chromosoom, een zichtbaar verkort chromosoom (grote deletie) of een stuk dat naar een ander chromosoom verhuisde (translocatie) zie je op dezelfde manier."
+ },
+ {
+  "t": "8 · What a karyotype can and cannot show",
+  "en": "A karyotype is the coarsest view: whole chromosomes, large deletions, big rearrangements such as the Philadelphia chromosome of chronic myelogenous leukemia. A single gene or a point mutation is thousands of times too small to see. Uses: diagnosing chromosome syndromes, prenatal screening on fetal cells from amniocentesis, and cancers with rearrangements.",
+  "nl": "Een karyotype is de grofste blik: hele chromosomen, grote deleties, grote herschikkingen zoals het Philadelphia-chromosoom van chronische myeloïde leukemie. Eén gen of een puntmutatie is duizenden keren te klein om te zien. Gebruik: diagnose van chromosoomsyndromen, prenatale screening op foetale cellen uit een vruchtwaterpunctie, en kankers met herschikkingen."
+ }
+];
+Stepper.init('karyo-stepper', steps, 'karyo');
+})();
+</script>
+
 <h3>Where it is used</h3>
 <ul>
   <li><strong>Medical diagnosis:</strong> aneuploidy and other chromosome aberrations (deletions, translocations) are frequent causes of birth defects, intellectual disability, miscarriages and other syndromes (chapter 1).</li>
@@ -196,6 +376,162 @@ probe for a known sequence. <strong>Goal:</strong> see where that sequence is on
   </svg>
   <figcaption>Syllabus Figure 4-44. Left: in a healthy nucleus each probe gives two separate spots. Right: a reciprocal translocation brings the two probed regions together on the rearranged chromosomes, and their signals merge to yellow.</figcaption>
 </figure>
+
+<h3>Build it up yourself: FISH, from a cell on a slide to the yellow spot</h3>
+<p>Press <strong>Next</strong> to follow the probe into the cell and read the result, one step at a time.</p>
+
+<div class="stepper" id="fish-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of FISH">
+    <defs>
+      <marker id="ar-f" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arT-f" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="40" y="40" width="330" height="260" rx="4" class="s-slide"/>
+      <circle cx="205" cy="170" r="95" class="s-cell" id="fish-cell"/>
+      <text x="440" y="40" class="lbl txt small bold">a cell on a glass slide (its nucleus is drawn large)</text>
+      <text x="620" y="300" class="lbl txt small">begin state: cells from the patient, and the question: where is sequence X, and is it still in one piece?</text>
+    </g>
+    <g data-step="2">
+      <rect x="60" y="60" width="290" height="220" rx="6" class="s-fixbox"/>
+      <text x="440" y="40" class="lbl txt small bold">fixed: the cells are treated so they stay in place and keep their structure</text>
+    </g>
+    <g data-step="3">
+      <circle cx="205" cy="170" r="95" class="s-holes"/>
+      <text x="440" y="40" class="lbl txt small bold">permeabilised: holes in the membranes, so a probe can get in</text>
+    </g>
+    <g data-step="4" data-until="9">
+      <path d="M150,110 C140,140 160,170 150,200" class="s-dna4"/>
+      <path d="M175,115 C165,145 185,175 175,205" class="s-dna4"/>
+      <path d="M235,120 C245,150 225,180 235,210" class="s-dna11"/>
+      <path d="M260,125 C270,155 250,185 260,215" class="s-dna11"/>
+      <text x="162" y="295" class="lbl txt small muted">two chr 4</text>
+      <text x="248" y="295" class="lbl txt small muted">two chr 11</text>
+      <text x="440" y="40" class="lbl txt small bold">the chromosomal DNA is denatured: the two strands come apart, so a probe can pair with one of them</text>
+    </g>
+    <g data-step="5">
+      <path d="M520,110 c10,-8 20,8 30,0 c10,-8 20,8 30,0" class="s-probeg"/>
+      <circle cx="512" cy="110" r="6" class="spot g"/>
+      <text x="600" y="114" class="txt small" style="text-anchor:start">green probe: pairs with a known region on chromosome 4</text>
+      <path d="M520,150 c10,-8 20,8 30,0 c10,-8 20,8 30,0" class="s-prober"/>
+      <circle cx="512" cy="150" r="6" class="spot r"/>
+      <text x="600" y="154" class="txt small" style="text-anchor:start">red probe: pairs with a known region on chromosome 11</text>
+      <text x="440" y="40" class="lbl txt small bold">probes: single-stranded DNA of a known sequence, each with its own fluorescent dye</text>
+    </g>
+    <g data-step="6" data-until="9">
+      <circle cx="148" cy="150" r="6" class="spot g"/>
+      <circle cx="173" cy="155" r="6" class="spot g"/>
+      <circle cx="237" cy="170" r="6" class="spot r"/>
+      <circle cx="262" cy="175" r="6" class="spot r"/>
+      <text x="440" y="40" class="lbl txt small bold">hybridisation: each probe base-pairs with its complementary sequence, on both homologous chromosomes</text>
+    </g>
+    <g data-step="7">
+      <circle cx="205" cy="170" r="95" class="s-dapi"/>
+      <text x="440" y="40" class="lbl txt small bold">DAPI: a blue dye that binds all DNA, so the whole nucleus is visible</text>
+    </g>
+    <g data-step="8">
+      <circle cx="500" cy="235" r="42" class="nuc"/>
+      <circle cx="482" cy="222" r="5" class="spot g"/>
+      <circle cx="490" cy="252" r="5" class="spot g"/>
+      <circle cx="515" cy="218" r="5" class="spot r"/>
+      <circle cx="520" cy="250" r="5" class="spot r"/>
+      <text x="500" y="292" class="txt small" style="text-anchor:middle">healthy: 2 green + 2 red</text>
+      <text x="440" y="40" class="lbl txt small bold">in the fluorescence microscope: blue nucleus, two spots per probe (one per homologue), far apart</text>
+    </g>
+    <g data-step="9">
+      <path d="M150,110 C140,140 160,170 150,200" class="s-dna4"/>
+      <path d="M175,115 C165,145 185,175 175,205" class="s-dna4" stroke-dasharray="60 200"/>
+      <path d="M175,165 C180,185 172,195 175,205" class="s-dna11"/>
+      <path d="M235,120 C245,150 225,180 235,210" class="s-dna11"/>
+      <path d="M260,125 C270,155 250,185 260,215" class="s-dna11" stroke-dasharray="60 200"/>
+      <path d="M260,175 C262,195 255,205 260,215" class="s-dna4"/>
+      <circle cx="148" cy="150" r="6" class="spot g"/>
+      <circle cx="237" cy="170" r="6" class="spot r"/>
+      <circle cx="175" cy="185" r="6" class="spot r"/>
+      <circle cx="173" cy="155" r="6" class="spot g"/>
+      <circle cx="258" cy="195" r="6" class="spot g"/>
+      <circle cx="262" cy="175" r="6" class="spot r"/>
+      <text x="440" y="40" class="lbl txt small bold">a leukaemia cell: one chr 4 and one chr 11 have exchanged ends (a reciprocal translocation)</text>
+      <text x="205" y="290" class="lbl txt small muted">the probed regions lie on either side of the breakpoint ("flanking")</text>
+    </g>
+    <g data-step="10">
+      <circle cx="700" cy="235" r="42" class="nuc"/>
+      <circle cx="682" cy="222" r="5" class="spot g"/>
+      <circle cx="720" cy="218" r="5" class="spot r"/>
+      <circle cx="688" cy="252" r="6" class="spot y"/>
+      <circle cx="715" cy="254" r="6" class="spot y"/>
+      <text x="700" y="292" class="txt small" style="text-anchor:middle">leukaemia: 1 green, 1 red, 2 yellow</text>
+      <text x="440" y="40" class="lbl txt small bold">green and red now overlap on the two rearranged chromosomes: a merged yellow signal</text>
+    </g>
+    <g data-step="11">
+      <text x="440" y="40" class="lbl txt small bold">uses: locate a gene; diagnose translocations, deletions, amplifications; also RNA in cells</text>
+      <text x="440" y="54" class="lbl txt small muted">limits: you must know which region to probe; too insensitive for small deletions or amplifications</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+ {
+  "t": "1 · Start: a cell on a slide",
+  "en": "FISH stands for fluorescence in situ hybridisation. In situ is Latin for 'in place': the test is done on the chromosomes inside the cell itself, not on extracted DNA. Begin state: the patient's cells on a glass slide, and a question: where is sequence X, and is it still in one piece?",
+  "nl": "FISH staat voor fluorescentie-in-situ-hybridisatie. In situ is Latijn voor 'ter plaatse': de test gebeurt op de chromosomen in de cel zelf, niet op geïsoleerd DNA. Beginstand: de cellen van de patiënt op een glaasje, en een vraag: waar zit sequentie X, en is ze nog in één stuk?"
+ },
+ {
+  "t": "2 · Fix the cells",
+  "en": "Fixing means treating the cells (for example with a chemical) so that they stay stuck in place on the slide and keep their structure during all the washing that follows.",
+  "nl": "Fixeren betekent de cellen behandelen (bijvoorbeeld met een chemische stof) zodat ze op hun plaats op het glaasje blijven zitten en hun structuur behouden tijdens al het spoelen dat volgt."
+ },
+ {
+  "t": "3 · Permeabilise",
+  "en": "Permeabilise = make holes in the membranes. A probe is a piece of DNA, far too big to pass an intact membrane, so the membranes are made leaky.",
+  "nl": "Permeabiliseren = gaatjes maken in de membranen. Een probe is een stuk DNA, veel te groot om door een intact membraan te gaan, dus de membranen worden lek gemaakt."
+ },
+ {
+  "t": "4 · Denature the chromosomal DNA",
+  "en": "Inside the nucleus the chromosomes are double-stranded. Heat or chemicals pull the two strands apart (denaturation). Only then can a probe pair with a strand. Drawn: the two chromosomes 4 (green strands) and the two chromosomes 11 (red strands) of the syllabus example.",
+  "nl": "In de kern zijn de chromosomen dubbelstrengs. Hitte of chemicaliën trekken de twee strengen uit elkaar (denaturatie). Pas dan kan een probe met een streng paren. Getekend: de twee chromosomen 4 (groene strengen) en de twee chromosomen 11 (rode strengen) uit het syllabusvoorbeeld."
+ },
+ {
+  "t": "5 · Make the probes",
+  "en": "A probe is a short piece of single-stranded DNA with a known sequence, carrying a fluorescent dye (a fluorophore: it glows in its own colour under the microscope's light). Syllabus Figure 4-44 uses two: a green one for a region on chromosome 4 and a red one for a region on chromosome 11.",
+  "nl": "Een probe is een kort stuk enkelstrengs DNA met een bekende sequentie, met een fluorescente kleurstof (een fluorofoor: ze gloeit in haar eigen kleur onder het licht van de microscoop). Syllabusfiguur 4-44 gebruikt er twee: een groene voor een regio op chromosoom 4 en een rode voor een regio op chromosoom 11."
+ },
+ {
+  "t": "6 · Hybridise",
+  "en": "The probes are added to the slide. Each one finds its complementary sequence and base-pairs with it: that is hybridisation. There are two chromosomes 4 and two chromosomes 11 in the cell, so each probe sticks in two places.",
+  "nl": "De probes worden op het glaasje gebracht. Elke probe vindt haar complementaire sequentie en vormt er basenparen mee: dat is hybridisatie. Er zijn twee chromosomen 4 en twee chromosomen 11 in de cel, dus elke probe plakt op twee plaatsen."
+ },
+ {
+  "t": "7 · DAPI: colour all the DNA blue",
+  "en": "DAPI is a dye that binds all DNA and fluoresces blue. It makes the whole nucleus visible, so you can see where the coloured spots are in relation to each other.",
+  "nl": "DAPI is een kleurstof die aan al het DNA bindt en blauw fluoresceert. Zo wordt de hele kern zichtbaar en zie je waar de gekleurde stippen ten opzichte van elkaar liggen."
+ },
+ {
+  "t": "8 · Look: the healthy picture",
+  "en": "In a fluorescence microscope a healthy nucleus shows two green spots and two red spots, one of each on each homologous chromosome, and the green ones lie far from the red ones, because chromosome 4 and chromosome 11 are different chromosomes.",
+  "nl": "In een fluorescentiemicroscoop toont een gezonde kern twee groene en twee rode stippen, van elk één op elk homoloog chromosoom, en de groene liggen ver van de rode, want chromosoom 4 en chromosoom 11 zijn verschillende chromosomen."
+ },
+ {
+  "t": "9 · A leukaemia cell with a translocation",
+  "en": "In the syllabus example a leukaemia cell has a reciprocal translocation: one chromosome 4 and one chromosome 11 broke and exchanged their end pieces (chapter 1). The two probes were chosen to flank the breakpoint, that is, to sit on either side of the place where the chromosomes broke.",
+  "nl": "In het syllabusvoorbeeld heeft een leukemiecel een reciproke translocatie: één chromosoom 4 en één chromosoom 11 braken en wisselden hun eindstukken uit (hoofdstuk 1). De twee probes werden zo gekozen dat ze het breekpunt flankeren, dus aan weerszijden liggen van de plaats waar de chromosomen braken."
+ },
+ {
+  "t": "10 · The merged yellow signal",
+  "en": "On the two rearranged chromosomes the green region and the red region now lie next to each other. Their light overlaps, and green plus red looks yellow. The untouched chromosome 4 and 11 still give one separate green and one separate red spot. So: two yellow spots = translocation.",
+  "nl": "Op de twee herschikte chromosomen liggen de groene en de rode regio nu naast elkaar. Hun licht overlapt, en groen plus rood ziet er geel uit. Het onaangetaste chromosoom 4 en 11 geven nog één aparte groene en één aparte rode stip. Dus: twee gele stippen = translocatie."
+ },
+ {
+  "t": "11 · Uses and limits",
+  "en": "FISH locates a gene on a chromosome and diagnoses diseases with known chromosome changes: translocations, specific deletions or amplifications; it can also show RNA transcripts in cells. Two limits: you must know in advance which region to look at, to make the probe, and FISH is not sensitive enough for small deletions or amplifications. For those you need aCGH.",
+  "nl": "FISH lokaliseert een gen op een chromosoom en diagnosticeert ziekten met bekende chromosoomveranderingen: translocaties, specifieke deleties of amplificaties; het kan ook RNA-transcripten in cellen tonen. Twee beperkingen: je moet vooraf weten naar welke regio je kijkt, om de probe te maken, en FISH is niet gevoelig genoeg voor kleine deleties of amplificaties. Daarvoor heb je aCGH nodig."
+ }
+];
+Stepper.init('fish-stepper', steps, 'fish');
+})();
+</script>
 
 <p><strong>Uses:</strong> locating a gene or sequence on a chromosome; diagnosing genetic diseases and cancers with known chromosome abnormalities (translocations, specific deletions or amplifications); it can also detect specific <strong>RNA transcripts</strong> in cells (page 4.13).</p>
 <p><strong>Limits:</strong> you must <strong>know in advance</strong> which region to look at, to make the probe, and FISH is <strong>not sensitive enough for small deletions or amplifications</strong>.</p>
@@ -259,6 +595,268 @@ cells. <strong>Goal:</strong> find every region that is deleted or amplified, ge
   </svg>
   <figcaption>Syllabus Figure 4-45, array CGH. Patient and reference DNA, in two colours, compete for the same spots; the colour ratio per spot, plotted along the chromosomes, reveals gains and losses anywhere in the genome.</figcaption>
 </figure>
+
+<h3>Build it up yourself: array CGH, from two DNA samples to a copy-number plot</h3>
+<p>Press <strong>Next</strong> to label, mix, hybridise and read the chip, one step at a time.</p>
+
+<div class="stepper" id="acgh-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of array CGH">
+    <defs>
+      <marker id="ar-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arT-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="60" y="60" width="34" height="70" rx="8" class="s-tube"/>
+      <rect x="62" y="92" width="30" height="36" rx="6" class="s-liq-k"/>
+      <text x="77" y="148" class="txt small" style="text-anchor:middle">patient DNA</text>
+      <text x="440" y="300" class="lbl txt small">begin state: DNA from the patient's cells. Question: which regions of the genome are lost or doubled?</text>
+    </g>
+    <g data-step="2">
+      <rect x="130" y="60" width="34" height="70" rx="8" class="s-tube"/>
+      <rect x="132" y="92" width="30" height="36" rx="6" class="s-liq-k"/>
+      <text x="147" y="148" class="txt small" style="text-anchor:middle">reference DNA</text>
+      <text x="440" y="300" class="lbl txt small">reference DNA = DNA from normal cells, with two copies of every region</text>
+    </g>
+    <g data-step="3">
+      <rect x="62" y="92" width="30" height="36" rx="6" class="s-liq-g"/>
+      <text x="95" y="48" class="lbl txt small bold">patient DNA labelled green (fluorescein)</text>
+    </g>
+    <g data-step="4">
+      <rect x="132" y="92" width="30" height="36" rx="6" class="s-liq-r"/>
+      <text x="95" y="48" class="lbl txt small bold">reference DNA labelled red (rhodamine)</text>
+    </g>
+    <g data-step="5">
+      <rect x="200" y="60" width="34" height="70" rx="8" class="s-tube"/>
+      <rect x="202" y="92" width="30" height="36" rx="6" class="s-liq-mix"/>
+      <text x="217" y="148" class="txt small" style="text-anchor:middle">mixed 1:1</text>
+      <path d="M100,130 L205,100" class="path" marker-end="url(#ar-a)"/>
+      <path d="M170,130 L212,110" class="path" marker-end="url(#ar-a)"/>
+      <text x="140" y="48" class="lbl txt small bold">mixed in equal amounts</text>
+    </g>
+    <g data-step="6">
+      <rect x="280" y="48" width="432" height="164" rx="6" class="s-chip"/>
+      <circle cx="300" cy="70" r="9" class="spot k"/>
+      <circle cx="300" cy="96" r="9" class="spot k"/>
+      <circle cx="300" cy="122" r="9" class="spot k"/>
+      <circle cx="300" cy="148" r="9" class="spot k"/>
+      <circle cx="300" cy="174" r="9" class="spot k"/>
+      <circle cx="334" cy="70" r="9" class="spot k"/>
+      <circle cx="334" cy="96" r="9" class="spot k"/>
+      <circle cx="334" cy="122" r="9" class="spot k"/>
+      <circle cx="334" cy="148" r="9" class="spot k"/>
+      <circle cx="334" cy="174" r="9" class="spot k"/>
+      <circle cx="368" cy="70" r="9" class="spot k"/>
+      <circle cx="368" cy="96" r="9" class="spot k"/>
+      <circle cx="368" cy="122" r="9" class="spot k"/>
+      <circle cx="368" cy="148" r="9" class="spot k"/>
+      <circle cx="368" cy="174" r="9" class="spot k"/>
+      <circle cx="402" cy="70" r="9" class="spot k"/>
+      <circle cx="402" cy="96" r="9" class="spot k"/>
+      <circle cx="402" cy="122" r="9" class="spot k"/>
+      <circle cx="402" cy="148" r="9" class="spot k"/>
+      <circle cx="402" cy="174" r="9" class="spot k"/>
+      <circle cx="436" cy="70" r="9" class="spot k"/>
+      <circle cx="436" cy="96" r="9" class="spot k"/>
+      <circle cx="436" cy="122" r="9" class="spot k"/>
+      <circle cx="436" cy="148" r="9" class="spot k"/>
+      <circle cx="436" cy="174" r="9" class="spot k"/>
+      <circle cx="470" cy="70" r="9" class="spot k"/>
+      <circle cx="470" cy="96" r="9" class="spot k"/>
+      <circle cx="470" cy="122" r="9" class="spot k"/>
+      <circle cx="470" cy="148" r="9" class="spot k"/>
+      <circle cx="470" cy="174" r="9" class="spot k"/>
+      <circle cx="504" cy="70" r="9" class="spot k"/>
+      <circle cx="504" cy="96" r="9" class="spot k"/>
+      <circle cx="504" cy="122" r="9" class="spot k"/>
+      <circle cx="504" cy="148" r="9" class="spot k"/>
+      <circle cx="504" cy="174" r="9" class="spot k"/>
+      <circle cx="538" cy="70" r="9" class="spot k"/>
+      <circle cx="538" cy="96" r="9" class="spot k"/>
+      <circle cx="538" cy="122" r="9" class="spot k"/>
+      <circle cx="538" cy="148" r="9" class="spot k"/>
+      <circle cx="538" cy="174" r="9" class="spot k"/>
+      <circle cx="572" cy="70" r="9" class="spot k"/>
+      <circle cx="572" cy="96" r="9" class="spot k"/>
+      <circle cx="572" cy="122" r="9" class="spot k"/>
+      <circle cx="572" cy="148" r="9" class="spot k"/>
+      <circle cx="572" cy="174" r="9" class="spot k"/>
+      <circle cx="606" cy="70" r="9" class="spot k"/>
+      <circle cx="606" cy="96" r="9" class="spot k"/>
+      <circle cx="606" cy="122" r="9" class="spot k"/>
+      <circle cx="606" cy="148" r="9" class="spot k"/>
+      <circle cx="606" cy="174" r="9" class="spot k"/>
+      <circle cx="640" cy="70" r="9" class="spot k"/>
+      <circle cx="640" cy="96" r="9" class="spot k"/>
+      <circle cx="640" cy="122" r="9" class="spot k"/>
+      <circle cx="640" cy="148" r="9" class="spot k"/>
+      <circle cx="640" cy="174" r="9" class="spot k"/>
+      <circle cx="674" cy="70" r="9" class="spot k"/>
+      <circle cx="674" cy="96" r="9" class="spot k"/>
+      <circle cx="674" cy="122" r="9" class="spot k"/>
+      <circle cx="674" cy="148" r="9" class="spot k"/>
+      <circle cx="674" cy="174" r="9" class="spot k"/>
+      <text x="300" y="202" class="txt small muted" style="text-anchor:middle">chr 1</text>
+      <text x="368" y="202" class="txt small muted" style="text-anchor:middle">…</text>
+      <text x="436" y="202" class="txt small muted" style="text-anchor:middle">chr 9</text>
+      <text x="470" y="202" class="txt small muted" style="text-anchor:middle">chr 10</text>
+      <text x="538" y="202" class="txt small muted" style="text-anchor:middle">…</text>
+      <text x="572" y="202" class="txt small muted" style="text-anchor:middle">chr 15</text>
+      <text x="640" y="202" class="txt small muted" style="text-anchor:middle">…</text>
+      <text x="674" y="202" class="txt small muted" style="text-anchor:middle">chr 22</text>
+      <text x="487.0" y="40" class="lbl txt small bold">a microarray: thousands of spots, each with a DNA fragment of one place in the genome; here one column per chromosome</text>
+    </g>
+    <g data-step="7">
+      <path d="M240,110 L275,110" class="path" marker-end="url(#ar-a)"/>
+      <text x="487.0" y="40" class="lbl txt small bold">co-hybridise: at every spot, green and red fragments of the same region compete for the same places</text>
+    </g>
+    <g data-step="8">
+      <circle cx="300" cy="70" r="9" class="spot y"/>
+      <circle cx="300" cy="96" r="9" class="spot y"/>
+      <circle cx="300" cy="122" r="9" class="spot y"/>
+      <circle cx="300" cy="148" r="9" class="spot y"/>
+      <circle cx="300" cy="174" r="9" class="spot y"/>
+      <circle cx="334" cy="70" r="9" class="spot y"/>
+      <circle cx="334" cy="96" r="9" class="spot y"/>
+      <circle cx="334" cy="122" r="9" class="spot y"/>
+      <circle cx="334" cy="148" r="9" class="spot y"/>
+      <circle cx="334" cy="174" r="9" class="spot y"/>
+      <circle cx="368" cy="70" r="9" class="spot y"/>
+      <circle cx="368" cy="96" r="9" class="spot y"/>
+      <circle cx="368" cy="122" r="9" class="spot y"/>
+      <circle cx="368" cy="148" r="9" class="spot y"/>
+      <circle cx="368" cy="174" r="9" class="spot y"/>
+      <circle cx="402" cy="70" r="9" class="spot y"/>
+      <circle cx="402" cy="96" r="9" class="spot y"/>
+      <circle cx="402" cy="122" r="9" class="spot y"/>
+      <circle cx="402" cy="148" r="9" class="spot y"/>
+      <circle cx="402" cy="174" r="9" class="spot y"/>
+      <circle cx="436" cy="70" r="9" class="spot y"/>
+      <circle cx="436" cy="96" r="9" class="spot y"/>
+      <circle cx="436" cy="122" r="9" class="spot y"/>
+      <circle cx="436" cy="148" r="9" class="spot y"/>
+      <circle cx="436" cy="174" r="9" class="spot y"/>
+      <circle cx="504" cy="70" r="9" class="spot y"/>
+      <circle cx="504" cy="96" r="9" class="spot y"/>
+      <circle cx="504" cy="122" r="9" class="spot y"/>
+      <circle cx="504" cy="148" r="9" class="spot y"/>
+      <circle cx="504" cy="174" r="9" class="spot y"/>
+      <circle cx="538" cy="70" r="9" class="spot y"/>
+      <circle cx="538" cy="96" r="9" class="spot y"/>
+      <circle cx="538" cy="122" r="9" class="spot y"/>
+      <circle cx="538" cy="148" r="9" class="spot y"/>
+      <circle cx="538" cy="174" r="9" class="spot y"/>
+      <circle cx="606" cy="70" r="9" class="spot y"/>
+      <circle cx="606" cy="96" r="9" class="spot y"/>
+      <circle cx="606" cy="122" r="9" class="spot y"/>
+      <circle cx="606" cy="148" r="9" class="spot y"/>
+      <circle cx="606" cy="174" r="9" class="spot y"/>
+      <circle cx="640" cy="70" r="9" class="spot y"/>
+      <circle cx="640" cy="96" r="9" class="spot y"/>
+      <circle cx="640" cy="122" r="9" class="spot y"/>
+      <circle cx="640" cy="148" r="9" class="spot y"/>
+      <circle cx="640" cy="174" r="9" class="spot y"/>
+      <text x="487.0" y="40" class="lbl txt small bold">scan: equal amounts of green and red = the spot looks yellow = same copy number as the reference</text>
+    </g>
+    <g data-step="9">
+      <circle cx="572" cy="70" r="9" class="spot r"/>
+      <circle cx="572" cy="96" r="9" class="spot r"/>
+      <circle cx="572" cy="122" r="9" class="spot r"/>
+      <circle cx="572" cy="148" r="9" class="spot r"/>
+      <circle cx="572" cy="174" r="9" class="spot r"/>
+      <circle cx="674" cy="70" r="9" class="spot r"/>
+      <circle cx="674" cy="96" r="9" class="spot r"/>
+      <circle cx="674" cy="122" r="9" class="spot r"/>
+      <circle cx="674" cy="148" r="9" class="spot r"/>
+      <circle cx="674" cy="174" r="9" class="spot r"/>
+      <text x="487.0" y="40" class="lbl txt small bold">red column: the patient has less of this region than the reference = a deletion (here chr 15 and chr 22: one copy)</text>
+    </g>
+    <g data-step="10">
+      <circle cx="470" cy="70" r="9" class="spot g"/>
+      <circle cx="470" cy="96" r="9" class="spot g"/>
+      <circle cx="470" cy="122" r="9" class="spot g"/>
+      <circle cx="470" cy="148" r="9" class="spot g"/>
+      <circle cx="470" cy="174" r="9" class="spot g"/>
+      <text x="487.0" y="40" class="lbl txt small bold">green column: the patient has more of this region = a duplication (here chr 10: three copies)</text>
+    </g>
+    <g data-step="11">
+      <path d="M300,262 L740,262" class="s-base"/>
+      <path d="M300,296 L740,296" class="s-ax"/>
+      <text x="292" y="266" class="txt small muted" style="text-anchor:end">equal</text>
+      <text x="292" y="250" class="txt small muted" style="text-anchor:end">gain</text>
+      <text x="292" y="282" class="txt small muted" style="text-anchor:end">loss</text>
+      <path d="M300,262 L466,262 L470,246 L500,246 L504,262 L568,262 L572,278 L602,278 L606,262 L670,262 L674,278 L704,278 L708,262 L740,262" class="plot"/>
+      <text x="485" y="308" class="txt small muted" style="text-anchor:middle">chr 10</text>
+      <text x="587" y="308" class="txt small muted" style="text-anchor:middle">chr 15</text>
+      <text x="689" y="308" class="txt small muted" style="text-anchor:middle">chr 22</text>
+      <text x="748" y="266" class="lbl txt small muted" style="text-anchor:start">ratio green : red</text>
+      <text x="440" y="40" class="lbl txt small bold">the ratio for every spot, plotted along each chromosome: flat = equal, a step up = gain, a step down = loss</text>
+      <text x="440" y="54" class="lbl txt small muted">genome-wide, quantitative, no prior knowledge needed, and short regions too</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+var steps = [
+ {
+  "t": "1 · Start: the patient's DNA",
+  "en": "aCGH stands for array comparative genomic hybridisation. Begin state: DNA extracted from the patient's cells (for example a tumour). Question: which regions of the genome are deleted or duplicated, anywhere, without knowing in advance where to look?",
+  "nl": "aCGH staat voor array comparative genomic hybridisation. Beginstand: DNA geïsoleerd uit de cellen van de patiënt (bijvoorbeeld een tumor). Vraag: welke regio's van het genoom zijn gedeleteerd of verdubbeld, waar dan ook, zonder vooraf te weten waar te kijken?"
+ },
+ {
+  "t": "2 · A reference",
+  "en": "'Comparative' means the patient's DNA is compared with something: reference DNA from normal cells, which has two copies of every region. Every difference between the two will be a gain or a loss in the patient.",
+  "nl": "'Comparative' betekent dat het DNA van de patiënt met iets vergeleken wordt: referentie-DNA van normale cellen, met twee kopieën van elke regio. Elk verschil tussen beide is een winst of een verlies bij de patiënt."
+ },
+ {
+  "t": "3 · Label the patient DNA green",
+  "en": "The patient DNA is labelled with a fluorophore, a dye that glows under the scanner's laser, here fluorescein, which emits green light. (The syllabus text and figure swap the colours; learn the logic, not the colours.)",
+  "nl": "Het patiënt-DNA wordt gelabeld met een fluorofoor, een kleurstof die gloeit onder de laser van de scanner, hier fluoresceïne, dat groen licht geeft. (De syllabustekst en -figuur wisselen de kleuren om; leer de logica, niet de kleuren.)"
+ },
+ {
+  "t": "4 · Label the reference DNA red",
+  "en": "The reference DNA gets a different dye, here rhodamine, which emits red light. Now the two DNAs can be told apart by colour even when they are mixed.",
+  "nl": "Het referentie-DNA krijgt een andere kleurstof, hier rhodamine, dat rood licht geeft. Nu zijn de twee DNA's aan hun kleur te onderscheiden, zelfs als ze gemengd zijn."
+ },
+ {
+  "t": "5 · Mix",
+  "en": "Equal amounts of green patient DNA and red reference DNA are mixed in one tube. From now on both are treated in exactly the same way, so any difference in the result comes from the DNA itself, not from the handling.",
+  "nl": "Gelijke hoeveelheden groen patiënt-DNA en rood referentie-DNA worden in één buisje gemengd. Vanaf nu worden beide precies hetzelfde behandeld, zodat elk verschil in het resultaat van het DNA zelf komt, niet van de behandeling."
+ },
+ {
+  "t": "6 · The microarray",
+  "en": "A microarray (chip) is a glass slide with thousands of tiny spots in rows and columns. Each spot holds many copies of one known DNA fragment, and together the spots cover the whole genome. In the drawing each column stands for one chromosome, with far fewer spots than in reality.",
+  "nl": "Een microarray (chip) is een glasplaatje met duizenden kleine stipjes in rijen en kolommen. Elke stip bevat veel kopieën van één bekend DNA-fragment, en samen bedekken de stippen het hele genoom. In de tekening staat elke kolom voor één chromosoom, met veel minder stippen dan in werkelijkheid."
+ },
+ {
+  "t": "7 · Co-hybridise",
+  "en": "The mixture is put on the chip. Every fragment pairs with the spot that carries its own sequence (hybridisation). Because green and red fragments of the same region arrive together, they compete for the same spot: the more copies a sample has of that region, the more of that colour ends up there.",
+  "nl": "Het mengsel wordt op de chip gebracht. Elk fragment paart met de stip die zijn eigen sequentie draagt (hybridisatie). Omdat groene en rode fragmenten van dezelfde regio samen aankomen, concurreren ze om dezelfde stip: hoe meer kopieën een monster van die regio heeft, hoe meer van die kleur er terechtkomt."
+ },
+ {
+  "t": "8 · Scan: yellow = equal",
+  "en": "A scanner reads every spot in both colours. Where patient and reference have the same copy number, equal amounts of green and red bind, and the spot looks yellow. Yellow means 'nothing changed here', not 'off'.",
+  "nl": "Een scanner leest elke stip in beide kleuren. Waar patiënt en referentie hetzelfde kopieaantal hebben, bindt evenveel groen als rood, en ziet de stip er geel uit. Geel betekent 'hier is niets veranderd', niet 'uit'."
+ },
+ {
+  "t": "9 · Red = deletion in the patient",
+  "en": "Where the patient has lost a copy of a region, less green DNA arrives and the red reference colour wins. In the syllabus example (a dog cancer cell line) chromosomes 15 and 22 were present in only one copy: red columns.",
+  "nl": "Waar de patiënt een kopie van een regio verloor, komt er minder groen DNA aan en wint de rode referentiekleur. In het syllabusvoorbeeld (een hondenkanker-cellijn) waren chromosomen 15 en 22 maar in één kopie aanwezig: rode kolommen."
+ },
+ {
+  "t": "10 · Green = duplication in the patient",
+  "en": "Where the patient has an extra copy, more green arrives and the patient colour wins. In the example chromosome 10 was present three times: a green column.",
+  "nl": "Waar de patiënt een extra kopie heeft, komt er meer groen aan en wint de patiëntkleur. In het voorbeeld was chromosoom 10 drie keer aanwezig: een groene kolom."
+ },
+ {
+  "t": "11 · The ratio plot",
+  "en": "The scanner turns the colours into numbers: the ratio green to red for every spot, plotted in order along each chromosome. A flat line means equal; a step up is a gain, a step down a loss. Because every spot is measured, the method is genome-wide and quantitative, needs no prior knowledge, and sees short regions that a karyotype or FISH would miss.",
+  "nl": "De scanner zet de kleuren om in getallen: de verhouding groen op rood voor elke stip, uitgezet in volgorde langs elk chromosoom. Een vlakke lijn betekent gelijk; een stap omhoog is winst, een stap omlaag verlies. Omdat elke stip gemeten wordt, is de methode genoombreed en kwantitatief, heeft ze geen voorkennis nodig, en ziet ze korte regio's die een karyotype of FISH zouden missen."
+ }
+];
+Stepper.init('acgh-stepper', steps, 'acgh');
+})();
+</script>
 
 <div class="callout nl"><span class="tag">Samenvatting</span>
 <p><strong>aCGH</strong> (array comparative genomic hybridisation): patiënt-DNA en normaal <strong>referentie-DNA</strong> met twee kleuren labelen (bv. fluoresceïne groen, rhodamine rood), mengen

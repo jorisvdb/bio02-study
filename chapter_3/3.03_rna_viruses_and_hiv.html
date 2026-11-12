@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>3.3 RNA viruses and HIV</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -19,6 +21,12 @@
   .spike { stroke: var(--c-P); stroke-width: 1.8; fill: none; }
   .numbg { fill: var(--accent); }
   .num { font-size: 12px; font-weight: 700; fill: #fff; text-anchor: middle; }
+  .stepper .cellb { fill: var(--bg); }
+  .stepper .nuc { fill: var(--quiz-bg); }
+  .recp { fill: var(--c-N); }
+  .rib { fill: var(--c-Na); }
+  .prot { fill: var(--c-N); }
+  .mem { fill: none; stroke: var(--muted); stroke-width: 3; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -185,6 +193,238 @@ RNA into protein (that is the ribosome).<br>
   </svg>
   <figcaption>Syllabus Figure 3-4, the HIV cycle. Step 4 (integration as a provirus) is the step that is unique to retroviruses; steps 5 to 7 use the host's normal machinery.</figcaption>
 </figure>
+
+<h3>Build it up yourself: HIV, from the first handshake to a permanent resident</h3>
+<p>Press <strong>Next</strong> to follow one HIV particle into a white blood cell and out again. Watch step 5 (RNA becomes DNA) and step 8 (the DNA is built into a chromosome): those two make retroviruses different from all other viruses.</p>
+
+<div class="stepper" id="hiv-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of the HIV replicative cycle">
+    <defs>
+      <marker id="arHv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+    </defs>
+
+    <!-- 1 the white blood cell -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="200" y="50" width="570" height="260" rx="40" class="cellb"/>
+      <ellipse cx="560" cy="240" rx="150" ry="55" class="nuc"/>
+      <path d="M430,240 C460,226 490,254 520,240 S580,226 610,240 S670,254 690,240" class="hostdna"/>
+      <rect x="194" y="118" width="12" height="24" class="recp"/>
+      <circle cx="300" cy="280" r="5" class="rib"/><circle cx="350" cy="296" r="5" class="rib"/><circle cx="380" cy="270" r="5" class="rib"/>
+      <text x="480" y="40" class="txt small muted">a human white blood cell (immune cell)</text>
+      <text x="40" y="40" class="txt small muted left">outside</text>
+      <text x="560" y="214" class="txt small muted">nucleus</text>
+      <text x="560" y="262" class="lbl txt small muted">the cell's own chromosome DNA (grey)</text>
+      <text x="222" y="112" class="lbl txt small left">the HIV receptor, present only</text>
+      <text x="222" y="124" class="lbl txt small left">on certain immune cells</text>
+    </g>
+
+    <!-- 2 HIV particle outside (until 3) -->
+    <g data-step="2" data-until="3">
+      <circle cx="95" cy="130" r="36" class="env"/>
+      <path d="M95,94 L95,84 M121,104 L128,97 M131,130 L141,130 M121,156 L128,163 M95,166 L95,176 M69,156 L62,163 M59,130 L49,130 M69,104 L62,97" class="spike"/>
+      <polygon points="95,108 114,119 114,141 95,152 76,141 76,119" class="cap"/>
+      <path d="M84,124 C88,119 92,129 96,124 S102,120 100,130 M84,136 C88,131 92,141 96,136 S102,132 100,142" class="rna"/>
+      <circle cx="106" cy="127" r="3.5" class="rt"/><circle cx="106" cy="139" r="3.5" class="rt"/>
+    </g>
+    <g data-step="2">
+      <text x="95" y="196" class="lbl txt small">an HIV particle:</text>
+      <text x="95" y="208" class="lbl txt small muted">envelope with glycoprotein spikes,</text>
+      <text x="95" y="220" class="lbl txt small muted">capsid, 2 identical ssRNA genomes (red),</text>
+      <text x="95" y="232" class="lbl txt small muted">2 reverse transcriptase molecules (green)</text>
+    </g>
+
+    <!-- 3 binding and fusion (until 4) -->
+    <g data-step="3" data-until="4">
+      <circle cx="166" cy="130" r="36" class="env"/>
+      <path d="M166,94 L166,84 M140,104 L133,97 M130,130 L120,130 M140,156 L133,163 M166,166 L166,176 M192,156 L199,163 M192,104 L199,97" class="spike"/>
+      <polygon points="166,108 185,119 185,141 166,152 147,141 147,119" class="cap"/>
+      <path d="M155,124 C159,119 163,129 167,124 S173,120 171,130 M155,136 C159,131 163,141 167,136 S173,132 171,142" class="rna"/>
+      <circle cx="177" cy="127" r="3.5" class="rt"/><circle cx="177" cy="139" r="3.5" class="rt"/>
+    </g>
+    <g data-step="3">
+      <text x="95" y="196" class="lbl txt small">1 · entry: a spike binds the</text>
+      <text x="95" y="208" class="lbl txt small">receptor; the envelope fuses</text>
+      <text x="95" y="220" class="lbl txt small">with the cell membrane</text>
+    </g>
+
+    <!-- 4 contents released (until 5) -->
+    <g data-step="4" data-until="5">
+      <polygon points="250,108 269,119 269,141 250,152 231,141 231,119" class="cap" style="opacity:.4"/>
+      <path d="M296,116 C302,108 308,124 314,116 S324,106 322,126 M296,142 C302,134 308,150 314,142 S324,132 322,152" class="rna"/>
+      <circle cx="338" cy="118" r="4" class="rt"/><circle cx="338" cy="144" r="4" class="rt"/>
+    </g>
+    <g data-step="4">
+      <text x="95" y="196" class="lbl txt small">1 · the capsid is inside and</text>
+      <text x="95" y="208" class="lbl txt small">releases its contents: 2 RNA</text>
+      <text x="95" y="220" class="lbl txt small">genomes + 2 reverse transcriptases</text>
+    </g>
+
+    <!-- 5 reverse transcription (until 6) -->
+    <g data-step="5" data-until="6">
+      <path d="M296,116 C302,108 308,124 314,116 S324,106 322,126" class="rna"/>
+      <path d="M294,134 L330,134" class="dna"/>
+      <circle cx="336" cy="134" r="5" class="rt"/>
+    </g>
+    <g data-step="5">
+      <text x="370" y="110" class="lbl txt small bold left">2 · reverse transcription</text>
+      <text x="370" y="124" class="lbl txt small left">reverse transcriptase reads the viral RNA</text>
+      <text x="370" y="136" class="lbl txt small left">and builds a DNA copy: RNA → DNA, read</text>
+      <text x="370" y="148" class="lbl txt small left">"RNA to DNA", the central dogma backwards</text>
+      <text x="370" y="162" class="lbl txt small left muted">the host has no enzyme for this; the virus brought it</text>
+    </g>
+
+    <!-- 6 double-stranded viral DNA (until 7) -->
+    <g data-step="6" data-until="7">
+      <path d="M290,124 L346,124 M290,132 L346,132" class="dna"/>
+    </g>
+    <g data-step="6">
+      <text x="370" y="110" class="lbl txt small bold left">2 · and the second strand</text>
+      <text x="370" y="124" class="lbl txt small left">the same enzyme makes the second DNA strand:</text>
+      <text x="370" y="136" class="lbl txt small left">double-stranded viral DNA, written in the</text>
+      <text x="370" y="148" class="lbl txt small left">same language as the cell's own genes</text>
+    </g>
+
+    <!-- 7 into the nucleus (until 8) -->
+    <g data-step="7" data-until="8">
+      <path d="M520,206 L576,206 M520,214 L576,214" class="dna"/>
+      <path d="M350,140 L500,196" class="path accent" marker-end="url(#arHv)"/>
+    </g>
+    <g data-step="7">
+      <text x="370" y="110" class="lbl txt small bold left">3 · into the nucleus</text>
+      <text x="370" y="124" class="lbl txt small left">the viral DNA travels to the nucleus,</text>
+      <text x="370" y="136" class="lbl txt small left">where the cell's chromosomes are</text>
+    </g>
+
+    <!-- 8 integration: provirus -->
+    <g data-step="8">
+      <path d="M540,238 L600,238" class="dna" style="stroke-width:5"/>
+      <text x="570" y="262" class="txt small">provirus</text>
+      <text x="370" y="110" class="lbl txt small bold left">4 · integration: a provirus</text>
+      <text x="370" y="124" class="lbl txt small left">the viral DNA is cut into a chromosome and</text>
+      <text x="370" y="136" class="lbl txt small left">becomes part of it: the provirus (blue segment)</text>
+      <text x="370" y="148" class="lbl txt small left muted">this step is unique to retroviruses</text>
+    </g>
+
+    <!-- 9 permanent resident -->
+    <g data-step="9">
+      <text x="370" y="110" class="lbl txt small bold left">4 · a permanent resident</text>
+      <text x="370" y="124" class="lbl txt small left">the provirus never leaves the host genome; every</text>
+      <text x="370" y="136" class="lbl txt small left">time the cell divides it is copied with the chromosome</text>
+      <text x="370" y="148" class="lbl txt small left muted">it can stay silent for years, invisible to drugs</text>
+    </g>
+
+    <!-- 10 host transcription -->
+    <g data-step="10">
+      <path d="M470,206 C476,198 482,214 488,206 S498,196 496,216" class="rna"/>
+      <path d="M560,232 L500,200" class="path accent" marker-end="url(#arHv)"/>
+      <path d="M440,150 C446,142 452,158 458,150 S468,140 466,160" class="rna"/>
+      <path d="M470,196 L452,160" class="path accent" marker-end="url(#arHv)"/>
+      <text x="370" y="110" class="lbl txt small bold left">5 · the host transcribes the provirus</text>
+      <text x="370" y="124" class="lbl txt small left">the host's own RNA polymerase reads the provirus</text>
+      <text x="370" y="136" class="lbl txt small left">like any other gene and makes viral RNA (red),</text>
+      <text x="370" y="148" class="lbl txt small left">which leaves the nucleus</text>
+    </g>
+
+    <!-- 11 RNA as mRNA: viral proteins and spikes -->
+    <g data-step="11">
+      <circle cx="420" cy="166" r="5" class="rib"/>
+      <circle cx="640" cy="176" r="4" class="prot"/><circle cx="652" cy="188" r="4" class="prot"/><circle cx="664" cy="174" r="4" class="rt"/>
+      <path d="M660,50 L664,40 M690,50 L690,38 M720,50 L716,40 M770,110 L782,104 M770,150 L782,156" class="spike"/>
+      <text x="370" y="110" class="lbl txt small bold left">6 · use one: as mRNA</text>
+      <text x="370" y="124" class="lbl txt small left">host ribosomes translate the viral RNA into viral</text>
+      <text x="370" y="136" class="lbl txt small left">proteins: capsid proteins, reverse transcriptase, and</text>
+      <text x="370" y="148" class="lbl txt small left">spikes, which go via ER and Golgi to the membrane</text>
+    </g>
+
+    <!-- 12 RNA as genome: new capsids -->
+    <g data-step="12">
+      <polygon points="700,100 719,111 719,133 700,144 681,133 681,111" class="cap"/>
+      <path d="M689,116 C693,111 697,121 701,116 S707,112 705,122 M689,128 C693,123 697,133 701,128 S707,124 705,134" class="rna"/>
+      <circle cx="711" cy="119" r="3.5" class="rt"/><circle cx="711" cy="131" r="3.5" class="rt"/>
+      <text x="370" y="110" class="lbl txt small bold left">6 · use two: as the new genomes</text>
+      <text x="370" y="124" class="lbl txt small left">other copies of the same RNA are packed, two per</text>
+      <text x="370" y="136" class="lbl txt small left">particle, with two reverse transcriptases into new</text>
+      <text x="370" y="148" class="lbl txt small left">capsids near the membrane: step 7, assembly</text>
+    </g>
+
+    <!-- 13 budding -->
+    <g data-step="13">
+      <rect x="764" y="176" width="12" height="70" class="cellb" style="stroke:none"/>
+      <path d="M770,176 C806,176 806,246 770,246" class="mem"/>
+      <path d="M796,190 L806,184 M804,211 L816,211 M796,232 L806,238" class="spike"/>
+      <polygon points="784,196 798,204 798,220 784,228 770,220 770,204" class="cap"/>
+      <path d="M777,210 C781,205 785,215 789,210 S794,204 792,216" class="rna"/>
+      <circle cx="836" cy="290" r="20" class="env"/>
+      <polygon points="836,279 846,285 846,296 836,302 826,296 826,285" class="cap"/>
+      <path d="M836,270 L836,264 M853,279 L858,274 M855,301 L860,306 M817,301 L812,306 M819,279 L814,274" class="spike"/>
+      <text x="370" y="110" class="lbl txt small bold left">7 · budding</text>
+      <text x="370" y="124" class="lbl txt small left">the new capsids push out through the membrane patch</text>
+      <text x="370" y="136" class="lbl txt small left">with viral spikes and pinch off: enveloped HIV</text>
+      <text x="370" y="148" class="lbl txt small left">particles, ready for the next immune cell</text>
+    </g>
+
+    <!-- 14 treated, not cured -->
+    <g data-step="14">
+      <text x="370" y="110" class="lbl txt small bold left">why HIV is treated but not cured</text>
+      <text x="370" y="124" class="lbl txt small left">drugs block new rounds, for instance by blocking reverse</text>
+      <text x="370" y="136" class="lbl txt small left">transcriptase (step 2); but the provirus is part of a human</text>
+      <text x="370" y="148" class="lbl txt small left">chromosome and stays, so the cycle can restart from it</text>
+      <text x="95" y="196" class="lbl txt small muted">without the drugs: AIDS,</text>
+      <text x="95" y="208" class="lbl txt small muted">the immune system fails and</text>
+      <text x="95" y="220" class="lbl txt small muted">other infections take over</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Start: a white blood cell with the HIV receptor",
+      en: "A human white blood cell, one of the cells of the body's defence system. On its surface sits the receptor protein that HIV can bind; only certain immune cells carry it, which is why HIV infects just those. Inside: ribosomes (purple) and, in the nucleus, the cell's own chromosomes (grey DNA).",
+      nl: "Een menselijke witte bloedcel, een van de cellen van het afweersysteem. Op haar oppervlak zit het receptoreiwit dat HIV kan binden; alleen bepaalde immuuncellen dragen het, en daarom infecteert HIV net die. Binnenin: ribosomen (paars) en, in de kern, de eigen chromosomen van de cel (grijs DNA)." },
+    { t: "2 · An HIV particle arrives",
+      en: "HIV, human immunodeficiency virus, is a retrovirus (class VI): an enveloped virus with glycoprotein spikes, a capsid, two identical molecules of single-stranded RNA (red) and two molecules of the enzyme reverse transcriptase (green). It brings the enzyme because no human cell can make DNA from an RNA template.",
+      nl: "HIV, human immunodeficiency virus, is een retrovirus (klasse VI): een virus met envelop en glycoproteïne-stekels, een capside, twee identieke moleculen enkelstrengs RNA (rood) en twee moleculen van het enzym reverse transcriptase (groen). Het brengt het enzym mee omdat geen enkele menselijke cel DNA kan maken van een RNA-mal." },
+    { t: "3 · Step 1: entry by fusion",
+      en: "A spike binds the receptor: the handshake of page 3.2. Then the envelope fuses with the cell membrane, the way two soap bubbles merge, and the capsid slips into the cytoplasm. The envelope itself stays behind as part of the cell membrane.",
+      nl: "Een stekel bindt de receptor: de handdruk van pagina 3.2. Dan fuseert de envelop met het celmembraan, zoals twee zeepbellen samensmelten, en glijdt de capside het cytoplasma in. De envelop zelf blijft achter als deel van het celmembraan." },
+    { t: "4 · Step 1, continued: the capsid opens",
+      en: "Inside the cytoplasm the capsid releases its contents: the two RNA genomes and the two reverse transcriptase molecules. From here on the virus is no longer a particle, only genes and one enzyme loose in the cell.",
+      nl: "In het cytoplasma laat de capside haar inhoud los: de twee RNA-genomen en de twee moleculen reverse transcriptase. Vanaf hier is het virus geen deeltje meer, alleen genen en één enzym los in de cel." },
+    { t: "5 · Step 2: reverse transcription, the central dogma backwards",
+      en: "Reverse transcriptase uses the viral RNA as a template and builds a DNA strand on it (blue). The usual flow of information is DNA to RNA; here it runs RNA to DNA, backwards, which is where the name retro (backward) comes from. Exam question 8: the function of reverse transcriptase is to use viral RNA as a template for DNA synthesis.",
+      nl: "Reverse transcriptase gebruikt het virale RNA als mal en bouwt er een DNA-streng op (blauw). De gewone informatiestroom is van DNA naar RNA; hier loopt ze van RNA naar DNA, achteruit, vandaar de naam retro (achterwaarts). Examenvraag 8: de functie van reverse transcriptase is viraal RNA gebruiken als mal voor DNA-synthese." },
+    { t: "6 · Step 2, continued: double-stranded viral DNA",
+      en: "The same enzyme then makes the second DNA strand, so the result is double-stranded viral DNA. It now looks exactly like a piece of the cell's own genetic material, written in the same language. The RNA template is gone.",
+      nl: "Hetzelfde enzym maakt daarna de tweede DNA-streng, zodat het resultaat dubbelstrengs viraal DNA is. Het ziet er nu precies uit als een stuk eigen genetisch materiaal van de cel, in dezelfde taal geschreven. De RNA-mal is weg." },
+    { t: "7 · Step 3: into the nucleus",
+      en: "The newly made viral DNA enters the cell's nucleus, the compartment where the chromosomes are kept. A DNA virus would stop here and be copied; a retrovirus goes one step further.",
+      nl: "Het pas gemaakte virale DNA gaat de celkern binnen, het compartiment waar de chromosomen bewaard worden. Een DNA-virus zou hier stoppen en gekopieerd worden; een retrovirus gaat nog één stap verder." },
+    { t: "8 · Step 4: integration, the provirus",
+      en: "The viral DNA is integrated into the DNA of a chromosome: cut in and joined, so it becomes part of the chromosome itself. Integrated viral DNA is called a provirus. This step is unique to retroviruses, and it is the answer to exam question 9: retroviruses differ from other viruses because they can transcribe a DNA copy from an RNA template and build it into the host genome.",
+      nl: "Het virale DNA wordt geïntegreerd in het DNA van een chromosoom: ingeknipt en verbonden, zodat het deel wordt van het chromosoom zelf. Geïntegreerd viraal DNA heet een provirus. Deze stap is uniek voor retrovirussen, en het is het antwoord op examenvraag 9: retrovirussen verschillen van andere virussen doordat ze een DNA-kopie van een RNA-mal kunnen maken en die in het genoom van de gastheer inbouwen." },
+    { t: "9 · The provirus never leaves",
+      en: "From now on the provirus is a permanent resident. Every time the cell divides, the chromosome is copied and the provirus with it, into both daughter cells. It can stay silent for years. This is also why HIV cannot be removed from the body: a drug can stop free virus, but not a piece of a human chromosome.",
+      nl: "Vanaf nu is het provirus een vaste bewoner. Telkens de cel deelt, wordt het chromosoom gekopieerd en het provirus mee, naar beide dochtercellen. Het kan jaren stil blijven. Daarom kan HIV ook niet uit het lichaam verwijderd worden: een geneesmiddel kan vrij virus stoppen, maar geen stuk van een menselijk chromosoom." },
+    { t: "10 · Step 5: the host transcribes the provirus",
+      en: "When the provirus is switched on, the host's own RNA polymerase transcribes it into RNA, exactly as it transcribes the cell's own genes. The cell cannot tell the difference. The viral RNA (red) leaves the nucleus for the cytoplasm.",
+      nl: "Als het provirus aangezet wordt, schrijft het eigen RNA-polymerase van de gastheer het over naar RNA, precies zoals het de eigen genen van de cel overschrijft. De cel merkt het verschil niet. Het virale RNA (rood) verlaat de kern naar het cytoplasma." },
+    { t: "11 · Step 6, use one: the RNA as mRNA",
+      en: "Some of that RNA works as messenger RNA. Host ribosomes translate it into viral proteins: capsid proteins (blue), new reverse transcriptase (green), and the envelope glycoproteins, which travel through the ER and the Golgi to the cell membrane and sit there as spikes (orange), as on page 3.2.",
+      nl: "Een deel van dat RNA werkt als boodschapper-RNA. Ribosomen van de gastheer vertalen het naar virale eiwitten: capside-eiwitten (blauw), nieuw reverse transcriptase (groen), en de envelop-glycoproteïnen, die via het ER en het Golgi naar het celmembraan gaan en daar als stekels zitten (oranje), zoals op pagina 3.2." },
+    { t: "12 · Step 6, use two: the RNA as new genomes, and assembly",
+      en: "Other copies of the very same RNA are not translated but packed: two RNA molecules and two reverse transcriptase molecules go into each new capsid. One RNA, two jobs. The new capsids gather near the membrane, under the patch with the viral spikes.",
+      nl: "Andere kopieën van precies hetzelfde RNA worden niet vertaald maar ingepakt: twee RNA-moleculen en twee moleculen reverse transcriptase gaan in elke nieuwe capside. Eén RNA, twee taken. De nieuwe capsiden verzamelen zich bij het membraan, onder het stuk met de virale stekels." },
+    { t: "13 · Step 7: budding",
+      en: "Each new capsid pushes out through the membrane patch that carries the spikes and pinches off, wrapped in host membrane: a complete enveloped HIV particle, just like the one that came in. The cell survives this for a while and keeps producing. The new particles infect the next immune cells.",
+      nl: "Elke nieuwe capside duwt zich door het membraanstuk met de stekels naar buiten en snoert af, gewikkeld in gastheermembraan: een volledig HIV-deeltje met envelop, net als het deeltje dat binnenkwam. De cel overleeft dit een tijdje en blijft produceren. De nieuwe deeltjes infecteren de volgende immuuncellen." },
+    { t: "14 · Why HIV is treated but not cured",
+      en: "Drugs can block the cycle, for instance by blocking reverse transcriptase at step 2, so no new proviruses are made and the amount of virus drops. But the proviruses already built into chromosomes stay, and the cycle can restart from them when the drugs stop. Without treatment the infected immune cells die off: AIDS, acquired immunodeficiency syndrome, in which the immune system fails and other infections take over.",
+      nl: "Geneesmiddelen kunnen de cyclus blokkeren, bijvoorbeeld door reverse transcriptase te remmen bij stap 2, zodat er geen nieuwe provirussen gemaakt worden en de hoeveelheid virus daalt. Maar de provirussen die al in chromosomen ingebouwd zijn blijven, en de cyclus kan daaruit herstarten als de medicatie stopt. Zonder behandeling sterven de geïnfecteerde immuuncellen af: AIDS, acquired immunodeficiency syndrome, waarbij het immuunsysteem faalt en andere infecties de overhand nemen." }
+  ];
+  Stepper.init('hiv-stepper', steps, 'hiv');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Why HIV cannot be removed from the body</span>
 <p>The provirus is part of a human chromosome and is copied with it; it is invisible to drugs that attack free virus. That is why HIV infection is treated but not cured: the drugs stop new rounds

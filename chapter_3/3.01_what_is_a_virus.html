@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>3.1 What is a virus</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -15,6 +17,10 @@
   .spikehead { fill: var(--c-P); }
   .tail { fill: var(--panel); stroke: var(--c-N); stroke-width: 1.4; }
   .fibre { stroke: var(--c-N); stroke-width: 1.4; fill: none; }
+  .enz { fill: var(--c-Cl); }
+  .cellb { fill: var(--bg); stroke: var(--muted); stroke-width: 2; }
+  .rib { fill: var(--c-Na); }
+  .hdna { stroke: var(--muted); stroke-width: 3; fill: none; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -174,6 +180,167 @@ as spikes. Those spikes are the "keys" with which the virus recognises a host ce
   </svg>
   <figcaption>Syllabus Figure 3-1 in schematic form. Blue = capsid (protein coat), red = the genome inside (DNA or RNA), orange = envelope with glycoprotein spikes. The four shapes are the four examples the syllabus gives: TMV, adenovirus, enveloped animal viruses, and a phage.</figcaption>
 </figure>
+
+<h3>Build it up yourself: a virus from nothing, and why it is not a cell</h3>
+<p>Press <strong>Next</strong> to add one part at a time: first the genome, then the coat, then the envelope, and at the end a cell next to it for comparison.</p>
+
+<div class="stepper" id="virus-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of a virus particle">
+    <!-- 1 empty -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <text x="250" y="44" class="lbl txt small muted">we build a virus here, in the middle of nothing</text>
+      <text x="250" y="314" class="lbl txt small muted">size at the end: 20 to 1500 nm (a ribosome is 25 nm, a bacterium 1000 nm)</text>
+    </g>
+
+    <!-- 2 genome -->
+    <g data-step="2">
+      <path d="M212,172 C224,156 236,188 248,172 S272,156 284,172" class="gen"/>
+      <text x="250" y="44" class="lbl txt small bold">1 · the genome: a molecule of DNA or RNA</text>
+      <text x="250" y="58" class="lbl txt small muted">double- or single-stranded, usually one linear or circular molecule, 3 to 2000 genes</text>
+      <text x="250" y="314" class="lbl txt small muted">this decides the name: DNA virus or RNA virus</text>
+    </g>
+
+    <!-- 3 loose capsomeres (until 4) -->
+    <g data-step="3" data-until="4">
+      <polygon points="150,100 160,106 160,118 150,124 140,118 140,106" class="cap"/>
+      <polygon points="350,110 360,116 360,128 350,134 340,128 340,116" class="cap"/>
+      <polygon points="170,240 180,246 180,258 170,264 160,258 160,246" class="cap"/>
+      <polygon points="330,230 340,236 340,248 330,254 320,248 320,236" class="cap"/>
+      <polygon points="250,100 260,106 260,118 250,124 240,118 240,106" class="cap"/>
+      <polygon points="250,250 260,256 260,268 250,274 240,268 240,256" class="cap"/>
+    </g>
+    <g data-step="3">
+      <text x="250" y="44" class="lbl txt small bold">2 · capsomeres: the protein building blocks of the coat</text>
+      <text x="250" y="58" class="lbl txt small muted">many copies, but of only a few kinds of protein (TMV: more than 1000 copies of one protein)</text>
+    </g>
+
+    <!-- 4 icosahedral capsid -->
+    <g data-step="4">
+      <polygon points="250,118 300,147 300,201 250,230 200,201 200,147" class="cap"/>
+      <path d="M250,118 L250,230 M200,147 L300,201 M300,147 L200,201" class="fibre" style="opacity:.5"/>
+      <path d="M212,172 C224,156 236,188 248,172 S272,156 284,172" class="gen"/>
+      <text x="250" y="44" class="lbl txt small bold">3 · the capsomeres assemble into the capsid, the protein coat</text>
+      <text x="250" y="58" class="lbl txt small muted">this shape is icosahedral: a closed shell with 20 triangular faces (adenovirus: 252 protein molecules)</text>
+      <text x="250" y="246" class="lbl txt small muted">icosahedral capsid</text>
+    </g>
+
+    <!-- 5 helical alternative -->
+    <g data-step="5">
+      <rect x="40" y="140" width="110" height="30" rx="15" class="cap"/>
+      <path d="M48,155 C56,143 64,167 72,155 S88,143 96,155 S112,167 120,155 S136,143 144,155" class="gen"/>
+      <path d="M58,142 L58,168 M74,142 L74,168 M90,142 L90,168 M106,142 L106,168 M122,142 L122,168 M138,142 L138,168" class="fibre" style="opacity:.5"/>
+      <text x="95" y="188" class="txt small muted">helical capsid</text>
+      <text x="250" y="44" class="lbl txt small bold">4 · the other shape: a helical capsid, a rod</text>
+      <text x="250" y="58" class="lbl txt small muted">the subunits sit in a spiral around the genome (tobacco mosaic virus, TMV)</text>
+    </g>
+
+    <!-- 6 enzyme inside -->
+    <g data-step="6">
+      <circle cx="268" cy="196" r="6" class="enz"/>
+      <text x="250" y="44" class="lbl txt small bold">5 · sometimes a viral enzyme travels inside the capsid</text>
+      <text x="250" y="58" class="lbl txt small muted">for example a polymerase (an enzyme that copies nucleic acid); HIV brings reverse transcriptase (page 3.3)</text>
+    </g>
+
+    <!-- 7 complete without envelope -->
+    <g data-step="7">
+      <text x="250" y="44" class="lbl txt small bold">6 · genome + capsid = a complete virus</text>
+      <text x="250" y="58" class="lbl txt small muted">adenovirus and TMV stop here: no envelope</text>
+      <text x="250" y="314" class="lbl txt small muted">the capsid protects the genome and is what the virus uses to get into a cell</text>
+    </g>
+
+    <!-- 8 envelope -->
+    <g data-step="8">
+      <circle cx="250" cy="174" r="80" class="env"/>
+      <text x="250" y="44" class="lbl txt small bold">7 · some viruses add an envelope: a piece of host membrane</text>
+      <text x="250" y="58" class="lbl txt small muted">host phospholipids and host proteins, taken when the virus leaves its last host cell (page 3.2)</text>
+      <text x="250" y="292" class="txt small muted">envelope</text>
+    </g>
+
+    <!-- 9 spikes -->
+    <g data-step="9">
+      <path d="M250,94 L250,80 M307,117 L317,107 M330,174 L344,174 M307,231 L317,241 M250,254 L250,268 M193,231 L183,241 M170,174 L156,174 M193,117 L183,107" class="spike"/>
+      <circle cx="250" cy="78" r="3.5" class="spikehead"/><circle cx="319" cy="105" r="3.5" class="spikehead"/><circle cx="346" cy="174" r="3.5" class="spikehead"/><circle cx="319" cy="243" r="3.5" class="spikehead"/>
+      <circle cx="250" cy="270" r="3.5" class="spikehead"/><circle cx="181" cy="243" r="3.5" class="spikehead"/><circle cx="154" cy="174" r="3.5" class="spikehead"/><circle cx="181" cy="105" r="3.5" class="spikehead"/>
+      <text x="250" y="44" class="lbl txt small bold">8 · glycoprotein spikes in the envelope: the keys</text>
+      <text x="250" y="58" class="lbl txt small muted">viral proteins with sugar chains; they fit the receptors of a host cell (influenza, coronavirus, HIV)</text>
+    </g>
+
+    <!-- 10 the cell for comparison -->
+    <g data-step="10">
+      <rect x="500" y="80" width="340" height="220" rx="60" class="cellb"/>
+      <circle cx="560" cy="130" r="4" class="rib"/><circle cx="600" cy="250" r="4" class="rib"/><circle cx="760" cy="120" r="4" class="rib"/><circle cx="780" cy="240" r="4" class="rib"/><circle cx="650" cy="110" r="4" class="rib"/><circle cx="700" cy="270" r="4" class="rib"/>
+      <path d="M600,190 C640,170 680,210 720,190 S760,170 790,190" class="hdna"/>
+      <text x="670" y="150" class="txt small muted">a cell (not to scale: 10 to 1000 times bigger)</text>
+      <text x="670" y="214" class="txt small muted">ribosomes · enzymes · its own membrane</text>
+      <text x="670" y="228" class="txt small muted">makes energy · grows · divides by itself</text>
+      <text x="670" y="60" class="lbl txt small bold">9 · compare with a cell</text>
+      <text x="670" y="308" class="lbl txt small muted">the virus has none of this: no ribosomes,</text><text x="670" y="319" class="lbl txt small muted">no metabolism, no membrane of its own</text>
+    </g>
+
+    <!-- 11 alive? -->
+    <g data-step="11">
+      <text x="250" y="44" class="lbl txt small bold">10 · so is it alive?</text>
+      <text x="250" y="58" class="lbl txt small muted">outside a cell: "a packaged set of genes in transit"; it cannot reproduce or do any chemistry alone</text>
+      <text x="250" y="314" class="lbl txt small muted">most biologists: not truly alive, a grey area between chemistry and life</text>
+    </g>
+
+    <!-- 12 phage -->
+    <g data-step="12">
+      <polygon points="430,96 455,110 455,140 430,154 405,140 405,110" class="cap"/>
+      <path d="M418,122 C424,114 430,134 436,126 S446,116 444,136" class="gen"/>
+      <rect x="425" y="154" width="10" height="40" class="tail"/>
+      <rect x="419" y="194" width="22" height="7" class="tail"/>
+      <path d="M421,201 L402,224 M426,201 L416,228 M434,201 L444,228 M439,201 L458,224" class="fibre"/>
+      <text x="430" y="248" class="txt small muted">phage</text>
+      <text x="250" y="44" class="lbl txt small bold">11 · the most complex capsid: a bacteriophage</text>
+      <text x="250" y="58" class="lbl txt small muted">icosahedral head + protein tail + fibres; it injects its DNA into a bacterium</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Start: nothing but a very small particle",
+      en: "We build a virus from its parts. Remember the scale: the finished particle will measure 20 to 1500 nm (a nanometre is one millionth of a millimetre). The smallest viruses are smaller than a ribosome, the machine that builds proteins. There is no cell here, only a particle.",
+      nl: "We bouwen een virus op uit zijn onderdelen. Onthoud de schaal: het afgewerkte deeltje meet 20 tot 1500 nm (een nanometer is een miljoenste millimeter). De kleinste virussen zijn kleiner dan een ribosoom, de machine die eiwitten maakt. Er is hier geen cel, alleen een deeltje." },
+    { t: "2 · The genome: the genes of the virus",
+      en: "First the only thing a virus really brings: its genome, all its genes on one molecule of nucleic acid (the family name of DNA and RNA). Unlike our cells, a virus may use double-stranded DNA, single-stranded DNA, double-stranded RNA or single-stranded RNA. That choice names the virus: a DNA virus or an RNA virus. Usually one linear or circular molecule, with as few as 3 genes or as many as 2000.",
+      nl: "Eerst het enige wat een virus echt meebrengt: zijn genoom, al zijn genen op één molecule nucleïnezuur (de familienaam van DNA en RNA). Anders dan onze cellen kan een virus dubbelstrengs DNA, enkelstrengs DNA, dubbelstrengs RNA of enkelstrengs RNA gebruiken. Die keuze geeft het virus zijn naam: DNA-virus of RNA-virus. Meestal één lineaire of ronde molecule, met 3 tot 2000 genen." },
+    { t: "3 · Capsomeres: the building blocks of the coat",
+      en: "The genome codes for a few kinds of protein. One of them is the coat protein, made in many copies. Each copy is a capsomere (capsomeer), a subunit of the coat. Tobacco mosaic virus uses more than 1000 copies of a single protein. Few kinds, many copies: that is what keeps a virus genome small.",
+      nl: "Het genoom codeert voor enkele soorten eiwit. Een daarvan is het jas-eiwit, in vele kopieën gemaakt. Elke kopie is een capsomeer, een bouwsteen van de jas. Het tabaksmozaïekvirus gebruikt meer dan 1000 kopieën van één eiwit. Weinig soorten, veel kopieën: zo blijft een virusgenoom klein." },
+    { t: "4 · The capsid: the capsomeres click together",
+      en: "The capsomeres assemble by themselves into a closed shell around the genome: the capsid (capside), the protein coat. This one is icosahedral: an icosahedron is a solid with 20 triangular faces (eikosi = twenty). Adenoviruses, which infect our airways, build theirs from 252 identical protein molecules.",
+      nl: "De capsomeren klikken vanzelf in elkaar tot een gesloten schil rond het genoom: de capside, de eiwitjas. Deze is icosaëdrisch: een icosaëder is een lichaam met 20 driehoekige vlakken (eikosi = twintig). Adenovirussen, die onze luchtwegen infecteren, bouwen de hunne uit 252 identieke eiwitmoleculen." },
+    { t: "5 · The other shape: a helical rod",
+      en: "Not every capsid is a ball. In a helical virus the subunits sit in a spiral (a helix) around the genome, giving a rigid rod. The classic example is tobacco mosaic virus, a plant virus. Ball or rod, the job is the same: protect the genome and carry it to the next cell.",
+      nl: "Niet elke capside is een bol. Bij een helicaal virus zitten de subeenheden in een spiraal (helix) rond het genoom, wat een stijve staaf geeft. Het klassieke voorbeeld is het tabaksmozaïekvirus, een plantenvirus. Bol of staaf, de taak is dezelfde: het genoom beschermen en naar de volgende cel brengen." },
+    { t: "6 · A passenger: sometimes a viral enzyme",
+      en: "Some viruses pack one or a few enzymes inside the capsid, next to the genome. Typically a polymerase: an enzyme that copies nucleic acid. The virus brings it because the host cell has no such enzyme, for example an enzyme that copies RNA. HIV brings reverse transcriptase this way (page 3.3).",
+      nl: "Sommige virussen stoppen één of enkele enzymen in de capside, naast het genoom. Typisch een polymerase: een enzym dat nucleïnezuur kopieert. Het virus brengt het mee omdat de gastheercel zo'n enzym niet heeft, bijvoorbeeld een enzym dat RNA kopieert. HIV brengt op die manier reverse transcriptase mee (pagina 3.3)." },
+    { t: "7 · Genome plus capsid: already a complete virus",
+      en: "Every virus has at least these two parts: a genome in a capsid. For many viruses, such as adenovirus and tobacco mosaic virus, this is the whole particle. The capsid is what touches the host cell first, so it is the capsid that recognises the right cell for a virus without envelope.",
+      nl: "Elk virus heeft minstens deze twee delen: een genoom in een capside. Voor veel virussen, zoals adenovirus en tabaksmozaïekvirus, is dit het hele deeltje. De capside raakt de gastheercel als eerste, dus bij een virus zonder envelop is het de capside die de juiste cel herkent." },
+    { t: "8 · The envelope: a borrowed membrane",
+      en: "Some viruses have a third layer: a membranous envelope (envelop = omhulsel) around the capsid. The virus does not make it from scratch. It is a piece of the membrane of the last host cell, with host phospholipids and host proteins, taken along when the virus left that cell (page 3.2 shows how). Influenza viruses and coronaviruses have one.",
+      nl: "Sommige virussen hebben een derde laag: een membraan-envelop (omhulsel) rond de capside. Het virus maakt die niet zelf. Het is een stuk membraan van de vorige gastheercel, met fosfolipiden en eiwitten van de gastheer, meegenomen toen het virus die cel verliet (pagina 3.2 toont hoe). Influenzavirussen en coronavirussen hebben er een." },
+    { t: "9 · Spikes: the keys of the virus",
+      en: "Planted in the envelope are viral glycoproteins: proteins with sugar chains attached, made from viral genes. They stick out as spikes. These spikes are the keys with which the virus recognises a host cell: they fit specific receptor proteins on the cell surface. Without a fitting receptor the virus cannot enter.",
+      nl: "In de envelop zitten virale glycoproteïnen: eiwitten met suikerketens eraan, gemaakt van virale genen. Ze steken uit als stekels (spikes). Die stekels zijn de sleutels waarmee het virus een gastheercel herkent: ze passen op specifieke receptoreiwitten op het celoppervlak. Zonder passende receptor kan het virus niet binnen." },
+    { t: "10 · Next to a cell: what the virus does not have",
+      en: "Put a cell beside it (in reality 10 to 1000 times bigger). A cell has ribosomes, enzymes for making energy and building blocks (its metabolism), and a membrane it made itself; it grows and divides on its own. The virus has none of this. It is only genes in a coat, so it can do nothing until it is inside a cell: an obligate intracellular parasite (page 3.2).",
+      nl: "Zet er een cel naast (in werkelijkheid 10 tot 1000 keer groter). Een cel heeft ribosomen, enzymen om energie en bouwstenen te maken (haar stofwisseling), en een membraan dat ze zelf gemaakt heeft; ze groeit en deelt uit zichzelf. Het virus heeft niets van dat alles. Het is alleen genen in een jas, dus het kan niets tot het in een cel zit: een verplichte intracellulaire parasiet (pagina 3.2)." },
+    { t: "11 · Is a virus alive?",
+      en: "Outside a cell a virus is a packaged set of genes in transit from one host cell to another. It cannot reproduce and performs no chemistry of its own. Most biologists therefore say viruses are not truly alive: they sit in a grey area between living things and chemicals. The Latin word virus simply means poison.",
+      nl: "Buiten een cel is een virus een verpakt pakket genen onderweg van de ene gastheercel naar de andere. Het kan zich niet voortplanten en doet geen eigen chemie. De meeste biologen zeggen daarom dat virussen niet echt leven: ze zitten in een grijze zone tussen levende wezens en chemische stoffen. Het Latijnse woord virus betekent gewoon gif." },
+    { t: "12 · The most complex coat: a bacteriophage",
+      en: "Finally the fourth shape from the syllabus. Bacteriophages, or phages (phagein = to eat), are the viruses of bacteria. They have the most complex capsids: an icosahedral head holding the DNA, a protein tail, and tail fibres that grip the bacterium. The tail works like a syringe and injects the DNA into the cell; the empty coat stays outside.",
+      nl: "Tot slot de vierde vorm uit de syllabus. Bacteriofagen, of fagen (phagein = eten), zijn de virussen van bacteriën. Ze hebben de ingewikkeldste capsiden: een icosaëdrische kop met het DNA, een eiwitstaart en staartvezels die de bacterie vastgrijpen. De staart werkt als een spuit en injecteert het DNA in de cel; de lege jas blijft buiten." }
+  ];
+  Stepper.init('virus-stepper', steps, 'virus');
+})();
+</script>
 
 <div class="callout key"><span class="tag">Must remember</span>
 <p>Every virus = <strong>genome + capsid</strong>. Some viruses = genome + capsid + <strong>envelope</strong>. The envelope is <em>not</em> made by the virus from scratch: it is a piece of

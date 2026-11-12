@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2.5 Oncogenes and tumor suppressor genes</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/stepper.css">
+<script src="assets/stepper.js"></script>
 <script src="assets/draw.js" defer></script>
 <script src="assets/quiz.js" defer></script>
 <style>
@@ -23,6 +25,12 @@
   .rec { fill: var(--c-N); }
   .ligand { fill: var(--c-S); }
   .ph { fill: var(--c-O); }
+  .nucl { fill: var(--quiz-bg); stroke: var(--quiz-border); stroke-width: 1.2; }
+  .dnaout { stroke: var(--c-N); stroke-width: 7; fill: none; stroke-linecap: round; opacity: .45; }
+  .dnamem { stroke: var(--muted); stroke-width: 7; fill: none; stroke-linecap: round; }
+  .cutline { stroke: var(--c-O); stroke-width: 2; fill: none; }
+  .stepper:focus { outline: 2px solid var(--accent); }
+  .stepbtn:disabled { opacity: .4; cursor: default; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
@@ -241,6 +249,200 @@ even when nobody presses the button</strong>. This is accident type 1 (a deletio
   </svg>
   <figcaption>Syllabus Figure 2-21. Blue = receptor, yellow = EGF, red dots = phosphate groups on the inside part (the on-signal). The truncated receptor (truncated = cut short) signals without EGF.</figcaption>
 </figure>
+
+<h3>Build it up yourself: the EGF receptor, from doorbell to faulty doorbell</h3>
+<p>Press <strong>Next</strong> to add one piece at a time. Steps 1 to 9 show how the normal receptor works: a doorbell that only rings when EGF presses the button. Steps 10 to 14 show the glioblastoma mutation: a doorbell that rings on its own.</p>
+
+<div class="stepper" id="egf-stepper">
+  <svg class="molsvg" viewBox="0 0 880 340" width="880" height="340" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step build-up of the EGF receptor and its oncogenic mutation">
+    <defs>
+      <marker id="arE1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arE2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+
+    <!-- 1 the cell -->
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="300" rx="14" class="ct"/>
+      <rect x="20" y="118" width="840" height="20" class="mem"/>
+      <text x="30" y="40" class="txt small muted left">outside the cell</text>
+      <text x="30" y="158" class="txt small muted left">inside the cell</text>
+      <ellipse cx="440" cy="272" rx="210" ry="44" class="nucl"/>
+      <text x="246" y="262" class="lbl txt small muted left">nucleus</text>
+      <text x="440" y="40" class="lbl txt small">a cell with its membrane: a wall between outside and inside</text>
+      <text x="440" y="200" class="lbl txt small">the cell may only divide when it is told to from outside</text>
+    </g>
+
+    <!-- 2 two receptors, apart (shown until step 6) -->
+    <g data-step="2" data-until="6">
+      <rect x="223" y="60" width="14" height="58" rx="4" class="rec"/><rect x="223" y="138" width="14" height="50" rx="4" class="rec"/>
+      <rect x="323" y="60" width="14" height="58" rx="4" class="rec"/><rect x="323" y="138" width="14" height="50" rx="4" class="rec"/>
+    </g>
+    <g data-step="2">
+      <text x="40" y="80" class="lbl txt small left">outside part = the button</text>
+      <text x="40" y="92" class="lbl txt small left muted">(extracellular domain: catches EGF)</text>
+      <text x="40" y="182" class="lbl txt small left">inside part = the bell</text>
+      <text x="40" y="194" class="lbl txt small left muted">(intracellular domain: a kinase)</text>
+      <text x="440" y="40" class="lbl txt small">the EGF receptor: one protein threaded through the membrane (two copies drawn)</text>
+    </g>
+
+    <!-- 3 the gene -->
+    <g data-step="3">
+      <path d="M300,284 L340,284" class="reg"/><path d="M346,284 L446,284" class="dnaout"/><path d="M452,284 L472,284" class="dnamem"/><path d="M478,284 L580,284" class="dnab"/>
+      <text x="320" y="302" class="txt small muted">regulatory</text><text x="396" y="302" class="txt small muted">codes outside part</text><text x="462" y="302" class="txt small muted">membr.</text><text x="529" y="302" class="txt small muted">codes inside part</text>
+      <text x="440" y="258" class="lbl txt small bold">the gene for the receptor (a proto-oncogene) lies in the nucleus</text>
+    </g>
+
+    <!-- 4 EGF arrives -->
+    <g data-step="4" data-until="5">
+      <circle cx="280" cy="44" r="9" class="ligand"/>
+      <path d="M560,34 L300,42" class="path accent" marker-end="url(#arE1)"/>
+      <text x="575" y="32" class="lbl txt small left">EGF, a small signal protein</text><text x="575" y="44" class="lbl txt small left">from neighbouring cells: "please divide"</text>
+    </g>
+
+    <!-- 5 EGF binds -->
+    <g data-step="5" data-until="6">
+      <circle cx="230" cy="50" r="9" class="ligand"/><circle cx="330" cy="50" r="9" class="ligand"/>
+    </g>
+    <g data-step="5">
+      <text x="440" y="40" class="lbl txt small">EGF fits on the outside part like a key in a lock: the button is pressed</text>
+    </g>
+
+    <!-- 6 receptors pair up (shown until step 9) -->
+    <g data-step="6" data-until="9">
+      <rect x="261" y="60" width="14" height="58" rx="4" class="rec"/><rect x="261" y="138" width="14" height="50" rx="4" class="rec"/>
+      <rect x="285" y="60" width="14" height="58" rx="4" class="rec"/><rect x="285" y="138" width="14" height="50" rx="4" class="rec"/>
+      <circle cx="268" cy="50" r="9" class="ligand"/><circle cx="292" cy="50" r="9" class="ligand"/>
+    </g>
+    <g data-step="6">
+      <text x="440" y="40" class="lbl txt small">with EGF on them, two receptors slide together and pair up: their inside parts now touch</text>
+    </g>
+
+    <!-- 7 phosphorylation -->
+    <g data-step="7" data-until="9">
+      <circle cx="254" cy="150" r="5" class="ph"/><circle cx="254" cy="166" r="5" class="ph"/><circle cx="306" cy="150" r="5" class="ph"/><circle cx="306" cy="166" r="5" class="ph"/>
+    </g>
+    <g data-step="7">
+      <text x="130" y="200" class="lbl txt small left">P = phosphate group: the inside parts</text>
+      <text x="130" y="212" class="lbl txt small left">phosphorylate each other = the bell rings</text>
+    </g>
+
+    <!-- 8 signal to the nucleus -->
+    <g data-step="8" data-until="9">
+      <path d="M284,196 L400,232" class="path accent" marker-end="url(#arE1)"/>
+      <text x="440" y="258" class="txt small bold" style="fill:var(--accent)">DIVIDE (once)</text>
+    </g>
+    <g data-step="8">
+      <text x="330" y="222" class="lbl txt small left">relay proteins (Ras and others, page 2.7)</text>
+      <text x="330" y="234" class="lbl txt small left">carry the signal to the nucleus</text>
+    </g>
+
+    <!-- 9 EGF gone, receptors apart again -->
+    <g data-step="9">
+      <rect x="223" y="60" width="14" height="58" rx="4" class="rec"/><rect x="223" y="138" width="14" height="50" rx="4" class="rec"/>
+      <rect x="323" y="60" width="14" height="58" rx="4" class="rec"/><rect x="323" y="138" width="14" height="50" rx="4" class="rec"/>
+      <text x="440" y="40" class="lbl txt small">EGF is gone: the receptors separate, the phosphates are removed, the bell is silent</text>
+      <text x="440" y="258" class="lbl txt small muted">no signal: the cell waits</text>
+    </g>
+
+    <!-- 10 the deletion -->
+    <g data-step="10">
+      <rect x="378" y="278" width="34" height="12" class="nucl" style="stroke:none"/>
+      <text x="395" y="289" class="txt small bold" style="fill:var(--c-O)">✕</text>
+      <text x="440" y="258" class="lbl txt small bold" style="fill:var(--c-O)">a deletion removes a piece of the DNA that codes for the outside part</text>
+      <text x="560" y="165" class="lbl txt small left">accident type 1 of Figure 2-20:</text>
+      <text x="560" y="177" class="lbl txt small left">a small change inside the coding sequence</text>
+    </g>
+
+    <!-- 11 truncated receptors, apart (until 12) -->
+    <g data-step="11" data-until="12">
+      <rect x="593" y="92" width="14" height="26" rx="4" class="rec"/><rect x="593" y="138" width="14" height="50" rx="4" class="rec"/>
+      <rect x="693" y="92" width="14" height="26" rx="4" class="rec"/><rect x="693" y="138" width="14" height="50" rx="4" class="rec"/>
+      <path d="M590,88 L610,88 M690,88 L710,88" class="cutline"/>
+    </g>
+    <g data-step="11">
+      <text x="650" y="60" class="lbl txt small">receptors made from the mutated gene: the outside part is cut short</text>
+      <text x="650" y="74" class="lbl txt small muted">(truncated): there is no button left for EGF to press</text>
+    </g>
+
+    <!-- 12 they pair and phosphorylate on their own -->
+    <g data-step="12">
+      <rect x="631" y="92" width="14" height="26" rx="4" class="rec"/><rect x="631" y="138" width="14" height="50" rx="4" class="rec"/>
+      <rect x="655" y="92" width="14" height="26" rx="4" class="rec"/><rect x="655" y="138" width="14" height="50" rx="4" class="rec"/>
+      <path d="M628,88 L648,88 M652,88 L672,88" class="cutline"/>
+      <circle cx="624" cy="150" r="5" class="ph"/><circle cx="624" cy="166" r="5" class="ph"/><circle cx="676" cy="150" r="5" class="ph"/><circle cx="676" cy="166" r="5" class="ph"/>
+      <text x="650" y="60" class="lbl txt small">without the outside part nothing keeps them apart: they pair up by themselves</text>
+      <text x="650" y="74" class="lbl txt small">and phosphorylate each other: the bell rings with nobody at the button</text>
+    </g>
+
+    <!-- 13 permanent signal -->
+    <g data-step="13">
+      <path d="M646,196 L500,232" class="sigT" marker-end="url(#arE2)"/>
+      <text x="440" y="258" class="txt small bold" style="fill:var(--c-O)">DIVIDE, DIVIDE, DIVIDE ...</text>
+      <text x="700" y="200" class="lbl txt small left">no EGF needed, never switched off:</text>
+      <text x="700" y="212" class="lbl txt small left">a hyperactive protein = an oncogene</text>
+      <text x="700" y="224" class="lbl txt small left muted">(the cell divides without permission)</text>
+    </g>
+
+    <!-- 14 wrap-up -->
+    <g data-step="14">
+      <text x="130" y="200" class="lbl txt small left">the normal receptors from the other</text>
+      <text x="130" y="212" class="lbl txt small left">gene copy are still here and silent,</text>
+      <text x="130" y="224" class="lbl txt small left">but that does not help: one mutated</text>
+      <text x="130" y="236" class="lbl txt small left">copy is enough (dominant)</text>
+      <text x="650" y="60" class="lbl txt small bold">result: glioblastoma, the most common brain tumor</text>
+      <text x="650" y="74" class="lbl txt small muted">deletion in the coding sequence → hyperactive protein (type 1)</text>
+    </g>
+  </svg>
+
+</div>
+
+<script>
+var steps = [
+  { t: "1 · A cell that waits for permission",
+    en: "One cell, with its membrane as the wall between outside and inside, and its nucleus with the DNA at the bottom. The rule of a multicellular body: a cell divides only when other cells tell it to. The message has to come from outside, so the cell needs something in its wall that can receive it.",
+    nl: "Eén cel, met haar membraan als muur tussen buiten en binnen, en onderaan de kern met het DNA. De regel in een meercellig lichaam: een cel deelt alleen als andere cellen dat zeggen. Die boodschap komt van buiten, dus de cel heeft iets in haar muur nodig dat ze kan ontvangen." },
+  { t: "2 · The EGF receptor: a doorbell in the wall",
+    en: "The receptor is one long protein that sticks through the membrane. The outside part is the button: it is shaped to catch EGF. The inside part is the bell: it is a kinase, an enzyme that can attach phosphate groups to proteins. Two copies are drawn because, as you will see, they work in pairs. A cell has thousands.",
+    nl: "De receptor is één lang eiwit dat door het membraan steekt. Het buitenste deel is de knop: het is gevormd om EGF te vangen. Het binnenste deel is de bel: het is een kinase, een enzym dat fosfaatgroepen aan eiwitten kan hangen. Er zijn er twee getekend omdat ze, zoals je zal zien, in paren werken. Een cel heeft er duizenden." },
+  { t: "3 · The gene that codes for it",
+    en: "Every receptor is made from the receptor gene in the nucleus. The gene has a regulatory part (yellow: when and how much) and a coding part that reads, from left to right, like the protein from outside to inside: a piece for the outside part, a short piece for the membrane-crossing part, and a piece for the inside part. This is a proto-oncogene: a normal gene that could become an oncogene.",
+    nl: "Elke receptor wordt gemaakt vanuit het receptorgen in de kern. Het gen heeft een regulerend deel (geel: wanneer en hoeveel) en een coderend deel dat van links naar rechts leest zoals het eiwit van buiten naar binnen: een stuk voor het buitenste deel, een kort stuk voor het membraandeel, en een stuk voor het binnenste deel. Dit is een proto-oncogen: een normaal gen dat een oncogen kan worden." },
+  { t: "4 · EGF arrives: somebody at the door",
+    en: "EGF, epidermal growth factor, is a small protein that other cells release when new cells are needed, for instance to close a wound. It floats in the fluid outside the cell. It is the message 'please divide'. On its own it can do nothing to the cell; it has to press the button.",
+    nl: "EGF, epidermal growth factor, is een klein eiwit dat andere cellen loslaten wanneer er nieuwe cellen nodig zijn, bijvoorbeeld om een wonde te sluiten. Het drijft in de vloeistof buiten de cel. Het is de boodschap 'deel alsjeblieft'. Op zichzelf kan het niets met de cel doen; het moet op de knop drukken." },
+  { t: "5 · EGF binds: the button is pressed",
+    en: "EGF fits exactly on the outside part of the receptor, like a key in a lock. Binding changes the shape of the outside part. Nothing has happened inside the cell yet.",
+    nl: "EGF past precies op het buitenste deel van de receptor, als een sleutel in een slot. Het binden verandert de vorm van het buitenste deel. Binnen in de cel is nog niets gebeurd." },
+  { t: "6 · Two receptors pair up",
+    en: "The new shape makes two EGF-carrying receptors stick to each other. Now their inside parts, the two kinases, lie side by side. That is the only thing the button does: bring two bells together.",
+    nl: "Door de nieuwe vorm plakken twee receptoren met EGF aan elkaar. Nu liggen hun binnenste delen, de twee kinasen, naast elkaar. Dat is het enige wat de knop doet: twee bellen bij elkaar brengen." },
+  { t: "7 · The bell rings: phosphorylation",
+    en: "Two kinases side by side attach phosphate groups (P, red) to each other's tails. A phosphate is the on-switch of BIO01: a tail with phosphates is 'on'. This is what the syllabus calls activation of the receptor.",
+    nl: "Twee kinasen naast elkaar hangen fosfaatgroepen (P, rood) aan elkaars staart. Een fosfaat is de aan-schakelaar uit BIO01: een staart met fosfaten staat 'aan'. Dit noemt de syllabus de activatie van de receptor." },
+  { t: "8 · The signal reaches the nucleus",
+    en: "The phosphorylated tails are a docking place for relay proteins inside the cell, Ras among them (page 2.7). They pass the message on, step by step, to the nucleus, where genes for cell division are switched on. The cell divides once.",
+    nl: "De gefosforyleerde staarten zijn een aanlegplaats voor doorgeef-eiwitten in de cel, waaronder Ras (pagina 2.7). Die geven de boodschap stap voor stap door tot in de kern, waar de genen voor celdeling aangezet worden. De cel deelt één keer." },
+  { t: "9 · EGF is gone: silence again",
+    en: "EGF is used up or drifts away. Without it the receptors let go of each other, other enzymes strip the phosphates off, and the bell is silent. No EGF, no division: that is the control. Remember this picture; the mutation breaks exactly this.",
+    nl: "EGF is opgebruikt of drijft weg. Zonder EGF laten de receptoren elkaar los, andere enzymen halen de fosfaten weg, en de bel zwijgt. Geen EGF, geen deling: dat is de controle. Onthoud dit beeld; de mutatie breekt precies dit." },
+  { t: "10 · The accident: a deletion in the gene",
+    en: "In a brain cell a stretch of DNA is lost from the receptor gene, in the piece that codes for the outside part. The regulatory part and the inside part are untouched. In Figure 2-20 this is accident type 1: a small change inside the coding sequence. So the amount of protein stays normal; it is the protein itself that will be wrong.",
+    nl: "In een hersencel gaat een stuk DNA verloren uit het receptorgen, in het stuk dat codeert voor het buitenste deel. Het regulerende deel en het binnenste deel zijn ongeschonden. In figuur 2-20 is dit ongeluk type 1: een kleine verandering binnen de coderende sequentie. De hoeveelheid eiwit blijft dus normaal; het eiwit zelf zal fout zijn." },
+  { t: "11 · A truncated receptor",
+    en: "The cell reads the damaged gene and makes receptors with a shortened outside part: truncated means cut short. The button is gone, so EGF cannot bind. You might expect a dead receptor that never rings. The opposite happens.",
+    nl: "De cel leest het beschadigde gen af en maakt receptoren met een verkort buitenste deel: truncated betekent afgeknot. De knop is weg, dus EGF kan niet binden. Je zou een dode receptor verwachten die nooit belt. Het omgekeerde gebeurt." },
+  { t: "12 · The faulty doorbell",
+    en: "The outside part did two jobs: catch EGF, and keep the receptors apart as long as there is no EGF. With that part gone, the truncated receptors pair up on their own, and their kinases phosphorylate each other. The bell rings while nobody is at the button. The syllabus calls this hyperphosphorylation and inappropriate activation.",
+    nl: "Het buitenste deel had twee taken: EGF vangen, en de receptoren uit elkaar houden zolang er geen EGF is. Zonder dat deel paren de afgeknotte receptoren vanzelf, en hun kinasen fosforyleren elkaar. De bel rinkelt terwijl niemand op de knop drukt. De syllabus noemt dit hyperfosforylering en ongepaste activatie." },
+  { t: "13 · A signal that never stops",
+    en: "The relay proteins cannot tell the difference: phosphorylated tails mean 'divide'. The nucleus keeps getting the message, with no EGF anywhere and nothing to switch it off. The protein is hyperactive, the gene has become an oncogene, and the cell divides without permission.",
+    nl: "De doorgeef-eiwitten zien het verschil niet: gefosforyleerde staarten betekenen 'deel'. De kern blijft de boodschap krijgen, zonder EGF en zonder iets dat het uitzet. Het eiwit is hyperactief, het gen is een oncogen geworden, en de cel deelt zonder toestemming." },
+  { t: "14 · Why one copy is enough, and where it happens",
+    en: "The cell still has its other, normal gene copy and makes normal receptors from it. They sit silently in the membrane, but they cannot stop the mutant ones from ringing. One mutated copy is enough: this is why oncogenes are dominant (section 2 of this page). Mutations of this kind are frequent in glioblastoma, the most common human brain tumor.",
+    nl: "De cel heeft nog haar andere, normale genkopie en maakt daar normale receptoren van. Die zitten stil in het membraan, maar ze kunnen de mutante niet beletten te rinkelen. Eén gemuteerde kopie volstaat: daarom zijn oncogenen dominant (deel 2 van deze pagina). Mutaties van dit soort komen vaak voor bij glioblastoom, de meest voorkomende hersentumor bij de mens." }
+];
+Stepper.init('egf-stepper', steps, 'egf');
+</script>
 
 <div class="callout key"><span class="tag">Story from Alberts (background, not exam material)</span>
 <p>The first oncogene was found in a chicken virus. Rous sarcoma virus causes connective-tissue tumors in chickens; its genome turned out to carry a passenger gene, <em>v-Src</em>,
