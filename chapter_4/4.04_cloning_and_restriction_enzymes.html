@@ -28,6 +28,14 @@
   .joint { fill: var(--c-S); stroke: none; }
   .txt.small { font-size: 11px; }
   .txt.bold { font-weight: 700; }
+  .lane { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 5 4; }
+  .tube { fill: var(--quiz-bg); stroke: var(--muted); stroke-width: 1.5; }
+  .frag { stroke: var(--c-O); stroke-width: 4; stroke-linecap: round; fill: none; }
+  .oth { stroke: var(--muted); stroke-width: 4; stroke-linecap: round; opacity: .45; }
+  .pol { fill: var(--c-S); stroke: none; }
+  .machine { fill: var(--key-bg); stroke: var(--accent); stroke-width: 1.5; }
+  .freeze { fill: var(--key-bg); stroke: var(--c-N); stroke-width: 1.5; }
+  .rowl { stroke: var(--line); stroke-width: 1; }
   table.cmp td:first-child { white-space: nowrap; font-weight: 700; }
 </style>
 </head>
@@ -60,6 +68,262 @@ behind transgenic organisms, knockout mice (page 4.6) and insulin made by bacter
 <p>Herhaling: een <strong>plasmide</strong> is een klein, rond DNA in bacteriën, los van het chromosoom; een <strong>replicatie-oorsprong</strong> is waar het kopiëren begint;
 <strong>DNA-ligase</strong> plakt DNA-uiteinden aan elkaar; een <strong>promotor</strong> is de startplaats van transcriptie; een <strong>antibioticum</strong> doodt bacteriën,
 behalve als ze een <strong>resistentiegen</strong> hebben.</p></div>
+
+<!-- ============================================================ -->
+<h3>Build it up yourself: PCR versus cloning, side by side</h3>
+<p>Both methods give you many copies of a DNA fragment, so why learn two? Press <strong>Next</strong>. Steps 1 to 6 run the two methods next to each other, from the same tube
+to their results; steps 7 to 12 fill in a comparison table, one row at a time, with the advantages and disadvantages of each.</p>
+
+<div class="stepper" id="cmp-stepper">
+  <svg class="molsvg" viewBox="0 0 880 420" width="880" height="420" xmlns="http://www.w3.org/2000/svg" aria-label="Step-by-step: PCR versus cloning">
+    <defs>
+      <marker id="arCmp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahN"/></marker>
+      <marker id="arPr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahT"/></marker>
+    </defs>
+    <g data-step="1">
+      <rect x="20" y="20" width="840" height="384" rx="14" class="ct"/>
+    </g>
+    <g data-step="1" data-until="7">
+      <rect x="30" y="30" width="820" height="172" rx="10" class="lane"/>
+      <rect x="30" y="208" width="820" height="172" rx="10" class="lane"/>
+      <text x="40" y="50" class="txt small bold left">PCR (page 4.3)</text>
+      <text x="40" y="228" class="txt small bold left">Cloning (this page)</text>
+      <path d="M85,70 h30 v45 a15,15 0 0 1 -30,0 z" class="tube"/>
+      <line x1="89" y1="88" x2="111" y2="88" class="oth"/>
+      <line x1="97" y1="88" x2="104" y2="88" class="frag"/>
+      <line x1="89" y1="98" x2="111" y2="98" class="oth"/>
+      <line x1="97" y1="98" x2="104" y2="98" class="frag"/>
+      <line x1="89" y1="108" x2="111" y2="108" class="oth"/>
+      <line x1="97" y1="108" x2="104" y2="108" class="frag"/>
+      <text x="100" y="152" class="txt small muted">your DNA sample</text>
+      <text x="100" y="165" class="txt small muted">(wanted fragment in orange)</text>
+      <path d="M85,248 h30 v45 a15,15 0 0 1 -30,0 z" class="tube"/>
+      <line x1="89" y1="266" x2="111" y2="266" class="oth"/>
+      <line x1="97" y1="266" x2="104" y2="266" class="frag"/>
+      <line x1="89" y1="276" x2="111" y2="276" class="oth"/>
+      <line x1="97" y1="276" x2="104" y2="276" class="frag"/>
+      <line x1="89" y1="286" x2="111" y2="286" class="oth"/>
+      <line x1="97" y1="286" x2="104" y2="286" class="frag"/>
+      <text x="100" y="330" class="txt small muted">your DNA sample</text>
+      <text x="100" y="343" class="txt small muted">(wanted fragment in orange)</text>
+      <text x="40" y="388" class="lbl txt small left">1 · begin state, the same for both: a tube of DNA in which one fragment (orange) interests you, among a lot of other DNA (grey)</text>
+      <text x="40" y="402" class="lbl txt small left">goal of both roads: many copies of just that fragment. PCR takes the top lane, cloning the bottom lane</text>
+    </g>
+    <g data-step="2" data-until="7">
+      <line x1="125" y1="110" x2="190" y2="110" class="path" marker-end="url(#arCmp)"/>
+      <text x="300" y="62" class="txt small bold">add to the tube:</text>
+      <line x1="215" y1="88" x2="245" y2="88" class="frag" marker-end="url(#arPr)"/><line x1="245" y1="100" x2="215" y2="100" class="frag" marker-end="url(#arPr)"/>
+      <text x="258" y="98" class="txt small left">2 primers that match the two ends</text>
+      <ellipse cx="230" cy="128" rx="14" ry="9" class="pol"/>
+      <text x="258" y="132" class="txt small left">Taq DNA polymerase (heat-stable)</text>
+      <circle cx="218" cy="160" r="4" style="fill:var(--c-O)"/>
+      <circle cx="227" cy="160" r="4" style="fill:var(--c-N)"/>
+      <circle cx="236" cy="160" r="4" style="fill:var(--c-S)"/>
+      <circle cx="245" cy="160" r="4" style="fill:var(--c-Cl)"/>
+      <text x="258" y="164" class="txt small left">dNTPs: the four building blocks</text>
+      <text x="300" y="192" class="txt small muted">you must already know the end sequences</text>
+      <text x="40" y="388" class="lbl txt small left">2 · PCR: into the same tube go two primers, the heat-stable polymerase and the four building blocks; nothing is alive</text>
+      <text x="40" y="402" class="lbl txt small left">the primers decide what is copied, so you must already know the sequence at both ends of the fragment</text>
+    </g>
+    <g data-step="3" data-until="7">
+      <line x1="125" y1="256" x2="200" y2="256" class="path" marker-end="url(#arCmp)"/>
+      <text x="310" y="226" class="txt small bold">cut and paste into a plasmid:</text>
+      <line x1="215" y1="256" x2="275" y2="256" class="st ins"/><line x1="215" y1="250" x2="215" y2="262" class="site"/><line x1="275" y1="250" x2="275" y2="262" class="site"/>
+      <text x="245" y="276" class="txt small muted">insert (often a PCR product)</text>
+      <text x="296" y="261" class="txt big">+</text>
+      <circle cx="330" cy="256" r="20" class="ring"/>
+      <text x="356" y="260" class="txt small muted left">plasmid</text>
+      <line x1="270" y1="282" x2="270" y2="296" class="path" marker-end="url(#arCmp)"/>
+      <text x="300" y="289" class="txt small left">same restriction enzyme,</text>
+      <text x="300" y="302" class="txt small left">then DNA ligase</text>
+      <circle cx="270" cy="322" r="20" class="ring"/>
+      <path d="M256,308 A20,20 0 0 1 284,308" class="st ins"/>
+      <text x="270" y="358" class="txt small muted">recombinant plasmid</text>
+      <line x1="298" y1="322" x2="360" y2="322" class="path" marker-end="url(#arCmp)"/>
+      <ellipse cx="395" cy="322" rx="26" ry="15" class="cell"/>
+      <circle cx="395" cy="322" r="7" class="ring" style="stroke-width:3"/>
+      <text x="395" y="358" class="txt small muted">into one bacterium</text>
+      <text x="40" y="388" class="lbl txt small left">3 · cloning: the fragment (usually first made by PCR) and a plasmid are cut with the same restriction enzyme and glued with DNA ligase</text>
+      <text x="40" y="402" class="lbl txt small left">the recombinant plasmid is put into a living bacterium; from here on the bacterium does the copying</text>
+    </g>
+    <g data-step="4" data-until="7">
+      <line x1="428" y1="176" x2="448" y2="176" class="path" marker-end="url(#arCmp)"/>
+      <rect x="452" y="56" width="180" height="118" rx="8" class="machine"/>
+      <text x="542" y="74" class="txt small bold">thermocycler (a heating block)</text>
+      <text x="542" y="90" class="txt small">95 → 55 → 72 °C, 30 times</text>
+      <line x1="536" y1="106" x2="548" y2="106" class="frag"/>
+      <line x1="528" y1="120" x2="540" y2="120" class="frag"/>
+      <line x1="544" y1="120" x2="556" y2="120" class="frag"/>
+      <line x1="512" y1="134" x2="524" y2="134" class="frag"/>
+      <line x1="528" y1="134" x2="540" y2="134" class="frag"/>
+      <line x1="544" y1="134" x2="556" y2="134" class="frag"/>
+      <line x1="560" y1="134" x2="572" y2="134" class="frag"/>
+      <line x1="480" y1="148" x2="492" y2="148" class="frag"/>
+      <line x1="496" y1="148" x2="508" y2="148" class="frag"/>
+      <line x1="512" y1="148" x2="524" y2="148" class="frag"/>
+      <line x1="528" y1="148" x2="540" y2="148" class="frag"/>
+      <line x1="544" y1="148" x2="556" y2="148" class="frag"/>
+      <line x1="560" y1="148" x2="572" y2="148" class="frag"/>
+      <line x1="576" y1="148" x2="588" y2="148" class="frag"/>
+      <line x1="592" y1="148" x2="604" y2="148" class="frag"/>
+      <text x="542" y="166" class="txt small muted">2, 4, 8, 16 … a billion in 2 to 3 hours</text>
+      <text x="40" y="388" class="lbl txt small left">4 · PCR copying: a machine heats and cools the tube 30 times; each cycle the enzyme copies every fragment once, so the number doubles</text>
+      <text x="40" y="402" class="lbl txt small left">read the arrow as "then": 95 °C strands apart, 55 °C primers bind, 72 °C polymerase builds. After 30 cycles: about a billion copies</text>
+    </g>
+    <g data-step="5" data-until="7">
+      <line x1="428" y1="322" x2="448" y2="322" class="path" marker-end="url(#arCmp)"/>
+      <text x="542" y="236" class="txt small bold">overnight on a plate with antibiotic, 37 °C</text>
+      <circle cx="542" cy="308" r="52" class="dish"/>
+      <circle cx="520" cy="290" r="4" class="colony"/>
+      <circle cx="556" cy="282" r="4" class="colony"/>
+      <circle cx="570" cy="318" r="4" class="colony"/>
+      <circle cx="530" cy="328" r="4" class="colony"/>
+      <circle cx="548" cy="305" r="4" class="colony"/>
+      <circle cx="512" cy="312" r="4" class="colony"/>
+      <circle cx="560" cy="340" r="4" class="colony"/>
+      <circle cx="538" cy="345" r="4" class="colony"/>
+      <text x="575" y="374" class="txt small muted">each dot = one colony = millions of cells from one bacterium</text>
+      <text x="40" y="388" class="lbl txt small left">5 · cloning copying: the bacterium divides every 20 minutes and copies the plasmid along with its own DNA; only bacteria with the plasmid survive the antibiotic</text>
+      <text x="40" y="402" class="lbl txt small left">by the next morning each bacterium has become a visible colony: millions of cells, each with tens to hundreds of plasmid copies</text>
+    </g>
+    <g data-step="6" data-until="7">
+      <line x1="640" y1="110" x2="660" y2="110" class="path" marker-end="url(#arCmp)"/>
+      <path d="M690,70 h30 v45 a15,15 0 0 1 -30,0 z" class="tube"/>
+      <line x1="695" y1="82" x2="715" y2="82" class="frag"/>
+      <line x1="695" y1="90" x2="715" y2="90" class="frag"/>
+      <line x1="695" y1="98" x2="715" y2="98" class="frag"/>
+      <line x1="695" y1="106" x2="715" y2="106" class="frag"/>
+      <line x1="695" y1="114" x2="715" y2="114" class="frag"/>
+      <text x="775" y="95" class="txt small left">billions of naked copies</text>
+      <text x="775" y="110" class="txt small left">all the same length</text>
+      <text x="775" y="125" class="txt small left">a mixture if the sample</text>
+      <text x="775" y="140" class="txt small left">held several variants</text>
+      <line x1="640" y1="300" x2="660" y2="300" class="path" marker-end="url(#arCmp)"/>
+      <circle cx="690" cy="300" r="12" class="colony"/>
+      <line x1="708" y1="300" x2="728" y2="300" class="path" marker-end="url(#arCmp)"/>
+      <rect x="736" y="276" width="26" height="48" rx="6" class="freeze"/>
+      <text x="749" y="305" class="txt small">−80</text>
+      <text x="775" y="285" class="txt small left">one colony = one pure clone</text>
+      <text x="775" y="300" class="txt small left">(offspring of one molecule)</text>
+      <text x="775" y="315" class="txt small left">frozen: regrow any time,</text>
+      <text x="775" y="330" class="txt small left">a supply for ever</text>
+      <text x="40" y="388" class="lbl txt small left">6 · the result. PCR: a tube of loose DNA copies, used up when you use them; if the sample had several versions of the fragment, the tube is a mixture</text>
+      <text x="40" y="402" class="lbl txt small left">cloning: every colony descends from one bacterium with one plasmid, so it is one pure sequence; frozen at −80 °C the clone can be regrown for ever</text>
+    </g>
+    <g data-step="7">
+      <text x="352" y="48" class="txt bold">PCR</text><text x="687" y="48" class="txt bold">Cloning</text>
+      <line x1="30" y1="56" x2="850" y2="56" class="rowl"/>
+    </g>
+    <g data-step="7">
+      <text x="40" y="76" class="txt small bold left">Where, how long?</text>
+      <text x="196" y="76" class="txt small left">in a tube; only an enzyme works, nothing is alive</text>
+      <text x="196" y="91" class="txt small left">2 to 3 hours</text>
+      <text x="530" y="76" class="txt small left">inside living bacteria, copied as they divide</text>
+      <text x="530" y="91" class="txt small left">1 to 2 days (plus a PCR to make the insert)</text>
+      <line x1="30" y1="100" x2="850" y2="100" class="rowl"/>
+      <text x="40" y="388" class="lbl txt small left">7 · where and how long: PCR is chemistry in a tube and takes an afternoon; cloning uses living cells and takes days</text>
+      <text x="40" y="402" class="lbl txt small left">the speed of PCR is its big advantage; the cells of cloning are what give all the advantages that follow</text>
+    </g>
+    <g data-step="8">
+      <text x="40" y="120" class="txt small bold left">What must you know</text>
+      <text x="40" y="135" class="txt small bold left">beforehand?</text>
+      <text x="196" y="120" class="txt small left">the sequence at both ends of the fragment,</text>
+      <text x="196" y="135" class="txt small left">to design the two primers</text>
+      <text x="530" y="120" class="txt small left">nothing: you can clone DNA you have never seen</text>
+      <text x="530" y="135" class="txt small left">(that is how libraries work, page 4.5)</text>
+      <line x1="30" y1="144" x2="850" y2="144" class="rowl"/>
+      <text x="40" y="388" class="lbl txt small left">8 · PCR can only copy what you can aim at: you need the end sequences for the primers. Cloning needs no knowledge of the fragment at all</text>
+      <text x="40" y="402" class="lbl txt small left">so cloning can be done on unknown DNA, chopped into pieces, every piece in its own bacterium: a library (page 4.5). PCR cannot do that</text>
+    </g>
+    <g data-step="9">
+      <text x="40" y="164" class="txt small bold left">Size and accuracy?</text>
+      <text x="196" y="164" class="txt small left">up to a few thousand base pairs</text>
+      <text x="196" y="179" class="txt small left">Taq makes errors; an early error is multiplied</text>
+      <text x="530" y="164" class="txt small left">thousands of bp, up to hundreds of thousands</text>
+      <text x="530" y="179" class="txt small left">bacteria proofread and repair: almost no errors</text>
+      <line x1="30" y1="188" x2="850" y2="188" class="rowl"/>
+      <text x="40" y="388" class="lbl txt small left">9 · PCR works well up to a few thousand base pairs and Taq has no proofreading, so an early mistake ends up in a large share of the copies</text>
+      <text x="40" y="402" class="lbl txt small left">bacteria copy long inserts with the proofreading and repair of normal DNA replication (BIO01 chapter 4): the copies are nearly perfect</text>
+    </g>
+    <g data-step="10">
+      <text x="40" y="208" class="txt small bold left">Purity and storage?</text>
+      <text x="196" y="208" class="txt small left">a mixture of everything the primers matched</text>
+      <text x="196" y="223" class="txt small left">the product is used up when you use it</text>
+      <text x="530" y="208" class="txt small left">one colony = offspring of one molecule: pure</text>
+      <text x="530" y="223" class="txt small left">frozen bacteria regrow any time: supply for ever</text>
+      <line x1="30" y1="232" x2="850" y2="232" class="rowl"/>
+      <text x="40" y="388" class="lbl txt small left">10 · a PCR tube contains copies of every molecule the primers matched, and once used it is gone</text>
+      <text x="40" y="402" class="lbl txt small left">a colony is the offspring of one single molecule, so it is one clean sequence, and the frozen bacteria are a permanent stock</text>
+    </g>
+    <g data-step="11">
+      <text x="40" y="252" class="txt small bold left">What can you do with it?</text>
+      <text x="196" y="252" class="txt small left">see it on a gel (4.8), sequence it (4.9), count it</text>
+      <text x="196" y="267" class="txt small left">(qPCR, 4.13), make the insert for cloning</text>
+      <text x="530" y="252" class="txt small left">cells make the protein (insulin), change the sequence,</text>
+      <text x="530" y="267" class="txt small left">put the gene in other organisms (4.6), libraries (4.5)</text>
+      <line x1="30" y1="276" x2="850" y2="276" class="rowl"/>
+      <text x="40" y="388" class="lbl txt small left">11 · a PCR product is for looking: on a gel, in a sequencer, in a counting machine. A clone is for doing: it sits in a living cell</text>
+      <text x="40" y="402" class="lbl txt small left">the cell can read the cloned gene and make its protein, you can edit the plasmid at will, and move the gene into mice or plants</text>
+    </g>
+    <g data-step="12">
+      <text x="40" y="304" class="txt small bold left">Partners, not rivals</text>
+      <text x="196" y="304" class="txt small left">PCR makes the insert fast, with the restriction sites built into the primers</text>
+      <text x="196" y="320" class="txt small left">→ cloning stores it, keeps it pure and lets a cell read it</text>
+      <text x="196" y="336" class="txt small left">→ PCR on a few cells from a colony checks that the right insert is in (read the arrow as "then")</text>
+      <text x="40" y="388" class="lbl txt small left">12 · in the lab the two are used together: PCR to make and to check, cloning to keep and to use</text>
+      <text x="40" y="402" class="lbl txt small left">picture: PCR is a photocopier for one page; cloning pastes the page into a living book that reprints itself and can be read aloud (expressed)</text>
+    </g>
+  </svg>
+</div>
+<script>
+(function () {
+  var steps = [
+    { t: "1 · Begin state: the same tube for both",
+      en: "You have a tube of DNA. One fragment interests you (orange); it sits among a lot of other DNA (grey). You want many copies of just that fragment. There are two roads. PCR (page 4.3) is the top lane, cloning (this page) the bottom lane. Both start from this same tube.",
+      nl: "Je hebt een buisje DNA. Eén fragment interesseert je (oranje); het zit tussen veel ander DNA (grijs). Je wil veel kopieën van alleen dat fragment. Er zijn twee wegen. PCR (pagina 4.3) is de bovenste baan, klonen (deze pagina) de onderste. Beide starten van hetzelfde buisje." },
+    { t: "2 · PCR: what you add to the tube",
+      en: "Two primers (short pieces of DNA that match the two ends of the fragment), a heat-stable DNA polymerase (Taq) and the four building blocks (dNTPs). Nothing in the tube is alive. The primers decide what gets copied, so you must already know the sequence at both ends of your fragment.",
+      nl: "Twee primers (korte stukjes DNA die passen op de twee uiteinden van het fragment), een hittebestendig DNA-polymerase (Taq) en de vier bouwstenen (dNTP's). Niets in het buisje leeft. De primers bepalen wat gekopieerd wordt, dus je moet de volgorde aan beide uiteinden van je fragment al kennen." },
+    { t: "3 · Cloning: cut and paste into a plasmid",
+      en: "The fragment (the insert, in practice usually first made by PCR) and a plasmid are cut with the same restriction enzyme and glued together with DNA ligase. The result is a recombinant plasmid. It is put into a living bacterium. From here on, the bacterium does the copying.",
+      nl: "Het fragment (de insert, in de praktijk meestal eerst gemaakt met PCR) en een plasmide worden geknipt met hetzelfde restrictie-enzym en aan elkaar geplakt met DNA-ligase. Het resultaat is een recombinant plasmide. Dat wordt in een levende bacterie gebracht. Vanaf hier doet de bacterie het kopiëren." },
+    { t: "4 · PCR copying: a machine and an enzyme",
+      en: "The tube goes into a thermocycler, a block that heats and cools: 95 °C (strands apart), 55 °C (primers bind), 72 °C (polymerase builds), about 30 times. Read the arrow as 'then'. Each cycle every fragment is copied once, so the number doubles: 2, 4, 8, 16 … about a billion after 30 cycles, in 2 to 3 hours.",
+      nl: "Het buisje gaat in een thermocycler, een blok dat verwarmt en afkoelt: 95 °C (strengen los), 55 °C (primers binden), 72 °C (polymerase bouwt), ongeveer 30 keer. Lees de pijl als 'daarna'. Elke cyclus wordt elk fragment één keer gekopieerd, dus het aantal verdubbelt: 2, 4, 8, 16 … ongeveer een miljard na 30 cycli, in 2 tot 3 uur." },
+    { t: "5 · Cloning copying: living bacteria on a plate",
+      en: "The bacteria are spread on a plate with antibiotic and left overnight at 37 °C. Only bacteria that took up the plasmid survive (it carries the resistance gene). Each one divides every 20 minutes and copies the plasmid together with its own DNA. By morning every survivor has become a visible colony: millions of cells, each with tens to hundreds of plasmid copies.",
+      nl: "De bacteriën worden op een plaat met antibioticum gestreken en een nacht op 37 °C gezet. Alleen bacteriën die het plasmide opnamen overleven (het draagt het resistentiegen). Elk deelt zich om de 20 minuten en kopieert het plasmide samen met zijn eigen DNA. 's Morgens is elke overlever een zichtbare kolonie: miljoenen cellen, elk met tientallen tot honderden kopieën van het plasmide." },
+    { t: "6 · The result: a tube of copies, or a living clone",
+      en: "PCR: a tube of loose DNA copies, all the same length. You use them up when you use them. If the sample contained several versions of the fragment, the tube is a mixture of them. Cloning: each colony descends from one bacterium with one plasmid, so it holds one pure sequence. Freeze the bacteria at −80 °C and you can regrow the clone whenever you want, for ever.",
+      nl: "PCR: een buisje losse DNA-kopieën, alle even lang. Je verbruikt ze als je ze gebruikt. Zat er in het staal meer dan één versie van het fragment, dan is het buisje een mengsel. Klonen: elke kolonie stamt af van één bacterie met één plasmide, dus ze bevat één zuivere sequentie. Vries de bacteriën in op −80 °C en je kan de kloon altijd opnieuw laten groeien, voor altijd." },
+    { t: "7 · Compare: where, and how long?",
+      en: "From here the two lanes make way for a comparison table; one row is added per step. PCR is chemistry in a tube: only an enzyme works and it takes an afternoon. Cloning uses living cells and takes a day or two, plus the PCR that usually makes the insert. Speed is the big advantage of PCR; the living cells are what give cloning all the advantages that follow.",
+      nl: "Vanaf hier maken de twee banen plaats voor een vergelijkingstabel; per stap komt er één rij bij. PCR is chemie in een buisje: alleen een enzym werkt en het duurt een namiddag. Klonen gebruikt levende cellen en duurt een dag of twee, plus de PCR die meestal de insert maakt. Snelheid is het grote voordeel van PCR; de levende cellen geven klonen alle voordelen die volgen." },
+    { t: "8 · Compare: what must you know beforehand?",
+      en: "PCR can only copy what you can aim at: you need the sequence of both ends to design the primers. Cloning needs no knowledge of the fragment at all. That is why you can chop up unknown DNA, put every piece into its own bacterium and search afterwards: a DNA library (page 4.5). PCR cannot do that.",
+      nl: "PCR kan alleen kopiëren waar je op kan richten: je hebt de sequentie van beide uiteinden nodig om primers te ontwerpen. Klonen vraagt geen enkele kennis van het fragment. Daarom kan je onbekend DNA in stukken knippen, elk stuk in zijn eigen bacterie steken en achteraf zoeken: een DNA-bibliotheek (pagina 4.5). Met PCR kan dat niet." },
+    { t: "9 · Compare: size and accuracy",
+      en: "PCR works well up to a few thousand base pairs. Taq has no proofreading, so it makes a mistake now and then, and a mistake in an early cycle ends up in a large share of the copies. Bacteria copy inserts of thousands to hundreds of thousands of base pairs (with special vectors), using the proofreading and repair of normal DNA replication (BIO01 chapter 4): the copies are nearly perfect.",
+      nl: "PCR werkt goed tot enkele duizenden basenparen. Taq heeft geen proefleesfunctie, dus het maakt af en toe een fout, en een fout in een vroege cyclus komt in een groot deel van de kopieën terecht. Bacteriën kopiëren inserts van duizenden tot honderdduizenden basenparen (met speciale vectoren), met de proeflezing en herstelling van normale DNA-replicatie (BIO01 hoofdstuk 4): de kopieën zijn bijna perfect." },
+    { t: "10 · Compare: purity and storage",
+      en: "A PCR tube holds copies of every molecule the primers matched, so it can be a mixture, and once used it is gone. A colony is the offspring of one single molecule, so it is one clean sequence, and the frozen bacteria are a permanent stock you can return to for years.",
+      nl: "Een PCR-buisje bevat kopieën van elke molecule waar de primers op pasten, dus het kan een mengsel zijn, en eens gebruikt is het weg. Een kolonie is het nageslacht van één enkele molecule, dus één zuivere sequentie, en de ingevroren bacteriën zijn een blijvende voorraad waar je jaren later naar terug kan." },
+    { t: "11 · Compare: what can you do with it afterwards?",
+      en: "A PCR product is for looking: on a gel (page 4.8), in a sequencer (4.9), in a counting machine (qPCR, 4.13), or as the insert for cloning. A clone is for doing, because it sits in a living cell: the cell can read the gene and make its protein (insulin from bacteria), you can edit the plasmid at will, and move the gene into mice or plants (page 4.6).",
+      nl: "Een PCR-product dient om te kijken: op een gel (pagina 4.8), in een sequencer (4.9), in een telmachine (qPCR, 4.13), of als insert om te klonen. Een kloon dient om te doen, want hij zit in een levende cel: de cel kan het gen lezen en zijn eiwit maken (insuline uit bacteriën), je kan het plasmide naar wens bewerken, en het gen in muizen of planten brengen (pagina 4.6)." },
+    { t: "12 · Partners, not rivals",
+      en: "In the lab the two are used together. PCR makes the insert fast, with the restriction sites built into the primers; cloning stores it, keeps it pure and lets a cell read it; PCR on a few cells from a colony then checks that the right insert is in. Picture: PCR is a photocopier for one page; cloning pastes the page into a living book that reprints itself and can be read aloud (expressed).",
+      nl: "In het labo worden de twee samen gebruikt. PCR maakt de insert snel, met de restrictieplaatsen ingebouwd in de primers; klonen bewaart ze, houdt ze zuiver en laat een cel ze lezen; PCR op enkele cellen uit een kolonie controleert dan of de juiste insert erin zit. Beeld: PCR is een kopieermachine voor één blad; klonen plakt het blad in een levend boek dat zichzelf herdrukt en dat voorgelezen (tot expressie gebracht) kan worden." }
+  ];
+  Stepper.init('cmp-stepper', steps, 'cmp');
+})();
+</script>
+
+<div class="callout nl"><span class="tag">Samenvatting</span>
+<p><strong>PCR</strong> en <strong>klonen</strong> geven allebei veel kopieën van een DNA-fragment, maar ze zijn geen concurrenten. PCR is snel (uren), gebeurt in een buisje met alleen een enzym,
+maar je moet de uiteinden van het fragment al kennen (primers), het werkt tot enkele duizenden basenparen, het maakt af en toe fouten en het product is een verbruiksartikel dat een mengsel kan zijn.
+Klonen is traag (dagen) maar zet het fragment in een levende bacterie: geen voorkennis nodig (bibliotheken), lange stukken, bijna foutloos gekopieerd, elke kolonie één zuivere sequentie,
+voor altijd bewaarbaar, en de cel kan het gen <em>gebruiken</em>: eiwit maken, de sequentie aanpassen, het gen in een ander organisme brengen. In de praktijk maakt PCR de insert en controleert PCR de kolonies; klonen bewaart en gebruikt.</p></div>
 
 <!-- ============================================================ -->
 <h2>1. What cloning is, and the vector that carries the DNA (4.4, 4.4.1)</h2>
