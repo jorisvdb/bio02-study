@@ -399,6 +399,7 @@ waar een fragment vandaan komt.</p></div>
 
 <!-- ============================================================ -->
 <h2>3. Why you must read much more than the genome: over-sequencing and coverage (4.9.2, 4.9.3)</h2>
+<p><strong>Why this comes next.</strong> Section 2 ended with the computer chaining overlapping reads into a genome. That only works if every part of the genome turns up in enough reads. This section explains how much you must read for that, and why it is far more than the genome length.</p>
 <p>To get a complete genome you need to sequence <strong>far more bases than the genome contains</strong>. The syllabus gives three reasons:</p>
 <ol>
   <li><strong>Errors.</strong> Sequencing is not error-free. If the same region is read several times independently, an error in one read stands out against the others and can be corrected.</li>
@@ -413,6 +414,7 @@ sequences, including the human one, <strong>had gaps</strong>. Three things help
 and <strong>longer reads</strong> that span the repeat and connect the unique sequences on both sides (Nanopore, section 6).</p>
 
 <h3>Depth of coverage</h3>
+<p><strong>Why this comes next.</strong> The three reasons above were about the total amount of reading. Here is the word for the same idea at one single position: how many reads contain one particular base. Page 4.11 uses this number constantly.</p>
 <p>The <strong>depth of coverage</strong> (or sequencing depth) of a base is the number of independent reads that contain it. It is written as a multiple: a base present in five reads has
 <strong>5X coverage</strong> ("five-fold", "five times"). Higher depth means more confidence when a difference from the reference is found (<strong>variant calling</strong>, deciding that a
 difference is real), especially for <strong>rare variants</strong>, where a single sequencing error could otherwise be mistaken for a mutation. The depth needed depends on the experiment:
@@ -430,6 +432,7 @@ reads; meer diepte = betrouwbaarder varianten vinden, vooral zeldzame.</p></div>
 
 <!-- ============================================================ -->
 <h2>4. Three generations of sequencing (4.9.4, Figures 4-33, 4-34, 4-35)</h2>
+<p><strong>Why this comes next.</strong> So far this page was about the strategy: cut, read a lot, reassemble. It did not say which machine does the reading. The machines have changed twice since Sanger, and each change changed what the strategy can do. This section lines up the three generations; sections 5 and 6 then open up the two newest ones.</p>
 <table class="tech">
   <tr><th>Generation</th><th>How</th><th>Numbers from the syllabus</th></tr>
   <tr><td>first: Sanger</td><td>chain termination (page 4.9); first by hand, later automated with capillary electrophoresis; one read per reaction</td><td>one machine: ~1000 reactions a day, ~0.5 Mbp a day. E. coli (37 Mbp needed): about 75 machine-days. Human genome: ~70 million reads of 500 bp for ten genome equivalents (35 × 10⁹ bp), 100 machines, 1000 reactions a day each, about two years</td></tr>
@@ -732,6 +735,7 @@ inbouwen, wassen, foto nemen (kleur = base), kleur en blokkering verwijderen, he
 
 <!-- ============================================================ -->
 <h2>6. Nanopore: reading the current (4.9.4.2, Figure 4-38)</h2>
+<p><strong>Why this comes next.</strong> Illumina ended with its limitation: short reads, and PCR copies before reading. The third generation drops both: it reads one original DNA molecule directly, and the read is as long as the molecule. Nanopore is the syllabus example of that.</p>
 <p><strong>The idea:</strong> pull a single DNA strand through a tiny hole and measure how the electrical current through the hole changes; each base blocks the hole a bit differently.
 No copying, no colours, no amplification.</p>
 <ol>
