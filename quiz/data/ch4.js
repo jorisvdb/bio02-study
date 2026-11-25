@@ -1,4 +1,4 @@
-// Chapter 4 – Tools and techniques in molecular biology (practice questions written by Claude; the official chapter quiz is not available yet)
+// Chapter 4 – Tools and techniques in molecular biology (practice questions written by Claude; the official chapter quiz is in off4a.js + off4b.js)
 window.QBANK = window.QBANK || [];
 window.QCONCEPTS = Object.assign(window.QCONCEPTS || {}, {
   "ch4:culture": "Model organisms and cell culture (primary cells, cell lines)",

@@ -390,7 +390,7 @@
     var days = Math.round((EXAM_DATE - new Date(new Date().toDateString())) / 864e5);
     var html = '';
     html += '<h1>BIO02 Quiz Trainer</h1>';
-    html += '<p class="muted">The example exam plus practice questions per chapter written by Claude (the official chapter quizzes will be added as soon as they are released). ' +
+    html += '<p class="muted">The official practice quiz of every chapter (177 questions), the example exam, and practice questions per chapter written by Claude. ' +
       'Wrong answers come back later in the same session and in the next sessions until you know them.' +
       (days >= 0 ? ' <b>Exam in ' + days + ' day' + (days === 1 ? '' : 's') + '.</b>' : '') + '</p>';
     html += '<div class="stats">' +
@@ -433,7 +433,7 @@
     html += '<h2>Sessions with a fixed length</h2><div class="modes">' +
       '<button class="mode" data-mode="smart"><b>Smart practice</b><span>Mistakes first, then questions that are due, then new ones.</span></button>' +
       '<button class="mode" data-mode="chapter"><b>By chapter</b><span>Smart order, only the chapters ticked above.</span></button>' +
-      '<button class="mode" data-mode="official"><b>Official quiz questions</b><span>The course quizzes, in their original order (not released yet).</span></button>' +
+      '<button class="mode" data-mode="official"><b>Official quiz questions</b><span>The practice quizzes of the lecturer, in their original order and numbering (ch 1: 33, ch 2: 37, ch 3: 32, ch 4: 75).</span></button>' +
       '<button class="mode" data-mode="sample"><b>Example exam</b><span>The 15 questions of the example exam.</span></button>' +
       '<button class="mode" data-mode="mistakes"><b>My mistakes (' + mistakePool().length + ')</b><span>Only questions you answered wrong and do not master yet, most often wrong first. A question leaves this list after ' + MASTER_BOX + ' right answers in a row without a hint.</span></button>' +
       '<button class="mode" data-mode="starred"><b>★ Important (' + starPool().length + ')</b><span>Only the questions you marked as important, right or wrong. Click ★ on a question again to take it off the list.</span></button>' +

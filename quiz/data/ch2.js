@@ -1,4 +1,4 @@
-// Chapter 2 – The genetic basis of cancer (practice questions written by Claude; the official chapter quiz is not available yet)
+// Chapter 2 – The genetic basis of cancer (practice questions written by Claude; the official chapter quiz is in off2.js)
 window.QBANK = window.QBANK || [];
 window.QCONCEPTS = Object.assign(window.QCONCEPTS || {}, {
   "ch2:society": "Cells as a society: social controls, cell fates",

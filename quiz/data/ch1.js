@@ -1,4 +1,4 @@
-// Chapter 1 – Alterations of chromosomes (practice questions written by Claude; the official chapter quiz is not available yet)
+// Chapter 1 – Alterations of chromosomes (practice questions written by Claude; the official chapter quiz is in off1.js)
 window.QBANK = window.QBANK || [];
 window.QCONCEPTS = Object.assign(window.QCONCEPTS || {}, {
   "ch1:nondisjunction": "Nondisjunction in meiosis I, meiosis II and mitosis",

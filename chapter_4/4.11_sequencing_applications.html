@@ -384,6 +384,8 @@ depth you can afford for the same cost:</p>
 <p>Page 4.2 noted that most microbes cannot be grown in the lab. <strong>Metagenome sequencing</strong> skips the growing: DNA is extracted directly from a sample (sea water, soil, the human gut)
 and all of it is sequenced together. The reads reveal <strong>which species</strong> are present (the diversity of the community) and <strong>which genes</strong> they carry (the functional potential, for
 example genes for breaking down a pollutant). Applications: environmental samples and host-associated microbiomes (the community of microbes living on or in a host).</p>
+<p><strong>Scale rule</strong> (the one the quiz uses): one or a few <strong>known genes</strong> → <strong>targeted sequencing</strong>; <strong>hundreds of candidate coding genes</strong> → <strong>whole-exome sequencing</strong>;
+a variant that could be <strong>anywhere</strong>, also outside genes → <strong>whole-genome sequencing</strong>; a <strong>mixed microbial sample</strong> (many species together) → <strong>metagenome sequencing</strong>.</p>
 
 <div class="callout quiz"><span class="tag">Exam link</span>
 <p>The chapter-2 cancer pages use these methods: a tumour's "complete genome sequence" is WGS, "the 21 000 genes that code for protein (the exome)" is WES, and The Cancer Genome Atlas
@@ -394,7 +396,7 @@ and which identifies the genes two cell types express (a DNA microarray or RNA-s
 <p><strong>WES</strong> leest alleen de exonen (1,5 %, 21 000 genen): minder data, meer diepte. <strong>Exoomvangst</strong>: fragmenten denatureren → <strong>biotine-RNA-probes</strong> voor alle exonen
 hybridiseren → <strong>streptavidine-magneetkorrels</strong> vangen de probes → magneet + wassen (98,5 % weg) → DNA losmaken → sequencen. Mist <strong>promotors en splice sites</strong>.
 <strong>Gerichte sequencing</strong>: enkele regio's, &gt; 500X. Diepte: WGS &gt; 30X, WES &gt; 50–100X, gericht &gt; 500X. <strong>Metagenoom</strong>: alle DNA van een staal (bodem, darm) samen
-lezen: welke soorten, welke genen, zonder te kweken.</p></div>
+lezen: welke soorten, welke genen, zonder te kweken. Schaalregel: één of enkele bekende genen → gericht; honderden kandidaat-genen → WES; variant overal mogelijk, ook buiten genen → WGS; gemengd microbieel staal → metagenoom.</p></div>
 
 <!-- ============================================================ -->
 <h2>3. Epigenome sequencing: reading the labels, not the letters (Figure 4-39b)</h2>
@@ -742,10 +744,11 @@ met speciale behandelingen ook RNA-modificaties.</p></div>
 <h2>5. Which approach for which question?</h2>
 <table class="tech">
   <tr><th>Question</th><th>Approach</th><th>Why</th></tr>
-  <tr><td>all variants of one patient, including non-coding and structural ones</td><td>WGS</td><td>covers everything; ~30X</td></tr>
+  <tr><td>all variants of one patient, including non-coding and structural ones; a variant that could be anywhere, also outside genes</td><td>WGS</td><td>covers everything; ~30X</td></tr>
   <tr><td>disease mutations in protein-coding genes, many patients, lower cost</td><td>WES</td><td>1.5 % of the data, 50–100X; misses promoters and splice sites</td></tr>
-  <tr><td>rare variants in a known set of genes (a diagnostic panel)</td><td>targeted sequencing</td><td>&gt; 500X on a small region, cheapest</td></tr>
-  <tr><td>which microbes live in the gut and what can they do</td><td>metagenome sequencing</td><td>no culturing needed; species and genes together</td></tr>
+  <tr><td>hundreds of candidate coding genes (the variant is in one of them, but which?)</td><td>WES</td><td>all coding genes in one run: too many regions for a targeted panel, far less data than WGS</td></tr>
+  <tr><td>one or a few known genes; rare variants in a known set of genes (a diagnostic panel)</td><td>targeted sequencing</td><td>&gt; 500X on a small region, cheapest</td></tr>
+  <tr><td>a mixed microbial sample: which microbes live in the gut and what can they do</td><td>metagenome sequencing</td><td>no culturing needed; species and genes together</td></tr>
   <tr><td>which C's are methylated</td><td>bisulfite sequencing (or Nanopore)</td><td>methylated C resists bisulfite</td></tr>
   <tr><td>where is a histone mark; which chromatin is open; where are R-loops</td><td>ChIP-seq; ATAC-seq; DRIP-seq</td><td>antibody or accessibility selects the DNA to sequence</td></tr>
   <tr><td>which genes are expressed, how strongly, which splice forms</td><td>RNA-seq</td><td>counts cDNA reads per gene</td></tr>
@@ -791,6 +794,38 @@ open chromatine, R-loops → ChIP-, ATAC-, DRIP-seq; genexpressie → RNA-seq.</
   <li>Name the four epigenome methods and what each maps (bisulfite: methylation; ChIP-seq: histone marks; ATAC-seq: open chromatin; DRIP-seq: R-loops).</li>
   <li>Give the six steps of RNA-seq and what it reveals (expression level, splicing, non-coding RNA).</li>
 </ol>
+
+<!-- official-quiz-block -->
+<h3>Official quiz questions on this page (8)</h3>
+<p class="small">From the lecturer's practice quiz for chapter 4; the numbers are the question numbers in that quiz, the options are in the original order. The answers were worked out by Claude from the syllabus and this page; a question marked <em>check</em> is one where that was less certain. Use them to see the level of detail the exam expects.</p>
+<div class="mq-tools"><button class="show" type="button">Show all answers</button><button class="hide" type="button">Hide all answers</button></div>
+<ol class="mq off">
+  <li value="40">A researcher needs to assess the DNA of an entire mixed microbial community in a water sample without selecting one organism. Which method best fits?
+    <ul class="opts"><li data-l="a">Western blot of one protein</li><li data-l="b">Metagenomic sequencing</li><li data-l="c">Sanger sequencing of one predefined gene only</li><li data-l="d">Karyotyping of a human cell line</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> <b>Metagenome sequencing</b> extracts all the DNA from a sample (water, soil, the gut) and sequences everything together, without growing any organism first. It shows which species are present and which genes they carry. Sanger sequencing of one gene reads one chosen piece, a Western blot detects one protein with antibodies, and a karyotype shows the chromosomes of one cell. Read page 4.11, section 2 (metagenome sequencing).</p></div></details></li>
+  <li value="41">What region of the human genome is the focus of whole-exome sequencing?
+    <ul class="opts"><li data-l="a">Only chromosomal centromeres</li><li data-l="b">Only mitochondrial RNA</li><li data-l="c">All protein-coding exons</li><li data-l="d">Every intron and intergenic sequence</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> The <b>exome</b> is all the exons (the parts of genes that end up in the mRNA and code for protein) of all protein-coding genes: about 21 000 genes, only 1.5 % of the genome. Whole-exome sequencing (WES) reads exactly that part. Introns and the DNA between genes (the other 98.5 %) are washed away during exome capture and are not read. Read page 4.11, section 2 (exome sequencing).</p></div></details></li>
+  <li value="42">Why are biotinylated RNA probes used in many exome-capture workflows?
+    <ul class="opts"><li data-l="a">They selectively break all protein-coding genes</li><li data-l="b">They identify every cell by light scattering</li><li data-l="c">They hybridize to exon-containing DNA and allow streptavidin-based enrichment</li><li data-l="d">They reverse-transcribe RNA into DNA without enzymes</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> A probe is a piece of RNA (here) with a known sequence that base-pairs (hybridises) with the matching DNA. The probes match every known exon and carry <b>biotin</b>, a small vitamin that works as a hook. Magnetic beads coated with <b>streptavidin</b>, a protein that grips biotin extremely tightly, catch the probes with their exon fragments; a magnet holds the beads while the rest of the genome is washed away. The probes do not cut DNA, do not copy RNA and have nothing to do with cells. Read page 4.11, section 2 (how the exons are fished out, Figure 4-40).</p></div></details></li>
+  <li value="43">Which method is most suitable for characterizing the entire collection of transcripts expressed by cells?
+    <ul class="opts"><li data-l="a">A single restriction enzyme digestion</li><li data-l="b">SDS-PAGE alone</li><li data-l="c">RNA sequencing (RNA-seq)</li><li data-l="d">Routine karyotyping</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>c.</strong> The entire collection of transcripts (all the RNA molecules in a cell) is the <b>transcriptome</b>. <b>RNA-seq</b> reads it: isolate all RNA, copy it into cDNA with reverse transcriptase, sequence millions of pieces and count the reads per gene. A restriction digestion cuts DNA, SDS-PAGE separates proteins by size and a karyotype shows chromosomes; none of them measures RNA. Read page 4.11, section 4 (transcriptome sequencing: RNA-seq).</p></div></details></li>
+  <li value="65">Which sequencing strategy is most appropriate for the following research objective: one known disease gene?
+    <ul class="opts"><li data-l="a">Whole-genome sequencing</li><li data-l="b">Targeted sequencing</li><li data-l="c">Metagenomic sequencing</li><li data-l="d">Whole-exome sequencing</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> If you already know which gene to look at, you capture and read only that region: <b>targeted sequencing</b>. Reading less means you can afford great depth (more than 500 reads over every base) for the lowest cost, so even rare variants are found reliably. Sequencing the whole genome or the whole exome for one known gene would waste almost all the data. Metagenomics is for mixed communities of microbes. Read page 4.11, section 2 (targeted region sequencing) and section 5 (which approach for which question).</p></div></details></li>
+  <li value="66">Which sequencing strategy is most appropriate for the following research objective: hundreds of candidate coding genes?
+    <ul class="opts"><li data-l="a">Metagenomic sequencing</li><li data-l="b">Whole-genome sequencing</li><li data-l="c">Targeted sequencing</li><li data-l="d">Whole-exome sequencing</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> The key word is <b>coding</b>: the question is about variants in the protein-coding parts of hundreds of genes. <b>Whole-exome sequencing</b> reads the exons of all protein-coding genes (1.5 % of the genome), so it covers all those candidates at once, at 50 to 100X depth and for far less data than a whole genome. Targeted sequencing is for one or a few chosen regions (question 65); whole-genome sequencing would read 98.5 % of DNA you do not need. In this set of four questions each strategy is the answer exactly once. Read page 4.11, section 2 (exome and targeted sequencing, Figure 4-41).</p></div></details></li>
+  <li value="67">Which sequencing strategy is most appropriate for the following research objective: unresolved variant anywhere in the genome?
+    <ul class="opts"><li data-l="a">Whole-exome sequencing</li><li data-l="b">Whole-genome sequencing</li><li data-l="c">Targeted sequencing</li><li data-l="d">Metagenomic sequencing</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>b.</strong> If the variant could be <b>anywhere</b>, including promoters, splice sites, introns and the DNA between genes, only <b>whole-genome sequencing</b> looks everywhere; it also finds structural variants (large rearrangements). Exome sequencing misses everything outside the exons (98.5 % of the genome), and targeted sequencing only looks at the regions you chose in advance. Read page 4.11, sections 1 and 5.</p></div></details></li>
+  <li value="68">Which sequencing strategy is most appropriate for the following research objective: mixed microbial population in a sample?
+    <ul class="opts"><li data-l="a">Targeted sequencing</li><li data-l="b">Whole-genome sequencing</li><li data-l="c">Whole-exome sequencing</li><li data-l="d">Metagenomic sequencing</li></ul>
+    <details><summary>Answer</summary><div class="ans"><p><strong>d.</strong> A sample full of different, mostly unknown and unculturable microbes is read with <b>metagenome sequencing</b>: all the DNA of the sample is extracted and sequenced together, giving the species present and the genes they carry. WGS, WES and targeted sequencing all start from the DNA of one organism and differ only in how much of it they read. Read page 4.11, section 2 (metagenome sequencing).</p></div></details></li>
+</ol>
+<!-- /official-quiz-block -->
 
 <!-- ============================================================ -->
 <h2>8. Questions and answers</h2>

@@ -1,4 +1,4 @@
-// Chapter 3 – Human pathogens: viruses (practice questions written by Claude; the official chapter quiz is not available yet)
+// Chapter 3 – Human pathogens: viruses (practice questions written by Claude; the official chapter quiz is in off3.js)
 window.QBANK = window.QBANK || [];
 window.QCONCEPTS = Object.assign(window.QCONCEPTS || {}, {
   "ch3:pathogens": "Pathogens and infectious disease (introduction)",
