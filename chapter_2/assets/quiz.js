@@ -8,3 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (hide) hide.addEventListener('click', function () { list.querySelectorAll('details').forEach(function (d) { d.open = false; }); });
   });
 });
+
+// Printing: open every answer (details) before printing, close the ones that were closed afterwards.
+(function () {
+  var opened = [];
+  window.addEventListener('beforeprint', function () {
+    opened = [];
+    document.querySelectorAll('details').forEach(function (d) { if (!d.open) { d.open = true; opened.push(d); } });
+  });
+  window.addEventListener('afterprint', function () { opened.forEach(function (d) { d.open = false; }); opened = []; });
+})();

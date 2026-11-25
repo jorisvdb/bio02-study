@@ -203,3 +203,19 @@ ol.mq details .ans p:last-child { margin-bottom: 0; }
 .mq-tools button { font: inherit; font-size: 0.85rem; padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); border-radius: 4px; cursor: pointer; margin-right: 8px; }
 .mq-tools button:hover { border-color: var(--accent); }
 .symbols td:first-child { font-size: 1.1rem; white-space: nowrap; }
+
+/* ---------- printing (portrait paper is narrower than the 880px layout) ---------- */
+@media print {
+  main { max-width: none; padding: 0; }
+  body { background: #fff; color: #000; }
+  .nav, .mq-tools, .stepbar { display: none !important; }
+  table { font-size: 0.82rem; table-layout: auto; width: 100%; }
+  th, td { white-space: normal !important; overflow-wrap: anywhere; hyphens: auto; padding: 4px 6px; }
+  pre { white-space: pre-wrap; overflow: visible; }
+  svg.molsvg { max-width: 100%; height: auto; }
+  tr, figure, .callout, .stepper, ol.mq > li, details { break-inside: avoid; page-break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+  a[href]::after { content: none; }
+}

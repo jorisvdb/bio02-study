@@ -20,3 +20,4 @@
 .stepper .ahT { fill: var(--c-O); }
 .stepper .ahF { fill: var(--c-S); }
 .stepper .ahN { fill: var(--accent); }
+@media print { .stepper .fresh { animation: none; } .stepper { break-inside: avoid; } }
