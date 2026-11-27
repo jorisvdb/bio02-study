@@ -1053,12 +1053,13 @@
   });
 
   /* ---------------- app version and updates ---------------- */
+  var APPVER = '';
   function showVersion() {
     var el = app.querySelector('#appver'); if (!el) return;
     if (!window.caches) { el.textContent = 'web'; return; }
     caches.keys().then(function (ks) {
       var k = ks.filter(function (x) { return x.indexOf('bio02-core-') === 0; }).sort().pop();
-      el.textContent = k ? k.slice(11, 17) : 'web (not stored)';
+      el.textContent = APPVER = k ? k.slice(11, 17) : 'web (not stored)';
     }, function () { el.textContent = '?'; });
   }
   function checkUpdate(manual) {
@@ -1146,21 +1147,42 @@
     if (cur.trim()) out.push(cur);
     return out;
   }
-  // one utterance; reports whether the phone really started speaking
-  function utter(text, p, cb) {
-    var u = new SpeechSynthesisUtterance(text), vs = speechSynthesis.getVoices() || [];
-    var v = pickVoice(p.lang);
-    if (v) { u.voice = v; u.lang = v.lang; } else if (!vs.length) u.lang = p.lang;   // no voice list yet: ask for the language
+  // three ways to ask the phone to speak; some Android speech engines stay silent with one of them
+  var HOWS = ['voice', 'lang', 'plain'];
+  function makeUtt(text, p, how) {
+    var u = new SpeechSynthesisUtterance(text), v = how === 'voice' ? pickVoice(p.lang) : null;
+    if (v) { u.voice = v; u.lang = v.lang; } else if (how !== 'plain') u.lang = p.lang;
     u.rate = p.rate;
-    var info = { started: false, err: null, voice: v ? v.name : '(default)' }, done = false;
-    var guard = setTimeout(fin, 4000 + text.length * 120 / p.rate);
-    function fin() { if (done) return; done = true; clearTimeout(guard); cb(info); }
-    u.onstart = function () { info.started = true; };
-    u.onend = fin;
-    u.onerror = function (e) { info.err = (e && e.error) || 'error'; fin(); };
-    function go() { try { speechSynthesis.resume(); } catch (e) { /* ignore */ } speechSynthesis.speak(u); }
-    // Chrome on Android drops speech that starts right after cancel(): wait a moment first
-    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(go, 200); } else go();
+    return { u: u, voice: v ? v.name : how === 'plain' ? '(phone default)' : '(' + p.lang + ')' };
+  }
+  // one utterance; if the phone does not start within 3 s, try the next way (and remember the one that works)
+  function utter(text, p, cb, onlyHow) {
+    var info = { started: false, err: null, voice: '', how: '' }, done = false;
+    var k0 = onlyHow ? HOWS.indexOf(onlyHow) : Math.max(0, HOWS.indexOf(p.how || 'voice'));
+    function fin() { if (done) return; done = true; cb(info); }
+    function attempt(k) {
+      var m = makeUtt(text, p, HOWS[k]), u = m.u, ended = false, t0 = Date.now();
+      info.voice = m.voice; info.how = HOWS[k]; info.err = null;
+      window.__lastUtt = u;   // keep a reference: Chrome can lose the events of a collected utterance
+      var guard = setTimeout(function () { ended = true; fin(); }, 4000 + text.length * 120 / p.rate);
+      var check = setTimeout(function () {
+        if (info.started || ended) return;
+        try { speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+        if (!onlyHow && k + 1 < HOWS.length) { ended = true; clearTimeout(guard); setTimeout(function () { attempt(k + 1); }, 250); }
+      }, 3000);
+      u.onstart = function () { info.started = true; if (!onlyHow && p.how !== HOWS[k]) { p.how = HOWS[k]; save(); } };
+      u.onend = function () { if (ended) return; ended = true; clearTimeout(guard); clearTimeout(check); if (!info.started && Date.now() - t0 > 600) info.started = true; fin(); };
+      u.onerror = function (e) {
+        if (ended) return; ended = true; clearTimeout(guard); clearTimeout(check);
+        info.err = (e && e.error) || 'error';
+        if (!onlyHow && !info.started && info.err !== 'interrupted' && info.err !== 'canceled' && k + 1 < HOWS.length) setTimeout(function () { attempt(k + 1); }, 250);
+        else fin();
+      };
+      function go() { try { speechSynthesis.resume(); } catch (e) { /* ignore */ } speechSynthesis.speak(u); }
+      // Chrome on Android drops speech that starts right after cancel(): wait a moment first
+      if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(go, 250); } else go();
+    }
+    attempt(k0);
     return info;
   }
   function say(text, tok) {
@@ -1173,7 +1195,7 @@
           if (CAR && !CAR.heardOk) { if (inf.started) { CAR.heardOk = true; carWarn(''); } else carWarn(inf.err); }
           one();
         });
-        if (CAR && !CAR.heardOk) setTimeout(function () { if (CAR && !CAR.heardOk && !info.started) carWarn(info.err); }, 3500);
+        if (CAR && !CAR.heardOk) setTimeout(function () { if (CAR && !CAR.heardOk && !info.started) carWarn(info.err); }, 10500);
       })();
     });
   }
@@ -1186,14 +1208,23 @@
   }
   function testVoice(out) {
     if (!window.speechSynthesis) { out.textContent = 'This browser cannot speak.'; return; }
-    var p = carPrefs(), vs = speechSynthesis.getVoices() || [];
-    out.innerHTML = 'Speaking…';
-    utter('Hello! This is car mode. Can you hear me?', p, function (inf) {
-      var en = vs.filter(function (v) { return /^en/i.test(v.lang); }).length;
-      out.innerHTML = (inf.started ? '✓ The phone started speaking (voice: ' + esc(inf.voice) + '). If you heard nothing, turn up the <b>media</b> volume.'
-        : '✗ The phone did not start speaking' + (inf.err ? ' (error: ' + esc(inf.err) + ')' : '') + '.<br>' + NOSOUND) +
-        '<br><span class="small muted">' + vs.length + ' voices on this phone, ' + en + ' English.</span>';
-    });
+    var p = carPrefs(), vs = speechSynthesis.getVoices() || [], en = vs.filter(function (v) { return /^en/i.test(v.lang); }).length;
+    var lines = [], k = 0;
+    out.innerHTML = 'Testing 3 ways… listen for “test one”, “test two”, “test three”.';
+    (function next() {
+      if (k >= HOWS.length) {
+        var ok = lines.filter(function (l) { return l.ok; });
+        out.innerHTML = lines.map(function (l) { return (l.ok ? '✓' : '✗') + ' ' + l.n + ': ' + esc(l.t); }).join('<br>') +
+          '<br><span class="small muted">' + vs.length + ' voices on this phone, ' + en + ' English · app ' + esc(APPVER || '?') + '</span>' +
+          (ok.length ? '<br>Tell me which numbers you <b>heard</b>.' : '<br>' + NOSOUND);
+        return;
+      }
+      var how = HOWS[k], n = 'test ' + (k + 1);
+      utter(n === 'test 1' ? 'Test one.' : n === 'test 2' ? 'Test two.' : 'Test three.', p, function (inf) {
+        lines.push({ n: n, ok: inf.started, t: (inf.started ? 'started' : 'did not start') + ' · ' + how + ' · ' + inf.voice + (inf.err ? ' · error ' + inf.err : '') });
+        k++; setTimeout(next, 400);
+      }, how);
+    })();
   }
   function tone(ok) {
     try {
