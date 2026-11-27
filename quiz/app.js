@@ -364,7 +364,7 @@
       '<div class="stat"><b>' + C.c + ' / ' + C.n + '</b><span>correct (' + pct(C.c, C.n) + '%)</span></div>' +
       '<div class="stat"><b>' + C.h + '</b><span>answered with a hint</span></div>' +
       '<div class="stat"><b>' + C.pending.length + '</b><span>mistakes waiting to come back</span></div></div>';
-    html += '<div class="actions"><button class="primary" id="resume">▶ Resume</button>' + (carSupported() ? '<button id="resumecar">🚗 Resume in car</button>' : '') + '<button id="back">Home</button></div>';
+    html += '<div class="actions"><button class="primary" id="resume">▶ Resume</button><button id="back">Home</button></div>';
     var ks = Object.keys(per).map(Number).sort(function (a, b) { return a - b; });
     if (ks.length) {
       html += '<h2>This run per chapter</h2><div class="card"><table><tr><th>Ch</th><th>Topic</th><th>Answered</th><th>Correct</th></tr>' +
@@ -383,7 +383,6 @@
     }
     app.innerHTML = html;
     app.querySelector('#resume').onclick = function () { startCont(false); };
-    var rc = app.querySelector('#resumecar'); if (rc) rc.onclick = function () { startCont(false, true); };
     app.querySelector('#back').onclick = renderDash;
     window.scrollTo(0, 0);
   }
@@ -407,25 +406,22 @@
     });
     if (hasRun()) rows.push({ k: 'cont', label: 'Endless study (ch ' + selectedChapters().join(', ') + ')', sub: C.n + ' answered' + (C.n ? ' · ' + pct(C.c, C.n) + '% right' : '') + ' · ' + C.pending.length + ' mistakes waiting', p: null, saved: C.saved || C.started || 0 });
     rows.sort(function (a, b) { return b.saved - a.saved; });
-    var carBtn = function (k, cls) { return carSupported() ? '<button class="' + cls + '" data-car="' + esc(k) + '" title="Continue in car mode: read aloud, answer by voice">🚗 Car</button>' : ''; };
     html += '<div class="home-go">' +
       '<button class="go go-new" id="newquiz"><span class="go-ic">＋</span><b>New quiz</b><span>choose what, which chapters, how many</span></button>';
     if (rows.length) {
       var r0 = rows[0];
-      html += '<div class="go-pair"><button class="go go-cont" data-resume="' + esc(r0.k) + '"><span class="go-ic">▶</span><b>Resume</b><span>' + esc(r0.label) + ' · ' + esc(r0.sub) + '</span></button>' +
-        carBtn(r0.k, 'go go-car go-carsm') + '</div>';
+      html += '<button class="go go-cont" data-resume="' + esc(r0.k) + '"><span class="go-ic">▶</span><b>Resume</b><span>' + esc(r0.label) + ' · ' + esc(r0.sub) + '</span></button>';
     }
     html += '</div>';
     if (rows.length) {
-      html += '<h2>Open sessions (' + rows.length + ')</h2><div class="card"><p class="small muted" style="margin:0 0 6px">Each one continues exactly where you left it, on the screen (▶) or in the car (🚗).</p><table class="open-ses">';
+      html += '<h2>Open sessions (' + rows.length + ')</h2><div class="card"><p class="small muted" style="margin:0 0 6px">Each one continues exactly where you left it.</p><table class="open-ses">';
       rows.forEach(function (z) {
         html += '<tr><td><b>' + esc(z.label) + '</b><div class="small muted">' + esc(z.sub) + (z.saved ? ' · ' + new Date(z.saved).toLocaleString() : '') + '</div>' +
           (z.p == null ? '' : '<div class="progress"><i style="width:' + z.p + '%"></i></div>') + '</td>' +
-          '<td class="ses-btns"><button class="primary small" data-resume="' + esc(z.k) + '">▶ Continue</button>' + carBtn(z.k, 'small') + '<button class="small" data-drop="' + esc(z.k) + '">Discard</button></td></tr>';
+          '<td class="ses-btns"><button class="primary small" data-resume="' + esc(z.k) + '">▶ Continue</button><button class="small" data-drop="' + esc(z.k) + '">Discard</button></td></tr>';
       });
       html += '</table></div>';
     }
-    if (!carSupported()) html += '<p class="small muted">🚗 Car mode is not available here: ' + esc(carWhyNot()) + '</p>';
     html += '<div class="home-more"><a class="btn" href="words.html">📖 Difficult words</a><a class="btn" href="pictures.html">🖼 All pictures</a></div>';
     html += installBox();
     html += '<h2>Your numbers</h2>';
@@ -500,7 +496,6 @@
     function pushQ() { try { history.pushState({ v: 'q' }, ''); } catch (e) { /* ignore */ } }
     function go(k, car) { pushQ(); if (k === 'cont') startCont(false, car); else resumeSes(k, car); }
     [].forEach.call(app.querySelectorAll('[data-resume]'), function (b) { b.onclick = function () { go(b.getAttribute('data-resume'), false); }; });
-    [].forEach.call(app.querySelectorAll('[data-car]'), function (b) { b.onclick = function () { go(b.getAttribute('data-car'), true); }; });
     [].forEach.call(app.querySelectorAll('[data-drop]'), function (b) {
       b.onclick = function () {
         if (!confirm('Discard this open session? Your per-question progress is kept.')) return;
@@ -566,7 +561,7 @@
       var again = C.log.some(function (r) { return r.id === q.id && !r.ok; }) && stat(q.id) && stat(q.id).lastOk === false;
       html = '<div class="row"><b>Endless study</b><span class="spacer"></span>' +
         '<span class="small">This run: <b id="score">' + C.c + '/' + C.n + '</b> correct' + (C.n ? ' (' + pct(C.c, C.n) + '%)' : '') + '</span>' +
-        '<button class="small" id="quit">Pause</button><button class="small carswitch" id="tocar" title="Car mode: read aloud, answer by voice">🚗</button></div>' +
+        '<button class="small" id="quit">Pause</button><button class="small carswitch" id="tocar" title="Car mode: questions read aloud, you answer by voice">🚗 Car mode</button></div>' +
         '<div class="progress" title="' + mastered + ' of ' + BANK.length + ' questions mastered"><i style="width:' + pct(mastered, BANK.length) + '%"></i></div>' +
         '<p class="small muted" style="margin:-6px 0 8px">' + mastered + ' of ' + BANK.length + ' questions mastered</p>';
       html += '<div class="card" id="qcard"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) +
@@ -576,7 +571,7 @@
         '<span class="muted small">Question ' + (SES.i + 1) + ' of ' + SES.queue.length + '</span>' +
         (SES.exam ? '' : '<span class="small"> · <b id="score">' + sc.c + '/' + sc.n + '</b> correct</span>') +
         (SES.save ? '<button class="small" id="pause" title="Your place is saved after every answer anyway">⏸ Save &amp; stop</button>' : '') +
-        '<button class="small" id="quit">End session</button><button class="small carswitch" id="tocar" title="Car mode: read aloud, answer by voice">🚗</button></div>' +
+        '<button class="small" id="quit">End session</button><button class="small carswitch" id="tocar" title="Car mode: questions read aloud, you answer by voice">🚗 Car mode</button></div>' +
         '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>';
       html += '<div class="card" id="qcard"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) +
         '<span class="badge">' + esc(conceptLabel(q.concept)) + '</span>' + (SES.reask[q.id] ? '<span class="badge">again</span>' : '') + starBtn(q.id) + '</div>';
@@ -1328,7 +1323,7 @@
     var q = BYID[SES.queue[SES.i]], sc = sessionScore(), p = carPrefs();
     var CC = SES.cont ? contRun() : null;
     var html = '<div class="row"><b>🚗 ' + esc(SES.label) + '</b><span class="spacer"></span><span class="muted small">' +
-      (CC ? 'this run ' + CC.c + '/' + CC.n + ' right' : (SES.i + 1) + ' / ' + SES.queue.length + (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right')) + '</span><button class="small carswitch" id="toscreen" title="Leave car mode and continue this quiz on the screen">📱 Screen</button></div>' +
+      (CC ? 'this run ' + CC.c + '/' + CC.n + ' right' : (SES.i + 1) + ' / ' + SES.queue.length + (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right')) + '</span><button class="small carswitch" id="toscreen" title="Leave car mode and continue this quiz on the screen">📱 Leave car mode</button></div>' +
       (CC ? '' : '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>') +
       '<div id="carst" class="car-st">…</div><div id="carheard" class="car-heard"></div><div id="carwarn"></div>' +
       '<div class="card car-q"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) + '</div>' +
@@ -1382,6 +1377,19 @@
     if (SES.i >= SES.queue.length) {
       if (!SES.cont) { carFinish(); return; }
       if (!contPickCar()) { carStop(); return; }
+    }
+    if (!SES.cont && !voiceable(BYID[SES.queue[SES.i]])) {
+      // skip ahead to the next question that can be read aloud; the others keep their place after it
+      var j = SES.i;
+      while (j < SES.queue.length && !voiceable(BYID[SES.queue[j]])) j++;
+      if (j >= SES.queue.length) {
+        var tk = CAR.tok;
+        carStatus('speak');
+        say('The last questions need the screen. Car mode is off.', tk).then(function () { if (CAR && CAR.tok === tk) carSwitchOff(); });
+        return;
+      }
+      SES.queue.splice(SES.i, 0, SES.queue.splice(j, 1)[0]);
+      persistSes(false);
     }
     var q = BYID[SES.queue[SES.i]];
     CAR.qid = q.id; CAR.hints = 0; CAR.struck = [];
@@ -1567,12 +1575,13 @@
       if (i >= SES.queue.length || !voiceable(BYID[SES.queue[0]])) { if (!contPickCar()) { alert('No questions to read aloud in these chapters.'); return; } }
       carBegin(); return;
     }
-    var rest = SES.queue.slice(i).filter(function (id) { return BYID[id] && voiceable(BYID[id]); });
-    if (!rest.length) {
+    // questions that cannot be read aloud stay in the quiz; car mode moves them back for when you are on the screen again
+    var any = SES.queue.slice(i).some(function (id) { return BYID[id] && voiceable(BYID[id]); });
+    if (!any) {
       if (silent) { SES.i = i; persistSes(false); renderQuestion(); return; }
       alert('The rest of this quiz has no questions that can be read aloud (only matching, ordering or picture questions).'); return;
     }
-    SES.queue = SES.queue.slice(0, i).concat(rest); SES.i = i; SES.car = true;
+    SES.i = i; SES.car = true;
     persistSes(false); carBegin();
   }
   // and back to the screen, at the same place
@@ -1688,7 +1697,7 @@
     }
     html += '<div class="wiz-bar">' + (W.step === 3
       ? '<button class="primary big" id="wstart"' + (canNext ? '' : ' disabled') + '>▶ Start</button>' +
-        (carSupported() ? '<button class="big go-car wcarbtn" id="wstartcar"' + (canNext ? '' : ' disabled') + '>🚗 Start in car</button>' : '')
+''
       : '<button class="primary big" id="wnext"' + (canNext ? '' : ' disabled') + '>Next →</button>') + '</div>';
     app.innerHTML = html;
     app.querySelector('#wback').onclick = function () { history.back(); };
@@ -1704,7 +1713,6 @@
     });
     var wn = app.querySelector('#wnext'); if (wn) wn.onclick = wNext;
     var ws = app.querySelector('#wstart'); if (ws) ws.onclick = function () { wStart(false); };
-    var wsc = app.querySelector('#wstartcar'); if (wsc) wsc.onclick = function () { wStart(true); };
     window.scrollTo(0, 0);
   }
   // phone/browser back button: in the wizard one step back; in a quiz back home (the place is saved)

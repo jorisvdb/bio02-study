@@ -2,7 +2,7 @@
    Stores the whole site on the phone except the animation audio, which is stored the first time it plays.
    Pages come from the phone first (fast, works offline); a new version of the site gets a new VERSION,
    the phone then downloads everything again in the background and uses it from the next start. */
-var VERSION = 'a086816b81';
+var VERSION = '768962af45';
 var CORE = 'bio02-core-' + VERSION;
 var EXTRA = 'bio02-extra';
 var FILES = [

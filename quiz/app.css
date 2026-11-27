@@ -161,7 +161,7 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
 .ses-btns { white-space: nowrap; text-align: right; }
 .ses-btns button { margin-left: 4px; }
 .wiz-bar .wcarbtn { margin-left: 8px; }
-.carswitch { margin-left: 6px; }
+.carswitch { margin-left: 6px; background: #e0892b; color: #fff; border-color: #c2571a; font-weight: 600; }
 .chips-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 6px; }
 .chip { min-width: 2.4em; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: .9rem; color: var(--muted); }
 .chip.on { background: var(--ok); border-color: var(--ok); color: #fff; }
