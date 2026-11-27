@@ -414,6 +414,7 @@
       html += '</table></div>';
     }
     html += '<div class="home-more"><a class="btn" href="words.html">📖 Difficult words</a><a class="btn" href="pictures.html">🖼 All pictures</a></div>';
+    html += installBox();
     html += '<h2>Your numbers</h2>';
     html += '<div class="stats">' +
       '<div class="stat"><b>' + BANK.length + '</b><span>questions loaded</span></div>' +
@@ -472,6 +473,14 @@
 
     // wiring
     app.querySelector('#newquiz').onclick = function () { openWizard(); };
+    var ib = app.querySelector('#installBtn');
+    if (ib) ib.onclick = function () {
+      if (!INSTALL) return;
+      INSTALL.prompt();
+      INSTALL.userChoice.then(function () { INSTALL = null; renderDash(); }, function () {});
+    };
+    var ix = app.querySelector('#installHide');
+    if (ix) ix.onclick = function () { S.prefs.noInstall = 1; save(); renderDash(); };
     [].forEach.call(app.querySelectorAll('[data-cch]'), function (b) {
       b.onclick = function () {
         var c = Number(b.getAttribute('data-cch')), cs = selectedChapters().slice(), k = cs.indexOf(c);
@@ -1032,6 +1041,22 @@
       pick(Number(e.key) - 1);
     }
   });
+
+  /* ---------------- install as an app (PWA) ---------------- */
+  var INSTALL = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); INSTALL = e; if (VIEW === 'dash') renderDash(); });
+  window.addEventListener('appinstalled', function () { INSTALL = null; if (VIEW === 'dash') renderDash(); });
+  function isApp() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
+  function installBox() {
+    if (isApp() || S.prefs.noInstall || location.protocol === 'file:') return '';
+    var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var body;
+    if (INSTALL) body = '<button class="primary" id="installBtn">📲 Install as app</button><span class="small muted">own icon on your home screen, full screen, works offline</span>';
+    else if (ios) body = '<span class="small">📲 <b>Use it as an app:</b> in Safari tap <b>Share</b> (□↑) → <b>Add to Home Screen</b>. It then opens full screen and works offline.</span>';
+    else if (/Android/.test(navigator.userAgent)) body = '<span class="small">📲 <b>Use it as an app:</b> in Chrome tap the menu <b>⋮</b> → <b>Add to Home screen</b> (or <b>Install app</b>).</span>';
+    else return '';
+    return '<div class="install-box">' + body + '<button class="small linkish" id="installHide">hide</button></div>';
+  }
 
   /* ---------------- new-quiz wizard ---------------- */
   var W = null;

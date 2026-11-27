@@ -209,3 +209,6 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
   .bar { min-width: 56px; }
   th, td { padding: 6px 5px; }
 }
+/* install as an app */
+.install-box { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; background: var(--card); border: 1px dashed var(--accent); }
+.install-box .linkish { margin-left: auto; }

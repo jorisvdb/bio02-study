@@ -35,6 +35,13 @@
 .w-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: var(--new); vertical-align: middle; }
 .w-dot.ok { background: var(--master); } .w-dot.bad { background: var(--bad); }
 </style>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#2a6fdb">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BIO02">
+<script>if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(function () {});</script>
 </head>
 <body>
 <main id="app"><p>Loading words…</p></main>
