@@ -247,6 +247,7 @@
       return;
     }
     SES = { mode: mode, label: label, queue: pool.map(function (q) { return q.id; }), i: 0, reask: {}, results: [], exam: !!opts.exam, save: mode !== 'autotest', sid: 's' + Date.now().toString(36) + Math.floor(Math.random() * 1e4) };
+    if (CAR_NEXT) { CAR_NEXT = false; SES.car = true; SES.label = '🚗 ' + SES.label; persistSes(false); carBegin(); return; }
     persistSes(false);
     renderQuestion();
   }
@@ -255,7 +256,7 @@
   function persistSes(answered) {
     if (!SES || !SES.save || SES.cont) return;
     var all = sessions();
-    all[SES.sid] = { sid: SES.sid, mode: SES.mode, label: SES.label, queue: SES.queue, i: SES.i, reask: SES.reask, results: SES.results, exam: SES.exam, answered: !!answered, started: (all[SES.sid] && all[SES.sid].started) || Date.now(), saved: Date.now() };
+    all[SES.sid] = { sid: SES.sid, mode: SES.mode, label: SES.label, queue: SES.queue, i: SES.i, reask: SES.reask, results: SES.results, exam: SES.exam, car: !!SES.car, answered: !!answered, started: (all[SES.sid] && all[SES.sid].started) || Date.now(), saved: Date.now() };
     // keep at most 12 open sessions: drop the one untouched longest
     var ids = Object.keys(all).sort(function (a, b) { return all[b].saved - all[a].saved; });
     ids.slice(12).forEach(function (k) { delete all[k]; });
@@ -272,9 +273,11 @@
     var z = sessions()[sid];
     if (!z) return;
     z.queue = z.queue.filter(function (id) { return BYID[id]; });
-    SES = { mode: z.mode, label: z.label, queue: z.queue, i: z.i, reask: z.reask || {}, results: z.results || [], exam: !!z.exam, save: true, sid: sid };
+    SES = { mode: z.mode, label: z.label, queue: z.queue, i: z.i, reask: z.reask || {}, results: z.results || [], exam: !!z.exam, car: !!z.car, save: true, sid: sid };
     if (z.answered) SES.i++;
-    if (SES.i >= SES.queue.length) renderSummary(); else { persistSes(false); renderQuestion(); }
+    if (SES.i >= SES.queue.length) renderSummary();
+    else if (SES.car && carSupported()) { persistSes(false); carBegin(); }
+    else { persistSes(false); renderQuestion(); }
   }
 
   /* ---------------- continuous study ---------------- */
@@ -1058,6 +1061,401 @@
     return '<div class="install-box">' + body + '<button class="small linkish" id="installHide">hide</button></div>';
   }
 
+  /* ---------------- car mode: questions read aloud, answered by voice ----------------
+     Uses the browser's speech synthesis (speaking) and speech recognition (listening; in Chrome on Android
+     this needs internet). Answers are recorded exactly like answers given on the screen. */
+  var CAR_NEXT = false, CAR = null;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  function carSupported() { return !!(SR && window.speechSynthesis); }
+  function voiceable(q) { return (q.type === 'mc' || q.type === 'tf' || q.type === 'multi' || q.type === 'fill') && !q.img; }
+  function carPrefs() {
+    var p = S.prefs.car || (S.prefs.car = {});
+    if (!p.lang) p.lang = 'en-US';
+    if (!p.rate) p.rate = 1;
+    if (p.explain == null) p.explain = true;
+    return p;
+  }
+  var LETTERS = 'ABCDEFGH';
+
+  // text that sounds right when read aloud
+  function sayable(s) {
+    return strip(String(s))
+      .replace(/_{3,}/g, ' blank ')
+      .replace(/(\d)\s*[−-]\s*(\d)/g, '$1 to $2')
+      .replace(/\s[−]\s?|\s?−\s/g, ' minus ').replace(/−/g, ' minus ')
+      .replace(/→|⟶|=>/g, ', then ').replace(/←/g, ' from ').replace(/↔/g, ' versus ')
+      .replace(/≈/g, ' about ').replace(/≥/g, ' at least ').replace(/≤/g, ' at most ').replace(/±/g, ' plus or minus ')
+      .replace(/×/g, ' times ').replace(/%/g, ' percent').replace(/°C/g, ' degrees').replace(/[µμ]/g, 'micro')
+      .replace(/(\d)′/g, '$1 prime').replace(/[′’]/g, "'")
+      .replace(/\be\.g\./gi, 'for example').replace(/\bi\.e\./gi, 'that is').replace(/\bvs\.?/gi, 'versus')
+      .replace(/–/g, ', ').replace(/\//g, ' or ').replace(/\s+/g, ' ').trim();
+  }
+
+  /* --- speaking --- */
+  function pickVoice(lang) {
+    var vs = speechSynthesis.getVoices() || [];
+    return vs.filter(function (v) { return v.lang === lang; })[0] ||
+      vs.filter(function (v) { return v.lang && v.lang.replace('_', '-').indexOf(lang.slice(0, 2)) === 0; })[0] || null;
+  }
+  function chunks(text) {
+    var parts = String(text).match(/[^.!?;:]+[.!?;:]*\s*/g) || [text], out = [], cur = '';
+    parts.forEach(function (p) { if ((cur + p).length > 180 && cur) { out.push(cur); cur = p; } else cur += p; });
+    if (cur.trim()) out.push(cur);
+    return out;
+  }
+  function say(text, tok) {
+    return new Promise(function (resolve) {
+      if (!text || !CAR || CAR.tok !== tok) { resolve(); return; }
+      var list = chunks(sayable(text)), i = 0, p = carPrefs();
+      (function one() {
+        if (!CAR || CAR.tok !== tok || i >= list.length) { resolve(); return; }
+        var u = new SpeechSynthesisUtterance(list[i++]);
+        u.lang = p.lang; u.rate = p.rate;
+        var v = pickVoice(p.lang); if (v) u.voice = v;
+        var done = false, guard = setTimeout(fin, 4000 + list[i - 1].length * 120 / p.rate);
+        function fin() { if (done) return; done = true; clearTimeout(guard); one(); }
+        u.onend = fin; u.onerror = fin;
+        speechSynthesis.speak(u);
+      })();
+    });
+  }
+  function tone(ok) {
+    try {
+      var A = window.AudioContext || window.webkitAudioContext; if (!A) return;
+      var ac = CAR && CAR.ac || (CAR.ac = new A()), t = ac.currentTime;
+      (ok ? [660, 880] : [330, 220]).forEach(function (f, k) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.frequency.value = f; o.connect(g); g.connect(ac.destination);
+        g.gain.setValueAtTime(0.0001, t + k * 0.14); g.gain.exponentialRampToValueAtTime(0.25, t + k * 0.14 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + k * 0.14 + 0.13);
+        o.start(t + k * 0.14); o.stop(t + k * 0.14 + 0.14);
+      });
+    } catch (e) { /* no sound */ }
+  }
+
+  /* --- listening --- */
+  function listen(tok) {
+    return new Promise(function (resolve) {
+      if (!CAR || CAR.tok !== tok) { resolve({ err: 'stopped' }); return; }
+      var r, alts = [], err = null;
+      try { r = new SR(); } catch (e) { resolve({ err: 'unsupported' }); return; }
+      r.lang = carPrefs().lang; r.interimResults = false; r.maxAlternatives = 5; r.continuous = false;
+      r.onresult = function (e) {
+        var res = e.results[e.results.length - 1];
+        for (var k = 0; k < res.length; k++) alts.push(String(res[k].transcript || '').trim());
+      };
+      r.onerror = function (e) { err = e.error || 'error'; };
+      r.onend = function () { CAR && (CAR.rec = null); resolve(alts.length ? { alts: alts } : { err: err || 'no-speech' }); };
+      CAR.rec = r;
+      carStatus('listen');
+      try { r.start(); } catch (e) { resolve({ err: 'start' }); }
+    });
+  }
+
+  /* --- understanding what was said --- */
+  function clean(t) { return ' ' + String(t).toLowerCase().replace(/[.,!?;:"']/g, ' ').replace(/\s+/g, ' ').trim() + ' '; }
+  function command(alts) {
+    // only a command when the whole utterance is the command (so "stop codon" stays an answer)
+    for (var i = 0; i < alts.length; i++) {
+      var t = clean(alts[i]).replace(/ (please|now|the question|that|it) /g, ' ').replace(/\s+/g, ' ');
+      if (/^ (repeat|again|say again|say it again|read again|read it again|what|sorry|pardon) $/.test(t)) return 'repeat';
+      if (/^ (hint|give me a hint|a hint|help|clue) $/.test(t)) return 'hint';
+      if (/^ (skip|pass|next|i don t know|i dont know|don t know|no idea|next question) $/.test(t)) return 'skip';
+      if (/^ (stop|pause|quit|end|finish|stop quiz|end quiz|stop the quiz) $/.test(t)) return 'stop';
+    }
+    return null;
+  }
+  var LETTER_WORDS = { a: 0, ay: 0, eh: 0, b: 1, be: 1, bee: 1, c: 2, see: 2, sea: 2, cee: 2, si: 2, d: 3, dee: 3, e: 4, ee: 4, f: 5, ef: 5, eff: 5, g: 6, h: 7 };
+  var NUM_WORDS = { one: 0, won: 0, first: 0, '1': 0, two: 1, to: 1, too: 1, second: 1, '2': 1, three: 2, tree: 2, third: 2, '3': 2, four: 3, for: 3, fourth: 3, '4': 3, five: 4, fifth: 4, '5': 4, six: 5, sixth: 5, '6': 5 };
+  var FILLER = { option: 1, options: 1, answer: 1, letter: 1, number: 1, its: 1, it: 1, is: 1, s: 1, the: 1, i: 1, think: 1, say: 1, my: 1, choose: 1, pick: 1, um: 1, uh: 1, and: 1, also: 1, plus: 1, then: 1, ok: 1, okay: 1 };
+  function letters(t, n) {
+    var words = clean(t).trim().split(' '), out = [];
+    // "a" only counts as a letter when it is not used as an article in a longer sentence
+    var content = words.filter(function (w) { return !FILLER[w]; });
+    if (content.some(function (w) { return /^(first|second|third|fourth|fifth|sixth)$/.test(w); })) content = content.filter(function (w) { return w !== 'one'; });
+    if (content.length > 4) return [];
+    content.forEach(function (w) {
+      var k = LETTER_WORDS.hasOwnProperty(w) ? LETTER_WORDS[w] : NUM_WORDS.hasOwnProperty(w) ? NUM_WORDS[w] : -1;
+      if (w.length === 2 && /^[a-h]\d?$/.test(w)) k = w.charCodeAt(0) - 97;
+      if (k >= 0 && k < n && out.indexOf(k) < 0) out.push(k);
+    });
+    return out;
+  }
+  function byText(t, opts) {
+    var tw = clean(t).trim().split(' ').filter(function (w) { return w.length > 3; });
+    if (!tw.length) return -1;
+    var sc = opts.map(function (o) {
+      var ow = clean(strip(o)); return tw.filter(function (w) { return ow.indexOf(' ' + w + ' ') >= 0; }).length;
+    });
+    var best = -1, bi = -1, second = -1;
+    sc.forEach(function (s, i) { if (s > best) { second = best; best = s; bi = i; } else if (s > second) second = s; });
+    return best >= 2 && best >= second + 2 ? bi : -1;
+  }
+  var SMALL = { zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90 };
+  var BIG = { hundred: 100, thousand: 1e3, million: 1e6, billion: 1e9 };
+  function wordsToNum(t) {
+    // "three hundred" -> 300, "ninety" -> 90; other words are left alone
+    return t.replace(/\b((?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million|billion|and|\s|-(?=[a-z]))+)\b/g, function (m) {
+      var ws = m.trim().split(/[\s-]+/).filter(function (w) { return w && w !== 'and'; });
+      if (!ws.length || !ws.some(function (w) { return SMALL.hasOwnProperty(w); })) return m;
+      var total = 0, cur = 0;
+      ws.forEach(function (w) {
+        if (SMALL.hasOwnProperty(w)) cur += SMALL[w];
+        else if (w === 'hundred') cur = (cur || 1) * 100;
+        else { total += (cur || 1) * BIG[w]; cur = 0; }
+      });
+      return ' ' + (total + cur) + ' ';
+    });
+  }
+  function spoken(s) {
+    var t = ' ' + String(s).toLowerCase() + ' ';
+    t = wordsToNum(t.replace(/[−–]/g, ' ~ '));   // number words first, so a minus sign cannot be swallowed
+    t = t.replace(/ ~ /g, ' - ').replace(/ minus /g, ' - ').replace(/ plus /g, ' + ').replace(/ times /g, ' x ').replace(/ percent/g, '%');
+    return t.replace(/^\s*(the|a|an|it s|it is|its) /, ' ').replace(/[.,!?;:"']/g, ' ').replace(/\s+/g, '').trim();
+  }
+  function fillMatch(accepted, alts) {
+    for (var i = 0; i < alts.length; i++) {
+      for (var j = 0; j < accepted.length; j++) {
+        var a = spoken(accepted[j]), g = spoken(alts[i]);
+        if (!g) continue;
+        if (a === g || fillEq(accepted[j], alts[i])) return true;
+        if (a.length >= 4 && g.indexOf(a) >= 0 && g.length <= a.length + 12) return true;   // "it is angiogenesis"
+        if (a.length >= 8 && /^[a-z]+$/.test(a) && Math.abs(a.length - g.length) <= 1 && lev(a, g) <= 2) return true;
+      }
+    }
+    return false;
+  }
+
+  /* --- screen --- */
+  function carStatus(st, heard) {
+    if (!CAR) return;
+    CAR.st = st;
+    var el = app.querySelector('#carst');
+    if (el) {
+      el.className = 'car-st ' + st;
+      el.textContent = st === 'listen' ? '🎙 Listening… say your answer' : st === 'speak' ? '🔊 Reading…' : st === 'pause' ? '⏸ Paused' : st === 'ok' ? '✓ Right' : st === 'bad' ? '✗ Not right' : '…';
+    }
+    if (heard != null) { var h = app.querySelector('#carheard'); if (h) h.textContent = heard ? '“' + heard + '”' : ''; }
+    var pb = app.querySelector('#carpause'); if (pb) pb.textContent = st === 'pause' ? '▶ Resume' : '⏸ Pause';
+  }
+  function carScreen() {
+    VIEW = 'car';
+    var q = BYID[SES.queue[SES.i]], sc = sessionScore(), p = carPrefs();
+    var html = '<div class="row"><b>' + esc(SES.label) + '</b><span class="spacer"></span><span class="muted small">' + (SES.i + 1) + ' / ' + SES.queue.length +
+      (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right') + '</span></div>' +
+      '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>' +
+      '<div id="carst" class="car-st">…</div><div id="carheard" class="car-heard"></div>' +
+      '<div class="card car-q"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) + '</div>' +
+      '<div class="qtext">' + esc(strip(q.q)).replace(/_{3,}/g, '_____') + '</div>';
+    if (q.type === 'mc' || q.type === 'multi') {
+      html += '<ol class="car-opts">' + CAR.perm.map(function (o, d) { return '<li data-d="' + d + '"><b>' + LETTERS[d] + '</b> ' + esc(strip(q.options[o])) + '</li>'; }).join('') + '</ol>';
+    } else if (q.type === 'tf') html += '<p class="muted">True or false?</p>';
+    else html += '<p class="muted">Say the missing word' + (q.blanks.length > 1 ? 's, one at a time (' + q.blanks.length + ' blanks)' : '') + '.</p>';
+    html += '<div id="carfb"></div></div>' +
+      '<div class="car-btns"><button id="carpause" class="big">⏸ Pause</button><button id="carrep">🔁 Repeat</button><button id="carskip">⏭ Skip</button><button id="carstop">⏹ Stop</button></div>' +
+      '<details class="card car-set"><summary>Voice settings</summary><div class="row">' +
+      '<label>Accent <select id="carlang"><option value="en-US"' + (p.lang === 'en-US' ? ' selected' : '') + '>English (US)</option><option value="en-GB"' + (p.lang === 'en-GB' ? ' selected' : '') + '>English (UK)</option></select></label>' +
+      '<label>Speed <select id="carrate">' + [0.85, 1, 1.15, 1.3].map(function (r) { return '<option value="' + r + '"' + (p.rate === r ? ' selected' : '') + '>' + (r === 1 ? 'normal' : r < 1 ? 'slower' : r < 1.2 ? 'faster' : 'fast') + '</option>'; }).join('') + '</select></label>' +
+      '<label><input type="checkbox" id="carexp"' + (p.explain ? ' checked' : '') + '> read the explanation after a wrong answer</label></div>' +
+      '<p class="small muted">Say a letter (“B”), several letters (“A and C”), “true”/“false”, or the word for a blank. Also: “repeat”, “hint”, “skip”, “stop”. After a wrong fill-in answer you can say “correct” if you did say it right. Listening needs internet.</p></details>';
+    app.innerHTML = html;
+    app.querySelector('#carpause').onclick = function () { if (CAR.st === 'pause') carRun(); else carPause(); };
+    app.querySelector('#carrep').onclick = function () { carRun(); };
+    app.querySelector('#carskip').onclick = function () { carAbort(); carAnswer(q, { ok: false, given: '(skipped)' }, true); };
+    app.querySelector('#carstop').onclick = carStop;
+    app.querySelector('#carlang').onchange = function () { p.lang = this.value; save(); };
+    app.querySelector('#carrate').onchange = function () { p.rate = Number(this.value); save(); };
+    app.querySelector('#carexp').onchange = function () { p.explain = this.checked; save(); };
+    window.scrollTo(0, 0);
+  }
+
+  /* --- the loop --- */
+  function carAbort() {
+    if (!CAR) return;
+    CAR.tok++;
+    try { speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+    if (CAR.rec) { try { CAR.rec.abort(); } catch (e) { /* ignore */ } CAR.rec = null; }
+  }
+  function carPause() { carAbort(); carStatus('pause'); }
+  function wake(on) {
+    try {
+      if (on && navigator.wakeLock && !CAR.lock) navigator.wakeLock.request('screen').then(function (l) { if (CAR) CAR.lock = l; else l.release(); }, function () {});
+      if (!on && CAR && CAR.lock) { CAR.lock.release(); CAR.lock = null; }
+    } catch (e) { /* ignore */ }
+  }
+  document.addEventListener('visibilitychange', function () { if (CAR && document.visibilityState === 'visible') { CAR.lock = null; wake(true); } });
+  function carBegin() {
+    CAR = { tok: 0, rec: null, st: '', lock: null, ac: null, perm: null, qid: null, hints: 0, struck: [] };
+    wake(true);
+    carNewQuestion();
+  }
+  function carNewQuestion() {
+    if (SES.i >= SES.queue.length) { carFinish(); return; }
+    var q = BYID[SES.queue[SES.i]];
+    CAR.qid = q.id; CAR.hints = 0; CAR.struck = [];
+    CAR.perm = (q.type === 'mc' || q.type === 'multi') ? (q.shuffle === false ? range(q.options.length) : shuffle(range(q.options.length))) : null;
+    carScreen();
+    carRun();
+  }
+  function questionText(q) {
+    var t = 'Question ' + (SES.i + 1) + '. ' + strip(q.q).replace(/_{3,}/g, ' blank ') + ' ';
+    if (q.type === 'mc' || q.type === 'multi') {
+      if (q.type === 'multi') t += ' Several answers can be right. ';
+      CAR.perm.forEach(function (o, d) { t += ' ' + LETTERS[d] + '. ' + strip(q.options[o]) + '. '; });
+    } else if (q.type === 'tf') t += ' True or false?';
+    return t;
+  }
+  // read the question, then listen until an answer or a command comes
+  function carRun() {
+    carAbort();
+    var tok = CAR.tok, q = BYID[CAR.qid], misses = 0, given = [];
+    carStatus('speak', '');
+    say(questionText(q), tok).then(function step() {
+      if (!CAR || CAR.tok !== tok) return;
+      var b = given.length;
+      var ask = q.type === 'fill' && q.blanks.length > 1 ? say('Blank ' + (b + 1) + '?', tok) : Promise.resolve();
+      return ask.then(function () { return listen(tok); }).then(function (r) {
+        if (!CAR || CAR.tok !== tok) return;
+        if (r.err) {
+          if (r.err === 'not-allowed' || r.err === 'service-not-allowed') { carPause(); alert('The microphone is blocked. Allow it for this site in the browser settings, then tap Resume.'); return; }
+          if (r.err === 'network') { carStatus('speak'); return say('Voice recognition needs internet. Paused.', tok).then(carPause); }
+          misses++;
+          if (misses >= 4) { carStatus('speak'); return say('Paused. Tap resume when you are ready.', tok).then(carPause); }
+          if (misses === 2) { carStatus('speak'); return say('Say your answer, or say repeat.', tok).then(step); }
+          return step();
+        }
+        carStatus('listen', r.alts[0]);
+        var cmd = command(r.alts);
+        if (cmd === 'stop') { carStop(); return; }
+        if (cmd === 'repeat') { carRun(); return; }
+        if (cmd === 'skip') { carAnswer(q, { ok: false, given: '(skipped)' }, true); return; }
+        if (cmd === 'hint') { carStatus('speak'); return say(carHint(q), tok).then(step); }
+        var res = carGrade(q, r.alts, given);
+        if (res === 'more') return step();
+        if (!res) {
+          misses++; carStatus('speak');
+          var help = q.type === 'tf' ? 'Say true or false.' : q.type === 'fill' ? 'I did not catch a word. Say it again, or say skip.' : 'Say a letter, ' + LETTERS.slice(0, CAR.perm.length).split('').join(', ') + '.';
+          return say('Sorry, I heard ' + r.alts[0] + '. ' + help, tok).then(step);
+        }
+        carAnswer(q, res, false);
+      });
+    });
+  }
+  function carGrade(q, alts, given) {
+    var i, k;
+    if (q.type === 'tf') {
+      for (i = 0; i < alts.length; i++) {
+        var t = clean(alts[i]);
+        if (/ (false|not true|wrong|incorrect|no|nope) /.test(t)) return { ok: q.answer === false, given: 'False' };
+        if (/ (true|yes|right|correct) /.test(t)) return { ok: q.answer === true, given: 'True' };
+      }
+      return null;
+    }
+    if (q.type === 'mc' || q.type === 'multi') {
+      var opts = CAR.perm.map(function (o) { return q.options[o]; }), sel = null;
+      for (i = 0; i < alts.length && !sel; i++) { var l = letters(alts[i], opts.length); if (l.length) sel = l; }
+      if (!sel && q.type === 'mc') for (i = 0; i < alts.length && !sel; i++) { k = byText(alts[i], opts); if (k >= 0) sel = [k]; }
+      if (!sel) return null;
+      if (q.type === 'mc') {
+        var ch = CAR.perm[sel[0]];
+        return { ok: ch === q.answer, given: LETTERS[sel[0]] + ': ' + strip(q.options[ch]), pick: [sel[0]] };
+      }
+      var set = sel.map(function (d) { return CAR.perm[d]; }).sort(), ans = q.answer.slice().sort();
+      return { ok: set.length === ans.length && set.every(function (v, j) { return v === ans[j]; }), given: sel.map(function (d) { return LETTERS[d]; }).join(' + '), pick: sel };
+    }
+    // fill: one blank per answer
+    given.push({ alts: alts, ok: fillMatch(q.blanks[given.length], alts) });
+    if (given.length < q.blanks.length) return 'more';
+    return { ok: given.every(function (g) { return g.ok; }), given: given.map(function (g) { return g.alts[0]; }).join(' | '), fill: true };
+  }
+  function carHint(q) {
+    CAR.hints++;
+    if (q.hint && CAR.hints === 1) return 'Hint. ' + q.hint;
+    if (q.type === 'mc' || q.type === 'multi') {
+      var right = q.type === 'mc' ? [q.answer] : q.answer;
+      var wrong = CAR.perm.map(function (o, d) { return right.indexOf(o) < 0 && CAR.struck.indexOf(d) < 0 ? d : -1; }).filter(function (d) { return d >= 0; });
+      if (wrong.length > (q.type === 'mc' ? 1 : 0)) { var d = shuffle(wrong)[0]; CAR.struck.push(d); return 'It is not ' + LETTERS[d] + '.'; }
+      return 'No more hints.';
+    }
+    if (q.type === 'fill') { var a = String(q.blanks[0][0]); return 'It starts with ' + a.charAt(0).toUpperCase() + ', and has ' + a.replace(/\s/g, '').length + ' characters.'; }
+    return 'No hint for this one.';
+  }
+  function correctSpoken(q) {
+    if (q.type === 'mc') return LETTERS[CAR.perm.indexOf(q.answer)] + '. ' + strip(q.options[q.answer]);
+    if (q.type === 'multi') return q.answer.map(function (o) { return LETTERS[CAR.perm.indexOf(o)]; }).join(' and ') + '.';
+    if (q.type === 'tf') return q.answer ? 'true' : 'false';
+    return q.blanks.map(function (b) { return b[0]; }).join(', and ');
+  }
+  function carMark(q, res) {
+    var fb = app.querySelector('#carfb'); if (!fb) return;
+    [].forEach.call(app.querySelectorAll('.car-opts li'), function (li) {
+      var d = Number(li.getAttribute('data-d')), o = CAR.perm[d];
+      var right = q.type === 'mc' ? o === q.answer : q.answer.indexOf(o) >= 0;
+      if (right) li.classList.add('right'); else if (res.pick && res.pick.indexOf(d) >= 0) li.classList.add('wrong');
+    });
+    fb.innerHTML = '<div class="feedback ' + (res.ok ? 'ok' : 'bad') + '"><div class="verdict">' + (res.ok ? '✓ Right' : '✗ Not right') + '</div>' +
+      '<div class="small">You said: ' + esc(res.given) + '</div>' + (res.ok ? '' : '<div class="ans">Correct answer: ' + correctText(q) + '</div>') +
+      (q.explain ? '<div class="exp">' + q.explain + '</div>' : '') + '</div>';
+  }
+  function carAnswer(q, res, skipped) {
+    carAbort();
+    var tok = CAR.tok, hinted = CAR.hints > 0, p = carPrefs(), ok = res.ok, given = res.given, stored = false;
+    function store() {
+      if (stored) return; stored = true; CAR.pending = null;
+      var first = !SES.results.some(function (r) { return r.id === q.id; });
+      SES.results.push({ id: q.id, ok: ok, first: first, given: given, hint: hinted });
+      record(q.id, ok, hinted);
+      if (!ok && !SES.exam) {
+        var n = SES.reask[q.id] || 0;
+        if (n < 2) { SES.reask[q.id] = n + 1; SES.queue.splice(Math.min(SES.queue.length, SES.i + REASK_MIN + Math.floor(Math.random() * REASK_SPREAD)), 0, q.id); }
+      }
+      SES.i++; persistSes(false);
+    }
+    function go() { if (CAR && CAR.tok === tok) carNewQuestion(); }
+    if (SES.exam) { store(); setTimeout(go, 400); return; }
+    var mayOverrule = !ok && !skipped && q.type === 'fill';
+    if (mayOverrule) CAR.pending = store; else store();
+    carMark(q, res); carStatus(ok ? 'ok' : 'bad'); tone(ok);
+    var talk = ok ? (hinted ? 'Right, with a hint.' : 'Right!') : (skipped ? 'The answer is ' : 'Not right. The answer is ') + correctSpoken(q) + '.';
+    var after = say(talk, tok);
+    if (mayOverrule) {
+      // speech recognition can mishear a term: the user may overrule
+      after = after.then(function () { return say('If you did say that, say correct. Otherwise say next.', tok); })
+        .then(function () { return listen(tok); })
+        .then(function (r) {
+          if (r.alts && r.alts.some(function (a) { return / (correct|i knew it|that s what i said|i said that|yes|right) /.test(clean(a)); })) {
+            ok = true; given += ' (accepted by you)'; carMark(q, { ok: true, given: given }); carStatus('ok'); tone(true);
+            store();
+            return say('Okay, counted as right.', tok);
+          }
+          store();
+        });
+    }
+    after.then(function () {
+      if (!CAR || CAR.tok !== tok) return;
+      return !ok && p.explain && q.explain ? say(q.explain, tok) : null;
+    }).then(function () { if (CAR && CAR.tok === tok) setTimeout(go, 600); });
+  }
+  function carFinish() {
+    var firsts = SES.results.filter(function (r) { return r.first; }), c = firsts.filter(function (r) { return r.ok; }).length;
+    var tok = CAR.tok;
+    renderSummary();
+    say('Finished. You got ' + c + ' out of ' + firsts.length + ' right the first time.', tok).then(carEnd);
+  }
+  function carEnd() {
+    if (!CAR) return;
+    if (CAR.pending) CAR.pending();
+    carAbort(); wake(false); CAR = null;
+  }
+  function carStop() {
+    if (CAR && CAR.pending) CAR.pending();
+    carEnd();
+    if (SES) persistSes(false);
+    if (SES && SES.results.length) renderSummary(); else renderDash();
+  }
+
+  window.__carTest = { letters: letters, byText: byText, fillMatch: fillMatch, spoken: spoken, command: command, sayable: sayable, carGrade: function (q, alts) { return carGrade(q, alts, []); }, start: function (ids) { CAR_NEXT = true; startMode('ids', ids); } };
+
   /* ---------------- new-quiz wizard ---------------- */
   var W = null;
   var WMODES = [
@@ -1074,8 +1472,9 @@
   function wNeedsLen(m) { return m !== 'sample'; }
   // how many questions this mode has in these chapters (before the length cut)
   function wCount(m, chs) {
-    var keep = S.prefs.chapters, n = 0;
+    var keep = S.prefs.chapters, keepB = BANK, n = 0;
     S.prefs.chapters = chs;
+    if (W && W.car) BANK = BANK.filter(voiceable);
     try {
       if (m === 'chapter' || m === 'exam') n = byChapters(BANK).length;
       else if (m === 'official') n = byChapters(BANK).filter(function (q) { return q.source === 'official'; }).length;
@@ -1087,12 +1486,12 @@
         conceptStats().forEach(function (c) { var t = c.correct + c.wrong; if (t && c.correct / t < 0.7) weakC[c.concept] = 1; });
         n = byChapters(BANK).filter(function (q) { var s = stat(q.id); return weakC[q.concept] || (s && s.box <= 1 && s.wrong > 0); }).length;
       }
-    } finally { S.prefs.chapters = keep; }
+    } finally { S.prefs.chapters = keep; BANK = keepB; }
     return n;
   }
   function wSteps() { var st = [1]; if (!W.mode || wNeedsCh(W.mode)) st.push(2); st.push(3); return st; }
   function openWizard() {
-    W = { step: 1, mode: null, chs: (S.prefs.wizChs && S.prefs.wizChs.length ? S.prefs.wizChs : [1, 2, 3, 4]).slice(), len: S.prefs.len || 20 };
+    W = { step: 1, mode: null, car: !!S.prefs.wizCar && carSupported(), chs: (S.prefs.wizChs && S.prefs.wizChs.length ? S.prefs.wizChs : [1, 2, 3, 4]).slice(), len: S.prefs.len || 20 };
     try { history.pushState({ v: 'wiz' }, ''); } catch (e) { /* ignore */ }
     renderWizard();
   }
@@ -1100,10 +1499,11 @@
   function wNext() { var st = wSteps(), k = st.indexOf(W.step); if (k < st.length - 1) wGo(st[k + 1]); }
   function wStart() {
     // the wizard keeps its own chapter choice; "Keep studying" keeps its own
-    var keep = S.prefs.chapters, m = W.mode;
-    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len; S.prefs.chapters = S.prefs.wizChs;
+    var keep = S.prefs.chapters, keepB = BANK, m = W.mode, car = W.car;
+    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len; S.prefs.chapters = S.prefs.wizChs; S.prefs.wizCar = car;
     W = null;
-    try { startMode(m); } finally { S.prefs.chapters = keep; save(); }
+    if (car) { BANK = BANK.filter(voiceable); CAR_NEXT = true; }
+    try { startMode(m); } finally { S.prefs.chapters = keep; BANK = keepB; CAR_NEXT = false; save(); }
   }
   function renderWizard() {
     VIEW = 'wiz'; SES = null; R = null;
@@ -1135,6 +1535,8 @@
     } else {
       var chs = wNeedsCh(W.mode) ? W.chs : [1, 2, 3, 4], avail = wCount(W.mode, chs);
       html += '<h1 class="wiz-h">' + (wNeedsLen(W.mode) ? 'How many questions?' : 'Ready?') + '</h1>';
+      if (carSupported()) html += '<button class="cartoggle' + (W.car ? ' on' : '') + '" id="wcar"><span class="go-ic">🚗</span><span><b>Car mode ' + (W.car ? 'ON' : 'off') + '</b>' +
+        '<span class="small">questions read aloud, you answer by voice' + (W.car ? ' · matching and ordering questions are left out' : '') + '</span></span><span class="sw"><i></i></span></button>';
       if (wNeedsLen(W.mode)) {
         html += '<div class="wiz-len">' + ['10', '20', '40', 'all'].map(function (v) {
           var dis = v !== 'all' && W.mode !== 'exam' && Number(v) > avail;
@@ -1147,7 +1549,7 @@
       if (wNeedsLen(W.mode)) n = W.len === 'all' ? (W.mode === 'exam' ? Math.min(40, avail) : avail) : Math.min(Number(W.len), avail);
       html += '<div class="wiz-recap"><div><span class="muted">What</span><b>' + wmode(W.mode).ic + ' ' + esc(wmode(W.mode).t) + '</b></div>' +
         (wNeedsCh(W.mode) ? '<div><span class="muted">Chapters</span><b>' + W.chs.slice().sort().join(', ') + '</b></div>' : '') +
-        '<div><span class="muted">Questions</span><b>' + n + '</b></div></div>';
+        '<div><span class="muted">Questions</span><b>' + n + '</b></div>' + (W.car ? '<div><span class="muted">Answer</span><b>🚗 by voice</b></div>' : '') + '</div>';
       canNext = n > 0;
     }
     html += '<div class="wiz-bar">' + (W.step === 3
@@ -1165,6 +1567,7 @@
     [].forEach.call(app.querySelectorAll('[data-wl]'), function (b) {
       b.onclick = function () { var v = b.getAttribute('data-wl'); W.len = v === 'all' ? 'all' : Number(v); renderWizard(); };
     });
+    var wc = app.querySelector('#wcar'); if (wc) wc.onclick = function () { W.car = !W.car; renderWizard(); };
     var wn = app.querySelector('#wnext'); if (wn) wn.onclick = wNext;
     var ws = app.querySelector('#wstart'); if (ws) ws.onclick = wStart;
     window.scrollTo(0, 0);
@@ -1175,9 +1578,11 @@
       var st = wSteps(), k = st.indexOf(W.step);
       if (k > 0) { try { history.pushState({ v: 'wiz' }, ''); } catch (e) { /* ignore */ } wGo(st[k - 1]); }
       else { W = null; renderDash(); }
+    } else if (VIEW === 'car' && CAR) {
+      carStop();
     } else if (VIEW === 'q' && SES) {
       if (SES.cont) renderContPause(); else { persistSes(R && R.answered); renderDash(); }
-    } else if (VIEW !== 'dash') renderDash();
+    } else if (VIEW !== 'dash') { if (CAR) carEnd(); renderDash(); }
   });
 
   /* ---------------- start ---------------- */
