@@ -1185,20 +1185,104 @@
     attempt(k0);
     return info;
   }
-  function say(text, tok) {
+  /* --- recorded voice (quiz/carvoice/*.mp3, made on the PC by tools/build_car_audio.py) ---
+     Every piece of text car mode says is looked up by a hash; if it was recorded, the mp3 plays as normal media
+     (the same way as music or video). Only a missing piece uses the phone's own speech engine. */
+  var CV = window.CARVOICE || {}, AUD = null;
+  function fnv(t) { var x = 0x811c9dc5; for (var i = 0; i < t.length; i++) { x ^= t.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0; } return ('0000000' + x.toString(16)).slice(-8); }
+  function recorded(t) { return !!CV[fnv(t)]; }
+  function aud() { if (!AUD) { AUD = new Audio(); AUD.preload = 'auto'; } return AUD; }
+  function stopClip() { if (AUD) { try { AUD.pause(); } catch (e) { /* ignore */ } } }
+  // play one recorded piece; cb(ok, err)
+  function playClip(t, p, cb) {
+    var a = aud(), done = false;
+    function fin(ok, err) { if (done) return; done = true; clearTimeout(guard); a.onended = a.onerror = null; cb(ok, err); }
+    var guard = setTimeout(function () { fin(false, 'timeout'); }, 90000);
+    a.onended = function () { fin(true); };
+    a.onerror = function () { fin(false, 'file'); };
+    a.src = 'carvoice/' + fnv(t) + '.mp3';
+    a.playbackRate = p.rate || 1;
+    var pr = a.play();
+    if (pr && pr.catch) pr.catch(function (e) { fin(false, (e && e.name) || 'play'); });
+  }
+  // say text (or a list of pieces); resolves when done
+  function say(parts, tok) {
     return new Promise(function (resolve) {
-      if (!text || !CAR || CAR.tok !== tok) { resolve(); return; }
-      var list = chunks(sayable(text)), i = 0, p = carPrefs();
+      if (!parts || !CAR || CAR.tok !== tok) { resolve(); return; }
+      var list = [].concat(parts).map(function (x) { return sayable(x); }).filter(Boolean), i = 0, p = carPrefs();
+      function ok() { return CAR && CAR.tok === tok; }
+      // the phone's own voice, in chunks
+      function phone(t, next) {
+        var ch = chunks(t), k = 0;
+        (function c1() {
+          if (!ok() || k >= ch.length) { next(); return; }
+          var info = utter(ch[k++], p, function (inf) {
+            if (CAR && !CAR.heardOk) { if (inf.started) { CAR.heardOk = true; carWarn(''); } else carWarn(inf.err); }
+            c1();
+          });
+          if (CAR && !CAR.heardOk) setTimeout(function () { if (CAR && !CAR.heardOk && !info.started) carWarn(info.err); }, 10500);
+        })();
+      }
       (function one() {
-        if (!CAR || CAR.tok !== tok || i >= list.length) { resolve(); return; }
-        var info = utter(list[i++], p, function (inf) {
-          if (CAR && !CAR.heardOk) { if (inf.started) { CAR.heardOk = true; carWarn(''); } else carWarn(inf.err); }
-          one();
-        });
-        if (CAR && !CAR.heardOk) setTimeout(function () { if (CAR && !CAR.heardOk && !info.started) carWarn(info.err); }, 10500);
+        if (!ok() || i >= list.length) { resolve(); return; }
+        var t = list[i++];
+        if (recorded(t)) {
+          playClip(t, p, function (good, err) {
+            if (!ok()) { resolve(); return; }
+            if (good) { if (!CAR.heardOk) { CAR.heardOk = true; carWarn(''); } one(); }
+            else { CAR.clipErr = err; phone(t, one); }
+          });
+        } else phone(t, one);
       })();
     });
   }
+
+  /* --- everything car mode says, as pieces that can be recorded --- */
+  var PH = {
+    qnum: function (n) { return n <= 60 ? 'Question ' + n + '.' : 'Next question.'; },
+    letter: function (d) { return LETTERS[d] + '.'; },
+    blank: function (n) { return 'Blank ' + n + '?'; },
+    notLetter: function (d) { return 'It is not ' + LETTERS[d] + '.'; },
+    starts: function (c) { return 'It starts with ' + c + '.'; },
+    hasChars: function (n) { return 'It has ' + n + ' characters.'; },
+    sayLetter: function (n) { return 'Say a letter, ' + LETTERS.slice(0, n).split('').join(', ') + '.'; },
+    num: function (n) { return String(n); },
+    FIXED: ['Several answers can be right.', 'True or false?', 'Hint.', 'No more hints.', 'No hint for this one.',
+      'Right!', 'Right, with a hint.', 'Not right. The answer is', 'The answer is', 'and', 'True.', 'False.',
+      'If you did say that, say correct. Otherwise say next.', 'Okay, counted as right.',
+      'Sorry, I did not get that.', 'Say true or false.', 'I did not catch a word. Say it again, or say skip.',
+      'Voice recognition needs internet. Paused.', 'Paused. Tap resume when you are ready.', 'Say your answer, or say repeat.',
+      'Finished.', 'You got', 'out of', 'right the first time.', 'The last questions need the screen. Car mode is off.',
+      'Hello! This is car mode. Can you hear me?']
+  };
+  function optText(q, o) { return strip(q.options[o]); }
+  // every piece needed for one question (options in bank order; the reading order changes, the pieces do not)
+  function questionPieces(q) {
+    var out = [strip(q.q)];
+    if (q.options) q.options.forEach(function (x, o) { out.push(optText(q, o)); });
+    if (q.hint) out.push(q.hint);
+    if (q.explain) out.push(q.explain);
+    if (q.type === 'fill') q.blanks.forEach(function (b) { out.push(String(b[0])); });
+    return out;
+  }
+  // the list of all texts to record (run in the browser: window.__carTexts())
+  function carTexts() {
+    var all = {}, n;
+    function add(t) { t = sayable(t); if (t) all[fnv(t)] = t; }
+    PH.FIXED.forEach(add);
+    for (n = 1; n <= 61; n++) add(PH.qnum(n));
+    for (n = 0; n < 8; n++) { add(PH.letter(n)); add(PH.notLetter(n)); }
+    for (n = 1; n <= 8; n++) add(PH.blank(n));
+    for (n = 2; n <= 8; n++) add(PH.sayLetter(n));
+    for (n = 0; n <= 200; n++) add(PH.num(n));
+    for (n = 1; n <= 60; n++) add(PH.hasChars(n));
+    BANK.filter(voiceable).forEach(function (q) {
+      questionPieces(q).forEach(add);
+      if (q.type === 'fill') q.blanks.forEach(function (b) { add(PH.starts(String(b[0]).charAt(0).toUpperCase())); });
+    });
+    return all;
+  }
+
   var NOSOUND = '<b>No sound?</b> 1) Press a volume key and turn up the <b>media</b> volume (not the ringer). ' +
     '2) Android Settings → search <b>Text-to-speech</b> → engine <b>Speech Services by Google</b> (or Google) → install an English voice → tap <b>Listen to an example</b>. ' +
     '3) Use <b>🔊 Test voice</b> under Voice settings.';
@@ -1209,9 +1293,14 @@
   function testVoice(out) {
     if (!window.speechSynthesis) { out.textContent = 'This browser cannot speak.'; return; }
     var p = carPrefs(), vs = speechSynthesis.getVoices() || [], en = vs.filter(function (v) { return /^en/i.test(v.lang); }).length;
-    var lines = [], k = 0;
-    out.innerHTML = 'Testing 3 ways… listen for “test one”, “test two”, “test three”.';
-    (function next() {
+    var lines = [], k = 0, hello = sayable('Hello! This is car mode. Can you hear me?');
+    out.innerHTML = 'Testing… first the recorded voice (“Hello! This is car mode…”), then the phone voice 3 ways (“test one”, “test two”, “test three”).';
+    if (recorded(hello)) playClip(hello, p, function (good, err) {
+      lines.push({ n: 'recorded voice', ok: good, t: good ? 'played' : 'failed' + (err ? ' · ' + err : '') });
+      setTimeout(next, 400);
+    });
+    else { lines.push({ n: 'recorded voice', ok: false, t: 'not installed yet' }); setTimeout(next, 0); }
+    function next() {
       if (k >= HOWS.length) {
         var ok = lines.filter(function (l) { return l.ok; });
         out.innerHTML = lines.map(function (l) { return (l.ok ? '✓' : '✗') + ' ' + l.n + ': ' + esc(l.t); }).join('<br>') +
@@ -1224,7 +1313,7 @@
         lines.push({ n: n, ok: inf.started, t: (inf.started ? 'started' : 'did not start') + ' · ' + how + ' · ' + inf.voice + (inf.err ? ' · error ' + inf.err : '') });
         k++; setTimeout(next, 400);
       }, how);
-    })();
+    }
   }
   function tone(ok) {
     try {
@@ -1384,6 +1473,7 @@
   function carAbort() {
     if (!CAR) return;
     CAR.tok++;
+    stopClip();
     try { if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel(); } catch (e) { /* ignore */ }
     if (CAR.rec) { try { CAR.rec.abort(); } catch (e) { /* ignore */ } CAR.rec = null; }
   }
@@ -1425,11 +1515,11 @@
     carRun();
   }
   function questionText(q) {
-    var t = 'Question ' + (SES.cont ? contRun().n + 1 : SES.i + 1) + '. ' + strip(q.q).replace(/_{3,}/g, ' blank ') + ' ';
+    var t = [PH.qnum(SES.cont ? contRun().n + 1 : SES.i + 1), strip(q.q)];
     if (q.type === 'mc' || q.type === 'multi') {
-      if (q.type === 'multi') t += ' Several answers can be right. ';
-      CAR.perm.forEach(function (o, d) { t += ' ' + LETTERS[d] + '. ' + strip(q.options[o]) + '. '; });
-    } else if (q.type === 'tf') t += ' True or false?';
+      if (q.type === 'multi') t.push('Several answers can be right.');
+      CAR.perm.forEach(function (o, d) { t.push(PH.letter(d), optText(q, o)); });
+    } else if (q.type === 'tf') t.push('True or false?');
     return t;
   }
   // read the question, then listen until an answer or a command comes
@@ -1440,7 +1530,7 @@
     say(questionText(q), tok).then(function step() {
       if (!CAR || CAR.tok !== tok) return;
       var b = given.length;
-      var ask = q.type === 'fill' && q.blanks.length > 1 ? say('Blank ' + (b + 1) + '?', tok) : Promise.resolve();
+      var ask = q.type === 'fill' && q.blanks.length > 1 ? say(PH.blank(b + 1), tok) : Promise.resolve();
       return ask.then(function () { return listen(tok); }).then(function (r) {
         if (!CAR || CAR.tok !== tok) return;
         if (r.err) {
@@ -1461,8 +1551,8 @@
         if (res === 'more') return step();
         if (!res) {
           misses++; carStatus('speak');
-          var help = q.type === 'tf' ? 'Say true or false.' : q.type === 'fill' ? 'I did not catch a word. Say it again, or say skip.' : 'Say a letter, ' + LETTERS.slice(0, CAR.perm.length).split('').join(', ') + '.';
-          return say('Sorry, I heard ' + r.alts[0] + '. ' + help, tok).then(step);
+          var help = q.type === 'tf' ? 'Say true or false.' : q.type === 'fill' ? 'I did not catch a word. Say it again, or say skip.' : PH.sayLetter(CAR.perm.length);
+          return say(['Sorry, I did not get that.', help], tok).then(step);
         }
         carAnswer(q, res, false);
       });
@@ -1497,21 +1587,21 @@
   }
   function carHint(q) {
     CAR.hints++;
-    if (q.hint && CAR.hints === 1) return 'Hint. ' + q.hint;
+    if (q.hint && CAR.hints === 1) return ['Hint.', q.hint];
     if (q.type === 'mc' || q.type === 'multi') {
       var right = q.type === 'mc' ? [q.answer] : q.answer;
       var wrong = CAR.perm.map(function (o, d) { return right.indexOf(o) < 0 && CAR.struck.indexOf(d) < 0 ? d : -1; }).filter(function (d) { return d >= 0; });
-      if (wrong.length > (q.type === 'mc' ? 1 : 0)) { var d = shuffle(wrong)[0]; CAR.struck.push(d); return 'It is not ' + LETTERS[d] + '.'; }
+      if (wrong.length > (q.type === 'mc' ? 1 : 0)) { var d = shuffle(wrong)[0]; CAR.struck.push(d); return PH.notLetter(d); }
       return 'No more hints.';
     }
-    if (q.type === 'fill') { var a = String(q.blanks[0][0]); return 'It starts with ' + a.charAt(0).toUpperCase() + ', and has ' + a.replace(/\s/g, '').length + ' characters.'; }
+    if (q.type === 'fill') { var a = String(q.blanks[0][0]); return [PH.starts(a.charAt(0).toUpperCase()), PH.hasChars(a.replace(/\s/g, '').length)]; }
     return 'No hint for this one.';
   }
   function correctSpoken(q) {
-    if (q.type === 'mc') return LETTERS[CAR.perm.indexOf(q.answer)] + '. ' + strip(q.options[q.answer]);
-    if (q.type === 'multi') return q.answer.map(function (o) { return LETTERS[CAR.perm.indexOf(o)]; }).join(' and ') + '.';
-    if (q.type === 'tf') return q.answer ? 'true' : 'false';
-    return q.blanks.map(function (b) { return b[0]; }).join(', and ');
+    if (q.type === 'mc') return [PH.letter(CAR.perm.indexOf(q.answer)), optText(q, q.answer)];
+    if (q.type === 'multi') return q.answer.map(function (o) { return PH.letter(CAR.perm.indexOf(o)); });
+    if (q.type === 'tf') return [q.answer ? 'True.' : 'False.'];
+    var out = []; q.blanks.forEach(function (b, k) { if (k) out.push('and'); out.push(String(b[0])); }); return out;
   }
   function carMark(q, res) {
     var fb = app.querySelector('#carfb'); if (!fb) return;
@@ -1544,7 +1634,7 @@
     var mayOverrule = !ok && !skipped && q.type === 'fill';
     if (mayOverrule) CAR.pending = store; else store();
     carMark(q, res); carStatus(ok ? 'ok' : 'bad'); tone(ok);
-    var talk = ok ? (hinted ? 'Right, with a hint.' : 'Right!') : (skipped ? 'The answer is ' : 'Not right. The answer is ') + correctSpoken(q) + '.';
+    var talk = ok ? (hinted ? 'Right, with a hint.' : 'Right!') : [skipped ? 'The answer is' : 'Not right. The answer is'].concat(correctSpoken(q));
     var after = say(talk, tok);
     if (mayOverrule) {
       // speech recognition can mishear a term: the user may overrule
@@ -1568,7 +1658,8 @@
     var firsts = SES.results.filter(function (r) { return r.first; }), c = firsts.filter(function (r) { return r.ok; }).length;
     var tok = CAR.tok;
     renderSummary();
-    say('Finished. You got ' + c + ' out of ' + firsts.length + ' right the first time.', tok).then(carEnd);
+    var nums = c <= 200 && firsts.length <= 200;
+    say(nums ? ['Finished.', 'You got', PH.num(c), 'out of', PH.num(firsts.length), 'right the first time.'] : 'Finished.', tok).then(carEnd);
   }
   function carEnd() {
     if (!CAR) return;
@@ -1621,6 +1712,7 @@
     persistSes(false); renderQuestion();
   }
 
+  window.__carTexts = carTexts;
   window.__carTest = { letters: letters, byText: byText, fillMatch: fillMatch, spoken: spoken, command: command, sayable: sayable, carGrade: function (q, alts) { return carGrade(q, alts, []); }, start: function (ids) { CAR_NEXT = true; startMode('ids', ids); } };
 
   /* ---------------- new-quiz wizard ---------------- */
