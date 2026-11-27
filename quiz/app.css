@@ -145,7 +145,7 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
 #proc.on { border-color: var(--accent); color: var(--accent); }
 
 /* home: two big start buttons */
-.home-go { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 8px; }
+.home-go { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0 8px; }
 .go { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; text-align: left; padding: 18px 18px; border-radius: 14px; border: 0; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
 .go:hover { filter: brightness(1.06); }
 .go .go-ic { grid-row: 1 / span 2; font-size: 1.7rem; width: 2.2em; height: 2.2em; border-radius: 50%; background: rgba(255,255,255,.22); display: flex; align-items: center; justify-content: center; }

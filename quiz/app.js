@@ -408,10 +408,6 @@
     rows.sort(function (a, b) { return b.saved - a.saved; });
     html += '<div class="home-go">' +
       '<button class="go go-new" id="newquiz"><span class="go-ic">＋</span><b>New quiz</b><span>choose what, which chapters, how many</span></button>';
-    if (rows.length) {
-      var r0 = rows[0];
-      html += '<button class="go go-cont" data-resume="' + esc(r0.k) + '"><span class="go-ic">▶</span><b>Resume</b><span>' + esc(r0.label) + ' · ' + esc(r0.sub) + '</span></button>';
-    }
     html += '</div>';
     if (rows.length) {
       html += '<h2>Open sessions (' + rows.length + ')</h2><div class="card"><p class="small muted" style="margin:0 0 6px">Each one continues exactly where you left it.</p><table class="open-ses">';
@@ -556,14 +552,14 @@
     R = { q: q, answered: false, perm: null, sel: [], tf: null, order: null, hints: 0, hintMsgs: [], struck: [], locked: 0, autoLevel: 0 };
     var sc = sessionScore(), html;
     if (SES.cont) {
-      var C = contRun(), mastered = 0;
-      BANK.forEach(function (x) { var s = stat(x.id); if (s && s.box >= MASTER_BOX) mastered++; });
+      var C = contRun(), mastered = 0, known = 0;
+      BANK.forEach(function (x) { var s = stat(x.id); if (s && s.box >= MASTER_BOX) mastered++; if (s && s.lastOk) known++; });
       var again = C.log.some(function (r) { return r.id === q.id && !r.ok; }) && stat(q.id) && stat(q.id).lastOk === false;
       html = '<div class="row"><b>Endless study</b><span class="spacer"></span>' +
         '<span class="small">This run: <b id="score">' + C.c + '/' + C.n + '</b> correct' + (C.n ? ' (' + pct(C.c, C.n) + '%)' : '') + '</span>' +
         '<button class="small" id="quit">Pause</button><button class="small carswitch" id="tocar" title="Car mode: questions read aloud, you answer by voice">🚗 Car mode</button></div>' +
-        '<div class="progress" title="' + mastered + ' of ' + BANK.length + ' questions mastered"><i style="width:' + pct(mastered, BANK.length) + '%"></i></div>' +
-        '<p class="small muted" style="margin:-6px 0 8px">' + mastered + ' of ' + BANK.length + ' questions mastered</p>';
+        '<div class="progress" title="right the last time you answered them"><i style="width:' + pct(known, BANK.length) + '%"></i></div>' +
+        '<p class="small muted" style="margin:-6px 0 8px"><b>' + known + '</b> of ' + BANK.length + ' questions right last time · <b>' + mastered + '</b> mastered (3× right in a row)</p>';
       html += '<div class="card" id="qcard"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) +
         '<span class="badge">' + esc(conceptLabel(q.concept)) + '</span>' + (again ? '<span class="badge">again</span>' : (stat(q.id) ? '<span class="badge">review</span>' : '<span class="badge">new</span>')) + starBtn(q.id) + '</div>';
     } else {
