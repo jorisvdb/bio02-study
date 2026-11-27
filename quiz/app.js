@@ -1361,12 +1361,23 @@
     }
     return null;
   }
-  var LETTER_WORDS = { a: 0, ay: 0, eh: 0, b: 1, be: 1, bee: 1, c: 2, see: 2, sea: 2, cee: 2, si: 2, d: 3, dee: 3, e: 4, ee: 4, f: 5, ef: 5, eff: 5, g: 6, h: 7 };
+  // a letter said on its own is often heard as a word that sounds like it ("D" -> "the", "day", "dee")
+  var LETTER_WORDS = {
+    a: 0, ay: 0, aye: 0, eh: 0, hey: 0, hay: 0, ei: 0,
+    b: 1, be: 1, bee: 1, bea: 1, bi: 1, bie: 1,
+    c: 2, see: 2, sea: 2, cee: 2, si: 2, she: 2, sie: 2,
+    d: 3, dee: 3, de: 3, di: 3, day: 3, they: 3, thee: 3, dea: 3, dye: 3, t: 3, tee: 3, tea: 3,
+    e: 4, ee: 4, he: 4, ea: 4,
+    f: 5, ef: 5, eff: 5, if: 5, elf: 5,
+    g: 6, gee: 6, ji: 6, jee: 6, gi: 6,
+    h: 7, age: 7, aitch: 7, each: 7, ach: 7
+  };
   var NUM_WORDS = { one: 0, won: 0, first: 0, '1': 0, two: 1, to: 1, too: 1, second: 1, '2': 1, three: 2, tree: 2, third: 2, '3': 2, four: 3, for: 3, fourth: 3, '4': 3, five: 4, fifth: 4, '5': 4, six: 5, sixth: 5, '6': 5 };
   var FILLER = { option: 1, options: 1, answer: 1, letter: 1, number: 1, its: 1, it: 1, is: 1, s: 1, the: 1, i: 1, think: 1, say: 1, my: 1, choose: 1, pick: 1, um: 1, uh: 1, and: 1, also: 1, plus: 1, then: 1, ok: 1, okay: 1 };
   function letters(t, n) {
     var words = clean(t).trim().split(' '), out = [];
     // "a" only counts as a letter when it is not used as an article in a longer sentence
+    if (words.length === 1 && words[0] === 'the') return n > 3 ? [3] : [];   // a lone "D" is often heard as "the"
     var content = words.filter(function (w) { return !FILLER[w]; });
     if (content.some(function (w) { return /^(first|second|third|fourth|fifth|sixth)$/.test(w); })) content = content.filter(function (w) { return w !== 'one'; });
     if (content.length > 4) return [];
@@ -1541,7 +1552,7 @@
           if (misses === 2) { carStatus('speak'); return say('Say your answer, or say repeat.', tok).then(step); }
           return step();
         }
-        carStatus('listen', r.alts[0]);
+        carStatus('listen', r.alts.slice(0, 3).join('  /  '));
         var cmd = command(r.alts);
         if (cmd === 'stop') { carStop(); return; }
         if (cmd === 'repeat') { carRun(); return; }
