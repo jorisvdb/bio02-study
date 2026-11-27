@@ -247,7 +247,7 @@
       return;
     }
     SES = { mode: mode, label: label, queue: pool.map(function (q) { return q.id; }), i: 0, reask: {}, results: [], exam: !!opts.exam, save: mode !== 'autotest', sid: 's' + Date.now().toString(36) + Math.floor(Math.random() * 1e4) };
-    if (CAR_NEXT) { CAR_NEXT = false; SES.car = true; SES.label = '🚗 ' + SES.label; persistSes(false); carBegin(); return; }
+    if (CAR_NEXT) { CAR_NEXT = false; carSwitchOn(true); return; }
     persistSes(false);
     renderQuestion();
   }
@@ -269,14 +269,14 @@
     return S.sessions;
   }
   function dropSes(sid) { var all = sessions(); if (all[sid]) { delete all[sid]; save(); } }
-  function resumeSes(sid) {
+  function resumeSes(sid, car) {
     var z = sessions()[sid];
     if (!z) return;
     z.queue = z.queue.filter(function (id) { return BYID[id]; });
-    SES = { mode: z.mode, label: z.label, queue: z.queue, i: z.i, reask: z.reask || {}, results: z.results || [], exam: !!z.exam, car: !!z.car, save: true, sid: sid };
+    SES = { mode: z.mode, label: z.label.replace(/^🚗 /, ''), queue: z.queue, i: z.i, reask: z.reask || {}, results: z.results || [], exam: !!z.exam, save: true, sid: sid };
     if (z.answered) SES.i++;
     if (SES.i >= SES.queue.length) renderSummary();
-    else if (SES.car && carSupported()) { persistSes(false); carBegin(); }
+    else if (car && carSupported()) carSwitchOn(true);
     else { persistSes(false); renderQuestion(); }
   }
 
@@ -321,11 +321,13 @@
     if (!any.length) any = pool;
     return any[Math.floor(Math.random() * any.length)].id;
   }
-  function startCont(fresh) {
+  function startCont(fresh, car) {
     if (!BANK.length) { alert('No questions loaded.'); return; }
     if (fresh || !S.cont) S.cont = freshRun();
     var C = contRun();
-    SES = { mode: 'cont', label: 'Continuous study', cont: true, queue: [], i: 0, reask: {}, results: [], exam: false };
+    C.saved = Date.now();
+    SES = { mode: 'cont', label: 'Endless study', cont: true, queue: [], i: 0, reask: {}, results: [], exam: false };
+    if (car && carSupported()) { SES.queue = C.cur && !C.answered ? [C.cur] : []; carSwitchOn(true); return; }
     if (C.cur && BYID[C.cur] && !C.answered) { SES.queue = [C.cur]; save(); renderQuestion(); }
     else contNext();
   }
@@ -344,7 +346,7 @@
     if (C.log.length > 500) C.log = C.log.slice(-500);
     C.pending = C.pending.filter(function (p) { return p.id !== q.id; });
     if (!res.ok) C.pending.push({ id: q.id, due: C.n + REASK_MIN + Math.floor(Math.random() * REASK_SPREAD) });
-    C.answered = true; save();
+    C.answered = true; C.saved = Date.now(); save();
   }
   function renderContPause() {
     VIEW = 'sum'; SES = null; R = null;
@@ -357,12 +359,12 @@
     for (var i = C.log.length - 1; i >= 0 && missed.length < 10; i--) {
       var r = C.log[i]; if (!r.ok && BYID[r.id] && missed.indexOf(r.id) < 0) missed.push(r.id);
     }
-    var html = '<h1>Continuous study – paused</h1><p class="muted">Everything is saved. "Resume" continues exactly here, also after closing the browser.</p>';
+    var html = '<h1>Endless study – paused</h1><p class="muted">Everything is saved. "Resume" continues exactly here, also after closing the browser.</p>';
     html += '<div class="stats"><div class="stat"><b>' + C.n + '</b><span>answered this run</span></div>' +
       '<div class="stat"><b>' + C.c + ' / ' + C.n + '</b><span>correct (' + pct(C.c, C.n) + '%)</span></div>' +
       '<div class="stat"><b>' + C.h + '</b><span>answered with a hint</span></div>' +
       '<div class="stat"><b>' + C.pending.length + '</b><span>mistakes waiting to come back</span></div></div>';
-    html += '<div class="actions"><button class="primary" id="resume">▶ Resume</button><button id="back">Dashboard</button></div>';
+    html += '<div class="actions"><button class="primary" id="resume">▶ Resume</button>' + (carSupported() ? '<button id="resumecar">🚗 Resume in car</button>' : '') + '<button id="back">Home</button></div>';
     var ks = Object.keys(per).map(Number).sort(function (a, b) { return a - b; });
     if (ks.length) {
       html += '<h2>This run per chapter</h2><div class="card"><table><tr><th>Ch</th><th>Topic</th><th>Answered</th><th>Correct</th></tr>' +
@@ -381,6 +383,7 @@
     }
     app.innerHTML = html;
     app.querySelector('#resume').onclick = function () { startCont(false); };
+    var rc = app.querySelector('#resumecar'); if (rc) rc.onclick = function () { startCont(false, true); };
     app.querySelector('#back').onclick = renderDash;
     window.scrollTo(0, 0);
   }
@@ -395,29 +398,34 @@
     var html = '';
     html += '<h1>BIO02 Quiz Trainer</h1>';
     html += '<p class="muted">' + BANK.length + ' questions' + (days >= 0 ? ' · <b>exam in ' + days + ' day' + (days === 1 ? '' : 's') + '</b>' : '') + '</p>';
-    // continuous study: the main entry point
-    var C = S.cont, run = hasRun();
-    var open = sessions(), oids = Object.keys(open).sort(function (x, y) { return open[y].saved - open[x].saved; });
+    // every open session (the endless run is one of them); the newest one gets the big Resume button
+    var C = S.cont, open = sessions(), rows = [];
+    Object.keys(open).forEach(function (k) {
+      var z = open[k], zf = (z.results || []).filter(function (r) { return r.first; }), zc = zf.filter(function (r) { return r.ok; }).length;
+      var at = Math.min(z.queue.length, z.i + (z.answered ? 2 : 1));
+      rows.push({ k: k, label: z.label.replace(/^🚗 /, ''), sub: 'question ' + at + ' of ' + z.queue.length + (z.exam ? '' : ' · ' + zc + '/' + zf.length + ' right'), p: pct(at - 1, z.queue.length), saved: z.saved });
+    });
+    if (hasRun()) rows.push({ k: 'cont', label: 'Endless study (ch ' + selectedChapters().join(', ') + ')', sub: C.n + ' answered' + (C.n ? ' · ' + pct(C.c, C.n) + '% right' : '') + ' · ' + C.pending.length + ' mistakes waiting', p: null, saved: C.saved || C.started || 0 });
+    rows.sort(function (a, b) { return b.saved - a.saved; });
+    var carBtn = function (k, cls) { return carSupported() ? '<button class="' + cls + '" data-car="' + esc(k) + '" title="Continue in car mode: read aloud, answer by voice">🚗 Car</button>' : ''; };
     html += '<div class="home-go">' +
-      '<button class="go go-new" id="newquiz"><span class="go-ic">＋</span><b>New quiz</b><span>choose what, which chapters, how many</span></button>' +
-      '<button class="go go-cont" id="cont"><span class="go-ic">▶</span><b>' + (run ? 'Resume studying' : 'Keep studying') + '</b><span>' +
-      (run ? C.n + ' answered this run' + (C.n ? ', ' + pct(C.c, C.n) + '% right' : '') : 'endless, mistakes come back') + '</span></button>' +
-      '<button class="go go-car' + (carSupported() ? '' : ' off') + '" id="cargo"><span class="go-ic">🚗</span><b>Car mode</b><span>' +
-      (carSupported() ? 'hands-free: questions read aloud, you answer by voice' : esc(carWhyNot())) + '</span></button></div>';
-    html += '<div class="chips-line"><span class="small muted">Chapters for Keep studying &amp; Car mode</span> ' +
-      [1, 2, 3, 4].map(function (c) { return '<button class="chip' + (selectedChapters().indexOf(c) >= 0 ? ' on' : '') + '" data-cch="' + c + '">' + c + '</button>'; }).join('') +
-      (run ? '<button class="small linkish" id="contFresh" title="Resets only the run counters; your per-question progress is kept">fresh run</button>' : '') + '</div>';
-    if (oids.length) {
-      html += '<h2>Open sessions (' + oids.length + ')</h2><div class="card"><p class="small muted" style="margin:0 0 6px">Sessions you started and did not finish. Each one continues exactly where you left it.</p><table class="open-ses">';
-      oids.forEach(function (k) {
-        var z = open[k], zf = (z.results || []).filter(function (r) { return r.first; }), zc = zf.filter(function (r) { return r.ok; }).length;
-        var at = Math.min(z.queue.length, z.i + (z.answered ? 2 : 1));
-        html += '<tr><td><b>' + esc(z.label) + '</b><div class="small muted">question ' + at + ' of ' + z.queue.length + (z.exam ? '' : ' · ' + zc + '/' + zf.length + ' right') + ' · ' + new Date(z.saved).toLocaleString() + '</div>' +
-          '<div class="progress"><i style="width:' + pct(at - 1, z.queue.length) + '%"></i></div></td>' +
-          '<td style="white-space:nowrap;text-align:right"><button class="primary small" data-resume="' + esc(k) + '">▶ Continue</button> <button class="small" data-drop="' + esc(k) + '">Discard</button></td></tr>';
+      '<button class="go go-new" id="newquiz"><span class="go-ic">＋</span><b>New quiz</b><span>choose what, which chapters, how many</span></button>';
+    if (rows.length) {
+      var r0 = rows[0];
+      html += '<div class="go-pair"><button class="go go-cont" data-resume="' + esc(r0.k) + '"><span class="go-ic">▶</span><b>Resume</b><span>' + esc(r0.label) + ' · ' + esc(r0.sub) + '</span></button>' +
+        carBtn(r0.k, 'go go-car go-carsm') + '</div>';
+    }
+    html += '</div>';
+    if (rows.length) {
+      html += '<h2>Open sessions (' + rows.length + ')</h2><div class="card"><p class="small muted" style="margin:0 0 6px">Each one continues exactly where you left it, on the screen (▶) or in the car (🚗).</p><table class="open-ses">';
+      rows.forEach(function (z) {
+        html += '<tr><td><b>' + esc(z.label) + '</b><div class="small muted">' + esc(z.sub) + (z.saved ? ' · ' + new Date(z.saved).toLocaleString() : '') + '</div>' +
+          (z.p == null ? '' : '<div class="progress"><i style="width:' + z.p + '%"></i></div>') + '</td>' +
+          '<td class="ses-btns"><button class="primary small" data-resume="' + esc(z.k) + '">▶ Continue</button>' + carBtn(z.k, 'small') + '<button class="small" data-drop="' + esc(z.k) + '">Discard</button></td></tr>';
       });
       html += '</table></div>';
     }
+    if (!carSupported()) html += '<p class="small muted">🚗 Car mode is not available here: ' + esc(carWhyNot()) + '</p>';
     html += '<div class="home-more"><a class="btn" href="words.html">📖 Difficult words</a><a class="btn" href="pictures.html">🖼 All pictures</a></div>';
     html += installBox();
     html += '<h2>Your numbers</h2>';
@@ -489,20 +497,18 @@
     };
     var ix = app.querySelector('#installHide');
     if (ix) ix.onclick = function () { S.prefs.noInstall = 1; save(); renderDash(); };
-    [].forEach.call(app.querySelectorAll('[data-cch]'), function (b) {
+    function pushQ() { try { history.pushState({ v: 'q' }, ''); } catch (e) { /* ignore */ } }
+    function go(k, car) { pushQ(); if (k === 'cont') startCont(false, car); else resumeSes(k, car); }
+    [].forEach.call(app.querySelectorAll('[data-resume]'), function (b) { b.onclick = function () { go(b.getAttribute('data-resume'), false); }; });
+    [].forEach.call(app.querySelectorAll('[data-car]'), function (b) { b.onclick = function () { go(b.getAttribute('data-car'), true); }; });
+    [].forEach.call(app.querySelectorAll('[data-drop]'), function (b) {
       b.onclick = function () {
-        var c = Number(b.getAttribute('data-cch')), cs = selectedChapters().slice(), k = cs.indexOf(c);
-        if (k >= 0) { if (cs.length === 1) return; cs.splice(k, 1); } else cs.push(c);
-        S.prefs.chapters = cs.sort(); save(); b.classList.toggle('on', k < 0);
+        if (!confirm('Discard this open session? Your per-question progress is kept.')) return;
+        var k = b.getAttribute('data-drop');
+        if (k === 'cont') { S.cont = null; save(); } else dropSes(k);
+        renderDash();
       };
     });
-    function pushQ() { try { history.pushState({ v: 'q' }, ''); } catch (e) { /* ignore */ } }
-    app.querySelector('#cont').onclick = function () { pushQ(); startCont(false); };
-    app.querySelector('#cargo').onclick = function () { if (!carSupported()) { alert(carWhyNot()); return; } pushQ(); carQuick(); };
-    [].forEach.call(app.querySelectorAll('[data-resume]'), function (b) { b.onclick = function () { pushQ(); resumeSes(b.getAttribute('data-resume')); }; });
-    [].forEach.call(app.querySelectorAll('[data-drop]'), function (b) { b.onclick = function () { if (confirm('Discard this open session? Your per-question progress is kept.')) { dropSes(b.getAttribute('data-drop')); renderDash(); } }; });
-    var cf = app.querySelector('#contFresh');
-    if (cf) cf.onclick = function () { if (confirm('Start a fresh run? The run counters go back to 0; what you know per question is kept.')) startCont(true); };
     [].forEach.call(app.querySelectorAll('[data-concept]'), function (b) { b.onclick = function () { startMode('concept', b.getAttribute('data-concept')); }; });
     app.querySelector('#reset').onclick = function () {
       if (confirm('Delete all your quiz progress in this browser? This cannot be undone.')) { var p = S.prefs; S = fresh(); S.prefs = p; save(); renderDash(); }
@@ -558,7 +564,7 @@
       var C = contRun(), mastered = 0;
       BANK.forEach(function (x) { var s = stat(x.id); if (s && s.box >= MASTER_BOX) mastered++; });
       var again = C.log.some(function (r) { return r.id === q.id && !r.ok; }) && stat(q.id) && stat(q.id).lastOk === false;
-      html = '<div class="row"><b>Continuous study</b><span class="spacer"></span>' +
+      html = '<div class="row"><b>Endless study</b><span class="spacer"></span>' +
         '<span class="small">This run: <b id="score">' + C.c + '/' + C.n + '</b> correct' + (C.n ? ' (' + pct(C.c, C.n) + '%)' : '') + '</span>' +
         '<button class="small" id="quit">Pause</button><button class="small carswitch" id="tocar" title="Car mode: read aloud, answer by voice">🚗</button></div>' +
         '<div class="progress" title="' + mastered + ' of ' + BANK.length + ' questions mastered"><i style="width:' + pct(mastered, BANK.length) + '%"></i></div>' +
@@ -591,7 +597,7 @@
     if (pz) pz.onclick = function () { persistSes(R && R.answered); renderDash(); };
     app.querySelector('#tocar').onclick = function () {
       if (!carSupported()) { alert(carWhyNot()); return; }
-      if (SES.cont) carQuick(); else carSwitchOn();
+      carSwitchOn();
     };
     app.querySelector('#submit').onclick = submit;
     app.querySelector('#next').onclick = next;
@@ -1320,9 +1326,10 @@
   function carScreen() {
     VIEW = 'car';
     var q = BYID[SES.queue[SES.i]], sc = sessionScore(), p = carPrefs();
-    var html = '<div class="row"><b>' + esc(SES.label) + '</b><span class="spacer"></span><span class="muted small">' + (SES.i + 1) + ' / ' + SES.queue.length +
-      (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right') + '</span><button class="small carswitch" id="toscreen" title="Leave car mode and continue this quiz on the screen">📱 Screen</button></div>' +
-      '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>' +
+    var CC = SES.cont ? contRun() : null;
+    var html = '<div class="row"><b>🚗 ' + esc(SES.label) + '</b><span class="spacer"></span><span class="muted small">' +
+      (CC ? 'this run ' + CC.c + '/' + CC.n + ' right' : (SES.i + 1) + ' / ' + SES.queue.length + (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right')) + '</span><button class="small carswitch" id="toscreen" title="Leave car mode and continue this quiz on the screen">📱 Screen</button></div>' +
+      (CC ? '' : '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>') +
       '<div id="carst" class="car-st">…</div><div id="carheard" class="car-heard"></div><div id="carwarn"></div>' +
       '<div class="card car-q"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) + '</div>' +
       '<div class="qtext">' + esc(strip(q.q)).replace(/_{3,}/g, '_____') + '</div>';
@@ -1372,7 +1379,10 @@
     carNewQuestion();
   }
   function carNewQuestion() {
-    if (SES.i >= SES.queue.length) { carFinish(); return; }
+    if (SES.i >= SES.queue.length) {
+      if (!SES.cont) { carFinish(); return; }
+      if (!contPickCar()) { carStop(); return; }
+    }
     var q = BYID[SES.queue[SES.i]];
     CAR.qid = q.id; CAR.hints = 0; CAR.struck = [];
     CAR.perm = (q.type === 'mc' || q.type === 'multi') ? (q.shuffle === false ? range(q.options.length) : shuffle(range(q.options.length))) : null;
@@ -1380,7 +1390,7 @@
     carRun();
   }
   function questionText(q) {
-    var t = 'Question ' + (SES.i + 1) + '. ' + strip(q.q).replace(/_{3,}/g, ' blank ') + ' ';
+    var t = 'Question ' + (SES.cont ? contRun().n + 1 : SES.i + 1) + '. ' + strip(q.q).replace(/_{3,}/g, ' blank ') + ' ';
     if (q.type === 'mc' || q.type === 'multi') {
       if (q.type === 'multi') t += ' Several answers can be right. ';
       CAR.perm.forEach(function (o, d) { t += ' ' + LETTERS[d] + '. ' + strip(q.options[o]) + '. '; });
@@ -1487,7 +1497,8 @@
       var first = !SES.results.some(function (r) { return r.id === q.id; });
       SES.results.push({ id: q.id, ok: ok, first: first, given: given, hint: hinted });
       record(q.id, ok, hinted);
-      if (!ok && !SES.exam) {
+      if (SES.cont) contAfter(q, { ok: ok }, hinted);
+      else if (!ok && !SES.exam) {
         var n = SES.reask[q.id] || 0;
         if (n < 2) { SES.reask[q.id] = n + 1; SES.queue.splice(Math.min(SES.queue.length, SES.i + REASK_MIN + Math.floor(Math.random() * REASK_SPREAD)), 0, q.id); }
       }
@@ -1532,30 +1543,44 @@
   function carStop() {
     if (CAR && CAR.pending) CAR.pending();
     carEnd();
+    if (SES && SES.cont) { renderContPause(); return; }
     if (SES) persistSes(false);
     if (SES && SES.results.length) renderSummary(); else renderDash();
   }
 
-  // one tap from home (or from Keep studying): smart practice on the Keep-studying chapters, voice-friendly questions only
-  function carQuick() {
-    var keepB = BANK, keepL = S.prefs.len;
-    BANK = BANK.filter(voiceable); S.prefs.len = 30; CAR_NEXT = true;
-    try { startMode('chapter'); } finally { BANK = keepB; S.prefs.len = keepL; CAR_NEXT = false; save(); }
+  // the endless run in car mode: pick the next question among those that can be read aloud
+  function contPickCar() {
+    var C = contRun(), keepB = BANK, id;
+    if (C.cur) { C.recent.push(C.cur); if (C.recent.length > 12) C.recent = C.recent.slice(-12); }
+    BANK = BANK.filter(voiceable);
+    try { id = BANK.length ? pickNext() : null; } finally { BANK = keepB; }
+    C.cur = id; C.answered = false; save();
+    SES.queue = id ? [id] : []; SES.i = 0;
+    return id;
   }
-  // switch a running quiz to car mode: the rest of the queue without the questions that cannot be read aloud
-  function carSwitchOn() {
-    var i = SES.i + (R && R.answered ? 1 : 0);
+  // play the current session in car mode, from the question you are on
+  // (questions that cannot be read aloud are left out: matching, ordering, pictures)
+  function carSwitchOn(silent) {
+    var i = SES.i + (R && R.answered && VIEW === 'q' ? 1 : 0);
+    if (SES.cont) {
+      SES.car = true;
+      if (i >= SES.queue.length || !voiceable(BYID[SES.queue[0]])) { if (!contPickCar()) { alert('No questions to read aloud in these chapters.'); return; } }
+      carBegin(); return;
+    }
     var rest = SES.queue.slice(i).filter(function (id) { return BYID[id] && voiceable(BYID[id]); });
-    if (!rest.length) { alert('The rest of this quiz has no questions that can be read aloud (only matching, ordering or picture questions).'); return; }
+    if (!rest.length) {
+      if (silent) { SES.i = i; persistSes(false); renderQuestion(); return; }
+      alert('The rest of this quiz has no questions that can be read aloud (only matching, ordering or picture questions).'); return;
+    }
     SES.queue = SES.queue.slice(0, i).concat(rest); SES.i = i; SES.car = true;
-    if (SES.label.indexOf('🚗') !== 0) SES.label = '🚗 ' + SES.label;
     persistSes(false); carBegin();
   }
   // and back to the screen, at the same place
   function carSwitchOff() {
     if (CAR && CAR.pending) CAR.pending();
     carEnd();
-    SES.car = false; SES.label = SES.label.replace(/^🚗 /, '');
+    SES.car = false;
+    if (SES.cont) { startCont(false); return; }
     if (SES.i >= SES.queue.length) { renderSummary(); return; }
     persistSes(false); renderQuestion();
   }
@@ -1565,6 +1590,7 @@
   /* ---------------- new-quiz wizard ---------------- */
   var W = null;
   var WMODES = [
+    { m: 'endless', ic: '♾', t: 'Endless study', d: 'Keeps going; mistakes come back later. Replaces your current endless run.' },
     { m: 'chapter', ic: '🎯', t: 'Practice', d: 'Smart order: mistakes first, then due, then new.' },
     { m: 'official', ic: '📋', t: 'Official quiz', d: 'The lecturer\'s practice questions.' },
     { m: 'mistakes', ic: '❌', t: 'My mistakes', d: 'Only what you got wrong and do not master yet.' },
@@ -1575,13 +1601,13 @@
   ];
   function wmode(m) { return WMODES.filter(function (x) { return x.m === m; })[0]; }
   function wNeedsCh(m) { return m !== 'sample'; }
-  function wNeedsLen(m) { return m !== 'sample'; }
+  function wNeedsLen(m) { return m !== 'sample' && m !== 'endless'; }
   // how many questions this mode has in these chapters (before the length cut)
   function wCount(m, chs) {
     var keep = S.prefs.chapters, keepB = BANK, n = 0;
     S.prefs.chapters = chs;
     try {
-      if (m === 'chapter' || m === 'exam') n = byChapters(BANK).length;
+      if (m === 'chapter' || m === 'exam' || m === 'endless') n = byChapters(BANK).length;
       else if (m === 'official') n = byChapters(BANK).filter(function (q) { return q.source === 'official'; }).length;
       else if (m === 'mistakes') n = mistakePool().length;
       else if (m === 'starred') n = starPool().length;
@@ -1602,12 +1628,18 @@
   }
   function wGo(step) { W.step = step; renderWizard(); }
   function wNext() { var st = wSteps(), k = st.indexOf(W.step); if (k < st.length - 1) wGo(st[k + 1]); }
-  function wStart() {
-    // the wizard keeps its own chapter choice; "Keep studying" keeps its own
-    var keep = S.prefs.chapters, m = W.mode;
-    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len; S.prefs.chapters = S.prefs.wizChs;
+  function wStart(car) {
+    // the wizard keeps its own chapter choice; the endless run keeps its own (S.prefs.chapters)
+    var keep = S.prefs.chapters, keepB = BANK, m = W.mode;
+    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len;
     W = null;
-    try { startMode(m); } finally { S.prefs.chapters = keep; save(); }
+    if (m === 'endless') {
+      if (hasRun() && !confirm('Start a new endless run? Your current run stops (what you know per question is kept).')) { renderDash(); return; }
+      S.prefs.chapters = S.prefs.wizChs; save(); startCont(true, car); return;
+    }
+    S.prefs.chapters = S.prefs.wizChs;
+    if (car) { BANK = BANK.filter(voiceable); CAR_NEXT = true; }   // car: pick only questions that can be read aloud
+    try { startMode(m); } finally { S.prefs.chapters = keep; BANK = keepB; CAR_NEXT = false; save(); }
   }
   function renderWizard() {
     VIEW = 'wiz'; SES = null; R = null;
@@ -1655,7 +1687,8 @@
       canNext = n > 0;
     }
     html += '<div class="wiz-bar">' + (W.step === 3
-      ? '<button class="primary big" id="wstart"' + (canNext ? '' : ' disabled') + '>▶ Start quiz</button>'
+      ? '<button class="primary big" id="wstart"' + (canNext ? '' : ' disabled') + '>▶ Start</button>' +
+        (carSupported() ? '<button class="big go-car wcarbtn" id="wstartcar"' + (canNext ? '' : ' disabled') + '>🚗 Start in car</button>' : '')
       : '<button class="primary big" id="wnext"' + (canNext ? '' : ' disabled') + '>Next →</button>') + '</div>';
     app.innerHTML = html;
     app.querySelector('#wback').onclick = function () { history.back(); };
@@ -1670,7 +1703,8 @@
       b.onclick = function () { var v = b.getAttribute('data-wl'); W.len = v === 'all' ? 'all' : Number(v); renderWizard(); };
     });
     var wn = app.querySelector('#wnext'); if (wn) wn.onclick = wNext;
-    var ws = app.querySelector('#wstart'); if (ws) ws.onclick = wStart;
+    var ws = app.querySelector('#wstart'); if (ws) ws.onclick = function () { wStart(false); };
+    var wsc = app.querySelector('#wstartcar'); if (wsc) wsc.onclick = function () { wStart(true); };
     window.scrollTo(0, 0);
   }
   // phone/browser back button: in the wizard one step back; in a quiz back home (the place is saved)

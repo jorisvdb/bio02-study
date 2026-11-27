@@ -153,8 +153,14 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
 .go span:last-child { font-size: .85rem; opacity: .92; }
 .go-new { background: linear-gradient(135deg, #2a6fdb, #6a4fd8); }
 .go-cont { background: linear-gradient(135deg, #1f8a4c, #2aa37a); }
-.go-car { grid-column: 1 / -1; background: linear-gradient(135deg, #c2571a, #e0892b); }
-.go-car.off { opacity: .6; }
+.go-car { background: linear-gradient(135deg, #c2571a, #e0892b); color: #fff; border: 0; }
+.go-pair { display: flex; gap: 8px; }
+.go-pair .go-cont { flex: 1; min-width: 0; }
+.go-pair .go-carsm { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; padding: 0 16px; font-weight: 700; font-size: 1.05rem; }
+.go-pair .go-cont > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.ses-btns { white-space: nowrap; text-align: right; }
+.ses-btns button { margin-left: 4px; }
+.wiz-bar .wcarbtn { margin-left: 8px; }
 .carswitch { margin-left: 6px; }
 .chips-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 6px; }
 .chip { min-width: 2.4em; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: .9rem; color: var(--muted); }
@@ -240,3 +246,9 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
 .car-set label { margin-right: 14px; font-size: .9rem; }
 .cartoggle.off { opacity: .8; border-style: dashed; cursor: default; }
 .ver { margin-top: 18px; }
+@media (max-width: 600px) {
+  .open-ses tr { display: block; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .open-ses td { display: block; border: 0; padding: 2px 0; }
+  .ses-btns { text-align: left; padding-top: 6px !important; }
+  .ses-btns button { margin: 0 6px 0 0; }
+}
