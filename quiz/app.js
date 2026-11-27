@@ -552,14 +552,14 @@
     R = { q: q, answered: false, perm: null, sel: [], tf: null, order: null, hints: 0, hintMsgs: [], struck: [], locked: 0, autoLevel: 0 };
     var sc = sessionScore(), html;
     if (SES.cont) {
-      var C = contRun(), mastered = 0, known = 0;
-      BANK.forEach(function (x) { var s = stat(x.id); if (s && s.box >= MASTER_BOX) mastered++; if (s && s.lastOk) known++; });
+      var C = contRun(), mastered = 0, known = 0, mine = byChapters(BANK);   // only the chapters of this run
+      mine.forEach(function (x) { var s = stat(x.id); if (s && s.box >= MASTER_BOX) mastered++; if (s && s.lastOk) known++; });
       var again = C.log.some(function (r) { return r.id === q.id && !r.ok; }) && stat(q.id) && stat(q.id).lastOk === false;
-      html = '<div class="row"><b>Endless study</b><span class="spacer"></span>' +
+      html = '<div class="row"><b>Endless study (ch ' + selectedChapters().join(', ') + ')</b><span class="spacer"></span>' +
         '<span class="small">This run: <b id="score">' + C.c + '/' + C.n + '</b> correct' + (C.n ? ' (' + pct(C.c, C.n) + '%)' : '') + '</span>' +
         '<button class="small" id="quit">Pause</button><button class="small carswitch" id="tocar" title="Car mode: questions read aloud, you answer by voice">🚗 Car mode</button></div>' +
-        '<div class="progress" title="right the last time you answered them"><i style="width:' + pct(known, BANK.length) + '%"></i></div>' +
-        '<p class="small muted" style="margin:-6px 0 8px"><b>' + known + '</b> of ' + BANK.length + ' questions right last time · <b>' + mastered + '</b> mastered (3× right in a row)</p>';
+        '<div class="progress" title="right the last time you answered them"><i style="width:' + pct(known, mine.length) + '%"></i></div>' +
+        '<p class="small muted" style="margin:-6px 0 8px"><b>' + known + '</b> of ' + mine.length + ' questions in ch ' + selectedChapters().join(', ') + ' right last time · <b>' + mastered + '</b> mastered (3× right in a row)</p>';
       html += '<div class="card" id="qcard"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) +
         '<span class="badge">' + esc(conceptLabel(q.concept)) + '</span>' + (again ? '<span class="badge">again</span>' : (stat(q.id) ? '<span class="badge">review</span>' : '<span class="badge">new</span>')) + starBtn(q.id) + '</div>';
     } else {
