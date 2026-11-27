@@ -1631,7 +1631,7 @@
   }
   function wSteps() { var st = [1]; if (!W.mode || wNeedsCh(W.mode)) st.push(2); st.push(3); return st; }
   function openWizard() {
-    W = { step: 1, mode: null, chs: (S.prefs.wizChs && S.prefs.wizChs.length ? S.prefs.wizChs : [1, 2, 3, 4]).slice(), len: S.prefs.len || 20 };
+    W = { step: 1, mode: null, chs: [], len: S.prefs.len || 20 };
     try { history.pushState({ v: 'wiz' }, ''); } catch (e) { /* ignore */ }
     renderWizard();
   }
@@ -1667,15 +1667,15 @@
       html += '</div>';
       canNext = !!W.mode;
     } else if (W.step === 2) {
-      html += '<h1 class="wiz-h">Which chapters?</h1><p class="muted wiz-sub">' + wmode(W.mode).ic + ' ' + esc(wmode(W.mode).t) + ' · tap to switch on or off</p><div class="wiz-ch">';
+      html += '<h1 class="wiz-h">Which chapters?</h1><p class="muted wiz-sub">' + wmode(W.mode).ic + ' ' + esc(wmode(W.mode).t) + ' · tap one or more chapters</p><div class="wiz-ch">';
       [1, 2, 3, 4].forEach(function (c) {
         var n = wCount(W.mode, [c]);
         html += '<button class="chtile' + (W.chs.indexOf(c) >= 0 ? ' on' : '') + '" data-wc="' + c + '"><span class="chnum">' + c + '</span>' +
           '<span class="chname">' + esc(CH_NAMES[c]) + '</span><span class="tile-n">' + n + '</span><span class="tick">✓</span></button>';
       });
-      html += '</div><div class="row"><button class="small" id="wall">All chapters</button></div>';
+      html += '</div><div class="row"><button class="small" id="wall">All chapters</button>' + (W.chs.length ? ' <button class="small" id="wnone">Clear</button>' : '') + '</div>';
       var tot = wCount(W.mode, W.chs);
-      html += '<p class="wiz-sum">' + (W.chs.length ? '<b>' + tot + '</b> question' + (tot === 1 ? '' : 's') + ' in chapter' + (W.chs.length > 1 ? 's ' : ' ') + W.chs.slice().sort().join(', ') : 'Pick at least one chapter') + '</p>';
+      html += '<p class="wiz-sum">' + (W.chs.length ? '<b>' + tot + '</b> question' + (tot === 1 ? '' : 's') + ' in chapter' + (W.chs.length > 1 ? 's ' : ' ') + W.chs.slice().sort().join(', ') : 'Tap the chapter(s) you want') + '</p>';
       canNext = W.chs.length > 0 && tot > 0;
     } else {
       var chs = wNeedsCh(W.mode) ? W.chs : [1, 2, 3, 4], avail = wCount(W.mode, chs);
@@ -1708,6 +1708,7 @@
       b.onclick = function () { var c = Number(b.getAttribute('data-wc')), k = W.chs.indexOf(c); if (k >= 0) W.chs.splice(k, 1); else W.chs.push(c); renderWizard(); };
     });
     var wa = app.querySelector('#wall'); if (wa) wa.onclick = function () { W.chs = [1, 2, 3, 4]; renderWizard(); };
+    var wz = app.querySelector('#wnone'); if (wz) wz.onclick = function () { W.chs = []; renderWizard(); };
     [].forEach.call(app.querySelectorAll('[data-wl]'), function (b) {
       b.onclick = function () { var v = b.getAttribute('data-wl'); W.len = v === 'all' ? 'all' : Number(v); renderWizard(); };
     });
