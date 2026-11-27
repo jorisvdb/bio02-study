@@ -401,8 +401,10 @@
     html += '<div class="home-go">' +
       '<button class="go go-new" id="newquiz"><span class="go-ic">＋</span><b>New quiz</b><span>choose what, which chapters, how many</span></button>' +
       '<button class="go go-cont" id="cont"><span class="go-ic">▶</span><b>' + (run ? 'Resume studying' : 'Keep studying') + '</b><span>' +
-      (run ? C.n + ' answered this run' + (C.n ? ', ' + pct(C.c, C.n) + '% right' : '') : 'endless, mistakes come back') + '</span></button></div>';
-    html += '<div class="chips-line"><span class="small muted">Keep studying uses chapters</span> ' +
+      (run ? C.n + ' answered this run' + (C.n ? ', ' + pct(C.c, C.n) + '% right' : '') : 'endless, mistakes come back') + '</span></button>' +
+      '<button class="go go-car' + (carSupported() ? '' : ' off') + '" id="cargo"><span class="go-ic">🚗</span><b>Car mode</b><span>' +
+      (carSupported() ? 'hands-free: questions read aloud, you answer by voice' : esc(carWhyNot())) + '</span></button></div>';
+    html += '<div class="chips-line"><span class="small muted">Chapters for Keep studying &amp; Car mode</span> ' +
       [1, 2, 3, 4].map(function (c) { return '<button class="chip' + (selectedChapters().indexOf(c) >= 0 ? ' on' : '') + '" data-cch="' + c + '">' + c + '</button>'; }).join('') +
       (run ? '<button class="small linkish" id="contFresh" title="Resets only the run counters; your per-question progress is kept">fresh run</button>' : '') + '</div>';
     if (oids.length) {
@@ -496,6 +498,7 @@
     });
     function pushQ() { try { history.pushState({ v: 'q' }, ''); } catch (e) { /* ignore */ } }
     app.querySelector('#cont').onclick = function () { pushQ(); startCont(false); };
+    app.querySelector('#cargo').onclick = function () { if (!carSupported()) { alert(carWhyNot()); return; } pushQ(); carQuick(); };
     [].forEach.call(app.querySelectorAll('[data-resume]'), function (b) { b.onclick = function () { pushQ(); resumeSes(b.getAttribute('data-resume')); }; });
     [].forEach.call(app.querySelectorAll('[data-drop]'), function (b) { b.onclick = function () { if (confirm('Discard this open session? Your per-question progress is kept.')) { dropSes(b.getAttribute('data-drop')); renderDash(); } }; });
     var cf = app.querySelector('#contFresh');
@@ -557,7 +560,7 @@
       var again = C.log.some(function (r) { return r.id === q.id && !r.ok; }) && stat(q.id) && stat(q.id).lastOk === false;
       html = '<div class="row"><b>Continuous study</b><span class="spacer"></span>' +
         '<span class="small">This run: <b id="score">' + C.c + '/' + C.n + '</b> correct' + (C.n ? ' (' + pct(C.c, C.n) + '%)' : '') + '</span>' +
-        '<button class="small" id="quit">Pause</button></div>' +
+        '<button class="small" id="quit">Pause</button><button class="small carswitch" id="tocar" title="Car mode: read aloud, answer by voice">🚗</button></div>' +
         '<div class="progress" title="' + mastered + ' of ' + BANK.length + ' questions mastered"><i style="width:' + pct(mastered, BANK.length) + '%"></i></div>' +
         '<p class="small muted" style="margin:-6px 0 8px">' + mastered + ' of ' + BANK.length + ' questions mastered</p>';
       html += '<div class="card" id="qcard"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) +
@@ -567,7 +570,7 @@
         '<span class="muted small">Question ' + (SES.i + 1) + ' of ' + SES.queue.length + '</span>' +
         (SES.exam ? '' : '<span class="small"> · <b id="score">' + sc.c + '/' + sc.n + '</b> correct</span>') +
         (SES.save ? '<button class="small" id="pause" title="Your place is saved after every answer anyway">⏸ Save &amp; stop</button>' : '') +
-        '<button class="small" id="quit">End session</button></div>' +
+        '<button class="small" id="quit">End session</button><button class="small carswitch" id="tocar" title="Car mode: read aloud, answer by voice">🚗</button></div>' +
         '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>';
       html += '<div class="card" id="qcard"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) +
         '<span class="badge">' + esc(conceptLabel(q.concept)) + '</span>' + (SES.reask[q.id] ? '<span class="badge">again</span>' : '') + starBtn(q.id) + '</div>';
@@ -586,6 +589,10 @@
     };
     var pz = app.querySelector('#pause');
     if (pz) pz.onclick = function () { persistSes(R && R.answered); renderDash(); };
+    app.querySelector('#tocar').onclick = function () {
+      if (!carSupported()) { alert(carWhyNot()); return; }
+      if (SES.cont) carQuick(); else carSwitchOn();
+    };
     app.querySelector('#submit').onclick = submit;
     app.querySelector('#next').onclick = next;
     var hb = app.querySelector('#hint'); if (hb) hb.onclick = hint;
@@ -1314,7 +1321,7 @@
     VIEW = 'car';
     var q = BYID[SES.queue[SES.i]], sc = sessionScore(), p = carPrefs();
     var html = '<div class="row"><b>' + esc(SES.label) + '</b><span class="spacer"></span><span class="muted small">' + (SES.i + 1) + ' / ' + SES.queue.length +
-      (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right') + '</span></div>' +
+      (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right') + '</span><button class="small carswitch" id="toscreen" title="Leave car mode and continue this quiz on the screen">📱 Screen</button></div>' +
       '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>' +
       '<div id="carst" class="car-st">…</div><div id="carheard" class="car-heard"></div><div id="carwarn"></div>' +
       '<div class="card car-q"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) + '</div>' +
@@ -1336,6 +1343,7 @@
     app.querySelector('#carrep').onclick = function () { carRun(); };
     app.querySelector('#carskip').onclick = function () { carAbort(); carAnswer(q, { ok: false, given: '(skipped)' }, true); };
     app.querySelector('#carstop').onclick = carStop;
+    app.querySelector('#toscreen').onclick = carSwitchOff;
     app.querySelector('#carlang').onchange = function () { p.lang = this.value; save(); };
     app.querySelector('#carrate').onchange = function () { p.rate = Number(this.value); save(); };
     app.querySelector('#carexp').onchange = function () { p.explain = this.checked; save(); };
@@ -1528,6 +1536,30 @@
     if (SES && SES.results.length) renderSummary(); else renderDash();
   }
 
+  // one tap from home (or from Keep studying): smart practice on the Keep-studying chapters, voice-friendly questions only
+  function carQuick() {
+    var keepB = BANK, keepL = S.prefs.len;
+    BANK = BANK.filter(voiceable); S.prefs.len = 30; CAR_NEXT = true;
+    try { startMode('chapter'); } finally { BANK = keepB; S.prefs.len = keepL; CAR_NEXT = false; save(); }
+  }
+  // switch a running quiz to car mode: the rest of the queue without the questions that cannot be read aloud
+  function carSwitchOn() {
+    var i = SES.i + (R && R.answered ? 1 : 0);
+    var rest = SES.queue.slice(i).filter(function (id) { return BYID[id] && voiceable(BYID[id]); });
+    if (!rest.length) { alert('The rest of this quiz has no questions that can be read aloud (only matching, ordering or picture questions).'); return; }
+    SES.queue = SES.queue.slice(0, i).concat(rest); SES.i = i; SES.car = true;
+    if (SES.label.indexOf('🚗') !== 0) SES.label = '🚗 ' + SES.label;
+    persistSes(false); carBegin();
+  }
+  // and back to the screen, at the same place
+  function carSwitchOff() {
+    if (CAR && CAR.pending) CAR.pending();
+    carEnd();
+    SES.car = false; SES.label = SES.label.replace(/^🚗 /, '');
+    if (SES.i >= SES.queue.length) { renderSummary(); return; }
+    persistSes(false); renderQuestion();
+  }
+
   window.__carTest = { letters: letters, byText: byText, fillMatch: fillMatch, spoken: spoken, command: command, sayable: sayable, carGrade: function (q, alts) { return carGrade(q, alts, []); }, start: function (ids) { CAR_NEXT = true; startMode('ids', ids); } };
 
   /* ---------------- new-quiz wizard ---------------- */
@@ -1548,7 +1580,6 @@
   function wCount(m, chs) {
     var keep = S.prefs.chapters, keepB = BANK, n = 0;
     S.prefs.chapters = chs;
-    if (W && W.car) BANK = BANK.filter(voiceable);
     try {
       if (m === 'chapter' || m === 'exam') n = byChapters(BANK).length;
       else if (m === 'official') n = byChapters(BANK).filter(function (q) { return q.source === 'official'; }).length;
@@ -1565,7 +1596,7 @@
   }
   function wSteps() { var st = [1]; if (!W.mode || wNeedsCh(W.mode)) st.push(2); st.push(3); return st; }
   function openWizard() {
-    W = { step: 1, mode: null, car: !!S.prefs.wizCar && carSupported(), chs: (S.prefs.wizChs && S.prefs.wizChs.length ? S.prefs.wizChs : [1, 2, 3, 4]).slice(), len: S.prefs.len || 20 };
+    W = { step: 1, mode: null, chs: (S.prefs.wizChs && S.prefs.wizChs.length ? S.prefs.wizChs : [1, 2, 3, 4]).slice(), len: S.prefs.len || 20 };
     try { history.pushState({ v: 'wiz' }, ''); } catch (e) { /* ignore */ }
     renderWizard();
   }
@@ -1573,11 +1604,10 @@
   function wNext() { var st = wSteps(), k = st.indexOf(W.step); if (k < st.length - 1) wGo(st[k + 1]); }
   function wStart() {
     // the wizard keeps its own chapter choice; "Keep studying" keeps its own
-    var keep = S.prefs.chapters, keepB = BANK, m = W.mode, car = W.car;
-    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len; S.prefs.chapters = S.prefs.wizChs; S.prefs.wizCar = car;
+    var keep = S.prefs.chapters, m = W.mode;
+    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len; S.prefs.chapters = S.prefs.wizChs;
     W = null;
-    if (car) { BANK = BANK.filter(voiceable); CAR_NEXT = true; }
-    try { startMode(m); } finally { S.prefs.chapters = keep; BANK = keepB; CAR_NEXT = false; save(); }
+    try { startMode(m); } finally { S.prefs.chapters = keep; save(); }
   }
   function renderWizard() {
     VIEW = 'wiz'; SES = null; R = null;
@@ -1609,10 +1639,6 @@
     } else {
       var chs = wNeedsCh(W.mode) ? W.chs : [1, 2, 3, 4], avail = wCount(W.mode, chs);
       html += '<h1 class="wiz-h">' + (wNeedsLen(W.mode) ? 'How many questions?' : 'Ready?') + '</h1>';
-      if (!carSupported()) html += '<div class="cartoggle off"><span class="go-ic">🚗</span><span><b>Car mode not available here</b><span class="small">' + esc(carWhyNot()) + '</span></span></div>';
-      else html += '<button class="cartoggle' + (W.car ? ' on' : '') + '" id="wcar"><span class="go-ic">🚗</span><span><b>Car mode ' + (W.car ? 'ON' : 'off') + '</b>' +
-        '<span class="small">questions read aloud, you answer by voice' + (W.car ? ' · matching and ordering questions are left out' : '') + '</span></span><span class="sw"><i></i></span></button>' +
-        (W.car ? '<div class="row" style="margin:-6px 0 12px"><button class="small" id="wtest">🔊 Test voice</button><span id="wtestout" class="small"></span></div>' : '');
       if (wNeedsLen(W.mode)) {
         html += '<div class="wiz-len">' + ['10', '20', '40', 'all'].map(function (v) {
           var dis = v !== 'all' && W.mode !== 'exam' && Number(v) > avail;
@@ -1625,7 +1651,7 @@
       if (wNeedsLen(W.mode)) n = W.len === 'all' ? (W.mode === 'exam' ? Math.min(40, avail) : avail) : Math.min(Number(W.len), avail);
       html += '<div class="wiz-recap"><div><span class="muted">What</span><b>' + wmode(W.mode).ic + ' ' + esc(wmode(W.mode).t) + '</b></div>' +
         (wNeedsCh(W.mode) ? '<div><span class="muted">Chapters</span><b>' + W.chs.slice().sort().join(', ') + '</b></div>' : '') +
-        '<div><span class="muted">Questions</span><b>' + n + '</b></div>' + (W.car ? '<div><span class="muted">Answer</span><b>🚗 by voice</b></div>' : '') + '</div>';
+        '<div><span class="muted">Questions</span><b>' + n + '</b></div>' + '</div>';
       canNext = n > 0;
     }
     html += '<div class="wiz-bar">' + (W.step === 3
@@ -1643,8 +1669,6 @@
     [].forEach.call(app.querySelectorAll('[data-wl]'), function (b) {
       b.onclick = function () { var v = b.getAttribute('data-wl'); W.len = v === 'all' ? 'all' : Number(v); renderWizard(); };
     });
-    var wc = app.querySelector('#wcar'); if (wc) wc.onclick = function () { W.car = !W.car; renderWizard(); };
-    var wt = app.querySelector('#wtest'); if (wt) wt.onclick = function () { testVoice(app.querySelector('#wtestout')); };
     var wn = app.querySelector('#wnext'); if (wn) wn.onclick = wNext;
     var ws = app.querySelector('#wstart'); if (ws) ws.onclick = wStart;
     window.scrollTo(0, 0);

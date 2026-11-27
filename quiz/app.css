@@ -153,6 +153,9 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
 .go span:last-child { font-size: .85rem; opacity: .92; }
 .go-new { background: linear-gradient(135deg, #2a6fdb, #6a4fd8); }
 .go-cont { background: linear-gradient(135deg, #1f8a4c, #2aa37a); }
+.go-car { grid-column: 1 / -1; background: linear-gradient(135deg, #c2571a, #e0892b); }
+.go-car.off { opacity: .6; }
+.carswitch { margin-left: 6px; }
 .chips-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 6px; }
 .chip { min-width: 2.4em; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: .9rem; color: var(--muted); }
 .chip.on { background: var(--ok); border-color: var(--ok); color: #fff; }
