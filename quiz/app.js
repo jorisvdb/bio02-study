@@ -1098,6 +1098,8 @@
   var CAR_NEXT = false, CAR = null;
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   function carSupported() { return !!(SR && window.speechSynthesis); }
+  // ask the phone for its voices early (Android loads the list asynchronously)
+  try { if (window.speechSynthesis) { speechSynthesis.getVoices(); if (speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged', function () {}); } } catch (e) { /* ignore */ }
   function carWhyNot() {
     if (!window.speechSynthesis) return 'This browser cannot read text aloud.';
     if (/SamsungBrowser/.test(navigator.userAgent)) return 'Samsung Internet cannot listen to speech. Open this page in Google Chrome and install the app from there.';
@@ -1140,20 +1142,53 @@
     if (cur.trim()) out.push(cur);
     return out;
   }
+  // one utterance; reports whether the phone really started speaking
+  function utter(text, p, cb) {
+    var u = new SpeechSynthesisUtterance(text), vs = speechSynthesis.getVoices() || [];
+    var v = pickVoice(p.lang);
+    if (v) { u.voice = v; u.lang = v.lang; } else if (!vs.length) u.lang = p.lang;   // no voice list yet: ask for the language
+    u.rate = p.rate;
+    var info = { started: false, err: null, voice: v ? v.name : '(default)' }, done = false;
+    var guard = setTimeout(fin, 4000 + text.length * 120 / p.rate);
+    function fin() { if (done) return; done = true; clearTimeout(guard); cb(info); }
+    u.onstart = function () { info.started = true; };
+    u.onend = fin;
+    u.onerror = function (e) { info.err = (e && e.error) || 'error'; fin(); };
+    function go() { try { speechSynthesis.resume(); } catch (e) { /* ignore */ } speechSynthesis.speak(u); }
+    // Chrome on Android drops speech that starts right after cancel(): wait a moment first
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(go, 200); } else go();
+    return info;
+  }
   function say(text, tok) {
     return new Promise(function (resolve) {
       if (!text || !CAR || CAR.tok !== tok) { resolve(); return; }
       var list = chunks(sayable(text)), i = 0, p = carPrefs();
       (function one() {
         if (!CAR || CAR.tok !== tok || i >= list.length) { resolve(); return; }
-        var u = new SpeechSynthesisUtterance(list[i++]);
-        u.lang = p.lang; u.rate = p.rate;
-        var v = pickVoice(p.lang); if (v) u.voice = v;
-        var done = false, guard = setTimeout(fin, 4000 + list[i - 1].length * 120 / p.rate);
-        function fin() { if (done) return; done = true; clearTimeout(guard); one(); }
-        u.onend = fin; u.onerror = fin;
-        speechSynthesis.speak(u);
+        var info = utter(list[i++], p, function (inf) {
+          if (CAR && !CAR.heardOk) { if (inf.started) { CAR.heardOk = true; carWarn(''); } else carWarn(inf.err); }
+          one();
+        });
+        if (CAR && !CAR.heardOk) setTimeout(function () { if (CAR && !CAR.heardOk && !info.started) carWarn(info.err); }, 3500);
       })();
+    });
+  }
+  var NOSOUND = '<b>No sound?</b> 1) Press a volume key and turn up the <b>media</b> volume (not the ringer). ' +
+    '2) Android Settings → search <b>Text-to-speech</b> → engine <b>Speech Services by Google</b> (or Google) → install an English voice → tap <b>Listen to an example</b>. ' +
+    '3) Use <b>🔊 Test voice</b> under Voice settings.';
+  function carWarn(err) {
+    var el = app.querySelector('#carwarn'); if (!el) return;
+    el.innerHTML = err === '' ? '' : '<div class="hint">' + NOSOUND + (err ? ' <span class="small">(error: ' + esc(err) + ')</span>' : '') + '</div>';
+  }
+  function testVoice(out) {
+    if (!window.speechSynthesis) { out.textContent = 'This browser cannot speak.'; return; }
+    var p = carPrefs(), vs = speechSynthesis.getVoices() || [];
+    out.innerHTML = 'Speaking…';
+    utter('Hello! This is car mode. Can you hear me?', p, function (inf) {
+      var en = vs.filter(function (v) { return /^en/i.test(v.lang); }).length;
+      out.innerHTML = (inf.started ? '✓ The phone started speaking (voice: ' + esc(inf.voice) + '). If you heard nothing, turn up the <b>media</b> volume.'
+        : '✗ The phone did not start speaking' + (inf.err ? ' (error: ' + esc(inf.err) + ')' : '') + '.<br>' + NOSOUND) +
+        '<br><span class="small muted">' + vs.length + ' voices on this phone, ' + en + ' English.</span>';
     });
   }
   function tone(ok) {
@@ -1281,7 +1316,7 @@
     var html = '<div class="row"><b>' + esc(SES.label) + '</b><span class="spacer"></span><span class="muted small">' + (SES.i + 1) + ' / ' + SES.queue.length +
       (SES.exam ? '' : ' · ' + sc.c + '/' + sc.n + ' right') + '</span></div>' +
       '<div class="progress"><i style="width:' + pct(SES.i, SES.queue.length) + '%"></i></div>' +
-      '<div id="carst" class="car-st">…</div><div id="carheard" class="car-heard"></div>' +
+      '<div id="carst" class="car-st">…</div><div id="carheard" class="car-heard"></div><div id="carwarn"></div>' +
       '<div class="card car-q"><div class="badges"><span class="badge">Ch ' + q.ch + '</span>' + sourceBadge(q) + '</div>' +
       '<div class="qtext">' + esc(strip(q.q)).replace(/_{3,}/g, '_____') + '</div>';
     if (q.type === 'mc' || q.type === 'multi') {
@@ -1294,6 +1329,7 @@
       '<label>Accent <select id="carlang"><option value="en-US"' + (p.lang === 'en-US' ? ' selected' : '') + '>English (US)</option><option value="en-GB"' + (p.lang === 'en-GB' ? ' selected' : '') + '>English (UK)</option></select></label>' +
       '<label>Speed <select id="carrate">' + [0.85, 1, 1.15, 1.3].map(function (r) { return '<option value="' + r + '"' + (p.rate === r ? ' selected' : '') + '>' + (r === 1 ? 'normal' : r < 1 ? 'slower' : r < 1.2 ? 'faster' : 'fast') + '</option>'; }).join('') + '</select></label>' +
       '<label><input type="checkbox" id="carexp"' + (p.explain ? ' checked' : '') + '> read the explanation after a wrong answer</label></div>' +
+      '<div class="row" style="margin-top:8px"><button class="small" id="cartest">🔊 Test voice</button><span id="cartestout" class="small"></span></div>' +
       '<p class="small muted">Say a letter (“B”), several letters (“A and C”), “true”/“false”, or the word for a blank. Also: “repeat”, “hint”, “skip”, “stop”. After a wrong fill-in answer you can say “correct” if you did say it right. Listening needs internet.</p></details>';
     app.innerHTML = html;
     app.querySelector('#carpause').onclick = function () { if (CAR.st === 'pause') carRun(); else carPause(); };
@@ -1303,6 +1339,7 @@
     app.querySelector('#carlang').onchange = function () { p.lang = this.value; save(); };
     app.querySelector('#carrate').onchange = function () { p.rate = Number(this.value); save(); };
     app.querySelector('#carexp').onchange = function () { p.explain = this.checked; save(); };
+    app.querySelector('#cartest').onclick = function () { carPause(); testVoice(app.querySelector('#cartestout')); };
     window.scrollTo(0, 0);
   }
 
@@ -1310,7 +1347,7 @@
   function carAbort() {
     if (!CAR) return;
     CAR.tok++;
-    try { speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+    try { if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel(); } catch (e) { /* ignore */ }
     if (CAR.rec) { try { CAR.rec.abort(); } catch (e) { /* ignore */ } CAR.rec = null; }
   }
   function carPause() { carAbort(); carStatus('pause'); }
@@ -1574,7 +1611,8 @@
       html += '<h1 class="wiz-h">' + (wNeedsLen(W.mode) ? 'How many questions?' : 'Ready?') + '</h1>';
       if (!carSupported()) html += '<div class="cartoggle off"><span class="go-ic">🚗</span><span><b>Car mode not available here</b><span class="small">' + esc(carWhyNot()) + '</span></span></div>';
       else html += '<button class="cartoggle' + (W.car ? ' on' : '') + '" id="wcar"><span class="go-ic">🚗</span><span><b>Car mode ' + (W.car ? 'ON' : 'off') + '</b>' +
-        '<span class="small">questions read aloud, you answer by voice' + (W.car ? ' · matching and ordering questions are left out' : '') + '</span></span><span class="sw"><i></i></span></button>';
+        '<span class="small">questions read aloud, you answer by voice' + (W.car ? ' · matching and ordering questions are left out' : '') + '</span></span><span class="sw"><i></i></span></button>' +
+        (W.car ? '<div class="row" style="margin:-6px 0 12px"><button class="small" id="wtest">🔊 Test voice</button><span id="wtestout" class="small"></span></div>' : '');
       if (wNeedsLen(W.mode)) {
         html += '<div class="wiz-len">' + ['10', '20', '40', 'all'].map(function (v) {
           var dis = v !== 'all' && W.mode !== 'exam' && Number(v) > avail;
@@ -1606,6 +1644,7 @@
       b.onclick = function () { var v = b.getAttribute('data-wl'); W.len = v === 'all' ? 'all' : Number(v); renderWizard(); };
     });
     var wc = app.querySelector('#wcar'); if (wc) wc.onclick = function () { W.car = !W.car; renderWizard(); };
+    var wt = app.querySelector('#wtest'); if (wt) wt.onclick = function () { testVoice(app.querySelector('#wtestout')); };
     var wn = app.querySelector('#wnext'); if (wn) wn.onclick = wNext;
     var ws = app.querySelector('#wstart'); if (ws) ws.onclick = wStart;
     window.scrollTo(0, 0);
