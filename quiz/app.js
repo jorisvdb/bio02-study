@@ -472,10 +472,13 @@
       html += '<details class="warn card"><summary>Data warnings (' + WARN.length + ')</summary><ul>' + WARN.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul></details>';
     }
     html += '<p class="small muted">Keyboard: 1–9 choose an option, Enter to check and to go on.</p>';
+    html += '<p class="small muted ver">App version <b id="appver">…</b> · ' + (carSupported() ? 'voice OK' : 'no voice') + ' <button class="small" id="chkupd">Check for update</button></p>';
     app.innerHTML = html;
 
     // wiring
     app.querySelector('#newquiz').onclick = function () { openWizard(); };
+    showVersion();
+    app.querySelector('#chkupd').onclick = function () { checkUpdate(true); };
     var ib = app.querySelector('#installBtn');
     if (ib) ib.onclick = function () {
       if (!INSTALL) return;
@@ -1045,6 +1048,34 @@
     }
   });
 
+  /* ---------------- app version and updates ---------------- */
+  function showVersion() {
+    var el = app.querySelector('#appver'); if (!el) return;
+    if (!window.caches) { el.textContent = 'web'; return; }
+    caches.keys().then(function (ks) {
+      var k = ks.filter(function (x) { return x.indexOf('bio02-core-') === 0; }).sort().pop();
+      el.textContent = k ? k.slice(11, 17) : 'web (not stored)';
+    }, function () { el.textContent = '?'; });
+  }
+  function checkUpdate(manual) {
+    if (!('serviceWorker' in navigator)) { if (manual) location.reload(); return; }
+    navigator.serviceWorker.getRegistration().then(function (reg) {
+      if (!reg) { if (manual) location.reload(); return; }
+      var b = app.querySelector('#chkupd'); if (b && manual) { b.disabled = true; b.textContent = 'checking…'; }
+      reg.update().then(function () {
+        setTimeout(function () { if (manual) location.reload(); }, reg.installing ? 8000 : 1500);
+      }, function () { if (b) { b.disabled = false; b.textContent = 'offline – try later'; } });
+    });
+  }
+  // a new version took over: reload right away when nothing is in progress
+  if ('serviceWorker' in navigator) {
+    var hadCtl = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadCtl) { hadCtl = true; return; }
+      if (VIEW === 'dash' || VIEW === 'wiz' || VIEW === 'sum') location.reload();
+    });
+  }
+
   /* ---------------- install as an app (PWA) ---------------- */
   var INSTALL = null;
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); INSTALL = e; if (VIEW === 'dash') renderDash(); });
@@ -1067,6 +1098,12 @@
   var CAR_NEXT = false, CAR = null;
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   function carSupported() { return !!(SR && window.speechSynthesis); }
+  function carWhyNot() {
+    if (!window.speechSynthesis) return 'This browser cannot read text aloud.';
+    if (/SamsungBrowser/.test(navigator.userAgent)) return 'Samsung Internet cannot listen to speech. Open this page in Google Chrome and install the app from there.';
+    if (/Firefox/.test(navigator.userAgent)) return 'Firefox cannot listen to speech. Open this page in Google Chrome.';
+    return 'This browser cannot listen to speech. Open this page in Google Chrome.';
+  }
   function voiceable(q) { return (q.type === 'mc' || q.type === 'tf' || q.type === 'multi' || q.type === 'fill') && !q.img; }
   function carPrefs() {
     var p = S.prefs.car || (S.prefs.car = {});
@@ -1535,7 +1572,8 @@
     } else {
       var chs = wNeedsCh(W.mode) ? W.chs : [1, 2, 3, 4], avail = wCount(W.mode, chs);
       html += '<h1 class="wiz-h">' + (wNeedsLen(W.mode) ? 'How many questions?' : 'Ready?') + '</h1>';
-      if (carSupported()) html += '<button class="cartoggle' + (W.car ? ' on' : '') + '" id="wcar"><span class="go-ic">🚗</span><span><b>Car mode ' + (W.car ? 'ON' : 'off') + '</b>' +
+      if (!carSupported()) html += '<div class="cartoggle off"><span class="go-ic">🚗</span><span><b>Car mode not available here</b><span class="small">' + esc(carWhyNot()) + '</span></span></div>';
+      else html += '<button class="cartoggle' + (W.car ? ' on' : '') + '" id="wcar"><span class="go-ic">🚗</span><span><b>Car mode ' + (W.car ? 'ON' : 'off') + '</b>' +
         '<span class="small">questions read aloud, you answer by voice' + (W.car ? ' · matching and ordering questions are left out' : '') + '</span></span><span class="sw"><i></i></span></button>';
       if (wNeedsLen(W.mode)) {
         html += '<div class="wiz-len">' + ['10', '20', '40', 'all'].map(function (v) {

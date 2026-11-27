@@ -235,3 +235,5 @@ code.mask { font-family: ui-monospace, Consolas, monospace; font-size: 1rem; let
 .car-btns button { padding: 16px 4px; font-size: 1rem; border-radius: 12px; }
 .car-btns .big { font-weight: 700; }
 .car-set label { margin-right: 14px; font-size: .9rem; }
+.cartoggle.off { opacity: .8; border-style: dashed; cursor: default; }
+.ver { margin-top: 18px; }
