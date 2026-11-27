@@ -215,16 +215,17 @@
       case 'smart':
         pool = smartOrder(BANK).slice(0, n); label = 'Smart practice'; break;
       case 'chapter':
-        pool = smartOrder(byChapters(BANK)).slice(0, n); label = 'By chapter (' + selectedChapters().join(', ') + ')'; break;
+        pool = smartOrder(byChapters(BANK)).slice(0, n); label = 'Practice (ch ' + selectedChapters().join(', ') + ')'; break;
       case 'official':
         pool = byChapters(BANK).filter(function (q) { return q.source === 'official'; }).sort(idOrder);
+        if (n !== Infinity) pool = shuffle(pool).slice(0, n);
         label = 'Official quiz questions (ch ' + selectedChapters().join(', ') + ')'; break;
       case 'sample':
         pool = BANK.filter(function (q) { return q.source === 'sample'; }).sort(idOrder); label = 'Sample exam'; break;
       case 'weak':
         var weakC = {};
         conceptStats().forEach(function (c) { var t = c.correct + c.wrong; if (t && c.correct / t < 0.7) weakC[c.concept] = 1; });
-        pool = BANK.filter(function (q) { var s = stat(q.id); return weakC[q.concept] || (s && s.box <= 1 && s.wrong > 0); });
+        pool = byChapters(BANK).filter(function (q) { var s = stat(q.id); return weakC[q.concept] || (s && s.box <= 1 && s.wrong > 0); });
         pool = smartOrder(pool).slice(0, n); label = 'Weak concepts'; break;
       case 'starred':
         pool = starPool(); if (n !== Infinity) pool = pool.slice(0, n);
@@ -390,20 +391,17 @@
     var days = Math.round((EXAM_DATE - new Date(new Date().toDateString())) / 864e5);
     var html = '';
     html += '<h1>BIO02 Quiz Trainer</h1>';
-    html += '<p class="muted">The official practice quiz of every chapter (177 questions), the example exam, and practice questions per chapter written by Claude. ' +
-      'Wrong answers come back later in the same session and in the next sessions until you know them.' +
-      (days >= 0 ? ' <b>Exam in ' + days + ' day' + (days === 1 ? '' : 's') + '.</b>' : '') + '</p>';
-    html += '<div class="stats">' +
-      '<div class="stat"><b>' + BANK.length + '</b><span>questions loaded</span></div>' +
-      '<div class="stat"><b>' + tot.seen + '</b><span>answered at least once</span></div>' +
-      '<div class="stat"><b>' + tot.master + '</b><span>mastered (3+ right in a row)</span></div>' +
-      '<div class="stat"><b>' + ((tot.c + tot.w) ? pct(tot.c, tot.c + tot.w) + '%' : '–') + '</b><span>overall accuracy</span></div>' +
-      '<div class="stat"><b>' + tot.hints + '</b><span>answered with a hint</span></div>' +
-      '</div>';
-
+    html += '<p class="muted">' + BANK.length + ' questions' + (days >= 0 ? ' · <b>exam in ' + days + ' day' + (days === 1 ? '' : 's') + '</b>' : '') + '</p>';
     // continuous study: the main entry point
     var C = S.cont, run = hasRun();
     var open = sessions(), oids = Object.keys(open).sort(function (x, y) { return open[y].saved - open[x].saved; });
+    html += '<div class="home-go">' +
+      '<button class="go go-new" id="newquiz"><span class="go-ic">＋</span><b>New quiz</b><span>choose what, which chapters, how many</span></button>' +
+      '<button class="go go-cont" id="cont"><span class="go-ic">▶</span><b>' + (run ? 'Resume studying' : 'Keep studying') + '</b><span>' +
+      (run ? C.n + ' answered this run' + (C.n ? ', ' + pct(C.c, C.n) + '% right' : '') : 'endless, mistakes come back') + '</span></button></div>';
+    html += '<div class="chips-line"><span class="small muted">Keep studying uses chapters</span> ' +
+      [1, 2, 3, 4].map(function (c) { return '<button class="chip' + (selectedChapters().indexOf(c) >= 0 ? ' on' : '') + '" data-cch="' + c + '">' + c + '</button>'; }).join('') +
+      (run ? '<button class="small linkish" id="contFresh" title="Resets only the run counters; your per-question progress is kept">fresh run</button>' : '') + '</div>';
     if (oids.length) {
       html += '<h2>Open sessions (' + oids.length + ')</h2><div class="card"><p class="small muted" style="margin:0 0 6px">Sessions you started and did not finish. Each one continues exactly where you left it.</p><table class="open-ses">';
       oids.forEach(function (k) {
@@ -415,30 +413,14 @@
       });
       html += '</table></div>';
     }
-    html += '<div class="cont-box"><button class="mode primary cont" id="cont"><b>' + (run ? '▶ Resume continuous study' : '▶ Continuous study') + '</b><span>' +
-      (run ? C.n + ' answered this run, ' + (C.n ? pct(C.c, C.n) + '% correct' : 'none yet') + ' — picks up exactly where you stopped.'
-        : 'No limit, all chapters, resumes where you stopped. Mistakes come back about 10–15 questions later; questions you got right return now and then.') +
-      '</span></button>' + (run ? '<button class="small" id="contFresh" title="Resets only the run counters; your per-question progress is kept">Start a fresh run</button>' : '') + '</div>';
-    html += '<div class="cont-box"><a class="btn mode cont" href="words.html"><b>📖 Difficult words</b><span>Flashcards of the course glossary, by concept: say what the word means, reveal the definition, where it sits (DNA? mRNA? protein?) and a picture with the spot highlighted.</span></a><a class="btn mode" href="pictures.html"><b>🖼 All pictures</b><span>Every drawing of the quiz, by chapter.</span></a></div>';
-
-    // settings
-    html += '<div class="card"><div class="row"><b>Session length</b> <select id="len">' +
-      ['10', '20', '40', 'all'].map(function (v) { return '<option value="' + v + '"' + (String(S.prefs.len) === v ? ' selected' : '') + '>' + (v === 'all' ? 'all' : v + ' questions') + '</option>'; }).join('') +
-      '</select></div><div class="row chapters" style="margin-top:8px"><b>Chapters</b> ' +
-      [1, 2, 3, 4].map(function (c) { return '<label><input type="checkbox" class="chk" value="' + c + '"' + (selectedChapters().indexOf(c) >= 0 ? ' checked' : '') + '> ' + c + '</label>'; }).join('') +
-      '<button class="small" id="chAll">all</button><button class="small" id="chNone">none</button></div>' +
-      '<p class="small muted" style="margin:6px 0 0">Session length applies to the session modes below. The chapter choice applies to "Continuous study", "By chapter", "My mistakes", "★ Important", "Official questions" and "Exam simulation".</p></div>';
-
-    // modes
-    html += '<h2>Sessions with a fixed length</h2><div class="modes">' +
-      '<button class="mode" data-mode="smart"><b>Smart practice</b><span>Mistakes first, then questions that are due, then new ones.</span></button>' +
-      '<button class="mode" data-mode="chapter"><b>By chapter</b><span>Smart order, only the chapters ticked above.</span></button>' +
-      '<button class="mode" data-mode="official"><b>Official quiz questions</b><span>The practice quizzes of the lecturer, in their original order and numbering (ch 1: 33, ch 2: 37, ch 3: 32, ch 4: 75).</span></button>' +
-      '<button class="mode" data-mode="sample"><b>Example exam</b><span>The 15 questions of the example exam.</span></button>' +
-      '<button class="mode" data-mode="mistakes"><b>My mistakes (' + mistakePool().length + ')</b><span>Only questions you answered wrong and do not master yet, most often wrong first. A question leaves this list after ' + MASTER_BOX + ' right answers in a row without a hint.</span></button>' +
-      '<button class="mode" data-mode="starred"><b>★ Important (' + starPool().length + ')</b><span>Only the questions you marked as important, right or wrong. Click ★ on a question again to take it off the list.</span></button>' +
-      '<button class="mode" data-mode="weak"><b>Weak concepts</b><span>Concepts under 70% and questions you recently missed.</span></button>' +
-      '<button class="mode" data-mode="exam"><b>Exam simulation</b><span>Random mix, no feedback until the end.</span></button>' +
+    html += '<div class="home-more"><a class="btn" href="words.html">📖 Difficult words</a><a class="btn" href="pictures.html">🖼 All pictures</a></div>';
+    html += '<h2>Your numbers</h2>';
+    html += '<div class="stats">' +
+      '<div class="stat"><b>' + BANK.length + '</b><span>questions loaded</span></div>' +
+      '<div class="stat"><b>' + tot.seen + '</b><span>answered at least once</span></div>' +
+      '<div class="stat"><b>' + tot.master + '</b><span>mastered (3+ right in a row)</span></div>' +
+      '<div class="stat"><b>' + ((tot.c + tot.w) ? pct(tot.c, tot.c + tot.w) + '%' : '–') + '</b><span>overall accuracy</span></div>' +
+      '<div class="stat"><b>' + tot.hints + '</b><span>answered with a hint</span></div>' +
       '</div>';
 
     // chapters
@@ -489,14 +471,17 @@
     app.innerHTML = html;
 
     // wiring
-    app.querySelector('#len').onchange = function () { S.prefs.len = this.value === 'all' ? 'all' : Number(this.value); save(); };
-    function readChecks() { S.prefs.chapters = [].slice.call(app.querySelectorAll('.chk')).filter(function (c) { return c.checked; }).map(function (c) { return Number(c.value); }); save(); }
-    [].forEach.call(app.querySelectorAll('.chk'), function (c) { c.onchange = readChecks; });
-    app.querySelector('#chAll').onclick = function () { [].forEach.call(app.querySelectorAll('.chk'), function (c) { c.checked = true; }); readChecks(); };
-    app.querySelector('#chNone').onclick = function () { [].forEach.call(app.querySelectorAll('.chk'), function (c) { c.checked = false; }); readChecks(); };
-    [].forEach.call(app.querySelectorAll('[data-mode]'), function (b) { b.onclick = function () { startMode(b.getAttribute('data-mode')); }; });
-    app.querySelector('#cont').onclick = function () { startCont(false); };
-    [].forEach.call(app.querySelectorAll('[data-resume]'), function (b) { b.onclick = function () { resumeSes(b.getAttribute('data-resume')); }; });
+    app.querySelector('#newquiz').onclick = function () { openWizard(); };
+    [].forEach.call(app.querySelectorAll('[data-cch]'), function (b) {
+      b.onclick = function () {
+        var c = Number(b.getAttribute('data-cch')), cs = selectedChapters().slice(), k = cs.indexOf(c);
+        if (k >= 0) { if (cs.length === 1) return; cs.splice(k, 1); } else cs.push(c);
+        S.prefs.chapters = cs.sort(); save(); b.classList.toggle('on', k < 0);
+      };
+    });
+    function pushQ() { try { history.pushState({ v: 'q' }, ''); } catch (e) { /* ignore */ } }
+    app.querySelector('#cont').onclick = function () { pushQ(); startCont(false); };
+    [].forEach.call(app.querySelectorAll('[data-resume]'), function (b) { b.onclick = function () { pushQ(); resumeSes(b.getAttribute('data-resume')); }; });
     [].forEach.call(app.querySelectorAll('[data-drop]'), function (b) { b.onclick = function () { if (confirm('Discard this open session? Your per-question progress is kept.')) { dropSes(b.getAttribute('data-drop')); renderDash(); } }; });
     var cf = app.querySelector('#contFresh');
     if (cf) cf.onclick = function () { if (confirm('Start a fresh run? The run counters go back to 0; what you know per question is kept.')) startCont(true); };
@@ -1046,6 +1031,128 @@
     if (/^[1-9]$/.test(e.key) && !R.answered && (R.q.type === 'mc' || R.q.type === 'multi' || R.q.type === 'tf')) {
       pick(Number(e.key) - 1);
     }
+  });
+
+  /* ---------------- new-quiz wizard ---------------- */
+  var W = null;
+  var WMODES = [
+    { m: 'chapter', ic: '🎯', t: 'Practice', d: 'Smart order: mistakes first, then due, then new.' },
+    { m: 'official', ic: '📋', t: 'Official quiz', d: 'The lecturer\'s practice questions.' },
+    { m: 'mistakes', ic: '❌', t: 'My mistakes', d: 'Only what you got wrong and do not master yet.' },
+    { m: 'starred', ic: '★', t: 'Important', d: 'Questions you marked with ★.' },
+    { m: 'weak', ic: '📉', t: 'Weak concepts', d: 'Concepts under 70 % right.' },
+    { m: 'exam', ic: '⏱', t: 'Exam simulation', d: 'Random mix, no feedback until the end.' },
+    { m: 'sample', ic: '📝', t: 'Example exam', d: 'The 15 questions of the example exam.' }
+  ];
+  function wmode(m) { return WMODES.filter(function (x) { return x.m === m; })[0]; }
+  function wNeedsCh(m) { return m !== 'sample'; }
+  function wNeedsLen(m) { return m !== 'sample'; }
+  // how many questions this mode has in these chapters (before the length cut)
+  function wCount(m, chs) {
+    var keep = S.prefs.chapters, n = 0;
+    S.prefs.chapters = chs;
+    try {
+      if (m === 'chapter' || m === 'exam') n = byChapters(BANK).length;
+      else if (m === 'official') n = byChapters(BANK).filter(function (q) { return q.source === 'official'; }).length;
+      else if (m === 'mistakes') n = mistakePool().length;
+      else if (m === 'starred') n = starPool().length;
+      else if (m === 'sample') n = BANK.filter(function (q) { return q.source === 'sample'; }).length;
+      else if (m === 'weak') {
+        var weakC = {};
+        conceptStats().forEach(function (c) { var t = c.correct + c.wrong; if (t && c.correct / t < 0.7) weakC[c.concept] = 1; });
+        n = byChapters(BANK).filter(function (q) { var s = stat(q.id); return weakC[q.concept] || (s && s.box <= 1 && s.wrong > 0); }).length;
+      }
+    } finally { S.prefs.chapters = keep; }
+    return n;
+  }
+  function wSteps() { var st = [1]; if (!W.mode || wNeedsCh(W.mode)) st.push(2); st.push(3); return st; }
+  function openWizard() {
+    W = { step: 1, mode: null, chs: (S.prefs.wizChs && S.prefs.wizChs.length ? S.prefs.wizChs : [1, 2, 3, 4]).slice(), len: S.prefs.len || 20 };
+    try { history.pushState({ v: 'wiz' }, ''); } catch (e) { /* ignore */ }
+    renderWizard();
+  }
+  function wGo(step) { W.step = step; renderWizard(); }
+  function wNext() { var st = wSteps(), k = st.indexOf(W.step); if (k < st.length - 1) wGo(st[k + 1]); }
+  function wStart() {
+    // the wizard keeps its own chapter choice; "Keep studying" keeps its own
+    var keep = S.prefs.chapters, m = W.mode;
+    S.prefs.wizChs = W.chs.slice().sort(); S.prefs.len = W.len; S.prefs.chapters = S.prefs.wizChs;
+    W = null;
+    try { startMode(m); } finally { S.prefs.chapters = keep; save(); }
+  }
+  function renderWizard() {
+    VIEW = 'wiz'; SES = null; R = null;
+    var st = wSteps(), pos = st.indexOf(W.step) + 1, html = '', canNext = true;
+    html += '<div class="wiz-top"><button class="small" id="wback">← ' + (pos === 1 ? 'Home' : 'Back') + '</button>' +
+      '<span class="wiz-dots">' + st.map(function (x, i) { return '<i class="' + (i + 1 < pos ? 'done' : i + 1 === pos ? 'cur' : '') + '"></i>'; }).join('') + '</span>' +
+      '<span class="small muted">step ' + pos + ' of ' + st.length + '</span></div>';
+    if (W.step === 1) {
+      html += '<h1 class="wiz-h">What do you want to practise?</h1><div class="wiz-tiles">';
+      WMODES.forEach(function (x) {
+        var n = wCount(x.m, [1, 2, 3, 4]);
+        html += '<button class="tile' + (W.mode === x.m ? ' on' : '') + (n ? '' : ' empty') + '" data-wm="' + x.m + '"' + (n ? '' : ' disabled') + '>' +
+          '<span class="tile-ic">' + x.ic + '</span><span class="tile-txt"><b>' + esc(x.t) + '</b><span class="tile-d">' + esc(x.d) + '</span></span>' +
+          '<span class="tile-n">' + n + '</span></button>';
+      });
+      html += '</div>';
+      canNext = !!W.mode;
+    } else if (W.step === 2) {
+      html += '<h1 class="wiz-h">Which chapters?</h1><p class="muted wiz-sub">' + wmode(W.mode).ic + ' ' + esc(wmode(W.mode).t) + ' · tap to switch on or off</p><div class="wiz-ch">';
+      [1, 2, 3, 4].forEach(function (c) {
+        var n = wCount(W.mode, [c]);
+        html += '<button class="chtile' + (W.chs.indexOf(c) >= 0 ? ' on' : '') + '" data-wc="' + c + '"><span class="chnum">' + c + '</span>' +
+          '<span class="chname">' + esc(CH_NAMES[c]) + '</span><span class="tile-n">' + n + '</span><span class="tick">✓</span></button>';
+      });
+      html += '</div><div class="row"><button class="small" id="wall">All chapters</button></div>';
+      var tot = wCount(W.mode, W.chs);
+      html += '<p class="wiz-sum">' + (W.chs.length ? '<b>' + tot + '</b> question' + (tot === 1 ? '' : 's') + ' in chapter' + (W.chs.length > 1 ? 's ' : ' ') + W.chs.slice().sort().join(', ') : 'Pick at least one chapter') + '</p>';
+      canNext = W.chs.length > 0 && tot > 0;
+    } else {
+      var chs = wNeedsCh(W.mode) ? W.chs : [1, 2, 3, 4], avail = wCount(W.mode, chs);
+      html += '<h1 class="wiz-h">' + (wNeedsLen(W.mode) ? 'How many questions?' : 'Ready?') + '</h1>';
+      if (wNeedsLen(W.mode)) {
+        html += '<div class="wiz-len">' + ['10', '20', '40', 'all'].map(function (v) {
+          var dis = v !== 'all' && W.mode !== 'exam' && Number(v) > avail;
+          var lbl = v === 'all' ? 'All<small>' + (W.mode === 'exam' ? 'max 40' : avail) + '</small>' : v;
+          return '<button class="lentile' + (String(W.len) === v ? ' on' : '') + '" data-wl="' + v + '"' + (dis ? ' disabled' : '') + '>' + lbl + '</button>';
+        }).join('') + '</div>';
+        if (W.mode === 'official') html += '<p class="small muted">10, 20 or 40 = a random pick. All = the whole set in the lecturer\'s order.</p>';
+      }
+      var n = avail;
+      if (wNeedsLen(W.mode)) n = W.len === 'all' ? (W.mode === 'exam' ? Math.min(40, avail) : avail) : Math.min(Number(W.len), avail);
+      html += '<div class="wiz-recap"><div><span class="muted">What</span><b>' + wmode(W.mode).ic + ' ' + esc(wmode(W.mode).t) + '</b></div>' +
+        (wNeedsCh(W.mode) ? '<div><span class="muted">Chapters</span><b>' + W.chs.slice().sort().join(', ') + '</b></div>' : '') +
+        '<div><span class="muted">Questions</span><b>' + n + '</b></div></div>';
+      canNext = n > 0;
+    }
+    html += '<div class="wiz-bar">' + (W.step === 3
+      ? '<button class="primary big" id="wstart"' + (canNext ? '' : ' disabled') + '>▶ Start quiz</button>'
+      : '<button class="primary big" id="wnext"' + (canNext ? '' : ' disabled') + '>Next →</button>') + '</div>';
+    app.innerHTML = html;
+    app.querySelector('#wback').onclick = function () { history.back(); };
+    [].forEach.call(app.querySelectorAll('[data-wm]'), function (b) {
+      b.onclick = function () { W.mode = b.getAttribute('data-wm'); wNext(); };
+    });
+    [].forEach.call(app.querySelectorAll('[data-wc]'), function (b) {
+      b.onclick = function () { var c = Number(b.getAttribute('data-wc')), k = W.chs.indexOf(c); if (k >= 0) W.chs.splice(k, 1); else W.chs.push(c); renderWizard(); };
+    });
+    var wa = app.querySelector('#wall'); if (wa) wa.onclick = function () { W.chs = [1, 2, 3, 4]; renderWizard(); };
+    [].forEach.call(app.querySelectorAll('[data-wl]'), function (b) {
+      b.onclick = function () { var v = b.getAttribute('data-wl'); W.len = v === 'all' ? 'all' : Number(v); renderWizard(); };
+    });
+    var wn = app.querySelector('#wnext'); if (wn) wn.onclick = wNext;
+    var ws = app.querySelector('#wstart'); if (ws) ws.onclick = wStart;
+    window.scrollTo(0, 0);
+  }
+  // phone/browser back button: in the wizard one step back; in a quiz back home (the place is saved)
+  window.addEventListener('popstate', function () {
+    if (VIEW === 'wiz' && W) {
+      var st = wSteps(), k = st.indexOf(W.step);
+      if (k > 0) { try { history.pushState({ v: 'wiz' }, ''); } catch (e) { /* ignore */ } wGo(st[k - 1]); }
+      else { W = null; renderDash(); }
+    } else if (VIEW === 'q' && SES) {
+      if (SES.cont) renderContPause(); else { persistSes(R && R.answered); renderDash(); }
+    } else if (VIEW !== 'dash') renderDash();
   });
 
   /* ---------------- start ---------------- */

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 4 on one A4</title>
+<style>
+@page { size: A4 landscape; margin: 5mm; }
+* { box-sizing: border-box; }
+html { background: #8a8f98; }
+body { margin: 0; font: 10.6pt/1.27 "Arial Narrow", "Roboto Condensed", Arial, sans-serif; color: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.bar { font: 13px/1.4 system-ui, sans-serif; color: #fff; padding: 8px 12px; }
+.bar a { color: #fff; }
+.sheet { width: 287mm; height: 200mm; margin: 0 auto 12px; background: #fff; padding: 2.5mm; overflow: hidden;
+  display: flex; flex-direction: column; gap: 1.6mm; box-shadow: 0 2px 12px #0006; }
+@media print { html { background: #fff; } .bar { display: none; } .sheet { margin: 0; box-shadow: none; padding: 0; } }
+
+.top { display: flex; align-items: baseline; gap: 4mm; }
+h1 { font-size: 12.5pt; margin: 0; white-space: nowrap; }
+.flow { font-size: 8pt; color: #333; }
+.flow b { color: #111; }
+
+.grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; gap: 1.6mm; min-height: 0; }
+.box { border: .45mm solid var(--c); background: #fff; border-radius: 1.2mm; overflow: hidden; display: flex; flex-direction: column; }
+.box h2 { margin: 0; background: var(--c); color: #fff; font-size: 12pt; padding: .9mm 1.8mm 1mm; line-height: 1.15; }
+.box h2 .n { display: inline-block; background: #fff; color: var(--c); border-radius: 50%; width: 4.4mm; height: 4.4mm; text-align: center; line-height: 4.4mm; font-size: 8.5pt; margin-right: 1mm; }
+.box h2 small { display: inline; margin-left: 1.5mm; font-weight: 400; font-size: 7.8pt; opacity: .92; margin-top: .2mm; }
+.box ul { list-style: none; margin: 0; padding: 1.4mm 1.8mm; display: flex; flex-direction: column; gap: 1.5mm; }
+.box li { padding-left: 0; }
+.box li:nth-child(even):not(.t):not(.x) { background: color-mix(in srgb, var(--c) 7%, white); margin: 0 -1.8mm; padding: .3mm 1.8mm; }
+.box li b { color: var(--c); }
+.box .x { color: #666; font-style: italic; }
+.box .t { color: #b3261e; }
+.box .t::before { content: "⚠ "; }
+
+/* the four recurring tricks */
+.k { display: inline-block; min-width: 3.3mm; padding: 0 .5mm; border-radius: .7mm; color: #fff; font: 700 6.6pt/3.3mm Arial, sans-serif; text-align: center; vertical-align: .2mm; margin-left: .4mm; }
+.kS { background: #6b6b6b; } .kP { background: #1f8a70; } .kA { background: #c2410c; } .kF { background: #7c3aed; }
+
+.strip { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.25fr; gap: 1.6mm; }
+.strip div { border-radius: 1.2mm; padding: .9mm 1.6mm; background: #f3f3f3; font-size: 8.6pt; }
+.strip div b:first-child { display: block; font-size: 8.6pt; margin-bottom: .2mm; }
+.strip .blot { background: #fff7e6; border: .3mm solid #e0b25a; }
+
+.c1 { --c: #2f6fbf; } .c2 { --c: #1f8a70; } .c3 { --c: #6b6b6b; } .c4 { --c: #7c3aed; }
+.c5 { --c: #b45309; } .c6 { --c: #be185d; } .c7 { --c: #c2410c; } .c8 { --c: #0f766e; }
+</style>
+</head>
+<body>
+<div class="bar"><a href="index.html">← Cheatsheets</a> · Chapter 4 on one A4 (landscape). Print: Ctrl+P → Landscape, Scale 100 %, tick “Background graphics”.</div>
+<div class="sheet">
+
+<div class="top">
+  <h1>Ch 4 · Tools and techniques – the 8 hangers (kapstokken)</h1>
+  <div class="flow"><b>Story:</b> cells → copy → sort → read → find → gene on? → protein? → change · <span class="k kS">S</span> size <span class="k kP">P</span> pairing probe <span class="k kA">A</span> antibody <span class="k kF">F</span> fluorescence</div>
+</div>
+
+<div class="grid">
+
+<section class="box c1"><h2><span class="n">1</span>Material <small>where? · 4.01–4.02</small></h2><ul>
+<li><b>Model organisms</b> E. coli · yeast · worm · fly · zebrafish · mouse · Arabidopsis</li>
+<li><b>Culture</b> liquid · agar plate → 1 cell = 1 colony = clone</li>
+<li><b>Primary cells</b> mortal ↔ <b>cell line</b> immortal</li>
+<li><b>Stem cells</b> ES (embryo) · iPS (adult cell reprogrammed) · blood (bone marrow)</li>
+<li class="t">totipotent = all (ES) · pluripotent = some</li>
+<li><b>Virus</b> only in living cells → <b>plaque assay</b> 1 virus = 1 hole → count</li>
+</ul></section>
+
+<section class="box c2"><h2><span class="n">2</span>Copy DNA <small>make more · 4.03–4.05</small></h2><ul>
+<li><b>PCR</b> <span class="k kP">P</span> 95° split → 55° primers → 72° build · ×30 · tube</li>
+<li><b>RT</b> mRNA → <b>cDNA</b> · reverse transcriptase (virus, ch 3)</li>
+<li><b>Cloning</b> cut (restriction enzyme) → glue (ligase) → plasmid → bacteria</li>
+<li><b>Library</b> many clones · genomic (all) · cDNA (active genes)</li>
+<li class="x">PCR fast, tube ↔ cloning slow, living cells</li>
+</ul></section>
+
+<section class="box c3"><h2><span class="n">3</span>Measure &amp; sort <small>how much? size? · 4.07–4.08</small></h2><ul>
+<li><b>Absorbance</b> DNA 260 nm · protein 280 nm · A260/A280 = purity · Beer–Lambert</li>
+<li><b>Dye</b> <span class="k kF">F</span> ethidium bromide → DNA glows (UV)</li>
+<li><b>Activity assay</b> measure the product, not the enzyme</li>
+<li><b>Agarose gel</b> <span class="k kS">S</span> DNA/RNA · − → + · small = fast</li>
+<li><b>SDS-PAGE</b> <span class="k kS">S</span> proteins · SDS = unfold + all negative → size only</li>
+<li><b>Mass spec</b> weigh pieces → which protein</li>
+</ul></section>
+
+<section class="box c4"><h2><span class="n">4</span>Read the sequence <small>letters · 4.09–4.11</small></h2><ul>
+<li><b>Sanger</b> <span class="k kS">S</span><span class="k kF">F</span> ddNTP = stop → sort by size · ~900 letters</li>
+<li><b>Shotgun</b> random pieces → read → overlap · <b>coverage</b> 30×</li>
+<li><b>Illumina</b> <span class="k kF">F</span> 2nd gen · short (150) · millions · 1 colour / cycle</li>
+<li><b>Nanopore</b> 3rd gen · long · strand through pore → current</li>
+<li><b>WGS</b> all · <b>WES</b> exons 1.5 % · <b>targeted</b> few, deep · epigenome · microbes</li>
+<li><b>BLAST</b> sequence vs database → which gene / species?</li>
+</ul></section>
+
+<section class="box c5"><h2><span class="n">5</span>Find a DNA sequence <small>where? · 4.12</small></h2><ul>
+<li><b>Restriction pattern</b> <span class="k kS">S</span> cut → gel → band pattern changes</li>
+<li><b>Southern blot</b> <span class="k kS">S</span><span class="k kP">P</span> DNA gel → membrane → probe</li>
+<li><b>Karyotype</b> dividing cells → stain → count · 47,XX,+21</li>
+<li><b>FISH</b> <span class="k kP">P</span><span class="k kF">F</span> glowing probe on chromosomes → where · how many</li>
+<li><b>aCGH</b> <span class="k kP">P</span><span class="k kF">F</span> patient vs normal · 2 colours · chip → gain / loss</li>
+<li class="t">aCGH blind for balanced changes (inversion, translocation)</li>
+</ul></section>
+
+<section class="box c6"><h2><span class="n">6</span>Gene on? <small>RNA · 4.13</small></h2><ul>
+<li><b>Northern blot</b> <span class="k kS">S</span><span class="k kP">P</span> RNA gel → membrane → probe</li>
+<li><b>qRT-PCR</b> <span class="k kP">P</span><span class="k kF">F</span> mRNA → cDNA → glowing PCR · early glow = much mRNA · 1 gene</li>
+<li><b>Reporter</b> <span class="k kF">F</span> promoter + GFP / luciferase / lacZ → where · when</li>
+<li><b>Microarray</b> <span class="k kP">P</span><span class="k kF">F</span> chip · 1000s of probes · 2 cell types</li>
+<li><b>RNA-seq</b> sequence all cDNA → count reads · all genes</li>
+</ul></section>
+
+<section class="box c7"><h2><span class="n">7</span>Protein there? <small>proteins &amp; cells · 4.12–4.13</small></h2><ul>
+<li><b>Western blot</b> <span class="k kS">S</span><span class="k kA">A</span> SDS-PAGE → membrane → antibody → size · amount</li>
+<li><b>ELISA</b> <span class="k kA">A</span> well + antibody → colour → how much (blood)</li>
+<li><b>Immunofluorescence</b> <span class="k kA">A</span><span class="k kF">F</span> glowing antibody → microscope → where in cell</li>
+<li><b>Flow cytometry</b> <span class="k kA">A</span><span class="k kF">F</span> cells 1 by 1 → laser → count · sort (FACS)</li>
+<li><b>Mass spec</b> → box 3</li>
+</ul></section>
+
+<section class="box c8"><h2><span class="n">8</span>Change the gene <small>what happens? · 4.05–4.06</small></h2><ul>
+<li><b>Forward</b> mutant → gene · <b>reverse</b> gene → mutant</li>
+<li><b>Mutagenesis</b> random (chemicals, radiation) · site-directed (1 letter)</li>
+<li><b>Transgenic</b> + extra gene</li>
+<li><b>RNAi / siRNA</b> <span class="k kP">P</span> destroy mRNA → knock<i>down</i> · temporary · DNA intact</li>
+<li><b>CRISPR-Cas9</b> <span class="k kP">P</span> guide RNA → Cas9 cuts → broken / edited</li>
+<li><b>Knockout mouse</b> ES cells → chimera → breed → no gene</li>
+</ul></section>
+
+</div>
+
+<div class="strip">
+  <div><b><span class="k kS">S</span> Sorting by size</b>molecules through a gel: small ones run fastest · gels, Sanger, every blot</div>
+  <div><b><span class="k kP">P</span> Pairing (probe)</b>a short known piece sticks only to its matching strand (A–T, G–C) · PCR, FISH, arrays, blots, CRISPR</div>
+  <div><b><span class="k kA">A</span> Antibody</b>a protein that grabs exactly one other protein · Western, ELISA, immunofluorescence, flow</div>
+  <div><b><span class="k kF">F</span> Fluorescence</b>a label that glows in a colour when light shines on it · GFP, FISH, qRT-PCR, Illumina</div>
+  <div class="blot"><b>The blot family: gel → membrane → find</b>Southern = DNA + probe · Northern = RNA + probe · Western = protein + antibody</div>
+</div>
+
+</div>
+</body>
+</html>
