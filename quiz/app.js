@@ -18,6 +18,7 @@
   var BANK = [], BYID = {}, WARN = [];
   var CONCEPTS = window.QCONCEPTS || {};
   var storageOK = true;
+  var SYNC = { applying: true };  // replaced by syncLoad() once storage is read
   var S;            // persistent state
   var SES = null;   // current session
   var R = null;     // current question render state
@@ -127,12 +128,14 @@
     if (!storageOK) return;
     try { localStorage.setItem(KEY, JSON.stringify(S)); }
     catch (e) { storageOK = false; banner(); }
+    if (!SYNC.applying) syncSoon();
   }
   function banner() {
     var b = document.getElementById('banner');
     if (!storageOK) { b.hidden = false; b.textContent = 'This browser blocks local storage here: progress is kept only until you close the page. Use "Export progress" to keep it.'; }
   }
   S = loadState();
+  SYNC = syncLoad();
   banner();
 
   function stat(id) { return S.q[id] || null; }
@@ -140,7 +143,7 @@
   function isStar(id) { return !!(S.star && S.star[id]); }
   function toggleStar(id) {
     if (!S.star) S.star = {};
-    if (S.star[id]) delete S.star[id]; else S.star[id] = Date.now();
+    if (S.star[id]) { delete S.star[id]; markGone('star:' + id); } else S.star[id] = Date.now();
     save();
   }
   function starBtn(id) {
@@ -268,7 +271,8 @@
     if (S.sess) { var o = S.sess; o.sid = o.sid || 'old'; S.sessions[o.sid] = o; delete S.sess; }
     return S.sessions;
   }
-  function dropSes(sid) { var all = sessions(); if (all[sid]) { delete all[sid]; save(); } }
+  function dropSes(sid) { var all = sessions(); if (all[sid]) { delete all[sid]; markGone('ses:' + sid); save(); } }
+  function markGone(k) { if (!S.gone) S.gone = {}; S.gone[k] = Date.now(); }
   function resumeSes(sid, car) {
     var z = sessions()[sid];
     if (!z) return;
@@ -335,7 +339,7 @@
     var C = contRun();
     if (C.cur) { C.recent.push(C.cur); if (C.recent.length > 12) C.recent = C.recent.slice(-12); }
     var id = pickNext();
-    C.cur = id; C.answered = false; save();
+    C.cur = id; C.answered = false; C.saved = Date.now(); save();
     SES.queue = [id]; SES.i = 0;
     renderQuestion();
   }
@@ -466,7 +470,7 @@
     }
 
     // data tools
-    html += '<h2>Your progress data</h2><div class="card"><p class="small muted" style="margin-top:0">Progress is saved in this browser (localStorage), on this computer only. Export it to keep a copy or move it to another browser.</p>' +
+    html += '<h2>Your progress data</h2><div class="card">' + syncCard() + '<p class="small muted">Progress is always saved on this device first. Export makes a copy as a file.</p>' +
       '<div class="row"><button id="exp">Export progress</button><label class="btn">Import progress<input type="file" id="imp" accept=".json,application/json" hidden></label>' +
       '<span class="spacer"></span><button id="reset">Reset progress</button></div><div id="dl" class="small" style="margin-top:8px"></div></div>';
 
@@ -496,13 +500,14 @@
       b.onclick = function () {
         if (!confirm('Discard this open session? Your per-question progress is kept.')) return;
         var k = b.getAttribute('data-drop');
-        if (k === 'cont') { S.cont = null; save(); } else dropSes(k);
+        if (k === 'cont') { S.cont = null; markGone('cont'); save(); } else dropSes(k);
         renderDash();
       };
     });
     [].forEach.call(app.querySelectorAll('[data-concept]'), function (b) { b.onclick = function () { startMode('concept', b.getAttribute('data-concept')); }; });
+    syncWire();
     app.querySelector('#reset').onclick = function () {
-      if (confirm('Delete all your quiz progress in this browser? This cannot be undone.')) { var p = S.prefs; S = fresh(); S.prefs = p; save(); renderDash(); }
+      if (confirm(SYNC.token ? 'Delete all your quiz progress, on this device AND in the cloud copy (so also on your other devices)? This cannot be undone.' : 'Delete all your quiz progress in this browser? This cannot be undone.')) { var p = S.prefs; S = fresh(); S.prefs = p; S.gone = { all: Date.now() }; save(); renderDash(); }
     };
     app.querySelector('#exp').onclick = function () {
       var blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' });
@@ -519,7 +524,7 @@
         try {
           var st = JSON.parse(rd.result);
           if (!st || typeof st.q !== 'object') throw new Error('no "q" object');
-          if (!confirm('Replace your current progress with the imported file?')) return;
+          if (!confirm(SYNC.token ? 'Replace your progress on this device with the imported file? (Cloud sync is on: it is then combined with the cloud copy.)' : 'Replace your current progress with the imported file?')) return;
           st.history = st.history || []; st.prefs = st.prefs || fresh().prefs; st.star = st.star || {};
           S = st; save(); renderDash();
         } catch (e) { alert('This file is not a valid progress file (' + e.message + ').'); }
@@ -1691,7 +1696,7 @@
     if (C.cur) { C.recent.push(C.cur); if (C.recent.length > 12) C.recent = C.recent.slice(-12); }
     BANK = BANK.filter(voiceable);
     try { id = BANK.length ? pickNext() : null; } finally { BANK = keepB; }
-    C.cur = id; C.answered = false; save();
+    C.cur = id; C.answered = false; C.saved = Date.now(); save();
     SES.queue = id ? [id] : []; SES.i = 0;
     return id;
   }
@@ -1900,5 +1905,196 @@
     }
     return false;
   }
+  /* ---------------- cloud sync (a private GitHub Gist in the user's own account) ----------------
+     The token stays on this device (its own localStorage key, never exported or uploaded).
+     Every sync: download the cloud copy, merge it with this device (per question the newest answer wins;
+     stars, open sessions and history are combined; removed things are remembered in S.gone), save here,
+     and upload the result if it differs. */
+  function syncLoad() {
+    var c = {};
+    try { c = JSON.parse(localStorage.getItem(KEY + '.sync') || '{}') || {}; } catch (e) { c = {}; }
+    c.applying = false; c.busy = false; c.again = false; c.dirty = false; c.timer = 0;
+    return c;
+  }
+  function syncKeep() {
+    try { localStorage.setItem(KEY + '.sync', JSON.stringify({ token: SYNC.token, gist: SYNC.gist, last: SYNC.last, err: SYNC.err })); } catch (e) { /* ignore */ }
+  }
+  var GIST_FILE = 'bio02quiz-progress.json';
+  function gh(method, path, body) {
+    var h = { Authorization: 'Bearer ' + SYNC.token, Accept: 'application/vnd.github+json' };
+    if (body) h['Content-Type'] = 'application/json';
+    return fetch('https://api.github.com' + path, { method: method, cache: 'no-store', headers: h, body: body ? JSON.stringify(body) : undefined })
+      .then(function (r) {
+        if (!r.ok) { var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
+        return r.json();
+      });
+  }
+  // the part of S that is shared between devices (prefs stay per device)
+  function shared(st) { return { q: st.q || {}, star: st.star || {}, sessions: st.sessions || {}, cont: st.cont || null, history: st.history || [], gone: st.gone || {} }; }
+  function canon(v) {
+    if (Array.isArray(v)) return '[' + v.map(canon).join(',') + ']';
+    if (v && typeof v === 'object') return '{' + Object.keys(v).sort().map(function (k) { return JSON.stringify(k) + ':' + canon(v[k]); }).join(',') + '}';
+    return JSON.stringify(v === undefined ? null : v);
+  }
+  function mergeState(L, M, keep) {
+    var g = {}, now = Date.now(), k;
+    [L.gone, M.gone].forEach(function (o) { for (k in o) if (!g[k] || o[k] > g[k]) g[k] = o[k]; });
+    for (k in g) if (k !== 'all' && now - g[k] > 120 * 864e5) delete g[k];
+    var cut = g.all || 0;
+    function union(a, b) { var u = {}; for (k in a) u[k] = 1; for (k in b) u[k] = 1; return Object.keys(u); }
+    var q = {};
+    union(L.q, M.q).forEach(function (id) {
+      var a = L.q[id], b = M.q[id], w = !b ? a : !a ? b : ((b.last || 0) > (a.last || 0) ? b : a);
+      if (w && (w.last || 0) > cut) q[id] = w;
+    });
+    var star = {};
+    union(L.star, M.star).forEach(function (id) {
+      var t = Math.max(L.star[id] || 0, M.star[id] || 0);
+      if (t > cut && !((g['star:' + id] || 0) >= t)) star[id] = t;
+    });
+    var ses = {};
+    union(L.sessions, M.sessions).forEach(function (sid) {
+      var a = L.sessions[sid], b = M.sessions[sid];
+      if (keep.sid === sid && a) { ses[sid] = a; return; }
+      var w = !b ? a : !a ? b : ((b.saved || 0) > (a.saved || 0) ? b : a);
+      if (w && (w.saved || 0) > cut && !((g['ses:' + sid] || 0) >= (w.saved || 0))) ses[sid] = w;
+    });
+    var ids = Object.keys(ses).sort(function (a, b) { return (ses[b].saved || 0) - (ses[a].saved || 0); });
+    ids.slice(12).forEach(function (x) { if (x !== keep.sid) delete ses[x]; });
+    function ct(c) { return c ? (c.saved || c.started || 0) : 0; }
+    var cont;
+    if (keep.cont) cont = L.cont;
+    else {
+      cont = ct(M.cont) > ct(L.cont) ? M.cont : L.cont;
+      if (cont && (ct(cont) <= cut || (g.cont || 0) >= ct(cont))) cont = null;
+    }
+    var hist = {}, list = [];
+    L.history.concat(M.history).forEach(function (x) { if (x && x.date > cut) hist[x.date + '|' + x.mode] = x; });
+    for (k in hist) list.push(hist[k]);
+    list.sort(function (a, b) { return a.date - b.date; });
+    return { q: q, star: star, sessions: ses, cont: cont || null, history: list.slice(-500), gone: g };
+  }
+  function findGist() {
+    return gh('GET', '/gists?per_page=100').then(function (list) {
+      var mine = (list || []).filter(function (x) { return x.files && x.files[GIST_FILE]; })
+        .sort(function (a, b) { return String(b.updated_at).localeCompare(String(a.updated_at)); });
+      return mine.length ? mine[0].id : null;
+    });
+  }
+  function readGist(id) {
+    return gh('GET', '/gists/' + id).then(function (gs) {
+      var f = gs.files && gs.files[GIST_FILE];
+      if (!f) return null;
+      var txt = f.truncated ? fetch(f.raw_url, { cache: 'no-store' }).then(function (r) { return r.text(); }) : Promise.resolve(f.content);
+      return txt.then(function (t) { var d = JSON.parse(t || '{}'); return d && d.state ? d.state : null; });
+    });
+  }
+  function payload(st) {
+    var f = {}; f[GIST_FILE] = { content: JSON.stringify({ app: 'bio02quiz', v: 1, saved: Date.now(), state: st }) };
+    return f;
+  }
+  function syncNow() {
+    if (!SYNC.token) return Promise.resolve();
+    if (SYNC.busy) { SYNC.again = true; return SYNC.busy; }
+    clearTimeout(SYNC.timer);
+    SYNC.dirty = false;
+    SYNC.err = ''; syncShow('syncing');
+    var p = (SYNC.gist ? Promise.resolve(SYNC.gist) : findGist()).then(function (id) {
+      if (!id) {  // first device: create the cloud copy
+        return gh('POST', '/gists', { description: 'BIO02 quiz progress (made by the quiz app)', public: false, files: payload(shared(S)) })
+          .then(function (gs) { SYNC.gist = gs.id; });
+      }
+      SYNC.gist = id;
+      return readGist(id).then(function (remote) {
+        remote = shared(remote || {});
+        var before = canon(shared(S));
+        var keep = { sid: VIEW === 'q' || VIEW === 'car' ? SES && SES.sid : null, cont: (VIEW === 'q' || VIEW === 'car') && SES && SES.cont };
+        var m = mergeState(shared(S), remote, keep);
+        S.q = m.q; S.star = m.star; S.sessions = m.sessions; S.cont = m.cont; S.history = m.history; S.gone = m.gone;
+        SYNC.applying = true; save(); SYNC.applying = false;
+        if (canon(m) !== before && VIEW === 'dash') renderDash();
+        if (canon(m) !== canon(remote)) return gh('PATCH', '/gists/' + id, { files: payload(m) });
+      });
+    }).then(function () {
+      SYNC.last = Date.now(); SYNC.err = '';
+    }, function (e) {
+      SYNC.applying = false;
+      if (e && e.status === 404) SYNC.gist = '';  // cloud copy deleted: make a new one next time
+      SYNC.err = !navigator.onLine ? 'offline – will sync when back online'
+        : e && e.status === 401 ? 'GitHub did not accept the token (wrong or expired)'
+          : e && (e.status === 403 || e.status === 404) ? 'no access – does the token have the “gist” box ticked?'
+            : 'could not reach GitHub (' + ((e && e.message) || 'error') + ')';
+      SYNC.dirty = true;
+    }).then(function () {
+      SYNC.busy = false; syncKeep(); syncShow();
+      if (SYNC.again) { SYNC.again = false; return syncNow(); }
+    });
+    SYNC.busy = p;
+    return p;
+  }
+  function syncSoon() {
+    if (!SYNC.token) return;
+    SYNC.dirty = true;
+    clearTimeout(SYNC.timer);
+    SYNC.timer = setTimeout(syncNow, 15000);
+  }
+  function syncWhen(t) {
+    var d = new Date(t), today = new Date().toDateString() === d.toDateString();
+    return (today ? '' : d.toLocaleDateString() + ' ') + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  function syncLine(state) {
+    if (state === 'syncing') return '☁ Syncing…';
+    if (SYNC.err) return '⚠ Cloud sync: ' + esc(SYNC.err) + (SYNC.last ? ' · last good sync ' + syncWhen(SYNC.last) : '');
+    return '☁ Cloud sync is on' + (SYNC.last ? ' · last synced ' + syncWhen(SYNC.last) : '');
+  }
+  function syncShow(state) { var el = document.getElementById('syncline'); if (el) el.innerHTML = syncLine(state); }
+  function syncCard() {
+    if (SYNC.token) {
+      return '<p style="margin-top:0"><b id="syncline">' + syncLine(SYNC.busy ? 'syncing' : '') + '</b></p>' +
+        '<p class="small muted">Your progress is shared with your other devices through a private Gist in your GitHub account. It syncs when you open the app, a few seconds after you answer, and when you leave the app.</p>' +
+        '<div class="row"><button id="syncnow">Sync now</button><button id="syncoff">Turn off on this device</button></div>';
+    }
+    return '<p style="margin-top:0"><b>☁ Cloud sync</b>: share your progress between your phone and laptop. It is stored as a private Gist (a small file) in your own GitHub account.</p>' +
+      '<ol class="small" style="padding-left:20px">' +
+      '<li>Open <a href="https://github.com/settings/tokens/new?scopes=gist&amp;description=BIO02%20quiz%20sync" target="_blank" rel="noopener">Create a GitHub token</a> and sign in to GitHub.</li>' +
+      '<li>Expiration: pick a date after the exam (for example 90 days). Only the box <b>gist</b> must be ticked (it is ticked for you).</li>' +
+      '<li>Tap <b>Generate token</b> at the bottom and copy the token (it starts with <code>ghp_</code>).</li>' +
+      '<li>Paste it here and tap Connect. Then do the same on your other device (you can use the same token).</li></ol>' +
+      '<div class="row"><input id="synctok" type="password" autocomplete="off" spellcheck="false" placeholder="paste the token here" style="flex:1;min-width:180px">' +
+      '<button id="syncgo" class="primary">Connect</button></div><div id="syncmsg" class="small" style="margin-top:6px"></div>';
+  }
+  function syncWire() {
+    var b = app.querySelector('#syncnow');
+    if (b) b.onclick = function () { syncNow(); };
+    b = app.querySelector('#syncoff');
+    if (b) b.onclick = function () {
+      if (!confirm('Turn off cloud sync on this device? Your progress here stays, and so does the cloud copy. This device just stops syncing.')) return;
+      SYNC.token = ''; SYNC.gist = ''; SYNC.last = 0; SYNC.err = ''; syncKeep(); renderDash();
+    };
+    b = app.querySelector('#syncgo');
+    if (b) b.onclick = function () {
+      var t = (app.querySelector('#synctok').value || '').trim(), msg = app.querySelector('#syncmsg');
+      if (!t) { msg.textContent = 'Paste the token first.'; return; }
+      msg.textContent = 'Checking the token…';
+      SYNC.token = t; SYNC.gist = '';
+      findGist().then(function (id) {
+        SYNC.gist = id || ''; SYNC.err = ''; syncKeep();
+        msg.textContent = id ? 'Found your cloud copy – combining it with this device…' : 'No cloud copy yet – making one from this device…';
+        return syncNow();
+      }).then(function () { renderDash(); }, function (e) {
+        SYNC.token = ''; syncKeep();
+        msg.textContent = e && e.status === 401 ? 'GitHub did not accept this token. Copy it again (the whole text).' : 'That did not work (' + ((e && e.message) || 'error') + '). Check the token and your internet.';
+      });
+    };
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (!SYNC.token) return;
+    if (document.visibilityState === 'hidden') { if (SYNC.dirty) syncNow(); }
+    else syncNow();
+  });
+  window.addEventListener('online', function () { if (SYNC.token && SYNC.dirty) syncNow(); });
+  window.__sync = { merge: mergeState, now: syncNow, state: function () { return SYNC; } };
+
   if (!fromHash()) renderDash();
+  if (SYNC.token) syncNow();
 })();
